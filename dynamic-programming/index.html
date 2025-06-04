@@ -647,34 +647,36 @@
 <li>Tabulation (Bottom-Up)</li>
 </ul>
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
-<ol>
+<ul>
 <li><strong>Climbing Stairs</strong>: similar to fibonacci</li>
-<li><strong>Frog Jump</strong>: Similar to above just need to subtract energy to jump (frog need to reach end)</li>
+<li><strong>Frog Jump</strong>: Similar to above just need to subtract energy to jump (frog need to reach end)<ul>
 <li>Que: [10,20,30,10] Ans: 20</li>
-</ol>
-<pre><code class="language-java">public class ClimbStairsOptimized {
-    public int climbStairs(int n, int arr) {
+</ul>
+</li>
+</ul>
+<pre><code class="language-java">      public class ClimbStairsOptimized {
+         public int climbStairs(int n, int arr) {
 
-        int first = 0;
-        int second = 0;
+            int first = 0;
+            int second = 0;
 
-        for (int i = 1; i &lt; n; i++) {
-            int fs = first + Math.abs(arr[i] - arr[i-1]); // jumping 1 step
-            int ss = Integer.MAX_VALUE;
-            if(i&gt;1) ss = second + Math.abs(arr[i] - arr[i-2]); // jumping 2 steps
+            for (int i = 1; i &lt; n; i++) {
+                  int fs = first + Math.abs(arr[i] - arr[i-1]); // jumping 1 step
+                  int ss = Integer.MAX_VALUE;
+                  if(i&gt;1) ss = second + Math.abs(arr[i] - arr[i-2]); // jumping 2 steps
 
-            int temp = Math.min(fs, ss); // taking min or max based on question
-            second = first; 
-            first = temp;
-        }
+                  int temp = Math.min(fs, ss); // taking min or max based on question
+                  second = first; 
+                  first = temp;
+            }
 
-        return first;
-    }
-}
+            return first;
+         }
+      }
 </code></pre>
-<ol>
+<ul>
 <li><strong>Frog Jump to K distance</strong>: similar to above problem, just one change before we were doing for step 1 and step 2, now we will do till k steps meaning we will iterate min/max logic in a for loop and get the result</li>
-</ol>
+</ul>
 <pre><code class="language-java">for (int i = 1; i &lt; n; i++) {
    int minSteps = Integer.MAX_VALUE;
    for(int j = 1; j &lt;= k; j++&gt;) {
@@ -685,10 +687,12 @@
    dp[i] = minSteps;
 }
 </code></pre>
-<ol>
-<li><strong>Maximum sum of non Adjecent elements</strong>: Here as the questions says we can't use contiguos elements for adding up the numbers. So what we do is we start with the classic DP approach of subsequence, where we add element by the take or notTake approach, and solve the problem </li>
+<ul>
+<li><strong>Maximum sum of non Adjecent elements</strong>: Here as the questions says we can't use contiguos elements for adding up the numbers. So what we do is we start with the classic DP approach of subsequence, where we add element by the take or notTake approach, and solve the problem <ul>
 <li>Que: [2,1,4,9] Ans: 11</li>
-</ol>
+</ul>
+</li>
+</ul>
 <pre><code class="language-java">fun(3, arr);
 
 int fun(int i, int[] arr) {
@@ -701,7 +705,7 @@ int fun(int i, int[] arr) {
    return Math.max(take, notTake); // return the max value
 }
 </code></pre>
-<ol>
+<ul>
 <li><strong>House Robber</strong>: Similar to above</li>
 <li><strong>House Robber 2</strong>: Similar to above, here we can't take the first and last element, so we call the method 2 times with [0, n-2] and [1, n-1], means skipping first one time and last second, and then taking max or min as per the expectation</li>
 <li><strong>Grid Unique Paths</strong></li>
@@ -714,7 +718,7 @@ int fun(int i, int[] arr) {
 <li>Now as we need to generate all the combinations for 3 pointers we will need a for loop which will start from first person -1 to +1 value and same for second as well.</li>
 </ul>
 </li>
-</ol>
+</ul>
 <pre><code class="language-java">
   return dp(grid, 0, 0, n - 1, mem);
 
@@ -745,7 +749,7 @@ int fun(int i, int[] arr) {
   }
 
 </code></pre>
-<ol>
+<ul>
 <li><strong>Subset sum equal to K</strong>: Mostly similar to problem 4 just that this is 2D, here we will have index and sum and 2 params for our DP. whenever we pass the values just make sure if we are taking it then f(i-1,sum-arr[index]) will be passed otherwise f(i-1, sum) will be passed. Small cases will be added that sum should not be negative when subtracting. </li>
 <li><strong>Partition Equal Subset Sum</strong>:<ul>
 <li>Que: [2,3,3,3,4,5] must be divided to equal sum &gt; [2,3,5] &amp; [3,3,4]</li>
@@ -753,13 +757,13 @@ int fun(int i, int[] arr) {
 </ul>
 </li>
 <li><strong>Partition A Set Into Two Subsets With Minimum Absolute Sum Difference</strong>: This is similar to subset sum problem, where we have create a boolean array which will tell us whether we can get the target sum or not. Now next step is to iterate through the optimized dp solution and subtract s2 = totalSum - s1 and s1 will get the final min value.</li>
-</ol>
+</ul>
 <pre><code class="language-java">   for(int s1 = 0; s1&lt;=totalSum/2;s1++){
       if(dp[lastRow][s1] == true) // subset sum is possible that means true
          min = Math.min(min, (totalSum-s1) - s1) // basically saying s2 - s1; as the data will be stored as [0,3,5,7,9,12], for s1 it is from begining and for s2 it from end. 
    }
 </code></pre>
-<ol>
+<ul>
 <li><strong>Counts Subsets with Sum K</strong>: Similar to problem 12, just we need to all the results if it matches with the sum.</li>
 <li><strong>Count Partitions With Given Difference</strong>:  Similar to problem 12, just a minor change the sum that we will be finding is = (totalSum - diff) / 2</li>
 <li><strong>0/1 Knapsack</strong>: similar to problem 12, here we will be subtracting the weight from the weight capacity of bag, it will break once the loop reaches to end for items.</li>
@@ -769,14 +773,14 @@ int fun(int i, int[] arr) {
 <li><strong>Unbounded Knapsack</strong>: Same as coin change problem</li>
 <li><strong>Rod Cutting Problem</strong>: Similar to 0/1 Knapsack problem</li>
 <li><strong>Longest Common Subsequence</strong>: This also follows the approach of match and not match, but here as this is a String problem we will be adding few more cases.</li>
-</ol>
+</ul>
 <pre><code class="language-java">s1 = &quot;adcbc&quot;, s2 = &quot;dcadb&quot;
 if(s1.charAt(i) == s.charAt(j))
    return 1 + f(i-1, j-1, arr); // As the char matches we go to previous index at both strings
 
 return Math.max(f(i, j-1, arr), f(i-1, j, arr)); // char is not matching at index so we go for previous index for s1 and second call for s2 saying that, may be they can match
 </code></pre>
-<ol>
+<ul>
 <li><strong>Print Longest Common Subsequence</strong>: Similar to above question, go for the optimized solution for above question and then we need to iterate through the dp array with below conditions. Single loop should be enough and start from last indexes of both Strings.<ul>
 <li>If they match then go to i-1, j-1</li>
 <li>If they don't match then if dp[i-1][j] &gt; dp[i][j] then i--; else j--;</li>
@@ -793,7 +797,7 @@ return Math.max(f(i, j-1, arr), f(i-1, j, arr)); // char is not matching at inde
 <li>But post that there is a chance that data will still remain in either of those strings so lets add that as well to the result.</li>
 </ul>
 </li>
-</ol>
+</ul>
 <pre><code class="language-java">s1 = &quot;brute&quot;, s2 = &quot;groot&quot;
 while(i&gt;0 &amp;&amp; j&gt;0) {
    if(s1.charAt(i-1) == s2.charAt(j-1)) { // if matched then add and reduce both indexes
@@ -812,13 +816,13 @@ while(i&gt;0 &amp;&amp; j&gt;0) {
 while(i&gt;0) result += s1.charAt(i-1); i--; // add the remaining chars from string 1
 while(j&gt;0) result += s2.charAt(j-1); j--; // add the remaining chars from string 2
 </code></pre>
-<ol>
+<ul>
 <li><strong>Distinct Subsequences</strong>: As part of this problem we need to find that how many times string 2 is present in string 1 as a subsequence, there is a slight change with this problem here.<ul>
 <li>if the char matches on both string we can consider the index from first string or we can ignore that, means (i-1, j-1) + (i-1, j) </li>
 <li>if they don't match just move the first string cause we need to match the first string with second so we do (i-1, j)</li>
 </ul>
 </li>
-</ol>
+</ul>
 <pre><code class="language-java">s1 = &quot;babgbag&quot;, s2 = &quot;bag&quot;
 
 if(j&lt;0) return 1; // basically saying s2 is exhausted 
