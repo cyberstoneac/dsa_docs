@@ -1,19 +1,18 @@
-site_name: My DSA Docs Site
+site_name: DSA Notes
 theme:
   name: material
-markdown_extensions:
-  - admonition
-  - codehilite
-  - toc:
-      permalink: true
-  - pymdownx.superfences
-  - pymdownx.details
-  - pymdownx.tabbed
-  - pymdownx.highlight
-  - pymdownx.emoji
-  - pymdownx.tasklist
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
-  - API Reference: api.md
+  - Array: array.md
+  - String: string.md
+  - Tree: tree.md
+  - Graph: graph.md
+  - Dynamic Programming: dynamic-programming.md
+  - Stack: stack.md
+  - Queue: queue.md
+  - Linked List: linked-list.md
+  - Trie: trie.md
+  - Maths: maths.md
+  - Bit Manipulation: bit-manipulation.md
+  - Greedy Algorithm: greedy.md

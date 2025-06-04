@@ -1,17 +1,42 @@
-# Welcome to MkDocs
+# 🧠 Data Structures & Algorithms (Java)
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome to the **DSA Notes** site! This documentation covers essential concepts and algorithms in computer science, with examples in **Java**.
 
-## Commands
+Whether you're preparing for interviews, improving problem-solving skills, or just exploring DSA, this guide is for you.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+---
 
-## Project layout
+## 📚 Topics Covered
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+### 🔹 Linear Data Structures
+- [Array](array.md)
+- [String](string.md)
+- [Stack](stack.md)
+- [Queue](queue.md)
+- [Linked List](linked-list.md)
+
+### 🌲 Non-Linear Data Structures
+- [Tree](tree.md)
+- [Graph](graph.md)
+- [Trie](trie.md)
+
+### ⚙️ Algorithms
+- [Dynamic Programming](dynamic-programming.md)
+- [Greedy Algorithm](greedy.md)
+
+### 🧮 Techniques & Math
+- [Maths](maths.md)
+- [Bit Manipulation](bit-manipulation.md)
+
+---
+
+## 📌 Highlights
+
+- ✅ Clean Java code examples
+- ✅ Covers foundational to advanced topics
+- ✅ Structured for quick reference
+- ✅ Ideal for competitive programming & interviews
+
+---
+
+> 🚧 _This documentation is a work in progress. Contributions and improvements are welcome!_
