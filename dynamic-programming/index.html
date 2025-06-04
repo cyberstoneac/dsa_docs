@@ -387,48 +387,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✅ Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔁 Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔥 Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
 </li>
       
     </ul>
@@ -653,48 +611,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✅ Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔁 Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔥 Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
 </li>
       
     </ul>
@@ -731,141 +647,188 @@
 <li>Tabulation (Bottom-Up)</li>
 </ul>
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
-<h3 id="easy">✅ Easy</h3>
 <ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/climbing-stairs/">Climbing Stairs</a></strong>
-   Classic Fibonacci-style problem.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/">Best Time to Buy and Sell Stock</a></strong>
-   Maximize profit from a single transaction.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/house-robber/">House Robber</a></strong>
-   Maximize loot without robbing adjacent houses.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/house-robber-ii/">House Robber II</a></strong>
-   Circular variation of House Robber.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/maximum-subarray/">Maximum Subarray</a></strong>
-   Find contiguous subarray with the largest sum.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">Best Time to Buy and Sell Stock II</a></strong>
-   Maximize profit with multiple transactions.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/">Best Time to Buy and Sell Stock III</a></strong>
-   Maximize profit with at most two transactions.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/">Best Time to Buy and Sell Stock IV</a></strong>
-   Maximize profit with at most k transactions.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/palindrome-partitioning-ii/">Palindrome Partitioning II</a></strong>
-   Min cuts to partition string into palindromes.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/unique-paths/">Unique Paths</a></strong>
-    Number of unique paths in a grid.</p>
-</li>
+<li><strong>Climbing Stairs</strong>: similar to fibonacci</li>
+<li><strong>Frog Jump</strong>: Similar to above just need to subtract energy to jump (frog need to reach end)</li>
+<li>Que: [10,20,30,10] Ans: 20</li>
 </ol>
-<hr />
-<h3 id="medium">🔁 Medium</h3>
+<pre><code class="language-java">public class ClimbStairsOptimized {
+    public int climbStairs(int n, int arr) {
+
+        int first = 0;
+        int second = 0;
+
+        for (int i = 1; i &lt; n; i++) {
+            int fs = first + Math.abs(arr[i] - arr[i-1]); // jumping 1 step
+            int ss = Integer.MAX_VALUE;
+            if(i&gt;1) ss = second + Math.abs(arr[i] - arr[i-2]); // jumping 2 steps
+
+            int temp = Math.min(fs, ss); // taking min or max based on question
+            second = first; 
+            first = temp;
+        }
+
+        return first;
+    }
+}
+</code></pre>
 <ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/decode-ways/">Decode Ways</a></strong>
-   Decode a message encoded as a number string.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/word-break/">Word Break</a></strong>
-   Determine if a string can be segmented into words.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/word-break-ii/">Word Break II</a></strong>
-   Return all possible segmentations of a string.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/longest-increasing-subsequence/">Longest Increasing Subsequence</a></strong>
-   Find length of longest increasing subsequence.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/longest-common-subsequence/">Longest Common Subsequence</a></strong>
-   Find longest subsequence common to two sequences.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/longest-palindromic-subsequence/">Longest Palindromic Subsequence</a></strong>
-   Find longest subsequence that is a palindrome.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/coin-change/">Coin Change</a></strong>
-   Find minimum number of coins for a given amount.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/coin-change-ii/">Coin Change II</a></strong>
-   Find number of ways to make a given amount.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/target-sum/">Target Sum</a></strong>
-   Find number of ways to assign symbols to make sum equal to target.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/partition-equal-subset-sum/">Partition Equal Subset Sum</a></strong>
-    Determine if a set can be partitioned into two subsets with equal sum.</p>
-</li>
+<li><strong>Frog Jump to K distance</strong>: similar to above problem, just one change before we were doing for step 1 and step 2, now we will do till k steps meaning we will iterate min/max logic in a for loop and get the result</li>
 </ol>
-<hr />
-<h3 id="hard">🔥 Hard</h3>
+<pre><code class="language-java">for (int i = 1; i &lt; n; i++) {
+   int minSteps = Integer.MAX_VALUE;
+   for(int j = 1; j &lt;= k; j++&gt;) {
+      int ss = Integer.MAX_VALUE;
+      if(i-j&gt;=0) ss = dp[i-j] + Math.abs(arr[i] - arr[i-j]);
+      minSteps = Math.min(fs, ss)
+   }
+   dp[i] = minSteps;
+}
+</code></pre>
 <ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/edit-distance/">Edit Distance</a></strong>
-   Find minimum number of operations to convert one string to another.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/palindrome-partitioning-iii/">Palindrome Partitioning III</a></strong>
-   Min cuts to partition string into palindromes with at most k changes.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/burst-balloons/">Burst Balloons</a></strong>
-   Maximize coins collected by bursting balloons.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/russian-doll-envelopes/">Russian Doll Envelopes</a></strong>
-   Max number of envelopes that can be Russian-dolled.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/scramble-string/">Scramble String</a></strong>
-   Determine if one string is a scrambled string of another.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/interleaving-string/">Interleaving String</a></strong>
-   Determine if a string is an interleaving of two others.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/minimum-cost-to-merge-stones/">Minimum Cost to Merge Stones</a></strong>
-   Min cost to merge stones into one pile.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/word-search-ii/">Word Search II</a></strong>
-   Find all words in a board.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/palindrome-partitioning-iv/">Palindrome Partitioning IV</a></strong>
-   Determine if a string can be partitioned into palindromes with at most k cuts.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/maximal-square/">Maximal Square</a></strong>
-    Find largest square containing only 1's.</p>
-</li>
+<li><strong>Maximum sum of non Adjecent elements</strong>: Here as the questions says we can't use contiguos elements for adding up the numbers. So what we do is we start with the classic DP approach of subsequence, where we add element by the take or notTake approach, and solve the problem </li>
+<li>Que: [2,1,4,9] Ans: 11</li>
 </ol>
-<h2 id="resources">🔹 Resources</h2>
-<ul>
-<li><a href="https://leetcode.com/tag/dynamic-programming/">LeetCode DP Problems</a></li>
+<pre><code class="language-java">fun(3, arr);
+
+int fun(int i, int[] arr) {
+   if(i&lt;0) return 0;
+   if(i == 0) return arr[0];
+
+   int take = arr[i] + fun(i-2, arr); // takes the element and will take the next+1 element
+   int notTake = fun(i-1, arr); // does not take, basically says we can take next element
+
+   return Math.max(take, notTake); // return the max value
+}
+</code></pre>
+<ol>
+<li><strong>House Robber</strong>: Similar to above</li>
+<li><strong>House Robber 2</strong>: Similar to above, here we can't take the first and last element, so we call the method 2 times with [0, n-2] and [1, n-1], means skipping first one time and last second, and then taking max or min as per the expectation</li>
+<li><strong>Grid Unique Paths</strong></li>
+<li><strong>Grid Unique Paths 2</strong></li>
+<li><strong>Min Path Sum</strong></li>
+<li><strong>Max Path Sum</strong></li>
+<li><strong>Triangle</strong> : Most of these problems will start at a certain index and then move to another in (i-1, j), (i, j-1) or (i-1,j-1) paths. based on questions these change but the core concept remains the same of take and notTake.</li>
+<li><strong>Cherry Pickup 2 [3D Array]</strong>: <ul>
+<li>Similar to above here 2 start points will be given, core logic remains the same just a change is that when 2 paths collide we will take a single value from both. Also here in function we will have 3 vars instead of 2. Here row remains the same as both start from first row but start index is different that's why. Ending points can be similar, that's why we will take one value if they reach at same index and will take different value if they reach at different indexes. </li>
+<li>Now as we need to generate all the combinations for 3 pointers we will need a for loop which will start from first person -1 to +1 value and same for second as well.</li>
 </ul>
+</li>
+</ol>
+<pre><code class="language-java">
+  return dp(grid, 0, 0, n - 1, mem);
+
+  public int cherryPickup(int[][] grid) {
+    final int m = grid.length;
+    final int n = grid[0].length;
+    int[][][] mem = new int[m][n][n];
+    Arrays.stream(mem).forEach(A -&gt; Arrays.stream(A).forEach(B -&gt; Arrays.fill(B, -1)));
+    return dp(grid, 0, 0, n - 1, mem);
+  }
+
+  // Returns the maximum cherries we can collect, where robot #1 is on (x, y1) and robot #2 is on (x, y2).
+  private int dp(int[][] grid, int x, int y1, int y2, int[][][] mem) {
+    if (x == grid.length) // end of rows
+      return 0;
+    if (y1 &lt; 0 || y1 == grid[0].length || y2 &lt; 0 || y2 == grid[0].length) // out of bounds case
+      return 0;
+    if (mem[x][y1][y2] != -1)
+      return mem[x][y1][y2];
+
+    final int currRow = grid[x][y1] + (y1 == y2 ? 0 : grid[x][y2]); // checking if both match then don't add and take one otherwise add both
+
+    for (int d1 = -1; d1 &lt;= 1; d1++)
+      for (int d2 = -1; d2 &lt;= 1; d2++)
+        mem[x][y1][y2] = Math.max(mem[x][y1][y2], currRow + dp(grid, x + 1, y1 + d1, y2 + d2, mem)); // calling all the 9 combinations here for d1 and d2
+
+    return mem[x][y1][y2];
+  }
+
+</code></pre>
+<ol>
+<li><strong>Subset sum equal to K</strong>: Mostly similar to problem 4 just that this is 2D, here we will have index and sum and 2 params for our DP. whenever we pass the values just make sure if we are taking it then f(i-1,sum-arr[index]) will be passed otherwise f(i-1, sum) will be passed. Small cases will be added that sum should not be negative when subtracting. </li>
+<li><strong>Partition Equal Subset Sum</strong>:<ul>
+<li>Que: [2,3,3,3,4,5] must be divided to equal sum &gt; [2,3,5] &amp; [3,3,4]</li>
+<li>Approach: For this first calculate the total sum fo the array, if sum%2==0 then we can divide it and follow the above problem with Sum as sum/2 and we are good.</li>
+</ul>
+</li>
+<li><strong>Partition A Set Into Two Subsets With Minimum Absolute Sum Difference</strong>: This is similar to subset sum problem, where we have create a boolean array which will tell us whether we can get the target sum or not. Now next step is to iterate through the optimized dp solution and subtract s2 = totalSum - s1 and s1 will get the final min value.</li>
+</ol>
+<pre><code class="language-java">   for(int s1 = 0; s1&lt;=totalSum/2;s1++){
+      if(dp[lastRow][s1] == true) // subset sum is possible that means true
+         min = Math.min(min, (totalSum-s1) - s1) // basically saying s2 - s1; as the data will be stored as [0,3,5,7,9,12], for s1 it is from begining and for s2 it from end. 
+   }
+</code></pre>
+<ol>
+<li><strong>Counts Subsets with Sum K</strong>: Similar to problem 12, just we need to all the results if it matches with the sum.</li>
+<li><strong>Count Partitions With Given Difference</strong>:  Similar to problem 12, just a minor change the sum that we will be finding is = (totalSum - diff) / 2</li>
+<li><strong>0/1 Knapsack</strong>: similar to problem 12, here we will be subtracting the weight from the weight capacity of bag, it will break once the loop reaches to end for items.</li>
+<li><strong>Coin change</strong>: Similar to above, just that when we are taking a coin it is not moved to next index for take case if it is less than total value, only for not take case it moved to next index. And as always when we are taking a value that means we need to subtract that value from totalValue. If it reaches to zero then that means we have reached to final.</li>
+<li><strong>Target Sum</strong>: Similar to 16, just a change here is questions is talking about + and - signs which basically means dividing the data into 2 sets.</li>
+<li><strong>Coin Change 2 | Infinite Supply Problems</strong>: Asking for how many ways we can make the amount, just add take and notTake and we will be good.</li>
+<li><strong>Unbounded Knapsack</strong>: Same as coin change problem</li>
+<li><strong>Rod Cutting Problem</strong>: Similar to 0/1 Knapsack problem</li>
+<li><strong>Longest Common Subsequence</strong>: This also follows the approach of match and not match, but here as this is a String problem we will be adding few more cases.</li>
+</ol>
+<pre><code class="language-java">s1 = &quot;adcbc&quot;, s2 = &quot;dcadb&quot;
+if(s1.charAt(i) == s.charAt(j))
+   return 1 + f(i-1, j-1, arr); // As the char matches we go to previous index at both strings
+
+return Math.max(f(i, j-1, arr), f(i-1, j, arr)); // char is not matching at index so we go for previous index for s1 and second call for s2 saying that, may be they can match
+</code></pre>
+<ol>
+<li><strong>Print Longest Common Subsequence</strong>: Similar to above question, go for the optimized solution for above question and then we need to iterate through the dp array with below conditions. Single loop should be enough and start from last indexes of both Strings.<ul>
+<li>If they match then go to i-1, j-1</li>
+<li>If they don't match then if dp[i-1][j] &gt; dp[i][j] then i--; else j--;</li>
+</ul>
+</li>
+<li><strong>Longest Common Substring</strong>: Similar to LCS problem just that the notTake part is not considered as we want subString not sequence</li>
+<li><strong>Longest Palindromic Subsequence</strong>: Similar to LCS, here for string 2 we need to reverse the original String and send it.</li>
+<li><strong>Minimum Insertions to Make String Palindrome</strong>: Similar to LCS, get the count of above program and subtract from the total size of original string</li>
+<li><strong>Minimum Insertions/Deletions to Convert String A to String B</strong>: s1.size() + s2.size() - 2 * LCS of both</li>
+<li><strong>Shortest Common Supersequence</strong>: <ul>
+<li>Que : s1="brute", s2="groot" Result: "bgruoote"</li>
+<li>Ans: </li>
+<li>Approach is similar to 24, just one change is previously we were just printing matching chars now we will add them even if they don't match.</li>
+<li>But post that there is a chance that data will still remain in either of those strings so lets add that as well to the result.</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-java">s1 = &quot;brute&quot;, s2 = &quot;groot&quot;
+while(i&gt;0 &amp;&amp; j&gt;0) {
+   if(s1.charAt(i-1) == s2.charAt(j-1)) { // if matched then add and reduce both indexes
+      result += s1.charAt(i-1);
+      i--;
+      j--;
+   } else if(dp[i-1][j] &gt; dp[i][j]) { // if d[i-1][j] &gt; dp[i][j] then add from first string
+      result += s1.charAt(i-1);
+      i--;
+   }else {
+      result += s2.charAt(j-1); // add from second string
+      j--;
+   }
+}
+
+while(i&gt;0) result += s1.charAt(i-1); i--; // add the remaining chars from string 1
+while(j&gt;0) result += s2.charAt(j-1); j--; // add the remaining chars from string 2
+</code></pre>
+<ol>
+<li><strong>Distinct Subsequences</strong>: As part of this problem we need to find that how many times string 2 is present in string 1 as a subsequence, there is a slight change with this problem here.<ul>
+<li>if the char matches on both string we can consider the index from first string or we can ignore that, means (i-1, j-1) + (i-1, j) </li>
+<li>if they don't match just move the first string cause we need to match the first string with second so we do (i-1, j)</li>
+</ul>
+</li>
+</ol>
+<pre><code class="language-java">s1 = &quot;babgbag&quot;, s2 = &quot;bag&quot;
+
+if(j&lt;0) return 1; // basically saying s2 is exhausted 
+if(i&lt;0) return 0; // nothing to compare 
+
+if(s1.charAt(i) == s.charAt(j))
+   return f(i-1, j-1, arr) + f(i-1, j, arr); 
+
+return f(i-1, j, arr); // char is not matching at index so we go for previous index for s1
+</code></pre>
 
 
 
