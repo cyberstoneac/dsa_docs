@@ -1,0 +1,19 @@
+site_name: My DSA Docs Site
+theme:
+  name: material
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tabbed
+  - pymdownx.highlight
+  - pymdownx.emoji
+  - pymdownx.tasklist
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - API Reference: api.md
