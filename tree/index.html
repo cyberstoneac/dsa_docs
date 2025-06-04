@@ -9,20 +9,22 @@
       
       
       
+        <link rel="prev" href="../string/">
       
-        <link rel="next" href="array/">
+      
+        <link rel="next" href="../graph/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>DSA Notes</title>
+        <title>Tree - DSA Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
       
 
@@ -41,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -60,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#data-structures-algorithms-java" class="md-skip">
+        <a href="#tree" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +78,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
+    <a href=".." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Tree
             
           </span>
         </div>
@@ -174,7 +176,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
+    <a href=".." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -184,6 +186,72 @@
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../array/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Array
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../string/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    String
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
     
       
       
@@ -206,7 +274,7 @@
   
   
   <span class="md-ellipsis">
-    Home
+    Tree
     
   </span>
   
@@ -214,12 +282,12 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="." class="md-nav__link md-nav__link--active">
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    Home
+    Tree
     
   </span>
   
@@ -242,46 +310,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#topics-covered" class="md-nav__link">
+  <a href="#key-concepts" class="md-nav__link">
     <span class="md-ellipsis">
-      📚 Topics Covered
+      Key Concepts
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📚 Topics Covered">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Problems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patterns-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Patterns / Techniques
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-problems-by-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Practice Problems by Topic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#linear-data-structures" class="md-nav__link">
+  <a href="#easy" class="md-nav__link">
     <span class="md-ellipsis">
-      🔹 Linear Data Structures
+      ✅ Easy
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#non-linear-data-structures" class="md-nav__link">
+  <a href="#medium" class="md-nav__link">
     <span class="md-ellipsis">
-      🌲 Non-Linear Data Structures
+      🔁 Medium
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#algorithms" class="md-nav__link">
+  <a href="#hard" class="md-nav__link">
     <span class="md-ellipsis">
-      ⚙️ Algorithms
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#techniques-math" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧮 Techniques &amp; Math
+      🔥 Hard
     </span>
   </a>
   
@@ -293,9 +379,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#highlights" class="md-nav__link">
+  <a href="#resources" class="md-nav__link">
     <span class="md-ellipsis">
-      📌 Highlights
+      🔹 Resources
     </span>
   </a>
   
@@ -316,73 +402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="array/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Array
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="string/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    String
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="tree/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Tree
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="graph/" class="md-nav__link">
+      <a href="../graph/" class="md-nav__link">
         
   
   
@@ -404,7 +424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dynamic-programming/" class="md-nav__link">
+      <a href="../dynamic-programming/" class="md-nav__link">
         
   
   
@@ -426,7 +446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="stack/" class="md-nav__link">
+      <a href="../stack/" class="md-nav__link">
         
   
   
@@ -448,7 +468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="queue/" class="md-nav__link">
+      <a href="../queue/" class="md-nav__link">
         
   
   
@@ -470,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="linked-list/" class="md-nav__link">
+      <a href="../linked-list/" class="md-nav__link">
         
   
   
@@ -492,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trie/" class="md-nav__link">
+      <a href="../trie/" class="md-nav__link">
         
   
   
@@ -514,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="maths/" class="md-nav__link">
+      <a href="../maths/" class="md-nav__link">
         
   
   
@@ -536,7 +556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="bit-manipulation/" class="md-nav__link">
+      <a href="../bit-manipulation/" class="md-nav__link">
         
   
   
@@ -558,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="greedy/" class="md-nav__link">
+      <a href="../greedy/" class="md-nav__link">
         
   
   
@@ -600,46 +620,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#topics-covered" class="md-nav__link">
+  <a href="#key-concepts" class="md-nav__link">
     <span class="md-ellipsis">
-      📚 Topics Covered
+      Key Concepts
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📚 Topics Covered">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Problems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patterns-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Patterns / Techniques
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-problems-by-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Practice Problems by Topic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#linear-data-structures" class="md-nav__link">
+  <a href="#easy" class="md-nav__link">
     <span class="md-ellipsis">
-      🔹 Linear Data Structures
+      ✅ Easy
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#non-linear-data-structures" class="md-nav__link">
+  <a href="#medium" class="md-nav__link">
     <span class="md-ellipsis">
-      🌲 Non-Linear Data Structures
+      🔁 Medium
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#algorithms" class="md-nav__link">
+  <a href="#hard" class="md-nav__link">
     <span class="md-ellipsis">
-      ⚙️ Algorithms
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#techniques-math" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧮 Techniques &amp; Math
+      🔥 Hard
     </span>
   </a>
   
@@ -651,9 +689,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#highlights" class="md-nav__link">
+  <a href="#resources" class="md-nav__link">
     <span class="md-ellipsis">
-      📌 Highlights
+      🔹 Resources
     </span>
   </a>
   
@@ -675,47 +713,99 @@
 
 
 
-<h1 id="data-structures-algorithms-java">🧠 Data Structures &amp; Algorithms (Java)</h1>
-<p>Welcome to the <strong>DSA Notes</strong> site! This documentation covers essential concepts and algorithms in computer science, with examples in <strong>Java</strong>.</p>
-<p>Whether you're preparing for interviews, improving problem-solving skills, or just exploring DSA, this guide is for you.</p>
+<h1 id="tree">Tree</h1>
+<h2 id="key-concepts">Key Concepts</h2>
+<ul>
+<li>Hierarchical structure with nodes</li>
+<li>Binary Tree, BST, Balanced Trees</li>
+</ul>
+<h2 id="common-problems">Common Problems</h2>
+<ul>
+<li>Tree Traversals (Inorder, Preorder, Postorder)</li>
+<li>Maximum Depth</li>
+<li>Lowest Common Ancestor</li>
+</ul>
+<h2 id="patterns-techniques">Patterns / Techniques</h2>
+<ul>
+<li>Recursion</li>
+<li>DFS, BFS</li>
+</ul>
+<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
+<h3 id="easy">✅ Easy</h3>
+<ol>
+<li>
+<p><strong><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/">Maximum Depth of Binary Tree</a></strong>
+   Find the height of a binary tree.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/symmetric-tree/">Symmetric Tree</a></strong>
+   Check if a tree is a mirror of itself.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/invert-binary-tree/">Invert Binary Tree</a></strong>
+   Flip the tree upside down.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/binary-tree-paths/">Binary Tree Paths</a></strong>
+   Find all root-to-leaf paths.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/path-sum/">Path Sum</a></strong>
+   Check if there’s a root-to-leaf path with a given sum.</p>
+</li>
+</ol>
 <hr />
-<h2 id="topics-covered">📚 Topics Covered</h2>
-<h3 id="linear-data-structures">🔹 Linear Data Structures</h3>
-<ul>
-<li><a href="array/">Array</a></li>
-<li><a href="string/">String</a></li>
-<li><a href="stack/">Stack</a></li>
-<li><a href="queue/">Queue</a></li>
-<li><a href="linked-list/">Linked List</a></li>
-</ul>
-<h3 id="non-linear-data-structures">🌲 Non-Linear Data Structures</h3>
-<ul>
-<li><a href="tree/">Tree</a></li>
-<li><a href="graph/">Graph</a></li>
-<li><a href="trie/">Trie</a></li>
-</ul>
-<h3 id="algorithms">⚙️ Algorithms</h3>
-<ul>
-<li><a href="dynamic-programming/">Dynamic Programming</a></li>
-<li><a href="greedy/">Greedy Algorithm</a></li>
-</ul>
-<h3 id="techniques-math">🧮 Techniques &amp; Math</h3>
-<ul>
-<li><a href="maths/">Maths</a></li>
-<li><a href="bit-manipulation/">Bit Manipulation</a></li>
-</ul>
+<h3 id="medium">🔁 Medium</h3>
+<ol>
+<li>
+<p><strong><a href="https://leetcode.com/problems/binary-tree-inorder-traversal/">Binary Tree Inorder Traversal</a></strong>
+   Inorder traversal of a tree (recursive and iterative).</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">Construct Binary Tree from Preorder and Inorder Traversal</a></strong>
+   Rebuild tree from traversal data.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/">Lowest Common Ancestor of a Binary Search Tree</a></strong>
+   Find LCA in a BST.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/serialize-and-deserialize-binary-tree/">Serialize and Deserialize Binary Tree</a></strong>
+   Convert tree to string and back.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node/">Populating Next Right Pointers in Each Node</a></strong>
+   Connect nodes at the same level.</p>
+</li>
+</ol>
 <hr />
-<h2 id="highlights">📌 Highlights</h2>
+<h3 id="hard">🔥 Hard</h3>
+<ol>
+<li>
+<p><strong><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/">Binary Tree Maximum Path Sum</a></strong>
+   Find max path sum between any two nodes.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/recover-binary-search-tree/">Recover Binary Search Tree</a></strong>
+   Fix swapped nodes in BST.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/count-of-smaller-numbers-after-self/">Count of Smaller Numbers After Self</a></strong>
+   Count smaller elements to the right.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/longest-consecutive-sequence/">Longest Consecutive Sequence</a></strong>
+   Find longest consecutive path.</p>
+</li>
+<li>
+<p><strong><a href="https://leetcode.com/problems/word-ladder-ii/">Word Ladder II</a></strong> <em>(involves graph/tree BFS)</em></p>
+</li>
+</ol>
+<h2 id="resources">🔹 Resources</h2>
 <ul>
-<li>✅ Clean Java code examples</li>
-<li>✅ Covers foundational to advanced topics</li>
-<li>✅ Structured for quick reference</li>
-<li>✅ Ideal for competitive programming &amp; interviews</li>
+<li><a href="https://leetcode.com/tag/tree/">LeetCode Tree Problems</a></li>
+<li><a href="https://www.hackerrank.com/domains/data-structures/trees">HackerRank Trees</a></li>
 </ul>
-<hr />
-<blockquote>
-<p>🚧 <em>This documentation is a work in progress. Contributions and improvements are welcome!</em></p>
-</blockquote>
 
 
 
@@ -764,10 +854,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>

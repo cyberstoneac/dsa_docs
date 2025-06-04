@@ -9,18 +9,22 @@
       
       
       
+        <link rel="prev" href="..">
       
       
-      <link rel="icon" href="/assets/images/favicon.png">
+        <link rel="next" href="../string/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
     
     
       
-        <title>DSA Notes</title>
+        <title>Array - DSA Notes</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
       
 
@@ -39,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -57,6 +61,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#array" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -69,7 +78,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
+    <a href=".." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -89,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Array
             
           </span>
         </div>
@@ -167,7 +176,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
+    <a href=".." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -185,7 +194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -204,10 +213,32 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/array/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Array
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -218,6 +249,104 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Concepts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Problems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#techniques-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Techniques / Patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-problems-by-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Practice Problems by Topic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#easy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Easy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#medium" class="md-nav__link">
+    <span class="md-ellipsis">
+      Medium
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -229,7 +358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/string/" class="md-nav__link">
+      <a href="../string/" class="md-nav__link">
         
   
   
@@ -251,7 +380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/tree/" class="md-nav__link">
+      <a href="../tree/" class="md-nav__link">
         
   
   
@@ -273,7 +402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/graph/" class="md-nav__link">
+      <a href="../graph/" class="md-nav__link">
         
   
   
@@ -295,7 +424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/dynamic-programming/" class="md-nav__link">
+      <a href="../dynamic-programming/" class="md-nav__link">
         
   
   
@@ -317,7 +446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/stack/" class="md-nav__link">
+      <a href="../stack/" class="md-nav__link">
         
   
   
@@ -339,7 +468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/queue/" class="md-nav__link">
+      <a href="../queue/" class="md-nav__link">
         
   
   
@@ -361,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/linked-list/" class="md-nav__link">
+      <a href="../linked-list/" class="md-nav__link">
         
   
   
@@ -383,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/trie/" class="md-nav__link">
+      <a href="../trie/" class="md-nav__link">
         
   
   
@@ -405,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/maths/" class="md-nav__link">
+      <a href="../maths/" class="md-nav__link">
         
   
   
@@ -427,7 +556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/bit-manipulation/" class="md-nav__link">
+      <a href="../bit-manipulation/" class="md-nav__link">
         
   
   
@@ -449,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/greedy/" class="md-nav__link">
+      <a href="../greedy/" class="md-nav__link">
         
   
   
@@ -481,6 +610,94 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Concepts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Problems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#techniques-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Techniques / Patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-problems-by-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Practice Problems by Topic
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#easy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Easy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#medium" class="md-nav__link">
+    <span class="md-ellipsis">
+      Medium
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -492,8 +709,82 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+
+<h1 id="array">Array</h1>
+<h2 id="key-concepts">Key Concepts</h2>
+<ul>
+<li>Fixed size, index-based data structure</li>
+<li>Stored in contiguous memory</li>
+</ul>
+<h2 id="common-problems">Common Problems</h2>
+<ul>
+<li>Two Sum</li>
+<li>Kadane's Algorithm</li>
+<li>Sliding Window Maximum</li>
+<li>Merge Intervals</li>
+</ul>
+<h2 id="techniques-patterns">Techniques / Patterns</h2>
+<ul>
+<li>Two Pointers</li>
+<li>Sliding Window</li>
+<li>Prefix Sum</li>
+</ul>
+<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
+<h3 id="easy">Easy</h3>
+<ul>
+<li>Two Sum</li>
+<li>Maximum Subarray</li>
+<li>Best Time to Buy and Sell Stock</li>
+<li>Contains Duplicate</li>
+<li>Single Number</li>
+<li>Intersection of Two Arrays II</li>
+<li>Plus One</li>
+<li>Move Zeroes</li>
+<li>Rotate Array</li>
+<li>Find Pivot Index</li>
+</ul>
+<h3 id="medium">Medium</h3>
+<ul>
+<li>3Sum</li>
+<li>Set Matrix Zeroes</li>
+<li>Group Anagrams</li>
+<li>Product of Array Except Self</li>
+<li>Top K Frequent Elements</li>
+<li>Sort Colors</li>
+<li>Find All Numbers Disappeared in an Array</li>
+</ul>
+<h3 id="hard">Hard</h3>
+<ul>
+<li>First Missing Positive</li>
+<li>Trapping Rain Water</li>
+<li>Merge Intervals</li>
+<li>Insert Interval</li>
+<li>Longest Consecutive Sequence</li>
+<li>Median of Two Sorted Arrays</li>
+<li>Maximum Product Subarray</li>
+</ul>
+<h3 id="resources">Resources</h3>
+<ul>
+<li><a href="https://leetcode.com/problem-list/array/">LeetCode Array Problems</a></li>
+<li><a href="https://www.hackerrank.com/domains/data-structures/arrays">HackerRank Arrays</a></li>
+<li><a href="https://www.hackerearth.com/practice/data-structures/arrays/1-d/practice-problems/">HackerEarth Array Practice</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -529,10 +820,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "/", "features": [], "search": "/assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="/assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
       
     
   </body>
