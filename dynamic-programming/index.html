@@ -833,6 +833,76 @@ if(s1.charAt(i) == s.charAt(j))
 
 return f(i-1, j, arr); // char is not matching at index so we go for previous index for s1
 </code></pre>
+<ul>
+<li><strong>Edit Distance</strong>: Here we need to calculate min operations required to convert one string to another, we can do delete, insert and replace, to solve this</li>
+<li>If both strings match then we move to (i-1, j-1)</li>
+<li>If they do not match in that case we take min of (i-1, j) or (i, j-1) or (i-1,j-1) and adding 1 to each</li>
+<li><strong>Wildcard matching</strong>: Here we need to match the string with the pattern, like ?ay with ray, **aab with aaab, to solve this</li>
+<li>If current char is ? or both strings char match then we move to next index for both f(i-1,j-1)</li>
+<li>If current char is * then match the before char on either of those strings meaning f(i-1, j) or f(i, j-1)</li>
+<li>for base case as * can be matched to zero or more chars we need to iterate the pattern, if the first string is exhuasted and pattern is still remaining as we can see in the example 2, then we need to check if there is any char apart froom * is left then it is incorrect.</li>
+<li><strong>Best Time to Buy and Sell Stock</strong>: </li>
+<li>Que: [7, 1, 5, 3, 6, 4] Ans: 5, You can buy only once</li>
+<li>Here we will keep track of the min element of the arr and subtract it with the current value.</li>
+</ul>
+<pre><code class="language-java">   int cost = arr[i]-min;
+   profit = Math.max(profit, cost);
+   min = Math.min(min, arr[i]);
+</code></pre>
+<ul>
+<li><strong>Best Time to Buy and Sell Stock 2</strong>: </li>
+<li>Que: [7, 1, 5, 3, 6, 4] Ans: 7, Here You can buy multiple times</li>
+<li>This is similar to take and not take case scenario where we can decide to take the value or we don't, so we need to keep 2 vars one will be index and second will be to know whether we are buying or selling and call this data in recursion</li>
+<li>In optimized approach we take 4 vars and do the same.</li>
+</ul>
+<pre><code class="language-java">   long profit = 0;
+   if(buy == 1){
+      profit = Math.max(-arr[i] + f(i-1, 0, arr) // take case, here we considered a value so we are saying next time I can only sell
+                        0 + f(i-1, 1, arr))      // not take case, here we have decided not to buy and that's why we skipped it
+   } else {
+      profit = Math.max(arr[i] + f(i-1, 1, arr) // take case, here we considered a value so we are saying next time I can only buy
+                        0 + f(i-1, 0, arr))     // not take case, here we have decided not to sell and that's why we skipped it
+   }
+   return profit;
+</code></pre>
+<ul>
+<li><strong>Best Time to Buy and Sell Stock 3</strong>: </li>
+<li>Que: [3,4,5,0,0,3,1,4] Ans: 6, Here you can do at max 2 transactions</li>
+<li>Similar to above problem, one change is that we need to maintain a variable which will keep track of the transaction made so far, which we will change based on take case</li>
+</ul>
+<pre><code class="language-java">   if(i==n || trans == 2*k) return 0; // we did 2*k becauses sell is 1 transaction and buy is 1
+   long profit = 0;
+   if(trans%2 == 0){
+      profit = Math.max(-arr[i] + f(i-1, 0, trans+1, arr) // take case, here we considered a value so we are saying next time I can only sell
+                        0 + f(i-1, 1, trans, arr))      // not take case, here we have decided not to buy and that's why we skipped it
+   } else {
+      profit = Math.max(arr[i] + f(i-1, 1, trans+1, arr) // take case, here we considered a value so we are saying next time I can only buy
+                        0 + f(i-1, 0, trans, arr))     // not take case, here we have decided not to sell and that's why we skipped it
+   }
+   return profit;
+</code></pre>
+<ul>
+<li><strong>Best Time to Buy and Sell Stock 4</strong>: Similar to above, there we had 2 here we have k</li>
+<li>Que: [3,4,5,0,0,3,1,4] Ans: 6, Here you can do at max k transactions</li>
+<li><strong>Best Time to Buy and Sell Stock with Cooldown</strong>:</li>
+<li>Que: [4,9,0,4,10] Ans: 11, You cannot buy after sell</li>
+<li>Similar to stock 2 question, here when we sell anything then we will do i-2 instead of i-1 that's it, cause you are not allowed to buy on next day, for take case</li>
+<li><strong>Best Time to Buy and Sell Stock With Transaction Fee</strong>:</li>
+<li>Que: [4,9,0,4,10] Ans: 11, You need to pay transaction fee post selling</li>
+<li>Similar to stock 2 question, here when we are selling that time we will subtract the value from the profit and we are good, for take case</li>
+<li><strong>Longest Increasing subsequence</strong>:</li>
+<li>For this question we will check if the new value is greater than the prev value then take it add to the result. Similar to take and not take case, just that first we will start with not take case and take the max value and return it.</li>
+</ul>
+<pre><code class="language-java">
+   int len = 0 + f(i+1, prevIndex);                // not take case
+   if(prevIndex == -1 || arr[i] &gt; arr[prevIndex])
+      len = Math.max(len, f(i+1, i));             // take case  
+
+   return len;
+</code></pre>
+<ul>
+<li><strong>Printing Longest Increasing Subsequence</strong>:</li>
+</ul>
 
 
 
