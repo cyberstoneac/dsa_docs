@@ -1,17 +1,34 @@
 site_name: DSA Notes
 theme:
-  name: material
+  name: readthedocs
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js
+  - javascripts/mermaid.js
 
 nav:
   - Home: index.md
   - Array: array.md
+  - Two Pointers: two-pointers.md
+  - Sliding Window: sliding-window.md
+  - Binary Search: binary-search.md
   - String: string.md
-  - Tree: tree.md
-  - Graph: graph.md
-  - Dynamic Programming: dynamic-programming.md
   - Stack: stack.md
   - Queue: queue.md
   - Linked List: linked-list.md
+  - Tree: tree.md
+  - Heap / Priority Queue: heap.md
+  - Backtracking: backtracking.md
+  - Graph: graph.md
+  - Intervals: intervals.md
+  - Dynamic Programming: dynamic-programming.md
   - Trie: trie.md
   - Maths: maths.md
   - Bit Manipulation: bit-manipulation.md
