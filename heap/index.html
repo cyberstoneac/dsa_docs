@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Heap / Priority Queue - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Heap / Priority Queue";
+        var mkdocs_page_input_path = "heap.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Heap / Priority Queue</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#when-to-use">When to Use</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#complexity">Complexity</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-kth-largest-element-in-array">1. Kth Largest Element in Array</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-last-stone-weight">2. Last Stone Weight</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#3-kth-closest-points-to-origin">3. Kth Closest Points to Origin</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4-top-k-frequent-elements">4. Top K Frequent Elements</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#5-merge-k-sorted-lists">5. Merge K Sorted Lists</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#6-find-median-from-data-stream">6. Find Median from Data Stream</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#7-ipo-maximum-capital">7. IPO (Maximum Capital)</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-k-largestsmallest-pattern">1. K Largest/Smallest Pattern</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-merge-k-collections">2. Merge k Collections</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-two-heap-pattern">3. Two Heap Pattern</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-lazy-deletion">4. Lazy Deletion</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Heap / Priority Queue</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="heap-priority-queue">Heap / Priority Queue</h1>
+<h2 id="key-concepts">Key Concepts</h2>
+<ul>
+<li><strong>Min Heap</strong>: Parent ≤ Children (smallest at top)</li>
+<li><strong>Max Heap</strong>: Parent ≥ Children (largest at top)</li>
+<li><strong>Priority Queue</strong>: Abstract data type with priority ordering</li>
+<li><strong>Heapify</strong>: Maintain heap property after insertion/deletion</li>
+<li><strong>Heap Operations</strong>: Insert O(log n), Delete O(log n), Peek O(1)</li>
+<li><strong>Array Representation</strong>: Root at index 0, left child at 2i+1, right at 2i+2</li>
+</ul>
+<h2 id="when-to-use">When to Use</h2>
+<ul>
+<li>Find k largest/smallest elements</li>
+<li>Merge sorted lists/streams</li>
+<li>Scheduling problems (earliest deadline)</li>
+<li>Huffman coding, Dijkstra's algorithm</li>
+<li>Load balancing, system design</li>
+</ul>
+<h2 id="complexity">Complexity</h2>
+<ul>
+<li>Build heap: O(n)</li>
+<li>Insert: O(log n)</li>
+<li>Delete: O(log n)</li>
+<li>Heapify: O(log n)</li>
+<li>Space: O(n)</li>
+</ul>
+<hr />
+<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
+<h3 id="easy">Easy</h3>
+<h4 id="1-kth-largest-element-in-array">1. <strong>Kth Largest Element in Array</strong></h4>
+<p><strong>Explanation</strong>: Use min-heap of size k. When size &gt; k, remove smallest. Remaining top is kth largest. Time: O(n log k), Space: O(k).</p>
+<pre class="highlight"><code class="language-java">public int findKthLargest(int[] nums, int k) {
+    PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();
+
+    for (int num : nums) {
+        minHeap.offer(num);
+        if (minHeap.size() &gt; k) {
+            minHeap.poll();
+        }
+    }
+
+    return minHeap.peek();
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Kth Smallest Element, K Closest Points</p>
+<hr />
+<h4 id="2-last-stone-weight">2. <strong>Last Stone Weight</strong></h4>
+<p><strong>Explanation</strong>: Max heap. Pop two heaviest, if different push difference. Time: O(n log n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int lastStoneWeight(int[] stones) {
+    PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
+
+    for (int stone : stones) {
+        maxHeap.offer(stone);
+    }
+
+    while (maxHeap.size() &gt; 1) {
+        int first = maxHeap.poll();
+        int second = maxHeap.poll();
+
+        if (first != second) {
+            maxHeap.offer(first - second);
+        }
+    }
+
+    return maxHeap.isEmpty() ? 0 : maxHeap.peek();
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Last Stone Weight II, Relative Sort Array</p>
+<hr />
+<h3 id="medium">Medium</h3>
+<h4 id="3-kth-closest-points-to-origin">3. <strong>Kth Closest Points to Origin</strong></h4>
+<p><strong>Explanation</strong>: Max heap of k closest points by distance. Time: O(n log k), Space: O(k).</p>
+<pre class="highlight"><code class="language-java">public int[][] kClosest(int[][] points, int k) {
+    PriorityQueue&lt;int[]&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; 
+        (b[0] * b[0] + b[1] * b[1]) - (a[0] * a[0] + a[1] * a[1])
+    );
+
+    for (int[] point : points) {
+        maxHeap.offer(point);
+        if (maxHeap.size() &gt; k) {
+            maxHeap.poll();
+        }
+    }
+
+    int[][] result = new int[k][2];
+    int index = 0;
+    while (!maxHeap.isEmpty()) {
+        result[index++] = maxHeap.poll();
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Top K Frequent Elements, K Closest Elements</p>
+<hr />
+<h4 id="4-top-k-frequent-elements">4. <strong>Top K Frequent Elements</strong></h4>
+<p><strong>Explanation</strong>: Count frequencies, use min-heap of size k. Time: O(n log k), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int[] topKFrequent(int[] nums, int k) {
+    Map&lt;Integer, Integer&gt; count = new HashMap&lt;&gt;();
+    for (int num : nums) {
+        count.put(num, count.getOrDefault(num, 0) + 1);
+    }
+
+    PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; count.get(a) - count.get(b));
+
+    for (int num : count.keySet()) {
+        minHeap.offer(num);
+        if (minHeap.size() &gt; k) {
+            minHeap.poll();
+        }
+    }
+
+    int[] result = new int[k];
+    int index = 0;
+    while (!minHeap.isEmpty()) {
+        result[index++] = minHeap.poll();
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Top K Frequent Words, Rearrange String K Distance Apart</p>
+<hr />
+<h4 id="5-merge-k-sorted-lists">5. <strong>Merge K Sorted Lists</strong></h4>
+<p><strong>Explanation</strong>: Min-heap with list nodes. Pop smallest, add its next node. Time: O(n log k), Space: O(k).</p>
+<pre class="highlight"><code class="language-java">public ListNode mergeKLists(ListNode[] lists) {
+    PriorityQueue&lt;ListNode&gt; minHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; a.val - b.val);
+
+    for (ListNode list : lists) {
+        if (list != null) {
+            minHeap.offer(list);
+        }
+    }
+
+    ListNode dummy = new ListNode(0);
+    ListNode current = dummy;
+
+    while (!minHeap.isEmpty()) {
+        ListNode smallest = minHeap.poll();
+        current.next = smallest;
+        current = current.next;
+
+        if (smallest.next != null) {
+            minHeap.offer(smallest.next);
+        }
+    }
+
+    return dummy.next;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Merge Sorted Array, Merge K Sorted Arrays</p>
+<hr />
+<h4 id="6-find-median-from-data-stream">6. <strong>Find Median from Data Stream</strong></h4>
+<p><strong>Explanation</strong>: Max heap for smaller half, min heap for larger half. Time: O(log n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">class MedianFinder {
+    private PriorityQueue&lt;Integer&gt; maxHeap;
+    private PriorityQueue&lt;Integer&gt; minHeap;
+
+    public MedianFinder() {
+        maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
+        minHeap = new PriorityQueue&lt;&gt;();
+    }
+
+    public void addNum(int num) {
+        if (maxHeap.isEmpty() || num &lt;= maxHeap.peek()) {
+            maxHeap.offer(num);
+        } else {
+            minHeap.offer(num);
+        }
+
+        if (maxHeap.size() &gt; minHeap.size() + 1) {
+            minHeap.offer(maxHeap.poll());
+        }
+        if (minHeap.size() &gt; maxHeap.size()) {
+            maxHeap.offer(minHeap.poll());
+        }
+    }
+
+    public double findMedian() {
+        if (maxHeap.size() &gt; minHeap.size()) {
+            return maxHeap.peek();
+        }
+        return (maxHeap.peek() + minHeap.peek()) / 2.0;
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Find Median of BST, Find Mode in BST</p>
+<hr />
+<h3 id="hard">Hard</h3>
+<h4 id="7-ipo-maximum-capital">7. <strong>IPO (Maximum Capital)</strong></h4>
+<p><strong>Explanation</strong>: Simulate projects sorted by capital. Max-heap of available projects. Time: O(n log n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+    int n = profits.length;
+    Project[] projects = new Project[n];
+
+    for (int i = 0; i &lt; n; i++) {
+        projects[i] = new Project(capital[i], profits[i]);
+    }
+
+    Arrays.sort(projects, (a, b) -&gt; a.capital - b.capital);
+
+    PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
+    int i = 0;
+
+    for (int j = 0; j &lt; k; j++) {
+        while (i &lt; n &amp;&amp; projects[i].capital &lt;= w) {
+            maxHeap.offer(projects[i++].profit);
+        }
+
+        if (maxHeap.isEmpty()) break;
+        w += maxHeap.poll();
+    }
+
+    return w;
+}
+
+class Project {
+    int capital, profit;
+    Project(int capital, int profit) {
+        this.capital = capital;
+        this.profit = profit;
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Stock Market Prediction, Resource Allocation</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-k-largestsmallest-pattern">1. <strong>K Largest/Smallest Pattern</strong></h3>
+<ul>
+<li>Use min-heap for k largest (size k, peek is smallest of k largest)</li>
+<li>Use max-heap for k smallest (size k, peek is largest of k smallest)</li>
+<li>Keep heap size ≤ k</li>
+</ul>
+<h3 id="2-merge-k-collections">2. <strong>Merge k Collections</strong></h3>
+<ul>
+<li>Put first element from each collection in heap</li>
+<li>Pop smallest, add its next element</li>
+<li>Continue until heap empty</li>
+</ul>
+<h3 id="3-two-heap-pattern">3. <strong>Two Heap Pattern</strong></h3>
+<ul>
+<li>Max heap for left half</li>
+<li>Min heap for right half</li>
+<li>Balance sizes for median/middle queries</li>
+</ul>
+<h3 id="4-lazy-deletion">4. <strong>Lazy Deletion</strong></h3>
+<ul>
+<li>Mark deleted items but keep in heap</li>
+<li>Check validity when popping</li>
+<li>Saves deletion cost</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Wrong comparator for min/max heap</li>
+<li>❌ Heap not properly balanced</li>
+<li>❌ Not handling heap size properly</li>
+<li>❌ Comparison with null values</li>
+<li>❌ Integer overflow in distance calculations</li>
+<li>❌ Not updating heap after peek</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../tree/" class="btn btn-neutral float-left" title="Tree"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../backtracking/" class="btn btn-neutral float-right" title="Backtracking">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../tree/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../backtracking/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

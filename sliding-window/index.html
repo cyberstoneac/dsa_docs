@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Sliding Window - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Sliding Window";
+        var mkdocs_page_input_path = "sliding-window.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Sliding Window</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#when-to-use">When to Use</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pattern">Pattern</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#complexity">Complexity</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-maximum-average-subarray-i">1. Maximum Average Subarray I</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-contains-duplicate-ii">2. Contains Duplicate II</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#3-longest-substring-without-repeating-characters">3. Longest Substring Without Repeating Characters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4-minimum-window-substring">4. Minimum Window Substring</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#5-permutation-in-string">5. Permutation in String</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#6-sliding-window-maximum">6. Sliding Window Maximum</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-fixed-window-size">1. Fixed Window Size</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-variable-window-size">2. Variable Window Size</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-character-frequency-pattern">3. Character Frequency Pattern</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-deque-pattern">4. Deque Pattern</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Sliding Window</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="sliding-window">Sliding Window</h1>
+<h2 id="key-concepts">Key Concepts</h2>
+<ul>
+<li><strong>Window</strong>: Contiguous subarray/substring</li>
+<li><strong>Expand</strong>: Extend window right to include more elements</li>
+<li><strong>Shrink</strong>: Move left pointer to make window smaller</li>
+<li><strong>Invariant</strong>: Maintain condition (max length, sum ≤ target, etc.)</li>
+<li><strong>Two Pointers</strong>: Left and right boundaries of window</li>
+<li><strong>Time</strong>: O(n) because each element visited at most twice</li>
+</ul>
+<h2 id="when-to-use">When to Use</h2>
+<ul>
+<li>Longest/shortest substring with constraint</li>
+<li>All subarrays matching pattern</li>
+<li>Maximum sum/product in window</li>
+<li>Anagrams, permutations in string</li>
+<li>Duplicate handling</li>
+</ul>
+<h2 id="pattern">Pattern</h2>
+<ol>
+<li>Expand right pointer to add element</li>
+<li>While condition violated: shrink from left</li>
+<li>Update answer</li>
+<li>Continue until right reaches end</li>
+</ol>
+<h2 id="complexity">Complexity</h2>
+<ul>
+<li>Time: O(n) - each element visited twice</li>
+<li>Space: O(min(n, k)) for hashmap/set</li>
+</ul>
+<hr />
+<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
+<h3 id="easy">Easy</h3>
+<h4 id="1-maximum-average-subarray-i">1. <strong>Maximum Average Subarray I</strong></h4>
+<p><strong>Explanation</strong>: Find subarray of size k with maximum average. Slide window, calculate averages. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public double findMaxAverage(int[] nums, int k) {
+    int sum = 0;
+    for (int i = 0; i &lt; k; i++) {
+        sum += nums[i];
+    }
+
+    int maxSum = sum;
+    for (int i = k; i &lt; nums.length; i++) {
+        sum = sum - nums[i - k] + nums[i];
+        maxSum = Math.max(maxSum, sum);
+    }
+
+    return maxSum / (double) k;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Maximum Sum Subarray, Minimum Average Subarray</p>
+<hr />
+<h4 id="2-contains-duplicate-ii">2. <strong>Contains Duplicate II</strong></h4>
+<p><strong>Explanation</strong>: Find duplicates within distance k. Use sliding window with HashSet. Time: O(n), Space: O(min(n, k)).</p>
+<pre class="highlight"><code class="language-java">public boolean containsNearbyDuplicate(int[] nums, int k) {
+    Set&lt;Integer&gt; window = new HashSet&lt;&gt;();
+
+    for (int i = 0; i &lt; nums.length; i++) {
+        if (window.contains(nums[i])) {
+            return true;
+        }
+
+        window.add(nums[i]);
+
+        if (window.size() &gt; k) {
+            window.remove(nums[i - k]);
+        }
+    }
+
+    return false;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Contains Duplicate III, Find Duplicates</p>
+<hr />
+<h3 id="medium">Medium</h3>
+<h4 id="3-longest-substring-without-repeating-characters">3. <strong>Longest Substring Without Repeating Characters</strong></h4>
+<p><strong>Explanation</strong>: Expand right, shrink left when duplicate found. Track max length. Time: O(n), Space: O(min(n, charset)).</p>
+<pre class="highlight"><code class="language-java">public int lengthOfLongestSubstring(String s) {
+    Map&lt;Character, Integer&gt; lastIndex = new HashMap&lt;&gt;();
+    int left = 0, maxLen = 0;
+
+    for (int right = 0; right &lt; s.length(); right++) {
+        char c = s.charAt(right);
+
+        if (lastIndex.containsKey(c)) {
+            left = Math.max(left, lastIndex.get(c) + 1);
+        }
+
+        lastIndex.put(c, right);
+        maxLen = Math.max(maxLen, right - left + 1);
+    }
+
+    return maxLen;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Longest Substring with At Most 2 Distinct Characters, Longest Repeating Character Replacement</p>
+<hr />
+<h4 id="4-minimum-window-substring">4. <strong>Minimum Window Substring</strong></h4>
+<p><strong>Explanation</strong>: Find smallest substring with all characters. Expand right, shrink left when valid. Time: O(n), Space: O(charset).</p>
+<pre class="highlight"><code class="language-java">public String minWindow(String s, String t) {
+    if (t.length() &gt; s.length()) return "";
+
+    Map&lt;Character, Integer&gt; tCount = new HashMap&lt;&gt;();
+    for (char c : t.toCharArray()) {
+        tCount.put(c, tCount.getOrDefault(c, 0) + 1);
+    }
+
+    Map&lt;Character, Integer&gt; windowCount = new HashMap&lt;&gt;();
+    int left = 0, minLen = Integer.MAX_VALUE, minStart = 0;
+    int required = tCount.size();
+    int formed = 0;
+
+    for (int right = 0; right &lt; s.length(); right++) {
+        char c = s.charAt(right);
+        windowCount.put(c, windowCount.getOrDefault(c, 0) + 1);
+
+        if (tCount.containsKey(c) &amp;&amp; windowCount.get(c).equals(tCount.get(c))) {
+            formed++;
+        }
+
+        while (left &lt;= right &amp;&amp; formed == required) {
+            if (right - left + 1 &lt; minLen) {
+                minLen = right - left + 1;
+                minStart = left;
+            }
+
+            char leftChar = s.charAt(left);
+            windowCount.put(leftChar, windowCount.get(leftChar) - 1);
+            if (tCount.containsKey(leftChar) &amp;&amp; windowCount.get(leftChar) &lt; tCount.get(leftChar)) {
+                formed--;
+            }
+
+            left++;
+        }
+    }
+
+    return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Minimum Window Subsequence, Smallest Range, Substring with Concatenation</p>
+<hr />
+<h4 id="5-permutation-in-string">5. <strong>Permutation in String</strong></h4>
+<p><strong>Explanation</strong>: Check if permutation of s1 is substring of s2. Compare character counts. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public boolean checkInclusion(String s1, String s2) {
+    if (s1.length() &gt; s2.length()) return false;
+
+    int[] s1Count = new int[26];
+    int[] windowCount = new int[26];
+
+    for (char c : s1.toCharArray()) {
+        s1Count[c - 'a']++;
+    }
+
+    for (int i = 0; i &lt; s2.length(); i++) {
+        windowCount[s2.charAt(i) - 'a']++;
+
+        if (i &gt;= s1.length()) {
+            windowCount[s2.charAt(i - s1.length()) - 'a']--;
+        }
+
+        if (Arrays.equals(s1Count, windowCount)) {
+            return true;
+        }
+    }
+
+    return false;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Find Anagram, Find All Anagrams in String</p>
+<hr />
+<h3 id="hard">Hard</h3>
+<h4 id="6-sliding-window-maximum">6. <strong>Sliding Window Maximum</strong></h4>
+<p><strong>Explanation</strong>: Maximum in every k-size window. Use deque tracking indices. Time: O(n), Space: O(k).</p>
+<pre class="highlight"><code class="language-java">public int[] maxSlidingWindow(int[] nums, int k) {
+    if (nums == null || nums.length == 0) return new int[0];
+
+    Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;();
+    int[] result = new int[nums.length - k + 1];
+    int index = 0;
+
+    for (int i = 0; i &lt; nums.length; i++) {
+        // Remove indices outside window
+        if (!deque.isEmpty() &amp;&amp; deque.peekFirst() &lt; i - k + 1) {
+            deque.pollFirst();
+        }
+
+        // Remove smaller elements
+        while (!deque.isEmpty() &amp;&amp; nums[deque.peekLast()] &lt; nums[i]) {
+            deque.pollLast();
+        }
+
+        deque.addLast(i);
+
+        if (i &gt;= k - 1) {
+            result[index++] = nums[deque.peekFirst()];
+        }
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Sliding Window Minimum, Constrained Subsequence Sum</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-fixed-window-size">1. <strong>Fixed Window Size</strong></h3>
+<ul>
+<li>Maintain window of exactly k elements</li>
+<li>Slide: remove leftmost, add rightmost</li>
+<li>O(n) time, O(1) space</li>
+</ul>
+<h3 id="2-variable-window-size">2. <strong>Variable Window Size</strong></h3>
+<ul>
+<li>Expand right until condition met</li>
+<li>Shrink left while condition holds</li>
+<li>Track optimal during shrinking</li>
+</ul>
+<h3 id="3-character-frequency-pattern">3. <strong>Character Frequency Pattern</strong></h3>
+<ul>
+<li>Use array/hashmap for counts</li>
+<li>For anagrams, compare arrays</li>
+<li>Fixed alphabet size = O(1) space</li>
+</ul>
+<h3 id="4-deque-pattern">4. <strong>Deque Pattern</strong></h3>
+<ul>
+<li>Maintain indices/elements in order</li>
+<li>Remove non-useful elements early</li>
+<li>Perfect for max/min in window</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Moving pointers in wrong order</li>
+<li>❌ Not handling edge cases (empty string, k &gt; n)</li>
+<li>❌ Forgetting to update answer at right time</li>
+<li>❌ Off-by-one errors in window boundaries</li>
+<li>❌ Comparing characters vs indices incorrectly</li>
+<li>❌ Not cleaning up deque properly</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../two-pointers/" class="btn btn-neutral float-left" title="Two Pointers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../binary-search/" class="btn btn-neutral float-right" title="Binary Search">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../two-pointers/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../binary-search/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,808 +1,463 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Queue - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Queue";
+        var mkdocs_page_input_path = "queue.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-        <link rel="prev" href="../stack/">
-      
-      
-        <link rel="next" href="../linked-list/">
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
-    
-    
-      
-        <title>Queue - DSA Notes</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
-      
-      
+<body class="wy-body-for-nav" role="document">
 
-
-    
-    
-      
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-    
-  </head>
-  
-  
-    <body dir="ltr">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#queue" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            DSA Notes
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              Queue
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-    
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
 </div>
-      
-    
-    
-  </nav>
-  
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
+      </div>
 
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href=".." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    DSA Notes
-  </label>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-      </a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Queue</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../array/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Array
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../string/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    String
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tree/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Tree
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-implement-queue-using-stacks">1. Implement Queue using Stacks</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../graph/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Graph
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l4"><a class="reference internal" href="#2-number-of-recent-calls">2. Number of Recent Calls</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dynamic-programming/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Dynamic Programming
-    
-  </span>
-  
-
-      </a>
+        </ul>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../stack/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Stack
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#3-sliding-window-maximum">3. Sliding Window Maximum</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Queue
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    Queue
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#patterns-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Patterns / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
-</li>
-      
+    <li class="toctree-l4"><a class="reference internal" href="#4-perfect-squares">4. Perfect Squares</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#5-reconstruct-queue-by-height">5. Reconstruct Queue by Height</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#6-dota2-senate">6. Dota2 Senate</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-two-stack-queue">1. Two Stack Queue</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-deque-double-ended-queue">2. Deque (Double-Ended Queue)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-bfs-breadth-first-search">3. BFS (Breadth-First Search)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-monotonic-queue">4. Monotonic Queue</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
     </ul>
-  
-</nav>
-      
-    </li>
-  
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../linked-list/" class="md-nav__link">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
         
-  
-  
-  <span class="md-ellipsis">
-    Linked List
-    
-  </span>
-  
-
-      </a>
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Queue</li>
+    <li class="wy-breadcrumbs-aside">
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../trie/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Trie
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../maths/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Maths
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../bit-manipulation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Bit Manipulation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../greedy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Greedy Algorithm
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#patterns-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Patterns / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-
-<h1 id="queue">Queue</h1>
+                <h1 id="queue">Queue</h1>
 <h2 id="key-concepts">Key Concepts</h2>
 <ul>
-<li>FIFO (First In First Out)</li>
-<li>Enqueue and Dequeue operations</li>
+<li>FIFO (First In First Out) data structure</li>
+<li>Enqueue (add) to rear, Dequeue (remove) from front</li>
+<li><strong>Time Complexity</strong>: O(1) for enqueue/dequeue/peek</li>
+<li><strong>Space Complexity</strong>: O(n) for storage</li>
 </ul>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
 <li>Implement Queue using Stacks</li>
 <li>Circular Queue</li>
 <li>Sliding Window Maximum</li>
+<li>Number of Recent Calls</li>
+<li>Reconstruct Queue by Height</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Two Stacks for Queue</li>
-<li>Double-ended Queue (Deque)</li>
+<li>Two Stacks for Queue (simulate with stacks)</li>
+<li>Double-ended Queue (Deque) for flexibility</li>
+<li>Level-order Traversal (BFS)</li>
+<li>Monotonic Queue (sliding window problems)</li>
 </ul>
+<hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
-<ul>
-<li>Implement Queue using Stacks</li>
-<li>Number of Recent Calls</li>
-</ul>
+<h4 id="1-implement-queue-using-stacks">1. <strong>Implement Queue using Stacks</strong></h4>
+<p><strong>Explanation</strong>: Use two stacks - <code>pushStack</code> for enqueue, <code>popStack</code> for dequeue. When dequeuing, if popStack empty, push all elements from pushStack (reversed). Time: O(1) amortized, Space: O(n).</p>
+<pre class="highlight"><code class="language-java">class MyQueue {
+    private Stack&lt;Integer&gt; pushStack;
+    private Stack&lt;Integer&gt; popStack;
+
+    public MyQueue() {
+        pushStack = new Stack&lt;&gt;();
+        popStack = new Stack&lt;&gt;();
+    }
+
+    public void push(int x) {
+        pushStack.push(x);
+    }
+
+    public int pop() {
+        if (popStack.isEmpty()) {
+            while (!pushStack.isEmpty()) {
+                popStack.push(pushStack.pop());
+            }
+        }
+        return popStack.pop();
+    }
+
+    public int peek() {
+        if (popStack.isEmpty()) {
+            while (!pushStack.isEmpty()) {
+                popStack.push(pushStack.pop());
+            }
+        }
+        return popStack.peek();
+    }
+
+    public boolean empty() {
+        return pushStack.isEmpty() &amp;&amp; popStack.isEmpty();
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Implement Deque using Arrays, Stack using Queues</p>
+<hr />
+<h4 id="2-number-of-recent-calls">2. <strong>Number of Recent Calls</strong></h4>
+<p><strong>Explanation</strong>: Keep queue of recent timestamps. When new request comes, remove timestamps older than t-3000. Queue size is answer. Time: O(1) per operation, Space: O(n).</p>
+<pre class="highlight"><code class="language-java">class RecentCounter {
+    private Queue&lt;Integer&gt; queue;
+
+    public RecentCounter() {
+        queue = new LinkedList&lt;&gt;();
+    }
+
+    public int ping(int t) {
+        queue.offer(t);
+
+        while (!queue.isEmpty() &amp;&amp; queue.peek() &lt; t - 3000) {
+            queue.poll();
+        }
+
+        return queue.size();
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Last N Orders, Expiring Map</p>
+<hr />
 <h3 id="medium">Medium</h3>
-<ul>
-<li>Perfect Squares</li>
-<li>Dota2 Senate</li>
-</ul>
+<h4 id="3-sliding-window-maximum">3. <strong>Sliding Window Maximum</strong></h4>
+<p><strong>Explanation</strong>: Use deque (double-ended queue) storing indices. Maintain decreasing order of values. Remove indices outside window. Remove smaller values when new larger arrives. Front of deque is maximum. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int[] maxSlidingWindow(int[] nums, int k) {
+    int n = nums.length;
+    int[] result = new int[n - k + 1];
+    Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;(); // Store indices
+
+    for (int i = 0; i &lt; n; i++) {
+        // Remove indices outside window
+        while (!deque.isEmpty() &amp;&amp; deque.peekFirst() &lt; i - k + 1) {
+            deque.pollFirst();
+        }
+
+        // Remove smaller elements
+        while (!deque.isEmpty() &amp;&amp; nums[deque.peekLast()] &lt; nums[i]) {
+            deque.pollLast();
+        }
+
+        deque.offerLast(i);
+
+        // Window is complete
+        if (i &gt;= k - 1) {
+            result[i - k + 1] = nums[deque.peekFirst()];
+        }
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Maximum of Minimum Subarrays, Max Consecutive Ones</p>
+<hr />
+<h4 id="4-perfect-squares">4. <strong>Perfect Squares</strong></h4>
+<p><strong>Explanation</strong>: BFS approach. Each number represents squared number (1², 2², 3²...). Find shortest path from n to 0 using BFS. Each step is subtracting a perfect square. Time: O(n * sqrt(n)), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int numSquares(int n) {
+    Queue&lt;int[]&gt; queue = new LinkedList&lt;&gt;(); // [value, steps]
+    HashSet&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+    queue.offer(new int[]{n, 0});
+    visited.add(n);
+
+    while (!queue.isEmpty()) {
+        int[] curr = queue.poll();
+        int num = curr[0], steps = curr[1];
+
+        if (num == 0) return steps;
+
+        for (int i = 1; i * i &lt;= num; i++) {
+            int next = num - i * i;
+
+            if (!visited.contains(next)) {
+                visited.add(next);
+                queue.offer(new int[]{next, steps + 1});
+            }
+        }
+    }
+
+    return -1;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Minimum Path Sum, Word Ladder</p>
+<hr />
+<h4 id="5-reconstruct-queue-by-height">5. <strong>Reconstruct Queue by Height</strong></h4>
+<p><strong>Explanation</strong>: Sort by height descending, then position ascending. Insert each person at their specified position in result list. This works because all taller people are already inserted. Time: O(n log n + n²) = O(n²), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int[][] reconstructQueue(int[][] people) {
+    Arrays.sort(people, (a, b) -&gt; 
+        a[0] == b[0] ? a[1] - b[1] : b[0] - a[0]
+    );
+
+    List&lt;int[]&gt; result = new LinkedList&lt;&gt;();
+
+    for (int[] person : people) {
+        result.add(person[1], person);
+    }
+
+    return result.toArray(new int[result.size()][]);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Create Sorted Array, Process Queue by Conditions</p>
+<hr />
 <h3 id="hard">Hard</h3>
+<h4 id="6-dota2-senate">6. <strong>Dota2 Senate</strong></h4>
+<p><strong>Explanation</strong>: Use queue of team members. Process bans in order. If senator has ban from opponent, they're banned. Otherwise, they ban opponent and go to queue. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public String predictPartyVictory(String senate) {
+    Queue&lt;Integer&gt; radiant = new LinkedList&lt;&gt;();
+    Queue&lt;Integer&gt; dire = new LinkedList&lt;&gt;();
+
+    for (int i = 0; i &lt; senate.length(); i++) {
+        if (senate.charAt(i) == 'R') {
+            radiant.offer(i);
+        } else {
+            dire.offer(i);
+        }
+    }
+
+    while (!radiant.isEmpty() &amp;&amp; !dire.isEmpty()) {
+        int rIndex = radiant.poll();
+        int dIndex = dire.poll();
+
+        if (rIndex &gt; dIndex) {
+            radiant.offer(rIndex + senate.length());
+        } else {
+            dire.offer(dIndex + senate.length());
+        }
+    }
+
+    return radiant.isEmpty() ? "Dire" : "Radiant";
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Robot Returning to Origin, Process Requests</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-two-stack-queue">1. <strong>Two Stack Queue</strong></h3>
 <ul>
-<li>Sliding Window Maximum</li>
+<li>Use two stacks to simulate queue behavior</li>
+<li>Enqueue pushes to stack1</li>
+<li>Dequeue transfers to stack2 if needed</li>
 </ul>
-<h2 id="resources">🔹 Resources</h2>
+<h3 id="2-deque-double-ended-queue">2. <strong>Deque (Double-Ended Queue)</strong></h3>
 <ul>
-<li><a href="https://leetcode.com/tag/queue/">LeetCode Queue Problems</a></li>
-<li><a href="https://www.hackerrank.com/domains/data-structures/queues">HackerRank Queues</a></li>
+<li>Add/remove from both ends</li>
+<li>Used for: Sliding window, monotonic queue</li>
 </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-                
-              </article>
+<h3 id="3-bfs-breadth-first-search">3. <strong>BFS (Breadth-First Search)</strong></h3>
+<ul>
+<li>Queue stores nodes to visit</li>
+<li>Used for: Shortest path, level-order traversal</li>
+</ul>
+<h3 id="4-monotonic-queue">4. <strong>Monotonic Queue</strong></h3>
+<ul>
+<li>Maintain specific order in deque</li>
+<li>Used for: Sliding window maximum, minimum</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Forgetting to check if queue is empty</li>
+<li>❌ Confusing queue implementation (array vs linked list)</li>
+<li>❌ Not maintaining proper deque invariants</li>
+<li>❌ Off-by-one errors in window tracking</li>
+<li>❌ Inefficient operations (avoid removals from middle)</li>
+</ul>
+              
             </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
-</div>
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../stack/" class="btn btn-neutral float-left" title="Stack"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../linked-list/" class="btn btn-neutral float-right" title="Linked List">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
   </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-    
-      
-      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <span><a href="../stack/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
-      
+      <span><a href="../linked-list/" style="color: #fcfcfc">Next &raquo;</a></span>
     
-  </body>
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
 </html>

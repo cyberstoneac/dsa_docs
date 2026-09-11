@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Intervals - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Intervals";
+        var mkdocs_page_input_path = "intervals.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Intervals</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#overlap-condition">Overlap Condition</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#patterns">Patterns</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#complexity">Complexity</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-merge-intervals">1. Merge Intervals</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-insert-interval">2. Insert Interval</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#3-meeting-rooms">3. Meeting Rooms</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4-meeting-rooms-ii-minimum-rooms">4. Meeting Rooms II (Minimum Rooms)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#5-non-overlapping-intervals">5. Non-overlapping Intervals</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#6-skyline-problem">6. Skyline Problem</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-merge-pattern">1. Merge Pattern</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-sweep-line-pattern">2. Sweep Line Pattern</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-greedy-interval-selection">3. Greedy Interval Selection</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-comparison-for-overlaps">4. Comparison for Overlaps</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Intervals</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="intervals">Intervals</h1>
+<h2 id="key-concepts">Key Concepts</h2>
+<ul>
+<li><strong>Interval</strong>: Pair [start, end] representing a range</li>
+<li><strong>Overlap</strong>: Two intervals overlap if one doesn't end before other starts</li>
+<li><strong>Merge</strong>: Combine overlapping intervals</li>
+<li><strong>Sort</strong>: Usually by start time, then by end time</li>
+<li><strong>Sweep Line</strong>: Process events (start/end) in order</li>
+<li><strong>Common Problems</strong>: Meeting rooms, interval scheduling, skyline</li>
+</ul>
+<h2 id="overlap-condition">Overlap Condition</h2>
+<ul>
+<li><strong>Not Overlapping</strong>: a.end &lt; b.start or b.end &lt; a.start</li>
+<li><strong>Overlapping</strong>: a.start ≤ b.end and b.start ≤ a.end</li>
+<li><strong>Merged Interval</strong>: [min(starts), max(ends)]</li>
+</ul>
+<h2 id="patterns">Patterns</h2>
+<ol>
+<li><strong>Sort &amp; Merge</strong>: Sort by start, merge adjacent</li>
+<li><strong>Sweep Line</strong>: Track active intervals at each point</li>
+<li><strong>Priority Queue</strong>: Process intervals by priority</li>
+</ol>
+<h2 id="complexity">Complexity</h2>
+<ul>
+<li>Sort: O(n log n)</li>
+<li>Merge: O(n)</li>
+<li>Total: Usually O(n log n)</li>
+</ul>
+<hr />
+<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
+<h3 id="easy">Easy</h3>
+<h4 id="1-merge-intervals">1. <strong>Merge Intervals</strong></h4>
+<p><strong>Explanation</strong>: Sort by start time, merge overlapping intervals. Time: O(n log n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public int[][] merge(int[][] intervals) {
+    if (intervals.length &lt;= 1) return intervals;
+
+    Arrays.sort(intervals, (a, b) -&gt; a[0] - b[0]);
+
+    List&lt;int[]&gt; merged = new ArrayList&lt;&gt;();
+    int[] current = intervals[0];
+
+    for (int i = 1; i &lt; intervals.length; i++) {
+        if (intervals[i][0] &lt;= current[1]) {
+            current[1] = Math.max(current[1], intervals[i][1]);
+        } else {
+            merged.add(current);
+            current = intervals[i];
+        }
+    }
+
+    merged.add(current);
+    return merged.toArray(new int[0][]);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Insert Interval, Remove Interval Overlap</p>
+<hr />
+<h4 id="2-insert-interval">2. <strong>Insert Interval</strong></h4>
+<p><strong>Explanation</strong>: Insert new interval and merge. Handle non-overlapping before/after. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int[][] insert(int[][] intervals, int[] newInterval) {
+    List&lt;int[]&gt; result = new ArrayList&lt;&gt;();
+    int i = 0;
+
+    // Add intervals before newInterval
+    while (i &lt; intervals.length &amp;&amp; intervals[i][1] &lt; newInterval[0]) {
+        result.add(intervals[i++]);
+    }
+
+    // Merge overlapping intervals
+    while (i &lt; intervals.length &amp;&amp; intervals[i][0] &lt;= newInterval[1]) {
+        newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+        newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+        i++;
+    }
+
+    result.add(newInterval);
+
+    // Add remaining intervals
+    while (i &lt; intervals.length) {
+        result.add(intervals[i++]);
+    }
+
+    return result.toArray(new int[0][]);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Insert Range, Merge Sorted Intervals</p>
+<hr />
+<h3 id="medium">Medium</h3>
+<h4 id="3-meeting-rooms">3. <strong>Meeting Rooms</strong></h4>
+<p><strong>Explanation</strong>: Sort by start time, check if any two meetings overlap. Time: O(n log n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public boolean canAttendMeetings(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -&gt; a[0] - b[0]);
+
+    for (int i = 1; i &lt; intervals.length; i++) {
+        if (intervals[i][0] &lt; intervals[i - 1][1]) {
+            return false;
+        }
+    }
+
+    return true;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Meeting Rooms II, Minimum Rooms Required</p>
+<hr />
+<h4 id="4-meeting-rooms-ii-minimum-rooms">4. <strong>Meeting Rooms II (Minimum Rooms)</strong></h4>
+<p><strong>Explanation</strong>: Count max concurrent meetings. Use heap or sweep line. Time: O(n log n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int minMeetingRooms(int[][] intervals) {
+    int[] starts = new int[intervals.length];
+    int[] ends = new int[intervals.length];
+
+    for (int i = 0; i &lt; intervals.length; i++) {
+        starts[i] = intervals[i][0];
+        ends[i] = intervals[i][1];
+    }
+
+    Arrays.sort(starts);
+    Arrays.sort(ends);
+
+    int rooms = 0, maxRooms = 0;
+    int i = 0, j = 0;
+
+    while (i &lt; intervals.length) {
+        if (starts[i] &lt; ends[j]) {
+            rooms++;
+            i++;
+        } else {
+            rooms--;
+            j++;
+        }
+        maxRooms = Math.max(maxRooms, rooms);
+    }
+
+    return maxRooms;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Minimum Flights to Connect All Cities, Rooms Required</p>
+<hr />
+<h4 id="5-non-overlapping-intervals">5. <strong>Non-overlapping Intervals</strong></h4>
+<p><strong>Explanation</strong>: Remove minimum intervals to make rest non-overlapping. Greedy by end time. Time: O(n log n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public int eraseOverlapIntervals(int[][] intervals) {
+    if (intervals.length &lt;= 1) return 0;
+
+    Arrays.sort(intervals, (a, b) -&gt; a[1] - b[1]);
+
+    int removed = 0;
+    int prevEnd = intervals[0][1];
+
+    for (int i = 1; i &lt; intervals.length; i++) {
+        if (intervals[i][0] &lt; prevEnd) {
+            removed++;
+        } else {
+            prevEnd = intervals[i][1];
+        }
+    }
+
+    return removed;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Maximum Non-overlapping Intervals, Interval Scheduling</p>
+<hr />
+<h3 id="hard">Hard</h3>
+<h4 id="6-skyline-problem">6. <strong>Skyline Problem</strong></h4>
+<p><strong>Explanation</strong>: Merge building heights at each x-coordinate. Use sweep line with multiset. Time: O(n log n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; getSkyline(int[][] buildings) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    List&lt;int[]&gt; events = new ArrayList&lt;&gt;();
+
+    for (int[] b : buildings) {
+        events.add(new int[]{b[0], 0, b[2]}); // start, type (0=start, 1=end), height
+        events.add(new int[]{b[1], 1, b[2]});
+    }
+
+    events.sort((a, b) -&gt; a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
+
+    TreeMap&lt;Integer, Integer&gt; heightCount = new TreeMap&lt;&gt;();
+    heightCount.put(0, 1);
+    int prevMaxHeight = 0;
+
+    for (int[] event : events) {
+        int x = event[0], type = event[1], h = event[2];
+
+        if (type == 0) {
+            heightCount.put(h, heightCount.getOrDefault(h, 0) + 1);
+        } else {
+            heightCount.put(h, heightCount.get(h) - 1);
+            if (heightCount.get(h) == 0) heightCount.remove(h);
+        }
+
+        int maxHeight = heightCount.lastKey();
+
+        if (maxHeight != prevMaxHeight) {
+            result.add(Arrays.asList(x, maxHeight));
+            prevMaxHeight = maxHeight;
+        }
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Rectangle Area II, Largest Rectangle in Histogram</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-merge-pattern">1. <strong>Merge Pattern</strong></h3>
+<ul>
+<li>Sort by start time</li>
+<li>Merge when overlapping</li>
+<li>Update end to max of current and next</li>
+</ul>
+<h3 id="2-sweep-line-pattern">2. <strong>Sweep Line Pattern</strong></h3>
+<ul>
+<li>Create events for start/end</li>
+<li>Process in order</li>
+<li>Track active intervals/height/count</li>
+</ul>
+<h3 id="3-greedy-interval-selection">3. <strong>Greedy Interval Selection</strong></h3>
+<ul>
+<li>Sort by end time</li>
+<li>Pick interval, skip overlapping</li>
+<li>Maximizes non-overlapping count</li>
+</ul>
+<h3 id="4-comparison-for-overlaps">4. <strong>Comparison for Overlaps</strong></h3>
+<ul>
+<li>a.end &gt;= b.start (inclusive end)</li>
+<li>a.end &gt; b.start (exclusive end)</li>
+<li>Depends on problem definition</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Wrong overlap condition</li>
+<li>❌ Not handling edge cases (touching intervals)</li>
+<li>❌ Forgetting to sort</li>
+<li>❌ Incorrect comparison for interval sorting</li>
+<li>❌ Off-by-one in merge condition</li>
+<li>❌ Not considering inclusive vs exclusive ends</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../graph/" class="btn btn-neutral float-left" title="Graph"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../dynamic-programming/" class="btn btn-neutral float-right" title="Dynamic Programming">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../graph/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../dynamic-programming/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

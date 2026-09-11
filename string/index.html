@@ -1,706 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>String - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "String";
+        var mkdocs_page_input_path = "string.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-        <link rel="prev" href="../array/">
-      
-      
-        <link rel="next" href="../tree/">
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
-    
-    
-      
-        <title>String - DSA Notes</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
-      
-      
+<body class="wy-body-for-nav" role="document">
 
-
-    
-    
-      
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-    
-  </head>
-  
-  
-    <body dir="ltr">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#string" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            DSA Notes
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              String
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-    
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
 </div>
-      
-    
-    
-  </nav>
-  
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
+      </div>
 
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href=".." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    DSA Notes
-  </label>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-      </a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">String</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../array/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Array
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    String
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    String
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#patterns-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Patterns / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✅ Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔁 Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔥 Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
+    <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-valid-anagram">1. Valid Anagram</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-implement-strstr-find-substring">2. Implement strStr() - Find Substring</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#3-reverse-string">3. Reverse String</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4-first-unique-character-in-a-string">4. First Unique Character in a String</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#5-valid-palindrome">5. Valid Palindrome</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#6-longest-substring-without-repeating-characters">6. Longest Substring Without Repeating Characters</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#7-longest-palindromic-substring">7. Longest Palindromic Substring</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#8-group-anagrams">8. Group Anagrams</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#9-edit-distance-levenshtein-distance">9. Edit Distance (Levenshtein Distance)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#10-minimum-window-substring">10. Minimum Window Substring</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#11-regular-expression-matching">11. Regular Expression Matching</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-sliding-window">1. Sliding Window</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-two-pointers">2. Two Pointers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-dynamic-programming">3. Dynamic Programming</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-hashing">4. Hashing</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
     </ul>
-  
-</nav>
-      
-    </li>
-  
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tree/" class="md-nav__link">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
         
-  
-  
-  <span class="md-ellipsis">
-    Tree
-    
-  </span>
-  
-
-      </a>
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">String</li>
+    <li class="wy-breadcrumbs-aside">
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../graph/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Graph
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dynamic-programming/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Dynamic Programming
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../stack/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Stack
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../queue/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Queue
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../linked-list/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Linked List
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../trie/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Trie
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../maths/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Maths
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../bit-manipulation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Bit Manipulation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../greedy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Greedy Algorithm
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#patterns-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Patterns / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✅ Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔁 Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔥 Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-
-<h1 id="string">String</h1>
+                <h1 id="string">String</h1>
 <h2 id="key-concepts">Key Concepts</h2>
 <ul>
 <li>Immutable sequences of characters</li>
-<li>Efficient manipulation using StringBuilder</li>
-<li>Character arrays for performance</li>
+<li><strong>StringBuilder</strong> for efficient manipulation (mutable alternative)</li>
+<li>Character arrays for O(1) access</li>
+<li>Pattern matching and searching</li>
 </ul>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
@@ -708,142 +212,350 @@
 <li>Anagram Check</li>
 <li>Palindromic Substrings</li>
 <li>String Compression</li>
+<li>Regular Expression Matching</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
 <li>Sliding Window</li>
 <li>Two Pointers</li>
-<li>Hashing</li>
+<li>Hashing (Character frequency)</li>
+<li>Dynamic Programming (Edit Distance, Palindromes)</li>
 </ul>
+<hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
-<h3 id="easy">✅ Easy</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/valid-anagram/">Valid Anagram</a></strong>
-   Check if two strings are anagrams.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/implement-strstr/">Implement strStr()</a></strong>
-   Find the index of the first occurrence of a substring.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/reverse-string/">Reverse String</a></strong>
-   Reverse a string in-place.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/first-unique-character-in-a-string/">First Unique Character in a String</a></strong>
-   Find the first non-repeating character.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/valid-palindrome/">Valid Palindrome</a></strong>
-   Check if a string is a palindrome ignoring non-alphanumeric chars.</p>
-</li>
-</ol>
+<h3 id="easy">Easy</h3>
+<h4 id="1-valid-anagram">1. <strong>Valid Anagram</strong></h4>
+<p><strong>Explanation</strong>: Two strings are anagrams if they contain same characters with same frequencies. Use character frequency map or sorting approach. Time: O(n log n) for sorting, O(n) for frequency.</p>
+<pre class="highlight"><code class="language-java">public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()) return false;
+
+    char[] arr1 = s.toCharArray();
+    char[] arr2 = t.toCharArray();
+    Arrays.sort(arr1);
+    Arrays.sort(arr2);
+
+    return Arrays.equals(arr1, arr2);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Group Anagrams, Finding Anagrams</p>
 <hr />
-<h3 id="medium">🔁 Medium</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">Longest Substring Without Repeating Characters</a></strong>
-   Find length of longest substring with unique characters.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/group-anagrams/">Group Anagrams</a></strong>
-   Group strings that are anagrams.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/longest-palindromic-substring/">Longest Palindromic Substring</a></strong>
-   Find the longest palindromic substring.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/count-and-say/">Count and Say</a></strong>
-   Generate the nth term of the count-and-say sequence.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/decode-string/">Decode String</a></strong>
-   Decode strings with nested patterns like "3[a2[c]]".</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/minimum-window-substring/">Minimum Window Substring</a></strong>
-   Find minimum window substring containing all characters of another string.</p>
-</li>
-</ol>
+<h4 id="2-implement-strstr-find-substring">2. <strong>Implement strStr() - Find Substring</strong></h4>
+<p><strong>Explanation</strong>: Find first occurrence of substring. Naive approach checks each position. Can use KMP algorithm for O(n+m). Simple approach with built-in: just iterate and compare substrings.</p>
+<pre class="highlight"><code class="language-java">public int strStr(String haystack, String needle) {
+    if (needle.isEmpty()) return 0;
+
+    for (int i = 0; i &lt;= haystack.length() - needle.length(); i++) {
+        if (haystack.substring(i, i + needle.length()).equals(needle)) {
+            return i;
+        }
+    }
+
+    return -1;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Implement indexOf, String Matching with Wildcards</p>
 <hr />
-<h3 id="hard">🔥 Hard</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/wildcard-matching/">Wildcard Matching</a></strong>
-   Implement wildcard pattern matching with <code>?</code> and <code>*</code>.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/regular-expression-matching/">Regular Expression Matching</a></strong>
-   Match strings with regex patterns.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/substring-with-concatenation-of-all-words/">Substring with Concatenation of All Words</a></strong>
-   Find starting indices of substrings formed by concatenating all words.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/edit-distance/">Edit Distance</a></strong>
-   Compute minimum operations to convert one string to another.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/longest-valid-parentheses/">Longest Valid Parentheses</a></strong>
-   Find the length of the longest valid (well-formed) parentheses substring.</p>
-</li>
-</ol>
+<h4 id="3-reverse-string">3. <strong>Reverse String</strong></h4>
+<p><strong>Explanation</strong>: Reverse string in-place using two-pointer approach from both ends. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public void reverseString(char[] s) {
+    int left = 0, right = s.length - 1;
 
+    while (left &lt; right) {
+        char temp = s[left];
+        s[left] = s[right];
+        s[right] = temp;
+        left++;
+        right--;
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Reverse Words, Reverse Vowels</p>
+<hr />
+<h4 id="4-first-unique-character-in-a-string">4. <strong>First Unique Character in a String</strong></h4>
+<p><strong>Explanation</strong>: Use HashMap to count character frequencies. Then iterate through string again to find first character with count = 1. Time: O(n), Space: O(1) since max 26 lowercase letters.</p>
+<pre class="highlight"><code class="language-java">public int firstUniqChar(String s) {
+    HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+    for (char c : s.toCharArray()) {
+        map.put(c, map.getOrDefault(c, 0) + 1);
+    }
 
+    for (int i = 0; i &lt; s.length(); i++) {
+        if (map.get(s.charAt(i)) == 1) {
+            return i;
+        }
+    }
 
+    return -1;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: First Unique Number, First Missing Positive</p>
+<hr />
+<h4 id="5-valid-palindrome">5. <strong>Valid Palindrome</strong></h4>
+<p><strong>Explanation</strong>: Check if string is palindrome ignoring non-alphanumeric characters and case. Use two pointers from both ends, skip non-alphanumeric, compare characters (case-insensitive). Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public boolean isPalindrome(String s) {
+    int left = 0, right = s.length() - 1;
 
+    while (left &lt; right) {
+        while (left &lt; right &amp;&amp; !Character.isAlphanumeric(s.charAt(left))) {
+            left++;
+        }
+        while (left &lt; right &amp;&amp; !Character.isAlphanumeric(s.charAt(right))) {
+            right--;
+        }
 
+        if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+            return false;
+        }
+        left++;
+        right--;
+    }
 
+    return true;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Valid Palindrome II, Palindromic Substrings</p>
+<hr />
+<h3 id="medium">Medium</h3>
+<h4 id="6-longest-substring-without-repeating-characters">6. <strong>Longest Substring Without Repeating Characters</strong></h4>
+<p><strong>Explanation</strong>: Use sliding window with HashMap tracking character indices. When duplicate found, move left pointer to index after previous occurrence. Track maximum window size. Time: O(n), Space: O(min(m, alphabet_size)).</p>
+<pre class="highlight"><code class="language-java">public int lengthOfLongestSubstring(String s) {
+    HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+    int maxLen = 0, left = 0;
 
+    for (int right = 0; right &lt; s.length(); right++) {
+        char c = s.charAt(right);
 
+        if (map.containsKey(c)) {
+            left = Math.max(left, map.get(c) + 1);
+        }
 
+        map.put(c, right);
+        maxLen = Math.max(maxLen, right - left + 1);
+    }
 
+    return maxLen;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Longest Repeating Character Replacement, Substring with K Distinct Characters</p>
+<hr />
+<h4 id="7-longest-palindromic-substring">7. <strong>Longest Palindromic Substring</strong></h4>
+<p><strong>Explanation</strong>: Expand around center approach. For each character (odd length) and between characters (even length) as center, expand outward while palindrome continues. Time: O(n²), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public String longestPalindrome(String s) {
+    if (s.length() &lt; 2) return s;
 
+    int maxLen = 0, start = 0;
 
-                
-              </article>
+    for (int i = 0; i &lt; s.length(); i++) {
+        // Odd length palindromes
+        int len1 = expandAroundCenter(s, i, i);
+        // Even length palindromes
+        int len2 = expandAroundCenter(s, i, i + 1);
+
+        int len = Math.max(len1, len2);
+        if (len &gt; maxLen) {
+            maxLen = len;
+            start = i - (len - 1) / 2;
+        }
+    }
+
+    return s.substring(start, start + maxLen);
+}
+
+private int expandAroundCenter(String s, int left, int right) {
+    while (left &gt;= 0 &amp;&amp; right &lt; s.length() &amp;&amp; s.charAt(left) == s.charAt(right)) {
+        left--;
+        right++;
+    }
+    return right - left - 1;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Longest Palindromic Subsequence, Palindromic Substrings Count</p>
+<hr />
+<h4 id="8-group-anagrams">8. <strong>Group Anagrams</strong></h4>
+<p><strong>Explanation</strong>: Sort characters in each string to create canonical form (anagrams have same sorted form). Use HashMap with sorted string as key. Time: O(n * k log k) where n = number of strings, k = max string length.</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) {
+    HashMap&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
+
+    for (String str : strs) {
+        char[] chars = str.toCharArray();
+        Arrays.sort(chars);
+        String sorted = new String(chars);
+
+        map.putIfAbsent(sorted, new ArrayList&lt;&gt;());
+        map.get(sorted).add(str);
+    }
+
+    return new ArrayList&lt;&gt;(map.values());
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Count Isomorphic Strings, Word Patterns</p>
+<hr />
+<h4 id="9-edit-distance-levenshtein-distance">9. <strong>Edit Distance (Levenshtein Distance)</strong></h4>
+<p><strong>Explanation</strong>: DP problem. dp[i][j] = minimum operations to convert s1[0...i-1] to s2[0...j-1]. Three operations: insert, delete, replace. If s1[i-1] == s2[j-1]: dp[i][j] = dp[i-1][j-1]. Otherwise: dp[i][j] = 1 + min(replace, insert, delete). Time: O(m<em>n), Space: O(m</em>n).</p>
+<pre class="highlight"><code class="language-java">public int minDistance(String word1, String word2) {
+    int m = word1.length(), n = word2.length();
+    int[][] dp = new int[m + 1][n + 1];
+
+    for (int i = 0; i &lt;= m; i++) dp[i][0] = i;
+    for (int j = 0; j &lt;= n; j++) dp[0][j] = j;
+
+    for (int i = 1; i &lt;= m; i++) {
+        for (int j = 1; j &lt;= n; j++) {
+            if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], 
+                          Math.min(dp[i - 1][j], dp[i][j - 1]));
+            }
+        }
+    }
+
+    return dp[m][n];
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Edit Distance II, Minimum Window Substring</p>
+<hr />
+<h4 id="10-minimum-window-substring">10. <strong>Minimum Window Substring</strong></h4>
+<p><strong>Explanation</strong>: Sliding window with two-pointer. Track character frequencies needed. Expand window until all required characters found, then contract from left while still valid. Time: O(m + n), Space: O(alphabet_size).</p>
+<pre class="highlight"><code class="language-java">public String minWindow(String s, String t) {
+    if (t.isEmpty()) return "";
+
+    HashMap&lt;Character, Integer&gt; needed = new HashMap&lt;&gt;();
+    for (char c : t.toCharArray()) {
+        needed.put(c, needed.getOrDefault(c, 0) + 1);
+    }
+
+    int formed = 0, left = 0, minLen = Integer.MAX_VALUE, minStart = 0;
+    HashMap&lt;Character, Integer&gt; window = new HashMap&lt;&gt;();
+
+    for (int right = 0; right &lt; s.length(); right++) {
+        char c = s.charAt(right);
+        window.put(c, window.getOrDefault(c, 0) + 1);
+
+        if (needed.containsKey(c) &amp;&amp; window.get(c).equals(needed.get(c))) {
+            formed++;
+        }
+
+        while (left &lt;= right &amp;&amp; formed == needed.size()) {
+            if (right - left + 1 &lt; minLen) {
+                minLen = right - left + 1;
+                minStart = left;
+            }
+
+            char leftChar = s.charAt(left);
+            window.put(leftChar, window.get(leftChar) - 1);
+            if (needed.containsKey(leftChar) &amp;&amp; window.get(leftChar) &lt; needed.get(leftChar)) {
+                formed--;
+            }
+            left++;
+        }
+    }
+
+    return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Permutation in String, Anagrams in Array</p>
+<hr />
+<h3 id="hard">Hard</h3>
+<h4 id="11-regular-expression-matching">11. <strong>Regular Expression Matching</strong></h4>
+<p><strong>Explanation</strong>: DP problem. dp[i][j] = true if s[0...i-1] matches p[0...j-1]. Handle '.' (any char) and '<em>' (0 or more of previous). Time: O(m</em>n), Space: O(m*n).</p>
+<pre class="highlight"><code class="language-java">public boolean isMatch(String s, String p) {
+    int m = s.length(), n = p.length();
+    boolean[][] dp = new boolean[m + 1][n + 1];
+    dp[0][0] = true;
+
+    for (int j = 1; j &lt;= n; j++) {
+        if (p.charAt(j - 1) == '*') {
+            dp[0][j] = dp[0][j - 2];
+        }
+    }
+
+    for (int i = 1; i &lt;= m; i++) {
+        for (int j = 1; j &lt;= n; j++) {
+            if (p.charAt(j - 1) == '*') {
+                dp[i][j] = dp[i][j - 2] || 
+                           (dp[i - 1][j] &amp;&amp; (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1)));
+            } else {
+                dp[i][j] = dp[i - 1][j - 1] &amp;&amp; 
+                           (p.charAt(j - 1) == '.' || p.charAt(j - 1) == s.charAt(i - 1));
+            }
+        }
+    }
+
+    return dp[m][n];
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Wildcard Matching, Word Pattern Matching</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-sliding-window">1. <strong>Sliding Window</strong></h3>
+<ul>
+<li>Maintain window of characters</li>
+<li>Expand/contract based on condition</li>
+<li>Used for: Substrings, character frequency</li>
+</ul>
+<h3 id="2-two-pointers">2. <strong>Two Pointers</strong></h3>
+<ul>
+<li>Start from opposite ends</li>
+<li>Move towards center</li>
+<li>Used for: Palindromes, validation</li>
+</ul>
+<h3 id="3-dynamic-programming">3. <strong>Dynamic Programming</strong></h3>
+<ul>
+<li>Build solution from smaller subproblems</li>
+<li>Used for: Edit distance, pattern matching</li>
+</ul>
+<h3 id="4-hashing">4. <strong>Hashing</strong></h3>
+<ul>
+<li>Character frequency maps</li>
+<li>Canonical forms for anagrams</li>
+<li>Used for: Anagrams, duplicates</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Not handling empty strings</li>
+<li>❌ Case sensitivity issues</li>
+<li>❌ Not considering special characters</li>
+<li>❌ String concatenation in loops (creates new objects)</li>
+<li>❌ Inefficient string comparisons</li>
+</ul>
+              
             </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
-</div>
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../binary-search/" class="btn btn-neutral float-left" title="Binary Search"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../stack/" class="btn btn-neutral float-right" title="Stack">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
   </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-    
-      
-      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <span><a href="../binary-search/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
-      
+      <span><a href="../stack/" style="color: #fcfcfc">Next &raquo;</a></span>
     
-  </body>
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
 </html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Backtracking - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Backtracking";
+        var mkdocs_page_input_path = "backtracking.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Backtracking</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#when-to-use">When to Use</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#time-complexity">Time Complexity</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#patterns">Patterns</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-subsets">1. Subsets</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-combinations">2. Combinations</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#3-permutations">3. Permutations</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#4-generate-parentheses">4. Generate Parentheses</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#5-combination-sum">5. Combination Sum</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#6-word-search">6. Word Search</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#7-palindrome-partitioning">7. Palindrome Partitioning</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#8-n-queens">8. N Queens</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-combination-pattern-no-reuse">1. Combination Pattern (No Reuse)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-permutation-pattern-full-reuse">2. Permutation Pattern (Full Reuse)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-substringpartition-pattern">3. Substring/Partition Pattern</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-board-pattern-2d-search">4. Board Pattern (2D Search)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-pruning-techniques">5. Pruning Techniques</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Backtracking</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="backtracking">Backtracking</h1>
+<h2 id="key-concepts">Key Concepts</h2>
+<ul>
+<li>Explore all possibilities systematically</li>
+<li><strong>Search Space</strong>: All valid combinations/permutations/solutions</li>
+<li><strong>Pruning</strong>: Cut branches that can't lead to valid solutions</li>
+<li><strong>State</strong>: Current partial solution being built</li>
+<li><strong>Backtrack</strong>: Undo choices and try alternatives</li>
+<li><strong>Base Case</strong>: When solution is complete or invalid</li>
+</ul>
+<h2 id="when-to-use">When to Use</h2>
+<ul>
+<li>Generate all permutations/combinations</li>
+<li>Find all valid paths/solutions</li>
+<li>Constraint satisfaction problems</li>
+<li>Exhaustive search with optimization</li>
+</ul>
+<h2 id="time-complexity">Time Complexity</h2>
+<ul>
+<li>Generally O(N!) or O(2^N) - exponential</li>
+<li>Pruning can improve practical performance</li>
+<li>Space: O(N) for recursion stack</li>
+</ul>
+<h2 id="patterns">Patterns</h2>
+<ol>
+<li><strong>Permutation pattern</strong>: Choose element, recurse, undo choice</li>
+<li><strong>Combination pattern</strong>: Choose index range, avoid duplicates</li>
+<li><strong>Partition pattern</strong>: Divide string/array into valid parts</li>
+<li><strong>Board pattern</strong>: N-Queens, Sudoku solving</li>
+</ol>
+<hr />
+<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
+<h3 id="easy">Easy</h3>
+<h4 id="1-subsets">1. <strong>Subsets</strong></h4>
+<p><strong>Explanation</strong>: Generate all 2^n subsets. For each element, include or exclude it. Time: O(n*2^n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; subsets(int[] nums) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    backtrack(nums, 0, new ArrayList&lt;&gt;(), result);
+    return result;
+}
+
+private void backtrack(int[] nums, int start, List&lt;Integer&gt; current, List&lt;List&lt;Integer&gt;&gt; result) {
+    result.add(new ArrayList&lt;&gt;(current));
+
+    for (int i = start; i &lt; nums.length; i++) {
+        current.add(nums[i]);
+        backtrack(nums, i + 1, current, result);
+        current.remove(current.size() - 1);
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Subsets II (with duplicates), Power Set</p>
+<hr />
+<h4 id="2-combinations">2. <strong>Combinations</strong></h4>
+<p><strong>Explanation</strong>: Choose k elements from n. Similar to subsets but fixed size k. Time: O(C(n,k) * k), Space: O(k).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; combine(int n, int k) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    backtrack(n, k, 1, new ArrayList&lt;&gt;(), result);
+    return result;
+}
+
+private void backtrack(int n, int k, int start, List&lt;Integer&gt; current, List&lt;List&lt;Integer&gt;&gt; result) {
+    if (current.size() == k) {
+        result.add(new ArrayList&lt;&gt;(current));
+        return;
+    }
+
+    for (int i = start; i &lt;= n; i++) {
+        current.add(i);
+        backtrack(n, k, i + 1, current, result);
+        current.remove(current.size() - 1);
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Combination Sum, Combinations with Duplicates</p>
+<hr />
+<h4 id="3-permutations">3. <strong>Permutations</strong></h4>
+<p><strong>Explanation</strong>: Generate all n! orderings. Mark visited, try each unused element. Time: O(n*n!), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; permute(int[] nums) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    boolean[] used = new boolean[nums.length];
+    backtrack(nums, used, new ArrayList&lt;&gt;(), result);
+    return result;
+}
+
+private void backtrack(int[] nums, boolean[] used, List&lt;Integer&gt; current, List&lt;List&lt;Integer&gt;&gt; result) {
+    if (current.size() == nums.length) {
+        result.add(new ArrayList&lt;&gt;(current));
+        return;
+    }
+
+    for (int i = 0; i &lt; nums.length; i++) {
+        if (!used[i]) {
+            used[i] = true;
+            current.add(nums[i]);
+            backtrack(nums, used, current, result);
+            current.remove(current.size() - 1);
+            used[i] = false;
+        }
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Permutations II (with duplicates), Next Permutation</p>
+<hr />
+<h3 id="medium">Medium</h3>
+<h4 id="4-generate-parentheses">4. <strong>Generate Parentheses</strong></h4>
+<p><strong>Explanation</strong>: Generate all valid parenthesis combinations. Track open/close counts. Time: O(4^n/sqrt(n)), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public List&lt;String&gt; generateParenthesis(int n) {
+    List&lt;String&gt; result = new ArrayList&lt;&gt;();
+    backtrack(n, n, "", result);
+    return result;
+}
+
+private void backtrack(int open, int close, String current, List&lt;String&gt; result) {
+    if (open == 0 &amp;&amp; close == 0) {
+        result.add(current);
+        return;
+    }
+
+    if (open &gt; 0) {
+        backtrack(open - 1, close, current + "(", result);
+    }
+
+    if (close &gt; open) {
+        backtrack(open, close - 1, current + ")", result);
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Generate Valid IP Addresses, Restore IP Addresses</p>
+<hr />
+<h4 id="5-combination-sum">5. <strong>Combination Sum</strong></h4>
+<p><strong>Explanation</strong>: Find all combinations that sum to target. Reuse elements allowed. Time: O(N^T/M), Space: O(T/M).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    Arrays.sort(candidates);
+    backtrack(candidates, target, 0, new ArrayList&lt;&gt;(), result);
+    return result;
+}
+
+private void backtrack(int[] candidates, int target, int start, List&lt;Integer&gt; current, List&lt;List&lt;Integer&gt;&gt; result) {
+    if (target == 0) {
+        result.add(new ArrayList&lt;&gt;(current));
+        return;
+    }
+
+    if (target &lt; 0) return;
+
+    for (int i = start; i &lt; candidates.length; i++) {
+        current.add(candidates[i]);
+        backtrack(candidates, target - candidates[i], i, current, result);
+        current.remove(current.size() - 1);
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Combination Sum II (no reuse), Combination Sum III (k elements)</p>
+<hr />
+<h4 id="6-word-search">6. <strong>Word Search</strong></h4>
+<p><strong>Explanation</strong>: DFS on grid checking if word exists. Mark visited cells. Time: O(N*3^L), Space: O(L).</p>
+<pre class="highlight"><code class="language-java">public boolean exist(char[][] board, String word) {
+    for (int i = 0; i &lt; board.length; i++) {
+        for (int j = 0; j &lt; board[0].length; j++) {
+            if (board[i][j] == word.charAt(0) &amp;&amp; 
+                backtrack(board, word, 0, i, j)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+private boolean backtrack(char[][] board, String word, int index, int row, int col) {
+    if (index == word.length()) return true;
+
+    if (row &lt; 0 || row &gt;= board.length || col &lt; 0 || col &gt;= board[0].length || 
+        board[row][col] != word.charAt(index)) {
+        return false;
+    }
+
+    char original = board[row][col];
+    board[row][col] = '*';
+
+    boolean result = backtrack(board, word, index + 1, row + 1, col) ||
+                     backtrack(board, word, index + 1, row - 1, col) ||
+                     backtrack(board, word, index + 1, row, col + 1) ||
+                     backtrack(board, word, index + 1, row, col - 1);
+
+    board[row][col] = original;
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Word Search II (multiple words), Search Pattern in Matrix</p>
+<hr />
+<h4 id="7-palindrome-partitioning">7. <strong>Palindrome Partitioning</strong></h4>
+<p><strong>Explanation</strong>: Partition string into palindromes. Backtrack exploring all valid partitions. Time: O(N*2^N), Space: O(N).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;String&gt;&gt; partition(String s) {
+    List&lt;List&lt;String&gt;&gt; result = new ArrayList&lt;&gt;();
+    backtrack(s, 0, new ArrayList&lt;&gt;(), result);
+    return result;
+}
+
+private void backtrack(String s, int start, List&lt;String&gt; current, List&lt;List&lt;String&gt;&gt; result) {
+    if (start == s.length()) {
+        result.add(new ArrayList&lt;&gt;(current));
+        return;
+    }
+
+    for (int i = start; i &lt; s.length(); i++) {
+        if (isPalindrome(s, start, i)) {
+            current.add(s.substring(start, i + 1));
+            backtrack(s, i + 1, current, result);
+            current.remove(current.size() - 1);
+        }
+    }
+}
+
+private boolean isPalindrome(String s, int left, int right) {
+    while (left &lt; right) {
+        if (s.charAt(left++) != s.charAt(right--)) return false;
+    }
+    return true;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Palindrome Partitioning II, Cut Palindrome String</p>
+<hr />
+<h3 id="hard">Hard</h3>
+<h4 id="8-n-queens">8. <strong>N Queens</strong></h4>
+<p><strong>Explanation</strong>: Place n queens on n×n board. No two attack each other. Backtrack with pruning. Time: O(n!), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;String&gt;&gt; solveNQueens(int n) {
+    List&lt;List&lt;String&gt;&gt; result = new ArrayList&lt;&gt;();
+    char[][] board = new char[n][n];
+    for (int i = 0; i &lt; n; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            board[i][j] = '.';
+        }
+    }
+
+    backtrack(board, 0, result);
+    return result;
+}
+
+private void backtrack(char[][] board, int row, List&lt;List&lt;String&gt;&gt; result) {
+    if (row == board.length) {
+        result.add(boardToList(board));
+        return;
+    }
+
+    for (int col = 0; col &lt; board.length; col++) {
+        if (isValid(board, row, col)) {
+            board[row][col] = 'Q';
+            backtrack(board, row + 1, result);
+            board[row][col] = '.';
+        }
+    }
+}
+
+private boolean isValid(char[][] board, int row, int col) {
+    for (int i = 0; i &lt; row; i++) {
+        if (board[i][col] == 'Q') return false;
+    }
+
+    for (int i = row - 1, j = col - 1; i &gt;= 0 &amp;&amp; j &gt;= 0; i--, j--) {
+        if (board[i][j] == 'Q') return false;
+    }
+
+    for (int i = row - 1, j = col + 1; i &gt;= 0 &amp;&amp; j &lt; board.length; i--, j++) {
+        if (board[i][j] == 'Q') return false;
+    }
+
+    return true;
+}
+
+private List&lt;String&gt; boardToList(char[][] board) {
+    List&lt;String&gt; result = new ArrayList&lt;&gt;();
+    for (char[] row : board) {
+        result.add(new String(row));
+    }
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: N Queens II (count solutions), Sudoku Solver</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-combination-pattern-no-reuse">1. <strong>Combination Pattern (No Reuse)</strong></h3>
+<ul>
+<li>Use <code>start</code> index to avoid duplicates</li>
+<li>Explore from start to end</li>
+<li>Perfect for: Combinations, Subsets</li>
+</ul>
+<h3 id="2-permutation-pattern-full-reuse">2. <strong>Permutation Pattern (Full Reuse)</strong></h3>
+<ul>
+<li>Use <code>boolean[] used</code> array</li>
+<li>Try all unused elements</li>
+<li>Perfect for: Permutations, Arrangements</li>
+</ul>
+<h3 id="3-substringpartition-pattern">3. <strong>Substring/Partition Pattern</strong></h3>
+<ul>
+<li>Iterate through indices</li>
+<li>Choose substring, recurse on remainder</li>
+<li>Perfect for: Palindrome Partitioning, IP Addresses</li>
+</ul>
+<h3 id="4-board-pattern-2d-search">4. <strong>Board Pattern (2D Search)</strong></h3>
+<ul>
+<li>Mark visited cells</li>
+<li>Explore 4 directions</li>
+<li>Unmark on backtrack</li>
+<li>Perfect for: Word Search, N-Queens</li>
+</ul>
+<h3 id="5-pruning-techniques">5. <strong>Pruning Techniques</strong></h3>
+<ul>
+<li>Early termination when target reached</li>
+<li>Check validity before recursing</li>
+<li>Skip impossible branches</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Forgetting to undo changes when backtracking</li>
+<li>❌ Not handling duplicates (sort first)</li>
+<li>❌ Incorrect base case conditions</li>
+<li>❌ Not exploring all possibilities</li>
+<li>❌ Inefficient pruning strategies</li>
+<li>❌ Modifying shared data structure</li>
+<li>❌ Off-by-one errors in index management</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../heap/" class="btn btn-neutral float-left" title="Heap / Priority Queue"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../graph/" class="btn btn-neutral float-right" title="Graph">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../heap/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../graph/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

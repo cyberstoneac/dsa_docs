@@ -1,812 +1,493 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Stack - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Stack";
+        var mkdocs_page_input_path = "stack.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-        <link rel="prev" href="../dynamic-programming/">
-      
-      
-        <link rel="next" href="../queue/">
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
-    
-    
-      
-        <title>Stack - DSA Notes</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
-      
-      
+<body class="wy-body-for-nav" role="document">
 
-
-    
-    
-      
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-    
-  </head>
-  
-  
-    <body dir="ltr">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#stack" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            DSA Notes
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              Stack
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-    
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
 </div>
-      
-    
-    
-  </nav>
-  
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
+      </div>
 
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href=".." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    DSA Notes
-  </label>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-      </a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Stack</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../array/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Array
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../string/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    String
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tree/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Tree
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-valid-parentheses">1. Valid Parentheses</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../graph/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Graph
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l4"><a class="reference internal" href="#2-min-stack">2. Min Stack</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dynamic-programming/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Dynamic Programming
-    
-  </span>
-  
-
-      </a>
+        </ul>
     </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Stack
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    Stack
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#patterns-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Patterns / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
-</li>
-      
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#3-evaluate-reverse-polish-notation">3. Evaluate Reverse Polish Notation</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4-daily-temperatures">4. Daily Temperatures</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#5-asteroid-collision">5. Asteroid Collision</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#6-largest-rectangle-in-histogram">6. Largest Rectangle in Histogram</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#7-decode-string">7. Decode String</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-monotonic-stack">1. Monotonic Stack</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-stack-with-auxiliary-data">2. Stack with Auxiliary Data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-recursion-to-iteration">3. Recursion to Iteration</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
     </ul>
-  
-</nav>
-      
-    </li>
-  
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../queue/" class="md-nav__link">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
         
-  
-  
-  <span class="md-ellipsis">
-    Queue
-    
-  </span>
-  
-
-      </a>
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Stack</li>
+    <li class="wy-breadcrumbs-aside">
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../linked-list/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Linked List
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../trie/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Trie
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../maths/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Maths
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../bit-manipulation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Bit Manipulation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../greedy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Greedy Algorithm
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#patterns-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Patterns / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-
-<h1 id="stack">Stack</h1>
+                <h1 id="stack">Stack</h1>
 <h2 id="key-concepts">Key Concepts</h2>
 <ul>
-<li>LIFO (Last In First Out)</li>
-<li>Push and Pop operations</li>
+<li>LIFO (Last In First Out) data structure</li>
+<li>Push (add) and Pop (remove) from top</li>
+<li><strong>Time Complexity</strong>: O(1) for push/pop/peek</li>
+<li><strong>Space Complexity</strong>: O(n) for storage</li>
 </ul>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
 <li>Valid Parentheses</li>
 <li>Next Greater Element</li>
-<li>Min Stack</li>
+<li>Min Stack (track minimum efficiently)</li>
+<li>Evaluate Reverse Polish Notation</li>
+<li>Largest Rectangle in Histogram</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Monotonic Stack</li>
-<li>Stack with auxiliary structures</li>
+<li>Monotonic Stack (maintain increasing/decreasing order)</li>
+<li>Stack with Auxiliary Data Structure</li>
+<li>Using Stack for Recursion/DFS</li>
 </ul>
+<hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
-<ul>
-<li>Valid Parentheses</li>
-<li>Min Stack</li>
-</ul>
+<h4 id="1-valid-parentheses">1. <strong>Valid Parentheses</strong></h4>
+<p><strong>Explanation</strong>: Use stack to track opening brackets. For each closing bracket, check if it matches top of stack. If matches, pop. If doesn't match or stack empty when needed, return false. Stack should be empty at end. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public boolean isValid(String s) {
+    Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
+    HashMap&lt;Character, Character&gt; map = new HashMap&lt;&gt;();
+    map.put(')', '(');
+    map.put(']', '[');
+    map.put('}', '{');
+
+    for (char c : s.toCharArray()) {
+        if (map.containsKey(c)) {
+            if (stack.isEmpty() || stack.pop() != map.get(c)) {
+                return false;
+            }
+        } else {
+            stack.push(c);
+        }
+    }
+
+    return stack.isEmpty();
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Valid Parentheses II, Check if Balanced</p>
+<hr />
+<h4 id="2-min-stack">2. <strong>Min Stack</strong></h4>
+<p><strong>Explanation</strong>: Maintain two stacks - one for values, one for tracking minimum at each level. When pushing, also push min(current, prev_min). When popping, pop from both stacks. Time: O(1) for all ops, Space: O(n).</p>
+<pre class="highlight"><code class="language-java">class MinStack {
+    private Stack&lt;Integer&gt; stack;
+    private Stack&lt;Integer&gt; minStack;
+
+    public MinStack() {
+        stack = new Stack&lt;&gt;();
+        minStack = new Stack&lt;&gt;();
+    }
+
+    public void push(int val) {
+        stack.push(val);
+        minStack.push(Math.min(val, minStack.isEmpty() ? val : minStack.peek()));
+    }
+
+    public void pop() {
+        stack.pop();
+        minStack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Max Stack, Stack with Duplicate Min</p>
+<hr />
 <h3 id="medium">Medium</h3>
-<ul>
-<li>Evaluate Reverse Polish Notation</li>
-<li>Daily Temperatures</li>
-<li>Asteroid Collision</li>
-<li>Decode String</li>
-</ul>
+<h4 id="3-evaluate-reverse-polish-notation">3. <strong>Evaluate Reverse Polish Notation</strong></h4>
+<p><strong>Explanation</strong>: Process tokens left to right. Numbers go to stack. When operator found, pop two operands, apply operation, push result back. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int evalRPN(String[] tokens) {
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+    for (String token : tokens) {
+        if (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/")) {
+            int b = stack.pop();
+            int a = stack.pop();
+
+            int result;
+            switch (token) {
+                case "+": result = a + b; break;
+                case "-": result = a - b; break;
+                case "*": result = a * b; break;
+                case "/": result = a / b; break;
+                default: result = 0;
+            }
+            stack.push(result);
+        } else {
+            stack.push(Integer.parseInt(token));
+        }
+    }
+
+    return stack.pop();
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Basic Calculator, Expression Evaluation</p>
+<hr />
+<h4 id="4-daily-temperatures">4. <strong>Daily Temperatures</strong></h4>
+<p><strong>Explanation</strong>: Monotonic stack approach. For each day, compare with stack top. If current temp &gt; top's temp, found the answer for that day. Pop and compare again. Push current to stack. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int[] dailyTemperatures(int[] temperatures) {
+    int n = temperatures.length;
+    int[] result = new int[n];
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;(); // Store indices
+
+    for (int i = 0; i &lt; n; i++) {
+        while (!stack.isEmpty() &amp;&amp; temperatures[i] &gt; temperatures[stack.peek()]) {
+            int prevIndex = stack.pop();
+            result[prevIndex] = i - prevIndex;
+        }
+        stack.push(i);
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Next Greater Element, Trapping Rain Water</p>
+<hr />
+<h4 id="5-asteroid-collision">5. <strong>Asteroid Collision</strong></h4>
+<p><strong>Explanation</strong>: Use stack to track surviving asteroids. For each asteroid, check collision logic: if moving right, push to stack. If moving left, check with rightward asteroids in stack. Handle collisions by sizes. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int[] asteroidCollision(int[] asteroids) {
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+    for (int asteroid : asteroids) {
+        boolean alive = true;
+
+        while (alive &amp;&amp; asteroid &lt; 0 &amp;&amp; !stack.isEmpty() &amp;&amp; stack.peek() &gt; 0) {
+            int top = stack.pop();
+
+            if (top &lt; -asteroid) {
+                continue; // Current survives
+            } else if (top == -asteroid) {
+                alive = false; // Both explode
+            } else {
+                alive = false;
+                stack.push(top); // Top survives
+            }
+        }
+
+        if (alive) {
+            stack.push(asteroid);
+        }
+    }
+
+    int[] result = new int[stack.size()];
+    for (int i = result.length - 1; i &gt;= 0; i--) {
+        result[i] = stack.pop();
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Robot Collisions, Track Collisions</p>
+<hr />
 <h3 id="hard">Hard</h3>
+<h4 id="6-largest-rectangle-in-histogram">6. <strong>Largest Rectangle in Histogram</strong></h4>
+<p><strong>Explanation</strong>: Monotonic stack of indices maintaining increasing heights. When height decreases, pop indices and calculate area with popped bar as shortest. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int largestRectangleArea(int[] heights) {
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+    int maxArea = 0;
+
+    for (int i = 0; i &lt; heights.length; i++) {
+        while (!stack.isEmpty() &amp;&amp; heights[i] &lt; heights[stack.peek()]) {
+            int h = heights[stack.pop()];
+            int w = stack.isEmpty() ? i : i - stack.peek() - 1;
+            maxArea = Math.max(maxArea, h * w);
+        }
+        stack.push(i);
+    }
+
+    while (!stack.isEmpty()) {
+        int h = heights[stack.pop()];
+        int w = stack.isEmpty() ? heights.length : heights.length - stack.peek() - 1;
+        maxArea = Math.max(maxArea, h * w);
+    }
+
+    return maxArea;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Maximal Rectangle, Largest Rectangle with Rotations</p>
+<hr />
+<h4 id="7-decode-string">7. <strong>Decode String</strong></h4>
+<p><strong>Explanation</strong>: Stack stores characters. When ']' encountered, pop until '[', multiply by number before '['. Push result back. Handle nested patterns. Time: O(n*m) where m = multiplication factor, Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public String decodeString(String s) {
+    Stack&lt;Object&gt; stack = new Stack&lt;&gt;();
+    int num = 0;
+
+    for (char c : s.toCharArray()) {
+        if (Character.isDigit(c)) {
+            num = num * 10 + (c - '0');
+        } else if (c == '[') {
+            stack.push(num);
+            stack.push("[");
+            num = 0;
+        } else if (c == ']') {
+            StringBuilder sb = new StringBuilder();
+            while (!stack.peek().equals("[")) {
+                sb.insert(0, stack.pop());
+            }
+            stack.pop(); // Remove '['
+            int count = (Integer) stack.pop();
+            String decoded = sb.toString();
+            for (int i = 0; i &lt; count; i++) {
+                stack.push(decoded);
+            }
+        } else {
+            stack.push(String.valueOf(c));
+        }
+    }
+
+    StringBuilder result = new StringBuilder();
+    while (!stack.isEmpty()) {
+        result.insert(0, stack.pop());
+    }
+
+    return result.toString();
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Nested List Weight Sum, Decode Ways</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-monotonic-stack">1. <strong>Monotonic Stack</strong></h3>
 <ul>
-<li>Largest Rectangle in Histogram</li>
-<li>Maximal Rectangle</li>
+<li>Maintain stack in increasing or decreasing order</li>
+<li>Used for: Next Greater Element, Largest Rectangle</li>
+<li>Efficiently find nearest element with specific property</li>
 </ul>
-<h2 id="resources">🔹 Resources</h2>
+<h3 id="2-stack-with-auxiliary-data">2. <strong>Stack with Auxiliary Data</strong></h3>
 <ul>
-<li><a href="https://leetcode.com/tag/stack/">LeetCode Stack Problems</a></li>
-<li><a href="https://www.hackerrank.com/domains/data-structures/stacks">HackerRank Stacks</a></li>
-<li><a href="https://www.naukri.com/code360/problem-lists/stack-questions">Code360 Stack Questions</a></li>
+<li>Pair stack with additional tracking (min/max)</li>
+<li>Used for: Min Stack, Max Stack</li>
+<li>O(1) operations for auxiliary queries</li>
 </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-                
-              </article>
+<h3 id="3-recursion-to-iteration">3. <strong>Recursion to Iteration</strong></h3>
+<ul>
+<li>Convert recursive algorithms to iterative using stack</li>
+<li>Used for: DFS, backtracking simulation</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Forgetting to check if stack is empty before peek/pop</li>
+<li>❌ Confusing stack index for multiple stacks</li>
+<li>❌ Not handling order correctly in monotonic stack</li>
+<li>❌ Integer overflow in calculations</li>
+<li>❌ Not clearing stack between test cases</li>
+</ul>
+              
             </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
-</div>
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../string/" class="btn btn-neutral float-left" title="String"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../queue/" class="btn btn-neutral float-right" title="Queue">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
   </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-    
-      
-      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <span><a href="../string/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
-      
+      <span><a href="../queue/" style="color: #fcfcfc">Next &raquo;</a></span>
     
-  </body>
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
 </html>

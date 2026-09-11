@@ -1,864 +1,616 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Linked List - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Linked List";
+        var mkdocs_page_input_path = "linked-list.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-        <link rel="prev" href="../queue/">
-      
-      
-        <link rel="next" href="../trie/">
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
-    
-    
-      
-        <title>Linked List - DSA Notes</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
-      
-      
+<body class="wy-body-for-nav" role="document">
 
-
-    
-    
-      
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-    
-  </head>
-  
-  
-    <body dir="ltr">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#linked-list" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            DSA Notes
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              Linked List
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-    
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
 </div>
-      
-    
-    
-  </nav>
-  
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
+      </div>
 
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href=".." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    DSA Notes
-  </label>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-      </a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Linked List</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../array/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Array
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#variants">Variants</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../string/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    String
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tree/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Tree
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../graph/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Graph
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-reverse-linked-list">1. Reverse Linked List</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dynamic-programming/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Dynamic Programming
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l4"><a class="reference internal" href="#2-merge-two-sorted-lists">2. Merge Two Sorted Lists</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../stack/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Stack
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l4"><a class="reference internal" href="#3-delete-node-in-a-linked-list">3. Delete Node in a Linked List</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../queue/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Queue
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l4"><a class="reference internal" href="#4-remove-nth-node-from-end-of-list">4. Remove Nth Node From End of List</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Linked List
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    Linked List
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#patterns-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Patterns / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✅ Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔁 Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔥 Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
-</li>
-      
+    <li class="toctree-l4"><a class="reference internal" href="#5-linked-list-cycle">5. Linked List Cycle</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#6-add-two-numbers">6. Add Two Numbers</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#7-sort-list-merge-sort">7. Sort List (Merge Sort)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#8-copy-list-with-random-pointer">8. Copy List with Random Pointer</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#9-reorder-list">9. Reorder List</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#10-merge-k-sorted-lists">10. Merge k Sorted Lists</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#11-lru-cache">11. LRU Cache</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-fast-and-slow-pointers">1. Fast and Slow Pointers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-dummy-node">2. Dummy Node</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-reversal">3. Reversal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-two-pass-algorithm">4. Two-Pass Algorithm</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
     </ul>
-  
-</nav>
-      
-    </li>
-  
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../trie/" class="md-nav__link">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
         
-  
-  
-  <span class="md-ellipsis">
-    Trie
-    
-  </span>
-  
-
-      </a>
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Linked List</li>
+    <li class="wy-breadcrumbs-aside">
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../maths/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Maths
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../bit-manipulation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Bit Manipulation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../greedy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Greedy Algorithm
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#patterns-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Patterns / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✅ Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔁 Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔥 Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-
-<h1 id="linked-list">Linked List</h1>
+                <h1 id="linked-list">Linked List</h1>
 <h2 id="key-concepts">Key Concepts</h2>
 <ul>
-<li>Nodes pointing to next element</li>
-<li>Singly, Doubly, and Circular Linked Lists</li>
+<li>Nodes pointing to next element (or previous in doubly linked)</li>
+<li>No random access (O(n) to reach element)</li>
+<li><strong>Time Complexity</strong>: O(1) for insertion/deletion at known position, O(n) for search</li>
+<li>Efficient for insertions/deletions compared to arrays</li>
+<li><strong>Space Complexity</strong>: O(n) for n nodes</li>
+</ul>
+<h2 id="variants">Variants</h2>
+<ul>
+<li>Singly Linked List (next pointer only)</li>
+<li>Doubly Linked List (next and previous pointers)</li>
+<li>Circular Linked List (last node points to first)</li>
 </ul>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
 <li>Reverse a Linked List</li>
-<li>Detect Cycle</li>
+<li>Detect Cycle (Floyd's Algorithm)</li>
 <li>Merge Two Sorted Lists</li>
+<li>Remove Nth Node From End</li>
+<li>LRU Cache (uses linked list + hashmap)</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
 <li>Fast and Slow Pointers</li>
 <li>Recursion</li>
+<li>Dummy Node (simplifies code)</li>
+<li>Two-Pass Algorithm</li>
 </ul>
+<hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
-<h3 id="easy">✅ Easy</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/reverse-linked-list/">Reverse Linked List</a></strong>
-   Reverse a singly linked list.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/merge-two-sorted-lists/">Merge Two Sorted Lists</a></strong>
-   Merge two sorted linked lists into one.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/delete-node-in-a-linked-list/">Delete Node in a Linked List</a></strong>
-   Delete a node given only access to that node.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/">Remove Nth Node From End of List</a></strong>
-   Remove the nth node from the end of the list.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/linked-list-cycle/">Linked List Cycle</a></strong>
-   Detect if a linked list has a cycle.</p>
-</li>
-</ol>
+<h3 id="easy">Easy</h3>
+<h4 id="1-reverse-linked-list">1. <strong>Reverse Linked List</strong></h4>
+<p><strong>Explanation</strong>: Iterative approach with three pointers. Previous starts as null, current at head. Reverse link, then move pointers forward. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public ListNode reverseList(ListNode head) {
+    ListNode prev = null, curr = head;
+
+    while (curr != null) {
+        ListNode next = curr.next; // Save next
+        curr.next = prev;           // Reverse link
+        prev = curr;                // Move prev
+        curr = next;                // Move curr
+    }
+
+    return prev;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Reverse List II, Reverse Nodes in K-Group</p>
 <hr />
-<h3 id="medium">🔁 Medium</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/add-two-numbers/">Add Two Numbers</a></strong>
-   Add two numbers represented by linked lists.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/sort-list/">Sort List</a></strong>
-   Sort a linked list in O(n log n) time.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/copy-list-with-random-pointer/">Copy List with Random Pointer</a></strong>
-   Deep copy of a linked list with random pointers.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/reorder-list/">Reorder List</a></strong>
-   Reorder list to a specific sequence.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/">Remove Duplicate from Sorted List II</a></strong>
-   Remove all duplicates from a sorted linked list.</p>
-</li>
-</ol>
+<h4 id="2-merge-two-sorted-lists">2. <strong>Merge Two Sorted Lists</strong></h4>
+<p><strong>Explanation</strong>: Use dummy node, two pointers on both lists. Compare values, add smaller to result, move that pointer. Add remaining nodes at end. Time: O(m+n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    ListNode dummy = new ListNode(0);
+    ListNode curr = dummy;
+
+    while (list1 != null &amp;&amp; list2 != null) {
+        if (list1.val &lt; list2.val) {
+            curr.next = list1;
+            list1 = list1.next;
+        } else {
+            curr.next = list2;
+            list2 = list2.next;
+        }
+        curr = curr.next;
+    }
+
+    curr.next = (list1 != null) ? list1 : list2;
+    return dummy.next;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Merge K Sorted Lists, Merge Multiple Lists</p>
 <hr />
-<h3 id="hard">🔥 Hard</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/merge-k-sorted-lists/">Merge k Sorted Lists</a></strong>
-   Merge k sorted linked lists.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/reverse-nodes-in-k-group/">Reverse Nodes in k-Group</a></strong>
-   Reverse nodes in groups of k.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/lru-cache/">LRU Cache</a></strong> <em>(uses linked list + hashmap)</em>
-   Design a least recently used cache.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/split-linked-list-in-parts/">Split Linked List in Parts</a></strong>
-   Split linked list into k parts.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/copy-list-with-random-pointer/">Copy List with Random Pointer</a></strong> <em>(if considered hard due to pointers)</em></p>
-</li>
-</ol>
-<h2 id="resources">🔹 Resources</h2>
+<h4 id="3-delete-node-in-a-linked-list">3. <strong>Delete Node in a Linked List</strong></h4>
+<p><strong>Explanation</strong>: Copy next node's value to current, then skip next node (remove it). Works because we can't access previous in given constraint. Time: O(1), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public void deleteNode(ListNode node) {
+    node.val = node.next.val;
+    node.next = node.next.next;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Delete Node II, Unlink Nodes</p>
+<hr />
+<h4 id="4-remove-nth-node-from-end-of-list">4. <strong>Remove Nth Node From End of List</strong></h4>
+<p><strong>Explanation</strong>: Two-pass or two-pointer approach. Fast pointer goes n steps ahead. Both move together until fast reaches end. Use dummy for edge case (removing head). Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public ListNode removeNthFromEnd(ListNode head, int n) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode fast = dummy, slow = dummy;
+
+    // Move fast n+1 steps ahead
+    for (int i = 0; i &lt;= n; i++) {
+        fast = fast.next;
+    }
+
+    // Move both until fast reaches end
+    while (fast != null) {
+        fast = fast.next;
+        slow = slow.next;
+    }
+
+    slow.next = slow.next.next;
+    return dummy.next;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Remove Kth Element, Remove Elements</p>
+<hr />
+<h4 id="5-linked-list-cycle">5. <strong>Linked List Cycle</strong></h4>
+<p><strong>Explanation</strong>: Floyd's cycle detection (fast and slow pointers). Fast moves 2 steps, slow moves 1 step. If they meet, cycle exists. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public boolean hasCycle(ListNode head) {
+    ListNode fast = head, slow = head;
+
+    while (fast != null &amp;&amp; fast.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+
+        if (fast == slow) {
+            return true;
+        }
+    }
+
+    return false;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Detect Cycle II (find start), Cycle Length</p>
+<hr />
+<h3 id="medium">Medium</h3>
+<h4 id="6-add-two-numbers">6. <strong>Add Two Numbers</strong></h4>
+<p><strong>Explanation</strong>: Traverse both lists simultaneously, add digits with carry. Create new node for each sum digit. Handle final carry. Time: O(max(m,n)), Space: O(max(m,n)).</p>
+<pre class="highlight"><code class="language-java">public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(0);
+    ListNode curr = dummy;
+    int carry = 0;
+
+    while (l1 != null || l2 != null || carry != 0) {
+        int sum = (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0) + carry;
+        carry = sum / 10;
+        curr.next = new ListNode(sum % 10);
+        curr = curr.next;
+
+        l1 = (l1 != null) ? l1.next : null;
+        l2 = (l2 != null) ? l2.next : null;
+    }
+
+    return dummy.next;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Add Two Numbers II, Multiply Two Lists</p>
+<hr />
+<h4 id="7-sort-list-merge-sort">7. <strong>Sort List (Merge Sort)</strong></h4>
+<p><strong>Explanation</strong>: Divide using slow/fast pointers, then merge sorted halves. Time: O(n log n), Space: O(log n) for recursion stack.</p>
+<pre class="highlight"><code class="language-java">public ListNode sortList(ListNode head) {
+    if (head == null || head.next == null) return head;
+
+    ListNode mid = getMid(head);
+    ListNode midNext = mid.next;
+    mid.next = null;
+
+    ListNode left = sortList(head);
+    ListNode right = sortList(midNext);
+
+    return merge(left, right);
+}
+
+private ListNode getMid(ListNode head) {
+    ListNode slow = head, fast = head;
+    while (fast != null &amp;&amp; fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow;
+}
+
+private ListNode merge(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(0);
+    ListNode curr = dummy;
+
+    while (l1 != null &amp;&amp; l2 != null) {
+        if (l1.val &lt; l2.val) {
+            curr.next = l1;
+            l1 = l1.next;
+        } else {
+            curr.next = l2;
+            l2 = l2.next;
+        }
+        curr = curr.next;
+    }
+
+    curr.next = (l1 != null) ? l1 : l2;
+    return dummy.next;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Quick Sort Linked List, Insertion Sort List</p>
+<hr />
+<h4 id="8-copy-list-with-random-pointer">8. <strong>Copy List with Random Pointer</strong></h4>
+<p><strong>Explanation</strong>: Two-pass: first pass creates nodes and stores mapping. Second pass copies links. Or use interweaving to avoid extra hashmap. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public Node copyRandomList(Node head) {
+    HashMap&lt;Node, Node&gt; map = new HashMap&lt;&gt;();
+    Node curr = head;
+
+    // First pass: create all nodes
+    while (curr != null) {
+        map.put(curr, new Node(curr.val));
+        curr = curr.next;
+    }
+
+    // Second pass: set pointers
+    curr = head;
+    while (curr != null) {
+        map.get(curr).next = map.get(curr.next);
+        map.get(curr).random = map.get(curr.random);
+        curr = curr.next;
+    }
+
+    return map.get(head);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Deep Copy Graph, Clone Tree</p>
+<hr />
+<h4 id="9-reorder-list">9. <strong>Reorder List</strong></h4>
+<p><strong>Explanation</strong>: Find middle, reverse second half, merge alternately. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public void reorderList(ListNode head) {
+    ListNode mid = getMid(head);
+    ListNode second = mid.next;
+    mid.next = null;
+
+    second = reverse(second);
+    merge(head, second);
+}
+
+private void merge(ListNode l1, ListNode l2) {
+    while (l1 != null) {
+        ListNode l1Next = l1.next;
+        ListNode l2Next = l2.next;
+
+        l1.next = l2;
+        l1 = l1Next;
+
+        if (l1 != null) {
+            l2.next = l1;
+            l2 = l2Next;
+        }
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Reorder Deque, Zigzag Traversal</p>
+<hr />
+<h3 id="hard">Hard</h3>
+<h4 id="10-merge-k-sorted-lists">10. <strong>Merge k Sorted Lists</strong></h4>
+<p><strong>Explanation</strong>: Use min heap (priority queue) with head of each list. Pop min, add to result, push next node from same list. Time: O(n log k), Space: O(k).</p>
+<pre class="highlight"><code class="language-java">public ListNode mergeKLists(ListNode[] lists) {
+    PriorityQueue&lt;ListNode&gt; pq = new PriorityQueue&lt;&gt;((a, b) -&gt; a.val - b.val);
+
+    for (ListNode list : lists) {
+        if (list != null) pq.offer(list);
+    }
+
+    ListNode dummy = new ListNode(0);
+    ListNode curr = dummy;
+
+    while (!pq.isEmpty()) {
+        ListNode node = pq.poll();
+        curr.next = node;
+        curr = curr.next;
+
+        if (node.next != null) {
+            pq.offer(node.next);
+        }
+    }
+
+    return dummy.next;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Merge Multiple Streams, K-way Merge</p>
+<hr />
+<h4 id="11-lru-cache">11. <strong>LRU Cache</strong></h4>
+<p><strong>Explanation</strong>: Doubly linked list + HashMap. HashMap stores key→node mapping. Doubly linked list maintains LRU order. On access, move node to front. Time: O(1), Space: O(capacity).</p>
+<pre class="highlight"><code class="language-java">class LRUCache {
+    private int capacity;
+    private HashMap&lt;Integer, Node&gt; map;
+    private Node head, tail;
+
+    class Node {
+        int key, val;
+        Node prev, next;
+    }
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.map = new HashMap&lt;&gt;();
+        this.head = new Node();
+        this.tail = new Node();
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    public int get(int key) {
+        if (!map.containsKey(key)) return -1;
+        Node node = map.get(key);
+        moveToFront(node);
+        return node.val;
+    }
+
+    public void put(int key, int value) {
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            node.val = value;
+            moveToFront(node);
+        } else {
+            if (map.size() == capacity) {
+                removeLast();
+            }
+            Node node = new Node();
+            node.key = key;
+            node.val = value;
+            map.put(key, node);
+            addToFront(node);
+        }
+    }
+
+    private void moveToFront(Node node) {
+        removeNode(node);
+        addToFront(node);
+    }
+
+    private void addToFront(Node node) {
+        node.next = head.next;
+        node.prev = head;
+        head.next.prev = node;
+        head.next = node;
+    }
+
+    private void removeNode(Node node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    private void removeLast() {
+        Node last = tail.prev;
+        removeNode(last);
+        map.remove(last.key);
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: LFU Cache, Time-based Key-Value Store</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-fast-and-slow-pointers">1. <strong>Fast and Slow Pointers</strong></h3>
 <ul>
-<li><a href="https://leetcode.com/tag/linked-list/">LeetCode Linked List Problems</a></li>
-<li><a href="https://www.hackerrank.com/domains/data-structures/linked-lists">HackerRank Linked Lists</a></li>
+<li>Detect cycle, find middle, find kth node</li>
+<li>Fast moves 2 steps, slow moves 1</li>
 </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-                
-              </article>
+<h3 id="2-dummy-node">2. <strong>Dummy Node</strong></h3>
+<ul>
+<li>Simplifies edge cases (removing head, merging)</li>
+<li>Always has dummy point to head</li>
+</ul>
+<h3 id="3-reversal">3. <strong>Reversal</strong></h3>
+<ul>
+<li>Reverse links to change direction</li>
+<li>Used in reordering, palindrome checks</li>
+</ul>
+<h3 id="4-two-pass-algorithm">4. <strong>Two-Pass Algorithm</strong></h3>
+<ul>
+<li>First pass gathers info</li>
+<li>Second pass uses info for solution</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Forgetting to handle null pointers</li>
+<li>❌ Creating cycles accidentally (breaking links correctly)</li>
+<li>❌ Not using dummy node when helpful</li>
+<li>❌ Off-by-one errors with fast/slow pointers</li>
+<li>❌ Not updating pointers correctly during reversal</li>
+</ul>
+              
             </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
-</div>
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../queue/" class="btn btn-neutral float-left" title="Queue"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../tree/" class="btn btn-neutral float-right" title="Tree">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
   </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-    
-      
-      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <span><a href="../queue/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
-      
+      <span><a href="../tree/" style="color: #fcfcfc">Next &raquo;</a></span>
     
-  </body>
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
 </html>

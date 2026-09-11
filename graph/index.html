@@ -1,885 +1,800 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Graph - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Graph";
+        var mkdocs_page_input_path = "graph.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-        <link rel="prev" href="../tree/">
-      
-      
-        <link rel="next" href="../dynamic-programming/">
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
-    
-    
-      
-        <title>Graph - DSA Notes</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
-      
-      
+<body class="wy-body-for-nav" role="document">
 
-
-    
-    
-      
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-    
-  </head>
-  
-  
-    <body dir="ltr">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#graph" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            DSA Notes
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              Graph
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-    
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
 </div>
-      
-    
-    
-  </nav>
-  
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
+      </div>
 
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href=".." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    DSA Notes
-  </label>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-      </a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Graph</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../array/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Array
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#representation">Representation</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../string/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    String
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#common-algorithms">Common Algorithms</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tree/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Tree
-    
-  </span>
-  
-
-      </a>
+    <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Graph
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    Graph
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#algorithms-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Algorithms / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✅ Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔁 Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔥 Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
-</li>
-      
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-number-of-islands">1. Number of Islands</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-flood-fill">2. Flood Fill</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#3-clone-graph">3. Clone Graph</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4-find-the-town-judge">4. Find the Town Judge</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#5-course-schedule-cycle-detection">5. Course Schedule (Cycle Detection)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#6-pacific-atlantic-water-flow">6. Pacific Atlantic Water Flow</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#7-word-ladder">7. Word Ladder</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#8-critical-connections-in-network-bridges">8. Critical Connections in Network (Bridges)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#9-shortest-path-with-obstacles-elimination">9. Shortest Path with Obstacles Elimination</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#10-topological-sort-dfs">10. Topological Sort (DFS)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#11-union-find-disjoint-set">11. Union-Find (Disjoint Set)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#12-minimum-spanning-tree-kruskals-algorithm">12. Minimum Spanning Tree - Kruskal's Algorithm</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-graph-representation">1. Graph Representation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-traversal-patterns">2. Traversal Patterns</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-cycle-detection">3. Cycle Detection</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-shortest-path">4. Shortest Path</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-union-find-applications">5. Union-Find Applications</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#6-topological-sort-applications">6. Topological Sort Applications</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
     </ul>
-  
-</nav>
-      
-    </li>
-  
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dynamic-programming/" class="md-nav__link">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
         
-  
-  
-  <span class="md-ellipsis">
-    Dynamic Programming
-    
-  </span>
-  
-
-      </a>
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Graph</li>
+    <li class="wy-breadcrumbs-aside">
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../stack/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Stack
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../queue/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Queue
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../linked-list/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Linked List
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../trie/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Trie
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../maths/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Maths
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../bit-manipulation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Bit Manipulation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../greedy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Greedy Algorithm
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#algorithms-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Algorithms / Techniques
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      ✅ Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔁 Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔥 Hard
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Resources
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-
-<h1 id="graph">Graph</h1>
+                <h1 id="graph">Graph</h1>
 <h2 id="key-concepts">Key Concepts</h2>
 <ul>
 <li>Set of vertices connected by edges</li>
-<li>Directed/Undirected, Weighted/Unweighted</li>
+<li><strong>Directed Graph</strong>: Edges have direction</li>
+<li><strong>Undirected Graph</strong>: Edges are bidirectional</li>
+<li><strong>Weighted Graph</strong>: Edges have weights/costs</li>
+<li><strong>Cycle</strong>: Path that starts and ends at same vertex</li>
+<li><strong>Connected Component</strong>: Set of vertices where any can reach any other</li>
 </ul>
-<h2 id="common-problems">Common Problems</h2>
+<h2 id="representation">Representation</h2>
 <ul>
-<li>BFS, DFS traversal</li>
-<li>Detect Cycle</li>
-<li>Dijkstra's Algorithm</li>
+<li><strong>Adjacency List</strong>: Array of lists (memory efficient)</li>
+<li><strong>Adjacency Matrix</strong>: 2D array (fast lookup, uses O(V²) space)</li>
+<li><strong>Edge List</strong>: List of edges (useful for some algorithms)</li>
 </ul>
-<h2 id="algorithms-techniques">Algorithms / Techniques</h2>
+<h2 id="common-algorithms">Common Algorithms</h2>
 <ul>
-<li>BFS, DFS</li>
-<li>Union-Find</li>
-<li>Topological Sort</li>
+<li><strong>BFS</strong> (Breadth-First Search): Shortest path in unweighted graphs</li>
+<li><strong>DFS</strong> (Depth-First Search): Traversal, cycle detection, topological sort</li>
+<li><strong>Dijkstra</strong>: Shortest path in weighted graphs (non-negative weights)</li>
+<li><strong>Union-Find</strong>: Detect cycles, connected components</li>
+<li><strong>Topological Sort</strong>: Linear ordering of DAG</li>
+<li><strong>Tarjan/Bridges</strong>: Find critical connections</li>
 </ul>
+<h2 id="patterns-techniques">Patterns / Techniques</h2>
+<ul>
+<li>BFS for shortest path</li>
+<li>DFS for cycle detection</li>
+<li>Union-Find for connectivity</li>
+<li>Heap for Dijkstra</li>
+<li>Graph coloring</li>
+<li>Backtracking for paths</li>
+</ul>
+<hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
-<h3 id="easy">✅ Easy</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/find-the-town-judge/">Find the Town Judge</a></strong>
-   Identify a town judge based on trust relationships.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/number-of-islands/">Number of Islands</a></strong>
-   Count connected islands in a grid using DFS/BFS.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/flood-fill/">Flood Fill</a></strong>
-   Change connected pixels of the same color.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/max-area-of-island/">Max Area of Island</a></strong>
-   Find largest connected island area.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/clone-graph/">Clone Graph</a></strong>
-   Create a deep copy of a graph.</p>
-</li>
-</ol>
+<h3 id="easy">Easy</h3>
+<h4 id="1-number-of-islands">1. <strong>Number of Islands</strong></h4>
+<p><strong>Explanation</strong>: DFS/BFS on grid. Mark visited cells, count connected components of '1'. Time: O(m<em>n), Space: O(m</em>n).</p>
+<pre class="highlight"><code class="language-java">public int numIslands(char[][] grid) {
+    if (grid == null || grid.length == 0) return 0;
+
+    int count = 0;
+    for (int i = 0; i &lt; grid.length; i++) {
+        for (int j = 0; j &lt; grid[0].length; j++) {
+            if (grid[i][j] == '1') {
+                dfs(grid, i, j);
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+private void dfs(char[][] grid, int i, int j) {
+    if (i &lt; 0 || i &gt;= grid.length || j &lt; 0 || j &gt;= grid[0].length || grid[i][j] == '0') {
+        return;
+    }
+
+    grid[i][j] = '0';
+    dfs(grid, i + 1, j);
+    dfs(grid, i - 1, j);
+    dfs(grid, i, j + 1);
+    dfs(grid, i, j - 1);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Max Area of Island, Number of Connected Components</p>
 <hr />
-<h3 id="medium">🔁 Medium</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/course-schedule/">Course Schedule</a></strong>
-   Detect if it’s possible to finish all courses (cycle detection).</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/">Number of Connected Components in an Undirected Graph</a></strong>
-   Count connected components in a graph.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/pacific-atlantic-water-flow/">Pacific Atlantic Water Flow</a></strong>
-   Cells from which water flows to both oceans.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/alien-dictionary/">Alien Dictionary</a></strong>
-   Find character order from alien dictionary words.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/graph-valid-tree/">Graph Valid Tree</a></strong>
-   Determine if edges make a valid tree.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/number-of-islands-ii/">Number of Islands II</a></strong>
-   Count islands as land is added dynamically.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/word-ladder/">Word Ladder</a></strong>
-   Shortest transformation sequence from start to end word.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/minimum-height-trees/">Minimum Height Trees</a></strong>
-   Find roots of trees with minimum height.</p>
-</li>
-</ol>
+<h4 id="2-flood-fill">2. <strong>Flood Fill</strong></h4>
+<p><strong>Explanation</strong>: DFS changing connected pixels of same color to new color. Time: O(m<em>n), Space: O(m</em>n).</p>
+<pre class="highlight"><code class="language-java">public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+    int original = image[sr][sc];
+    if (original != color) {
+        dfs(image, sr, sc, original, color);
+    }
+    return image;
+}
+
+private void dfs(int[][] image, int i, int j, int original, int color) {
+    if (i &lt; 0 || i &gt;= image.length || j &lt; 0 || j &gt;= image[0].length || image[i][j] != original) {
+        return;
+    }
+
+    image[i][j] = color;
+    dfs(image, i + 1, j, original, color);
+    dfs(image, i - 1, j, original, color);
+    dfs(image, i, j + 1, original, color);
+    dfs(image, i, j - 1, original, color);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Surrounded Regions, Pacific Atlantic Water Flow</p>
 <hr />
-<h3 id="hard">🔥 Hard</h3>
-<ol>
-<li>
-<p><strong><a href="https://leetcode.com/problems/word-ladder-ii/">Word Ladder II</a></strong>
-   Find all shortest transformation sequences.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/critical-connections-in-a-network/">Critical Connections in a Network</a></strong>
-   Find bridges in a network (Tarjan’s algorithm).</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/reconstruct-itinerary/">Reconstruct Itinerary</a></strong>
-   Rebuild travel itinerary using all tickets.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/alien-dictionary/">Alien Dictionary II</a></strong> <em>(Similar to Alien Dictionary but more complex variants)</em></p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/longest-increasing-path-in-a-matrix/">Longest Increasing Path in a Matrix</a></strong>
-   Longest strictly increasing path in a matrix.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/cheapest-flights-within-k-stops/">Cheapest Flights Within K Stops</a></strong>
-   Find cheapest flight with at most k stops.</p>
-</li>
-<li>
-<p><strong><a href="https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination/">Shortest Path in a Grid with Obstacles Elimination</a></strong>
-   Shortest path allowing to eliminate obstacles.</p>
-</li>
-</ol>
-<h2 id="resources">🔹 Resources</h2>
+<h4 id="3-clone-graph">3. <strong>Clone Graph</strong></h4>
+<p><strong>Explanation</strong>: DFS/BFS creating deep copy. Use HashMap to track visited nodes. Time: O(V+E), Space: O(V).</p>
+<pre class="highlight"><code class="language-java">public Node cloneGraph(Node node) {
+    if (node == null) return null;
+
+    Map&lt;Node, Node&gt; map = new HashMap&lt;&gt;();
+    return dfs(node, map);
+}
+
+private Node dfs(Node node, Map&lt;Node, Node&gt; map) {
+    if (map.containsKey(node)) return map.get(node);
+
+    Node copy = new Node(node.val);
+    map.put(node, copy);
+
+    for (Node neighbor : node.neighbors) {
+        copy.neighbors.add(dfs(neighbor, map));
+    }
+
+    return copy;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Copy List with Random Pointer</p>
+<hr />
+<h4 id="4-find-the-town-judge">4. <strong>Find the Town Judge</strong></h4>
+<p><strong>Explanation</strong>: Judge is person that all trust but trusts no one. Count trust relationships. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int findJudge(int n, int[][] trust) {
+    int[] trustCount = new int[n + 1];
+    int[] trustedCount = new int[n + 1];
+
+    for (int[] t : trust) {
+        trustedCount[t[0]]++;
+        trustCount[t[1]]++;
+    }
+
+    for (int i = 1; i &lt;= n; i++) {
+        if (trustedCount[i] == 0 &amp;&amp; trustCount[i] == n - 1) {
+            return i;
+        }
+    }
+
+    return -1;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Single Number (XOR variant)</p>
+<hr />
+<h3 id="medium">Medium</h3>
+<h4 id="5-course-schedule-cycle-detection">5. <strong>Course Schedule (Cycle Detection)</strong></h4>
+<p><strong>Explanation</strong>: Detect cycle in directed graph. Use BFS with in-degree. Time: O(V+E), Space: O(V).</p>
+<pre class="highlight"><code class="language-java">public boolean canFinish(int numCourses, int[][] prerequisites) {
+    int[] inDegree = new int[numCourses];
+    List&lt;List&lt;Integer&gt;&gt; graph = new ArrayList&lt;&gt;();
+
+    for (int i = 0; i &lt; numCourses; i++) {
+        graph.add(new ArrayList&lt;&gt;());
+    }
+
+    for (int[] prereq : prerequisites) {
+        graph.get(prereq[1]).add(prereq[0]);
+        inDegree[prereq[0]]++;
+    }
+
+    Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+    for (int i = 0; i &lt; numCourses; i++) {
+        if (inDegree[i] == 0) queue.offer(i);
+    }
+
+    int count = 0;
+    while (!queue.isEmpty()) {
+        int course = queue.poll();
+        count++;
+
+        for (int next : graph.get(course)) {
+            inDegree[next]--;
+            if (inDegree[next] == 0) queue.offer(next);
+        }
+    }
+
+    return count == numCourses;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Course Schedule II, Topological Sort, Alien Dictionary</p>
+<hr />
+<h4 id="6-pacific-atlantic-water-flow">6. <strong>Pacific Atlantic Water Flow</strong></h4>
+<p><strong>Explanation</strong>: Find cells where water flows to both oceans. Start from edges, work inward using DFS. Time: O(m<em>n), Space: O(m</em>n).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; pacificAtlantic(int[][] heights) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    int m = heights.length, n = heights[0].length;
+    boolean[][] pacific = new boolean[m][n];
+    boolean[][] atlantic = new boolean[m][n];
+
+    // DFS from top and left (Pacific)
+    for (int i = 0; i &lt; m; i++) {
+        dfs(heights, pacific, i, 0);
+    }
+    for (int j = 0; j &lt; n; j++) {
+        dfs(heights, pacific, 0, j);
+    }
+
+    // DFS from bottom and right (Atlantic)
+    for (int i = 0; i &lt; m; i++) {
+        dfs(heights, atlantic, i, n - 1);
+    }
+    for (int j = 0; j &lt; n; j++) {
+        dfs(heights, atlantic, m - 1, j);
+    }
+
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            if (pacific[i][j] &amp;&amp; atlantic[i][j]) {
+                result.add(Arrays.asList(i, j));
+            }
+        }
+    }
+
+    return result;
+}
+
+private void dfs(int[][] heights, boolean[][] visited, int i, int j) {
+    if (i &lt; 0 || i &gt;= heights.length || j &lt; 0 || j &gt;= heights[0].length || visited[i][j]) {
+        return;
+    }
+
+    visited[i][j] = true;
+
+    int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    for (int[] dir : dirs) {
+        int ni = i + dir[0], nj = j + dir[1];
+        if (ni &gt;= 0 &amp;&amp; ni &lt; heights.length &amp;&amp; nj &gt;= 0 &amp;&amp; nj &lt; heights[0].length &amp;&amp; 
+            heights[ni][nj] &gt;= heights[i][j]) {
+            dfs(heights, visited, ni, nj);
+        }
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Number of Islands, Surrounded Regions</p>
+<hr />
+<h4 id="7-word-ladder">7. <strong>Word Ladder</strong></h4>
+<p><strong>Explanation</strong>: Shortest transformation path using BFS. Build word graph. Time: O(N<em>L²), Space: O(N</em>L).</p>
+<pre class="highlight"><code class="language-java">public int ladderLength(String beginWord, String endWord, List&lt;String&gt; wordList) {
+    Set&lt;String&gt; words = new HashSet&lt;&gt;(wordList);
+    if (!words.contains(endWord)) return 0;
+
+    Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+    queue.offer(beginWord);
+    words.remove(beginWord);
+    int steps = 1;
+
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+
+        for (int i = 0; i &lt; size; i++) {
+            String curr = queue.poll();
+            if (curr.equals(endWord)) return steps;
+
+            for (String neighbor : getNeighbors(curr, words)) {
+                queue.offer(neighbor);
+                words.remove(neighbor);
+            }
+        }
+
+        steps++;
+    }
+
+    return 0;
+}
+
+private List&lt;String&gt; getNeighbors(String word, Set&lt;String&gt; words) {
+    List&lt;String&gt; neighbors = new ArrayList&lt;&gt;();
+    char[] chars = word.toCharArray();
+
+    for (int i = 0; i &lt; chars.length; i++) {
+        char original = chars[i];
+        for (char c = 'a'; c &lt;= 'z'; c++) {
+            if (c == original) continue;
+            chars[i] = c;
+            String neighbor = new String(chars);
+            if (words.contains(neighbor)) {
+                neighbors.add(neighbor);
+            }
+        }
+        chars[i] = original;
+    }
+
+    return neighbors;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Word Ladder II, Minimum Genetic Mutation</p>
+<hr />
+<h3 id="hard">Hard</h3>
+<h4 id="8-critical-connections-in-network-bridges">8. <strong>Critical Connections in Network (Bridges)</strong></h4>
+<p><strong>Explanation</strong>: Find bridges using Tarjan's algorithm. Use discovery time and low value. Time: O(V+E), Space: O(V).</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; criticalConnections(int n, List&lt;List&lt;Integer&gt;&gt; connections) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    List&lt;Integer&gt;[] graph = new ArrayList[n];
+
+    for (int i = 0; i &lt; n; i++) {
+        graph[i] = new ArrayList&lt;&gt;();
+    }
+
+    for (List&lt;Integer&gt; conn : connections) {
+        graph[conn.get(0)].add(conn.get(1));
+        graph[conn.get(1)].add(conn.get(0));
+    }
+
+    int[] disc = new int[n];
+    int[] low = new int[n];
+    boolean[] visited = new boolean[n];
+    int[] time = {0};
+
+    for (int i = 0; i &lt; n; i++) {
+        if (!visited[i]) {
+            dfs(i, -1, disc, low, visited, graph, time, result);
+        }
+    }
+
+    return result;
+}
+
+private void dfs(int u, int parent, int[] disc, int[] low, boolean[] visited, 
+                 List&lt;Integer&gt;[] graph, int[] time, List&lt;List&lt;Integer&gt;&gt; result) {
+    visited[u] = true;
+    disc[u] = low[u] = time[0]++;
+
+    for (int v : graph[u]) {
+        if (!visited[v]) {
+            dfs(v, u, disc, low, visited, graph, time, result);
+            low[u] = Math.min(low[u], low[v]);
+
+            if (low[v] &gt; disc[u]) {
+                result.add(Arrays.asList(u, v));
+            }
+        } else if (v != parent) {
+            low[u] = Math.min(low[u], disc[v]);
+        }
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Minimum Height Trees, Network Delay Time</p>
+<hr />
+<h4 id="9-shortest-path-with-obstacles-elimination">9. <strong>Shortest Path with Obstacles Elimination</strong></h4>
+<p><strong>Explanation</strong>: BFS with state (row, col, obstacles used). Track visited with 3D array. Time: O(m<em>n</em>k), Space: O(m<em>n</em>k).</p>
+<pre class="highlight"><code class="language-java">public int shortestPath(int[][] grid, int k) {
+    int m = grid.length, n = grid[0].length;
+    if (k &lt; m - 1 + n - 1) return -1;
+
+    Queue&lt;int[]&gt; queue = new LinkedList&lt;&gt;();
+    queue.offer(new int[]{0, 0, 0});
+    int[][][] visited = new int[m][n][k + 1];
+    visited[0][0][0] = 1;
+
+    int steps = 0;
+    int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+
+        for (int i = 0; i &lt; size; i++) {
+            int[] curr = queue.poll();
+            int row = curr[0], col = curr[1], obstacles = curr[2];
+
+            if (row == m - 1 &amp;&amp; col == n - 1) return steps;
+
+            for (int[] dir : dirs) {
+                int nr = row + dir[0], nc = col + dir[1];
+
+                if (nr &gt;= 0 &amp;&amp; nr &lt; m &amp;&amp; nc &gt;= 0 &amp;&amp; nc &lt; n) {
+                    int newObstacles = obstacles + grid[nr][nc];
+
+                    if (newObstacles &lt;= k &amp;&amp; visited[nr][nc][newObstacles] == 0) {
+                        visited[nr][nc][newObstacles] = 1;
+                        queue.offer(new int[]{nr, nc, newObstacles});
+                    }
+                }
+            }
+        }
+
+        steps++;
+    }
+
+    return -1;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Shortest Path in Matrix, Path with Minimum Effort</p>
+<hr />
+<h4 id="10-topological-sort-dfs">10. <strong>Topological Sort (DFS)</strong></h4>
+<p><strong>Explanation</strong>: Linear ordering of vertices in DAG. Use DFS with post-order traversal. Time: O(V+E), Space: O(V).</p>
+<pre class="highlight"><code class="language-java">public List&lt;Integer&gt; topologicalSort(int n, int[][] edges) {
+    List&lt;Integer&gt;[] graph = new ArrayList[n];
+    for (int i = 0; i &lt; n; i++) {
+        graph[i] = new ArrayList&lt;&gt;();
+    }
+
+    for (int[] edge : edges) {
+        graph[edge[0]].add(edge[1]);
+    }
+
+    boolean[] visited = new boolean[n];
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+    for (int i = 0; i &lt; n; i++) {
+        if (!visited[i]) {
+            dfs(i, visited, graph, stack);
+        }
+    }
+
+    List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+    while (!stack.isEmpty()) {
+        result.add(stack.pop());
+    }
+
+    return result;
+}
+
+private void dfs(int node, boolean[] visited, List&lt;Integer&gt;[] graph, Stack&lt;Integer&gt; stack) {
+    visited[node] = true;
+
+    for (int neighbor : graph[node]) {
+        if (!visited[neighbor]) {
+            dfs(neighbor, visited, graph, stack);
+        }
+    }
+
+    stack.push(node);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Course Schedule, Alien Dictionary, Build Order</p>
+<hr />
+<h4 id="11-union-find-disjoint-set">11. <strong>Union-Find (Disjoint Set)</strong></h4>
+<p><strong>Explanation</strong>: Track connected components. Union find with path compression and union by rank. Time: O(α(n)) amortized.</p>
+<pre class="highlight"><code class="language-java">class UnionFind {
+    int[] parent, rank;
+
+    public UnionFind(int n) {
+        parent = new int[n];
+        rank = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]); // Path compression
+        }
+        return parent[x];
+    }
+
+    public boolean union(int x, int y) {
+        int px = find(x), py = find(y);
+
+        if (px == py) return false;
+
+        // Union by rank
+        if (rank[px] &lt; rank[py]) {
+            parent[px] = py;
+        } else if (rank[px] &gt; rank[py]) {
+            parent[py] = px;
+        } else {
+            parent[py] = px;
+            rank[px]++;
+        }
+
+        return true;
+    }
+
+    public int countComponents(int n) {
+        Set&lt;Integer&gt; roots = new HashSet&lt;&gt;();
+        for (int i = 0; i &lt; n; i++) {
+            roots.add(find(i));
+        }
+        return roots.size();
+    }
+}
+
+// Usage example: Number of connected components
+public int countComponents(int n, int[][] edges) {
+    UnionFind uf = new UnionFind(n);
+
+    for (int[] edge : edges) {
+        uf.union(edge[0], edge[1]);
+    }
+
+    return uf.countComponents(n);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Accounts Merge, Friends of Appropriate Ages, Smallest String with Swaps</p>
+<hr />
+<h4 id="12-minimum-spanning-tree-kruskals-algorithm">12. <strong>Minimum Spanning Tree - Kruskal's Algorithm</strong></h4>
+<p><strong>Explanation</strong>: Find MST using edges sorted by weight. Union-Find for cycle detection. Time: O(E log E), Space: O(V).</p>
+<pre class="highlight"><code class="language-java">public int minimumCost(int n, int[][] connections) {
+    Arrays.sort(connections, (a, b) -&gt; a[2] - b[2]);
+
+    UnionFind uf = new UnionFind(n + 1);
+    int totalCost = 0;
+    int edgesUsed = 0;
+
+    for (int[] edge : connections) {
+        if (uf.union(edge[0], edge[1])) {
+            totalCost += edge[2];
+            edgesUsed++;
+
+            if (edgesUsed == n - 1) break;
+        }
+    }
+
+    return edgesUsed == n - 1 ? totalCost : -1;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Connect All Points, Min Cost to Connect Sticks</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-graph-representation">1. <strong>Graph Representation</strong></h3>
 <ul>
-<li><a href="https://leetcode.com/tag/graph/">LeetCode Graph Problems</a></li>
-<li><a href="https://www.hackerrank.com/domains/algorithms/graph-theory">HackerRank Graph Theory</a></li>
+<li>Adjacency list: most common for sparse graphs</li>
+<li>Adjacency matrix: useful when checking edge (u,v) frequently</li>
 </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-                
-              </article>
+<h3 id="2-traversal-patterns">2. <strong>Traversal Patterns</strong></h3>
+<ul>
+<li>BFS: shortest path (unweighted), level-order</li>
+<li>DFS: topological sort, cycle detection, connectivity</li>
+</ul>
+<h3 id="3-cycle-detection">3. <strong>Cycle Detection</strong></h3>
+<ul>
+<li>Directed: use colors (white, gray, black)</li>
+<li>Undirected: DFS with parent tracking</li>
+</ul>
+<h3 id="4-shortest-path">4. <strong>Shortest Path</strong></h3>
+<ul>
+<li>Unweighted: BFS</li>
+<li>Weighted (non-negative): Dijkstra</li>
+<li>Weighted (general): Bellman-Ford</li>
+</ul>
+<h3 id="5-union-find-applications">5. <strong>Union-Find Applications</strong></h3>
+<ul>
+<li>Connected components</li>
+<li>Cycle detection</li>
+<li>Minimum spanning tree</li>
+<li>Kruskal's algorithm</li>
+</ul>
+<h3 id="6-topological-sort-applications">6. <strong>Topological Sort Applications</strong></h3>
+<ul>
+<li>Course prerequisites</li>
+<li>Build order</li>
+<li>Alien dictionary ordering</li>
+<li>Task scheduling</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Not distinguishing directed vs undirected edges</li>
+<li>❌ Forgetting to mark nodes as visited</li>
+<li>❌ Wrong graph representation for problem type</li>
+<li>❌ Not handling disconnected components</li>
+<li>❌ Integer overflow in path weights</li>
+<li>❌ Assuming positive weights when not guaranteed</li>
+<li>❌ Incorrect Union-Find implementation</li>
+<li>❌ Topological sort on cyclic graph</li>
+<li>❌ Not handling disconnected components</li>
+<li>❌ Integer overflow in path weights</li>
+<li>❌ Assuming positive weights when not guaranteed</li>
+</ul>
+              
             </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
-</div>
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../backtracking/" class="btn btn-neutral float-left" title="Backtracking"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../intervals/" class="btn btn-neutral float-right" title="Intervals">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
   </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-    
-      
-      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <span><a href="../backtracking/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
-      
+      <span><a href="../intervals/" style="color: #fcfcfc">Next &raquo;</a></span>
     
-  </body>
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
 </html>

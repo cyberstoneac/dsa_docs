@@ -1,830 +1,572 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Array - DSA Notes</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Array";
+        var mkdocs_page_input_path = "array.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-        <link rel="prev" href="..">
-      
-      
-        <link rel="next" href="../string/">
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
-    
-    
-      
-        <title>Array - DSA Notes</title>
-      
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
-      
-      
+<body class="wy-body-for-nav" role="document">
 
-
-    
-    
-      
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-    
-  </head>
-  
-  
-    <body dir="ltr">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#array" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="DSA Notes" class="md-header__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            DSA Notes
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              Array
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-    
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> DSA Notes
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
 </div>
-      
-    
-    
-  </nav>
-  
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
+      </div>
 
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href=".." title="DSA Notes" class="md-nav__button md-logo" aria-label="DSA Notes" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    DSA Notes
-  </label>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-      </a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Array</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
     </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Array
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    Array
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#techniques-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Techniques / Patterns
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hard
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resources
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
+    <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#techniques-patterns">Techniques / Patterns</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#1-two-sum">1. Two Sum</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#2-maximum-subarray-kadanes-algorithm">2. Maximum Subarray (Kadane's Algorithm)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#3-best-time-to-buy-and-sell-stock">3. Best Time to Buy and Sell Stock</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#4-contains-duplicate">4. Contains Duplicate</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#5-single-number">5. Single Number</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#6-move-zeroes">6. Move Zeroes</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#7-rotate-array">7. Rotate Array</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#8-3sum">8. 3Sum</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#9-product-of-array-except-self">9. Product of Array Except Self</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#10-merge-intervals">10. Merge Intervals</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#11-trapping-rain-water">11. Trapping Rain Water</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#12-first-missing-positive">12. First Missing Positive</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#13-longest-consecutive-sequence">13. Longest Consecutive Sequence</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-two-pointers">1. Two Pointers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-sliding-window">2. Sliding Window</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-prefix-sum">3. Prefix Sum</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-hashing">4. Hashing</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
     </ul>
-  
-</nav>
-      
-    </li>
-  
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../queue/">Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../string/" class="md-nav__link">
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">DSA Notes</a>
         
-  
-  
-  <span class="md-ellipsis">
-    String
-    
-  </span>
-  
-
-      </a>
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Array</li>
+    <li class="wy-breadcrumbs-aside">
     </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tree/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Tree
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../graph/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Graph
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dynamic-programming/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Dynamic Programming
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../stack/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Stack
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../queue/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Queue
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../linked-list/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Linked List
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../trie/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Trie
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../maths/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Maths
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../bit-manipulation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Bit Manipulation
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../greedy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Greedy Algorithm
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Concepts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Problems
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#techniques-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      Techniques / Patterns
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#practice-problems-by-topic" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔹 Practice Problems by Topic
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔹 Practice Problems by Topic">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#easy" class="md-nav__link">
-    <span class="md-ellipsis">
-      Easy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium" class="md-nav__link">
-    <span class="md-ellipsis">
-      Medium
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hard
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resources
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-
-<h1 id="array">Array</h1>
+                <h1 id="array">Array</h1>
 <h2 id="key-concepts">Key Concepts</h2>
 <ul>
 <li>Fixed size, index-based data structure</li>
 <li>Stored in contiguous memory</li>
+<li><strong>Time Complexity</strong>: O(1) for access, O(n) for search/insertion/deletion</li>
+<li><strong>Space Complexity</strong>: O(n) for storage</li>
 </ul>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
 <li>Two Sum</li>
-<li>Kadane's Algorithm</li>
+<li>Kadane's Algorithm (Maximum Subarray)</li>
 <li>Sliding Window Maximum</li>
 <li>Merge Intervals</li>
+<li>Trapping Rain Water</li>
 </ul>
 <h2 id="techniques-patterns">Techniques / Patterns</h2>
 <ul>
 <li>Two Pointers</li>
 <li>Sliding Window</li>
 <li>Prefix Sum</li>
+<li>Hashing (HashMap/HashSet)</li>
+<li>Sorting-based approaches</li>
 </ul>
+<hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
-<ul>
-<li>Two Sum</li>
-<li>Maximum Subarray</li>
-<li>Best Time to Buy and Sell Stock</li>
-<li>Contains Duplicate</li>
-<li>Single Number</li>
-<li>Intersection of Two Arrays II</li>
-<li>Plus One</li>
-<li>Move Zeroes</li>
-<li>Rotate Array</li>
-<li>Find Pivot Index</li>
-</ul>
+<h4 id="1-two-sum">1. <strong>Two Sum</strong></h4>
+<p><strong>Explanation</strong>: Use a HashMap to store numbers we've seen. For each number, check if <code>target - current_number</code> exists in the map. This gives us O(n) time instead of O(n²) brute force.</p>
+<pre class="highlight"><code class="language-java">public int[] twoSum(int[] nums, int target) {
+    HashMap&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
+    for (int i = 0; i &lt; nums.length; i++) {
+        int complement = target - nums[i];
+        if (map.containsKey(complement)) {
+            return new int[] {map.get(complement), i};
+        }
+        map.put(nums[i], i);
+    }
+    return new int[] {};
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Two Sum II, Two Sum III, Three Sum, Four Sum</p>
+<hr />
+<h4 id="2-maximum-subarray-kadanes-algorithm">2. <strong>Maximum Subarray (Kadane's Algorithm)</strong></h4>
+<p><strong>Explanation</strong>: At each position, decide whether to extend current subarray or start fresh. Track <code>maxSoFar</code> (global max) and <code>maxEndingHere</code> (max at current position). At each step: <code>maxEndingHere = max(nums[i], maxEndingHere + nums[i])</code>.</p>
+<pre class="highlight"><code class="language-java">public int maxSubArray(int[] nums) {
+    int maxSoFar = nums[0];
+    int maxEndingHere = nums[0];
+
+    for (int i = 1; i &lt; nums.length; i++) {
+        maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);
+        maxSoFar = Math.max(maxSoFar, maxEndingHere);
+    }
+
+    return maxSoFar;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Maximum Product Subarray, Maximum Sum Subarray of Size K</p>
+<hr />
+<h4 id="3-best-time-to-buy-and-sell-stock">3. <strong>Best Time to Buy and Sell Stock</strong></h4>
+<p><strong>Explanation</strong>: Track minimum price seen so far (best buying opportunity). Calculate profit at each point and update maximum profit when finding better selling price. Single pass O(n).</p>
+<pre class="highlight"><code class="language-java">public int maxProfit(int[] prices) {
+    int minPrice = prices[0];
+    int maxProfit = 0;
+
+    for (int i = 1; i &lt; prices.length; i++) {
+        maxProfit = Math.max(maxProfit, prices[i] - minPrice);
+        minPrice = Math.min(minPrice, prices[i]);
+    }
+
+    return maxProfit;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Best Time to Buy and Sell Stock II, III, IV, Cooldown</p>
+<hr />
+<h4 id="4-contains-duplicate">4. <strong>Contains Duplicate</strong></h4>
+<p><strong>Explanation</strong>: Use HashSet to track seen elements. Encounter a duplicate? Return true. Complete loop? No duplicates. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public boolean containsDuplicate(int[] nums) {
+    HashSet&lt;Integer&gt; seen = new HashSet&lt;&gt;();
+    for (int num : nums) {
+        if (seen.contains(num)) return true;
+        seen.add(num);
+    }
+    return false;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Contains Duplicate II, III, Find Duplicates</p>
+<hr />
+<h4 id="5-single-number">5. <strong>Single Number</strong></h4>
+<p><strong>Explanation</strong>: Use XOR operation (^). Key: a ^ a = 0 and a ^ 0 = a. XORing all numbers cancels out pairs, leaving only the single number. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public int singleNumber(int[] nums) {
+    int result = 0;
+    for (int num : nums) {
+        result ^= num;
+    }
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Single Number II, III, Find the Duplicate Number</p>
+<hr />
+<h4 id="6-move-zeroes">6. <strong>Move Zeroes</strong></h4>
+<p><strong>Explanation</strong>: Use two-pointer approach. <code>leftPointer</code> tracks where next non-zero should go. Whenever finding non-zero, swap with position at leftPointer. Time: O(n), Space: O(1), in-place.</p>
+<pre class="highlight"><code class="language-java">public void moveZeroes(int[] nums) {
+    int leftPointer = 0;
+
+    for (int i = 0; i &lt; nums.length; i++) {
+        if (nums[i] != 0) {
+            int temp = nums[leftPointer];
+            nums[leftPointer] = nums[i];
+            nums[i] = temp;
+            leftPointer++;
+        }
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Remove Duplicates from Sorted Array, Remove Element</p>
+<hr />
+<h4 id="7-rotate-array">7. <strong>Rotate Array</strong></h4>
+<p><strong>Explanation</strong>: Reverse entire array, then reverse first k elements, then reverse remaining. [1,2,3,4,5] with k=2: reverse all→[5,4,3,2,1]→reverse first 2→[4,5,3,2,1]→reverse last 3→[4,5,1,2,3]. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public void rotate(int[] nums, int k) {
+    k = k % nums.length;
+    reverse(nums, 0, nums.length - 1);
+    reverse(nums, 0, k - 1);
+    reverse(nums, k, nums.length - 1);
+}
+
+private void reverse(int[] nums, int start, int end) {
+    while (start &lt; end) {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+        start++;
+        end--;
+    }
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Rotate Matrix, Rotate List</p>
+<hr />
 <h3 id="medium">Medium</h3>
-<ul>
-<li>3Sum</li>
-<li>Set Matrix Zeroes</li>
-<li>Group Anagrams</li>
-<li>Product of Array Except Self</li>
-<li>Top K Frequent Elements</li>
-<li>Sort Colors</li>
-<li>Find All Numbers Disappeared in an Array</li>
-</ul>
+<h4 id="8-3sum">8. <strong>3Sum</strong></h4>
+<p><strong>Explanation</strong>: Sort array first. For each element, use two-pointer technique to find pairs summing to -element. Skip duplicates to ensure unique triplets. Time: O(n²), Space: O(1) excluding output.</p>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) {
+    Arrays.sort(nums);
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+
+    for (int i = 0; i &lt; nums.length - 2; i++) {
+        if (nums[i] &gt; 0) break;
+        if (i &gt; 0 &amp;&amp; nums[i] == nums[i-1]) continue;
+
+        int left = i + 1, right = nums.length - 1;
+        while (left &lt; right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == 0) {
+                result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                while (left &lt; right &amp;&amp; nums[left] == nums[left+1]) left++;
+                while (left &lt; right &amp;&amp; nums[right] == nums[right-1]) right--;
+                left++;
+                right--;
+            } else if (sum &lt; 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: 3Sum Closest, 4Sum, K Sum Variants</p>
+<hr />
+<h4 id="9-product-of-array-except-self">9. <strong>Product of Array Except Self</strong></h4>
+<p><strong>Explanation</strong>: Use prefix and suffix products approach. First pass calculates prefix products (product of all before current). Second pass calculates suffix (product of all after current) and multiplies with prefix. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int[] productExceptSelf(int[] nums) {
+    int n = nums.length;
+    int[] result = new int[n];
+
+    result[0] = 1;
+    for (int i = 1; i &lt; n; i++) {
+        result[i] = result[i-1] * nums[i-1];
+    }
+
+    int suffix = 1;
+    for (int i = n - 1; i &gt;= 0; i--) {
+        result[i] *= suffix;
+        suffix *= nums[i];
+    }
+
+    return result;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Paint House, Trapping Rain Water (similar prefix/suffix idea)</p>
+<hr />
+<h4 id="10-merge-intervals">10. <strong>Merge Intervals</strong></h4>
+<p><strong>Explanation</strong>: Sort by start point. Iterate through sorted intervals and merge if current overlaps with previous (current start ≤ previous end). Two intervals overlap when: current.start ≤ previous.end. Time: O(n log n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int[][] merge(int[][] intervals) {
+    Arrays.sort(intervals, (a, b) -&gt; Integer.compare(a[0], b[0]));
+
+    List&lt;int[]&gt; merged = new ArrayList&lt;&gt;();
+    int[] current = intervals[0];
+
+    for (int i = 1; i &lt; intervals.length; i++) {
+        if (intervals[i][0] &lt;= current[1]) {
+            current[1] = Math.max(current[1], intervals[i][1]);
+        } else {
+            merged.add(current);
+            current = intervals[i];
+        }
+    }
+    merged.add(current);
+
+    return merged.toArray(new int[merged.size()][]);
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Insert Interval, Meeting Rooms I &amp; II</p>
+<hr />
 <h3 id="hard">Hard</h3>
+<h4 id="11-trapping-rain-water">11. <strong>Trapping Rain Water</strong></h4>
+<p><strong>Explanation</strong>: At each position, water level = min(max_height_left, max_height_right). Trapped water = water_level - bar_height. Precompute max heights from left and right. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int trap(int[] height) {
+    int n = height.length;
+    if (n &lt; 3) return 0;
+
+    int[] leftMax = new int[n];
+    int[] rightMax = new int[n];
+
+    leftMax[0] = height[0];
+    for (int i = 1; i &lt; n; i++) {
+        leftMax[i] = Math.max(leftMax[i-1], height[i]);
+    }
+
+    rightMax[n-1] = height[n-1];
+    for (int i = n-2; i &gt;= 0; i--) {
+        rightMax[i] = Math.max(rightMax[i+1], height[i]);
+    }
+
+    int water = 0;
+    for (int i = 0; i &lt; n; i++) {
+        water += Math.min(leftMax[i], rightMax[i]) - height[i];
+    }
+
+    return water;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Trapping Rain Water II (2D), Rain Water II (Heap variant)</p>
+<hr />
+<h4 id="12-first-missing-positive">12. <strong>First Missing Positive</strong></h4>
+<p><strong>Explanation</strong>: Place each number n in position n-1 (if 1 ≤ n ≤ length). Then scan array to find first position where arr[i] ≠ i+1. That i+1 is missing. Uses array as hash table. Time: O(n), Space: O(1).</p>
+<pre class="highlight"><code class="language-java">public int firstMissingPositive(int[] nums) {
+    int n = nums.length;
+
+    for (int i = 0; i &lt; n; i++) {
+        while (nums[i] &gt; 0 &amp;&amp; nums[i] &lt;= n &amp;&amp; nums[nums[i]-1] != nums[i]) {
+            int correctIdx = nums[i] - 1;
+            int temp = nums[i];
+            nums[i] = nums[correctIdx];
+            nums[correctIdx] = temp;
+        }
+    }
+
+    for (int i = 0; i &lt; n; i++) {
+        if (nums[i] != i + 1) {
+            return i + 1;
+        }
+    }
+
+    return n + 1;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Find Disappeared Numbers, First Missing Number in Range</p>
+<hr />
+<h4 id="13-longest-consecutive-sequence">13. <strong>Longest Consecutive Sequence</strong></h4>
+<p><strong>Explanation</strong>: Use HashSet for O(1) lookups. For each number, check if it's sequence start (num-1 not in set). If yes, count consecutive sequence length. Time: O(n), Space: O(n).</p>
+<pre class="highlight"><code class="language-java">public int longestConsecutive(int[] nums) {
+    HashSet&lt;Integer&gt; set = new HashSet&lt;&gt;();
+    for (int num : nums) {
+        set.add(num);
+    }
+
+    int longest = 0;
+    for (int num : set) {
+        if (!set.contains(num - 1)) {
+            int current = num;
+            int streak = 1;
+            while (set.contains(current + 1)) {
+                current++;
+                streak++;
+            }
+            longest = Math.max(longest, streak);
+        }
+    }
+
+    return longest;
+}</code></pre>
+<p><strong>Similar Pattern Problems</strong>: Consecutive Numbers Sum, Longest Substring</p>
+<hr />
+<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
+<h3 id="1-two-pointers">1. <strong>Two Pointers</strong></h3>
 <ul>
-<li>First Missing Positive</li>
-<li>Trapping Rain Water</li>
-<li>Merge Intervals</li>
-<li>Insert Interval</li>
-<li>Longest Consecutive Sequence</li>
-<li>Median of Two Sorted Arrays</li>
-<li>Maximum Product Subarray</li>
+<li>Start from opposite ends or move same direction</li>
+<li>Move based on comparison condition</li>
+<li>Used for: Intersection, merging, pair finding</li>
 </ul>
-<h3 id="resources">Resources</h3>
+<h3 id="2-sliding-window">2. <strong>Sliding Window</strong></h3>
 <ul>
-<li><a href="https://leetcode.com/problem-list/array/">LeetCode Array Problems</a></li>
-<li><a href="https://www.hackerrank.com/domains/data-structures/arrays">HackerRank Arrays</a></li>
-<li><a href="https://www.hackerearth.com/practice/data-structures/arrays/1-d/practice-problems/">HackerEarth Array Practice</a></li>
+<li>Maintain window of fixed or variable size</li>
+<li>Expand/contract based on condition</li>
+<li>Used for: Subarrays, max/min in window</li>
 </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-                
-              </article>
+<h3 id="3-prefix-sum">3. <strong>Prefix Sum</strong></h3>
+<ul>
+<li>Precompute cumulative sums</li>
+<li>Query becomes O(1)</li>
+<li>Used for: Range sum queries, subarray problems</li>
+</ul>
+<h3 id="4-hashing">4. <strong>Hashing</strong></h3>
+<ul>
+<li>HashMap for element → index/count</li>
+<li>HashSet for existence checking</li>
+<li>Used for: Duplicate detection, pair finding</li>
+</ul>
+<hr />
+<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
+<ul>
+<li>❌ Not handling edge cases (empty array, single element)</li>
+<li>❌ Integer overflow (use long for large sums)</li>
+<li>❌ Off-by-one errors in pointer movements</li>
+<li>❌ Not sorting when needed for optimization</li>
+<li>❌ Forgetting to handle duplicates in result</li>
+</ul>
+              
             </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
-</div>
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../two-pointers/" class="btn btn-neutral float-right" title="Two Pointers">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
   </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-    
-      
-      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
-      
+      <span><a href="../two-pointers/" style="color: #fcfcfc">Next &raquo;</a></span>
     
-  </body>
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+      <script src="../javascripts/mermaid.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
 </html>
