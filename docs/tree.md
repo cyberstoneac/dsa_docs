@@ -1,3 +1,14 @@
+---
+tags:
+  - tree
+  - binary-tree
+  - bst
+  - dfs
+  - bfs
+  - recursion
+  - neetcode-150
+---
+
 # Tree
 
 ## What is a Tree? (Simple Explanation)

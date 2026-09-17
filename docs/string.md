@@ -1,3 +1,13 @@
+---
+tags:
+  - string
+  - hashing
+  - sliding-window
+  - two-pointers
+  - palindrome
+  - neetcode-150
+---
+
 # String
 
 ## What is a String? (Simple Explanation)

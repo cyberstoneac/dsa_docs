@@ -1,3 +1,12 @@
+---
+tags:
+  - sliding-window
+  - array
+  - string
+  - hashing
+  - neetcode-150
+---
+
 # Sliding Window
 
 ## What is a Sliding Window? (Simple Explanation)

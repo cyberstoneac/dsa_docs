@@ -1,35 +1,155 @@
-site_name: DSA Notes
+site_name: DSA Notes (Java)
+site_description: Comprehensive Data Structures & Algorithms notes with 150+ Java solutions, aligned with NeetCode 150
+site_author: Your Name
+site_url: https://cyberstoneac.github.io/dsa_docs/
+
+repo_name: cyberstoneac/dsa_docs
+repo_url: https://github.com/cyberstoneac/dsa_docs
+edit_uri: edit/main/docs/
+
 theme:
-  name: readthedocs
+  name: material
+  language: en
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  icon:
+    logo: material/book-open-page-variant
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant          # Instant page loads (SPA-like)
+    - navigation.instant.progress # Progress bar on navigation
+    - navigation.tracking         # URL updates with scroll
+    - navigation.tabs             # Top-level nav as tabs
+    - navigation.tabs.sticky      # Tabs stay visible on scroll
+    - navigation.sections         # Group nav items
+    - navigation.expand           # Expand all sections by default
+    - navigation.path             # Breadcrumb path
+    - navigation.top              # Back-to-top button
+    - navigation.footer           # Previous/Next footer links
+    - search.suggest              # Search suggestions as you type
+    - search.highlight            # Highlight search terms
+    - search.share                # Share search results
+    - toc.follow                  # TOC follows scroll
+    - content.code.copy           # Copy button on code blocks
+    - content.code.select         # Select code block
+    - content.code.annotate       # Code annotations
+    - content.tabs.link           # Link tabs across pages
+
+plugins:
+  - search:
+      lang: en
+      separator: '[\s\-\.]+'
+  - tags:
+      tags_file: tags.md
+  - minify:
+      minify_html: true
 
 markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 3
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js
   - javascripts/mermaid.js
 
+extra_css:
+  - stylesheets/extra.css
+
 nav:
   - Home: index.md
-  - Array: array.md
-  - Two Pointers: two-pointers.md
-  - Sliding Window: sliding-window.md
-  - Binary Search: binary-search.md
-  - String: string.md
-  - Stack: stack.md
-  - Queue: queue.md
-  - Linked List: linked-list.md
-  - Tree: tree.md
-  - Heap / Priority Queue: heap.md
-  - Backtracking: backtracking.md
-  - Graph: graph.md
-  - Intervals: intervals.md
-  - Dynamic Programming: dynamic-programming.md
-  - Trie: trie.md
-  - Maths: maths.md
-  - Bit Manipulation: bit-manipulation.md
-  - Greedy Algorithm: greedy.md
+  - 📋 Cheat Sheet: cheatsheet.md
+  - 🏷️ Tags: tags.md
+
+  - Linear Data Structures:
+      - Array: array.md
+      - String: string.md
+      - Linked List: linked-list.md
+      - Stack: stack.md
+      - Queue: queue.md
+
+  - Problem-Solving Techniques:
+      - Two Pointers: two-pointers.md
+      - Sliding Window: sliding-window.md
+      - Binary Search: binary-search.md
+      - Backtracking: backtracking.md
+      - Intervals: intervals.md
+
+  - Non-Linear Data Structures:
+      - Tree: tree.md
+      - Graph: graph.md
+      - Trie: trie.md
+      - Heap / Priority Queue: heap.md
+
+  - Algorithms & Patterns:
+      - Dynamic Programming: dynamic-programming.md
+      - Greedy Algorithm: greedy.md
+
+  - Techniques & Math:
+      - Maths: maths.md
+      - Bit Manipulation: bit-manipulation.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/cyberstoneac
+      name: GitHub
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/your-profile
+      name: LinkedIn
+  generator: false  # Hides "Made with MkDocs" footer
+
+copyright: Copyright &copy; 2025 DSA Notes — Built with ❤️ for learners

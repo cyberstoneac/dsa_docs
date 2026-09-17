@@ -1,3 +1,12 @@
+---
+tags:
+  - binary-search
+  - sorted-array
+  - divide-and-conquer
+  - binary-search-on-answer
+  - neetcode-150
+---
+
 # Binary Search
 
 ## Key Concepts

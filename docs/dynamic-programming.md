@@ -1,3 +1,13 @@
+---
+tags:
+  - dynamic-programming
+  - dp
+  - memoization
+  - tabulation
+  - recursion
+  - neetcode-150
+---
+
 # Dynamic Programming
 
 ## Key Concepts

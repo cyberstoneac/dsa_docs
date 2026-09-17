@@ -1,3 +1,11 @@
+---
+tags:
+  - stack
+  - monotonic-stack
+  - expression-evaluation
+  - neetcode-150
+---
+
 # Stack
 
 ## What is a Stack? (Simple Explanation)

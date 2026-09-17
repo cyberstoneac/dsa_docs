@@ -1,3 +1,12 @@
+---
+tags:
+  - heap
+  - priority-queue
+  - top-k
+  - two-heaps
+  - neetcode-150
+---
+
 # Heap / Priority Queue
 
 ## What is a Heap? (Simple Explanation)

@@ -1,3 +1,12 @@
+---
+tags:
+  - linked-list
+  - two-pointers
+  - fast-slow-pointers
+  - recursion
+  - neetcode-150
+---
+
 # Linked List
 
 ## What is a Linked List? (Simple Explanation)

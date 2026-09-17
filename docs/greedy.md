@@ -1,3 +1,11 @@
+---
+tags:
+  - greedy
+  - sorting
+  - priority-queue
+  - neetcode-150
+---
+
 # Greedy Algorithm
 
 ## What is a Greedy Algorithm? (Simple Explanation)

@@ -1,3 +1,13 @@
+---
+tags:
+  - maths
+  - number-theory
+  - primes
+  - gcd
+  - modular-arithmetic
+  - neetcode-150
+---
+
 # Maths
 
 ## What is this? (Simple Explanation)

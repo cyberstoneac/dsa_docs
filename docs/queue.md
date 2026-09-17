@@ -1,3 +1,12 @@
+---
+tags:
+  - queue
+  - deque
+  - bfs
+  - monotonic-queue
+  - neetcode-150
+---
+
 # Queue
 
 ## What is a Queue? (Simple Explanation)

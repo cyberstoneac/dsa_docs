@@ -1,3 +1,12 @@
+---
+tags:
+  - trie
+  - prefix-tree
+  - string
+  - dfs
+  - neetcode-150
+---
+
 # Trie (Prefix Tree)
 
 ## What is a Trie? (Simple Explanation)

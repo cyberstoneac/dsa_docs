@@ -1,3 +1,15 @@
+---
+tags:
+  - graph
+  - bfs
+  - dfs
+  - dijkstra
+  - union-find
+  - topological-sort
+  - mst
+  - neetcode-150
+---
+
 # Graph
 
 ## What is a Graph? (Simple Explanation)

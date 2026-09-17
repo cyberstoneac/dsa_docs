@@ -1,3 +1,13 @@
+---
+tags:
+  - backtracking
+  - recursion
+  - dfs
+  - permutations
+  - combinations
+  - neetcode-150
+---
+
 # Backtracking
 
 ## Key Concepts

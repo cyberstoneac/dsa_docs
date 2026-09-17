@@ -1,3 +1,12 @@
+---
+tags:
+  - array
+  - hashing
+  - two-pointers
+  - kadane
+  - neetcode-150
+---
+
 # Array
 
 ## Key Concepts

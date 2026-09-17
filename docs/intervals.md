@@ -1,3 +1,12 @@
+---
+tags:
+  - intervals
+  - sorting
+  - sweep-line
+  - greedy
+  - neetcode-150
+---
+
 # Intervals
 
 ## What are Intervals? (Simple Explanation)

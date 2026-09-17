@@ -1,3 +1,12 @@
+---
+tags:
+  - two-pointers
+  - array
+  - string
+  - sorting
+  - neetcode-150
+---
+
 # Two Pointers
 
 ## What is Two Pointers? (Simple Explanation)
