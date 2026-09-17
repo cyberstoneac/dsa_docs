@@ -28,44 +28,44 @@ Whether you're preparing for interviews, improving problem-solving skills, or ju
 
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
-| [Array](array.md) | 13 | 🟢 7 · 🟡 4 · 🔴 2 |
-| [String](string.md) | 11 | 🟢 5 · 🟡 5 · 🔴 1 |
-| [Stack](stack.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
-| [Queue](queue.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-| [Linked List](linked-list.md) | 11 | 🟢 5 · 🟡 4 · 🔴 2 |
+| [Array](dsa/array.md) | 13 | 🟢 7 · 🟡 4 · 🔴 2 |
+| [String](dsa/string.md) | 11 | 🟢 5 · 🟡 5 · 🔴 1 |
+| [Stack](dsa/stack.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
+| [Queue](dsa/queue.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
+| [Linked List](dsa/linked-list.md) | 11 | 🟢 5 · 🟡 4 · 🔴 2 |
 
 ### 🌲 Non-Linear Data Structures
 
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
-| [Tree](tree.md) | 9 | 🟢 4 · 🟡 3 · 🔴 2 |
-| [Graph](graph.md) | 12+ | 🟢 4 · 🟡 4 · 🔴 4 |
-| [Trie](trie.md) | 4 | 🟡 2 · 🔴 2 |
-| [Heap / Priority Queue](heap.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
+| [Tree](dsa/tree.md) | 9 | 🟢 4 · 🟡 3 · 🔴 2 |
+| [Graph](dsa/graph.md) | 12+ | 🟢 4 · 🟡 4 · 🔴 4 |
+| [Trie](dsa/trie.md) | 4 | 🟡 2 · 🔴 2 |
+| [Heap / Priority Queue](dsa/heap.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
 
 ### 🎯 Problem-Solving Techniques
 
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
-| [Two Pointers](two-pointers.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-| [Sliding Window](sliding-window.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-| [Binary Search](binary-search.md) | 8 | 🟢 2 · 🟡 4 · 🔴 2 |
-| [Backtracking](backtracking.md) | 8 | 🟢 3 · 🟡 3 · 🔴 2 |
-| [Intervals](intervals.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
+| [Two Pointers](dsa/two-pointers.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
+| [Sliding Window](dsa/sliding-window.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
+| [Binary Search](dsa/binary-search.md) | 8 | 🟢 2 · 🟡 4 · 🔴 2 |
+| [Backtracking](dsa/backtracking.md) | 8 | 🟢 3 · 🟡 3 · 🔴 2 |
+| [Intervals](dsa/intervals.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
 
 ### ⚙️ Algorithms & Patterns
 
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
-| [Dynamic Programming](dynamic-programming.md) | 13 | 🟢 4 · 🟡 6 · 🔴 3 |
-| [Greedy Algorithm](greedy.md) | 11 | 🟢 4 · 🟡 5 · 🔴 2 |
+| [Dynamic Programming](dsa/dynamic-programming.md) | 13 | 🟢 4 · 🟡 6 · 🔴 3 |
+| [Greedy Algorithm](dsa/greedy.md) | 11 | 🟢 4 · 🟡 5 · 🔴 2 |
 
 ### 🧮 Techniques & Math
 
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
-| [Maths](maths.md) | 9 | 🟢 3 · 🟡 4 · 🔴 2 |
-| [Bit Manipulation](bit-manipulation.md) | 10 | 🟢 5 · 🟡 3 · 🔴 2 |
+| [Maths](dsa/maths.md) | 9 | 🟢 3 · 🟡 4 · 🔴 2 |
+| [Bit Manipulation](dsa/bit-manipulation.md) | 10 | 🟢 5 · 🟡 3 · 🔴 2 |
 
 > 🟢 Easy &nbsp;&nbsp; 🟡 Medium &nbsp;&nbsp; 🔴 Hard
 

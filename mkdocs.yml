@@ -1,6 +1,6 @@
 site_name: DSA Notes (Java)
 site_description: Comprehensive Data Structures & Algorithms notes with 150+ Java solutions, aligned with NeetCode 150
-site_author: Your Name
+site_author: Jagdish
 site_url: https://cyberstoneac.github.io/dsa_docs/
 
 repo_name: cyberstoneac/dsa_docs
@@ -113,34 +113,42 @@ nav:
   - Home: index.md
   - 📋 Cheat Sheet: cheatsheet.md
   - 🏷️ Tags: tags.md
+  - DSA:
+    - Linear Data Structures:
+        - Array: dsa/array.md
+        - String: dsa/string.md
+        - Linked List: dsa/linked-list.md
+        - Stack: dsa/stack.md
+        - Queue: dsa/queue.md
 
-  - Linear Data Structures:
-      - Array: array.md
-      - String: string.md
-      - Linked List: linked-list.md
-      - Stack: stack.md
-      - Queue: queue.md
+    - Problem-Solving Techniques:
+        - Two Pointers: dsa/two-pointers.md
+        - Sliding Window: dsa/sliding-window.md
+        - Binary Search: dsa/binary-search.md
+        - Backtracking: dsa/backtracking.md
+        - Intervals: dsa/intervals.md
 
-  - Problem-Solving Techniques:
-      - Two Pointers: two-pointers.md
-      - Sliding Window: sliding-window.md
-      - Binary Search: binary-search.md
-      - Backtracking: backtracking.md
-      - Intervals: intervals.md
+    - Non-Linear Data Structures:
+        - Tree: dsa/tree.md
+        - Graph: dsa/graph.md
+        - Trie: dsa/trie.md
+        - Heap / Priority Queue: dsa/heap.md
 
-  - Non-Linear Data Structures:
-      - Tree: tree.md
-      - Graph: graph.md
-      - Trie: trie.md
-      - Heap / Priority Queue: heap.md
+    - Algorithms & Patterns:
+        - Dynamic Programming: dsa/dynamic-programming.md
+        - Greedy Algorithm: dsa/greedy.md
 
-  - Algorithms & Patterns:
-      - Dynamic Programming: dynamic-programming.md
-      - Greedy Algorithm: greedy.md
-
-  - Techniques & Math:
-      - Maths: maths.md
-      - Bit Manipulation: bit-manipulation.md
+    - Techniques & Math:
+        - Maths: dsa/maths.md
+        - Bit Manipulation: dsa/bit-manipulation.md
+  - System Design:
+    - Overview: system-design/index.md
+    - Fundamentals:
+        - Back of Envelope: system-design/fundamentals/back-of-envelope.md
+        - Database Design: system-design/fundamentals/database-design.md
+        - Building Blocks: system-design/fundamentals/building-blocks.md
+    - Problems:
+        - 01. URL Shortener: system-design/problems/01-url-shortener.md
 
 extra:
   social:
