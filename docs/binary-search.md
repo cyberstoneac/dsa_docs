@@ -24,26 +24,25 @@
 - Searching with Conditions (Peak, Minimum, comparisons)
 - Binary Search on Answer (searching over possible solutions, not elements)
 
+---
+
 ## 🔹 Basic Template
 
 ### Iterative Approach
 ```java
 public int binarySearch(int[] arr, int target) {
     int left = 0, right = arr.length - 1;
-    
     while (left <= right) {
-        int mid = left + (right - left) / 2; // Prevents overflow
-        
+        int mid = left + (right - left) / 2;
         if (arr[mid] == target) {
             return mid;
         } else if (arr[mid] < target) {
-            left = mid + 1;  // Target is in right half
+            left = mid + 1;
         } else {
-            right = mid - 1; // Target is in left half
+            right = mid - 1;
         }
     }
-    
-    return -1; // Not found
+    return -1;
 }
 ```
 
@@ -51,17 +50,15 @@ public int binarySearch(int[] arr, int target) {
 ```java
 public int binarySearchRecursive(int[] arr, int target, int left, int right) {
     if (left > right) {
-        return -1; // Base case: search space exhausted
+        return -1;
     }
-    
     int mid = left + (right - left) / 2;
-    
     if (arr[mid] == target) {
         return mid;
     } else if (arr[mid] < target) {
-        return binarySearchRecursive(arr, target, mid + 1, right); // Search right
+        return binarySearchRecursive(arr, target, mid + 1, right);
     } else {
-        return binarySearchRecursive(arr, target, left, mid - 1);  // Search left
+        return binarySearchRecursive(arr, target, left, mid - 1);
     }
 }
 ```
@@ -103,7 +100,7 @@ Array:  [1, 3, 5, 7, 9, 11, 13, 15]
          L              M              R
 left=0, right=7, mid=3
 
-Step 1: nums[mid]=7 == target=7 → Found! Return 3
+Step 1: nums[mid]=7 == target=7 -> Found! Return 3
 ```
 
 Input: `nums = [1, 3, 5, 7, 9, 11, 13, 15]`, `target = 10`
@@ -111,18 +108,18 @@ Input: `nums = [1, 3, 5, 7, 9, 11, 13, 15]`, `target = 10`
 **Step-by-step execution:**
 ```
 Step 1: left=0, right=7, mid=3
-        nums[3]=7 < target=10 → Search right half
+        nums[3]=7 < target=10 -> Search right half
         left = mid + 1 = 4
 
 Step 2: left=4, right=7, mid=5
-        nums[5]=11 > target=10 → Search left half
+        nums[5]=11 > target=10 -> Search left half
         right = mid - 1 = 4
 
 Step 3: left=4, right=4, mid=4
-        nums[4]=9 < target=10 → Search right half
+        nums[4]=9 < target=10 -> Search right half
         left = mid + 1 = 5
 
-Step 4: left=5, right=4 → left > right, loop ends
+Step 4: left=5, right=4 -> left > right, loop ends
         Return -1 (not found)
 ```
 
@@ -155,27 +152,24 @@ graph TD
 ```java
 public int search(int[] nums, int target) {
     int left = 0, right = nums.length - 1;
-    
     while (left <= right) {
         int mid = left + (right - left) / 2;
-        
         if (nums[mid] == target) {
             return mid;
         } else if (nums[mid] < target) {
-            left = mid + 1;  // Target must be larger, go right
+            left = mid + 1;
         } else {
-            right = mid - 1; // Target must be smaller, go left
+            right = mid - 1;
         }
     }
-    
     return -1;
 }
 ```
 
 **Edge Cases:**
-- Empty array: loop doesn't execute, returns -1 ✓
-- Single element match: works correctly ✓
-- Target not in array: left > right eventually, returns -1 ✓
+- Empty array: loop doesn't execute, returns -1
+- Single element match: works correctly
+- Target not in array: left > right eventually, returns -1
 
 **Similar Pattern Problems:**
 - Contains Duplicate II (searching within a range)
@@ -200,21 +194,21 @@ Input: `nums = [1, 3, 5, 7]`, `target = 6`
 Expected Output: 3 (insert 6 after 5, before 7)
 
 Step 1: left=0, right=3, mid=1
-        nums[1]=3 < target=6 → left = 2
+        nums[1]=3 < target=6 -> left = 2
 
 Step 2: left=2, right=3, mid=2
-        nums[2]=5 < target=6 → left = 3
+        nums[2]=5 < target=6 -> left = 3
 
 Step 3: left=3, right=3, mid=3
-        nums[3]=7 > target=6 → right = 2
+        nums[3]=7 > target=6 -> right = 2
 
-Step 4: left=3, right=2 → Loop ends (left > right)
+Step 4: left=3, right=2 -> Loop ends (left > right)
         The left pointer is now at position 3, which is the correct insertion point!
 ```
 
 **Key Insight:**
 When element is not found, the `left` pointer will always be positioned at the exact insertion point to maintain sorted order. This is because:
-- All elements to the left of `left` are ≤ target
+- All elements to the left of `left` are <= target
 - All elements at and right of `left` are > target
 
 **Why It Works:**
@@ -223,27 +217,24 @@ We use the same binary search logic as regular search, but when element not foun
 ```java
 public int searchInsert(int[] nums, int target) {
     int left = 0, right = nums.length - 1;
-    
     while (left <= right) {
         int mid = left + (right - left) / 2;
-        
         if (nums[mid] == target) {
-            return mid; // Found exact position
+            return mid;
         } else if (nums[mid] < target) {
-            left = mid + 1;  // Move right boundary
+            left = mid + 1;
         } else {
-            right = mid - 1; // Move left boundary
+            right = mid - 1;
         }
     }
-    
-    return left; // Insertion position
+    return left;
 }
 ```
 
 **Edge Cases:**
-- Target smaller than all elements: left stays at 0 ✓
-- Target larger than all elements: left becomes array.length ✓
-- Target at beginning/middle/end: all work correctly ✓
+- Target smaller than all elements: left stays at 0
+- Target larger than all elements: left becomes array.length
+- Target at beginning/middle/end: all work correctly
 
 **Similar Pattern Problems:**
 - First Bad Version (finding first occurrence of a condition)
@@ -266,16 +257,16 @@ Expected Output: [3, 4] (8 appears at indices 3 and 4)
 
 First Occurrence:
 Step 1: left=0, right=5, mid=2
-        nums[2]=7 < target=8 → left = 3
+        nums[2]=7 < target=8 -> left = 3
 
 Step 2: left=3, right=5, mid=4
-        nums[4]=8 == target → Found! But keep searching left
+        nums[4]=8 == target -> Found! But keep searching left
         result = 4, right = 3 (continue searching left half)
 
 Step 3: left=3, right=3, mid=3
-        nums[3]=8 == target → Found! result = 3, right = 2
+        nums[3]=8 == target -> Found! result = 3, right = 2
 
-Step 4: left=3, right=2 → Loop ends
+Step 4: left=3, right=2 -> Loop ends
         First occurrence at index 3
 
 Last Occurrence:
@@ -305,40 +296,34 @@ public int[] searchRange(int[] nums, int target) {
 private int findFirst(int[] nums, int target) {
     int left = 0, right = nums.length - 1;
     int result = -1;
-    
     while (left <= right) {
         int mid = left + (right - left) / 2;
-        
         if (nums[mid] == target) {
-            result = mid;           // Save this position
-            right = mid - 1;        // But keep searching LEFT for earlier occurrence
+            result = mid;
+            right = mid - 1;
         } else if (nums[mid] < target) {
-            left = mid + 1;         // Target is to the right
+            left = mid + 1;
         } else {
-            right = mid - 1;        // Target is to the left
+            right = mid - 1;
         }
     }
-    
     return result;
 }
 
 private int findLast(int[] nums, int target) {
     int left = 0, right = nums.length - 1;
     int result = -1;
-    
     while (left <= right) {
         int mid = left + (right - left) / 2;
-        
         if (nums[mid] == target) {
-            result = mid;           // Save this position
-            left = mid + 1;         // But keep searching RIGHT for later occurrence
+            result = mid;
+            left = mid + 1;
         } else if (nums[mid] < target) {
-            left = mid + 1;         // Target is to the right
+            left = mid + 1;
         } else {
-            right = mid - 1;        // Target is to the left
+            right = mid - 1;
         }
     }
-    
     return result;
 }
 ```
@@ -347,9 +332,9 @@ private int findLast(int[] nums, int target) {
 **Space Complexity**: O(1) - only pointers
 
 **Edge Cases:**
-- Target not present: both return -1 ✓
-- Single occurrence: first and last are same index ✓
-- All elements are target: first=0, last=length-1 ✓
+- Target not present: both return -1
+- Single occurrence: first and last are same index
+- All elements are target: first=0, last=length-1
 
 **Similar Pattern Problems:**
 - Find K Closest Elements (variant with range)
@@ -369,7 +354,7 @@ Input: `nums = [1, 2, 3, 1]`
 Expected Output: 2 (nums[2]=3 is greater than neighbors 2 and 1)
 
 Visual:
-    3 ← Peak (greater than both neighbors)
+    3 <- Peak (greater than both neighbors)
    / \
   2   1
  /
@@ -377,15 +362,15 @@ Visual:
 
 Step 1: left=0, right=3, mid=1
         Compare nums[1]=2 with nums[2]=3
-        nums[1] < nums[2] → Peak is on right side
+        nums[1] < nums[2] -> Peak is on right side
         left = 2
 
 Step 2: left=2, right=3, mid=2
         Compare nums[2]=3 with nums[3]=1
-        nums[2] > nums[3] → Peak is on left side (or at mid)
+        nums[2] > nums[3] -> Peak is on left side (or at mid)
         right = 2
 
-Step 3: left=2, right=2 → Loop ends, return left=2
+Step 3: left=2, right=2 -> Loop ends, return left=2
         nums[2]=3 is the peak
 ```
 
@@ -423,8 +408,8 @@ graph TD
     B -->|No| C["Return left: Found Peak"]
     B -->|Yes| D["mid = left + (right-left)/2"]
     D --> E{"nums[mid] > nums[mid+1]?"}
-    E -->|Yes<br/>Descending| F["right = mid<br/>Peak on left or at mid"]
-    E -->|No<br/>Ascending| G["left = mid + 1<br/>Peak on right"]
+    E -->|Yes Descending| F["right = mid Peak on left or at mid"]
+    E -->|No Ascending| G["left = mid + 1 Peak on right"]
     F --> B
     G --> B
     C --> H["Peak element at index left"]
@@ -433,20 +418,15 @@ graph TD
 ```java
 public int findPeakElement(int[] nums) {
     int left = 0, right = nums.length - 1;
-    
-    while (left < right) {  // Note: < not <=
+    while (left < right) {
         int mid = left + (right - left) / 2;
-        
         if (nums[mid] > nums[mid + 1]) {
-            // Right side is descending, peak is on left (or at mid)
-            right = mid;  // Keep mid in search space
+            right = mid;
         } else {
-            // Right side is ascending, peak is on right
-            left = mid + 1;  // Can safely exclude mid
+            left = mid + 1;
         }
     }
-    
-    return left;  // left and right will converge at peak
+    return left;
 }
 ```
 
@@ -457,10 +437,10 @@ We use `left < right` (not `<=`) because once left==right, we've found our answe
 **Space Complexity**: O(1)
 
 **Edge Cases:**
-- Single element: returns 0 immediately ✓
-- Strictly increasing: returns last element ✓
-- Strictly decreasing: returns first element ✓
-- Multiple peaks: returns any one of them ✓
+- Single element: returns 0 immediately
+- Strictly increasing: returns last element
+- Strictly decreasing: returns first element
+- Multiple peaks: returns any one of them
 
 **Similar Pattern Problems:**
 - Mountain Peak Array (similar comparison logic)
@@ -482,7 +462,7 @@ Expected Output: 4
 Rotation point:
    Original: [0, 1, 2, 4, 5, 6, 7]
    Rotated:  [4, 5, 6, 7, 0, 1, 2]
-                         ↑ rotation happened here
+                         ^ rotation happened here
 
 The KEY insight: One half is ALWAYS sorted!
 
@@ -491,16 +471,16 @@ Step 1: left=0, right=6, mid=3
         Check if left half is sorted: nums[0]=4 <= nums[3]=7? YES
         Left half [4,5,6,7] is sorted
         Is target 0 in range [4,7]? NO
-        So target must be in right half → left = 4
+        So target must be in right half -> left = 4
 
 Step 2: left=4, right=6, mid=5
         nums[5]=1
         Check if left half is sorted: nums[4]=0 <= nums[5]=1? YES
         Left half [0,1] is sorted
         Is target 0 in range [0,1]? YES
-        Search left → right = 4
+        Search left -> right = 4
 
-Step 3: left=4, right=4 → Found! Return 4
+Step 3: left=4, right=4 -> Found! Return 4
 ```
 
 **Key Insight - Identify Sorted Half:**
@@ -522,12 +502,12 @@ graph TD
     A["Start: left, right, mid"] --> B{"nums[mid] == target?"}
     B -->|Yes| C["Return mid: Found!"]
     B -->|No| D{"nums[left] <= nums[mid]?"}
-    D -->|Yes<br/>Left sorted| E{"Target in range<br/>[nums[left], nums[mid])?"}
-    D -->|No<br/>Right sorted| F{"Target in range<br/>(nums[mid], nums[right]]?"}
-    E -->|Yes| G["right = mid - 1<br/>Search Left"]
-    E -->|No| H["left = mid + 1<br/>Search Right"]
-    F -->|Yes| I["left = mid + 1<br/>Search Right"]
-    F -->|No| J["right = mid - 1<br/>Search Left"]
+    D -->|Yes Left sorted| E{"Target in range [nums[left], nums[mid])?"}
+    D -->|No Right sorted| F{"Target in range (nums[mid], nums[right]]?"}
+    E -->|Yes| G["right = mid - 1 Search Left"]
+    E -->|No| H["left = mid + 1 Search Right"]
+    F -->|Yes| I["left = mid + 1 Search Right"]
+    F -->|No| J["right = mid - 1 Search Left"]
     G --> K["left <= right?"]
     H --> K
     I --> K
@@ -540,46 +520,35 @@ graph TD
 **Step-by-Step Logic:**
 ```
 1. Find mid
-2. Check if nums[mid] == target → Return
+2. Check if nums[mid] == target -> Return
 3. Determine which half is sorted by comparing nums[left] with nums[mid]
-4. If sorted half contains target → search that half
-5. Otherwise → search the other half
+4. If sorted half contains target -> search that half
+5. Otherwise -> search the other half
 6. Repeat
 ```
 
 ```java
 public int search(int[] nums, int target) {
     int left = 0, right = nums.length - 1;
-    
     while (left <= right) {
         int mid = left + (right - left) / 2;
-        
         if (nums[mid] == target) {
             return mid;
         }
-        
-        // Determine which half is sorted
         if (nums[left] <= nums[mid]) {
-            // LEFT half is sorted
             if (target >= nums[left] && target < nums[mid]) {
-                // Target is in sorted left half
                 right = mid - 1;
             } else {
-                // Target is in right half
                 left = mid + 1;
             }
         } else {
-            // RIGHT half is sorted
             if (target > nums[mid] && target <= nums[right]) {
-                // Target is in sorted right half
                 left = mid + 1;
             } else {
-                // Target is in left half
                 right = mid - 1;
             }
         }
     }
-    
     return -1;
 }
 ```
@@ -593,9 +562,9 @@ public int search(int[] nums, int target) {
 **Space Complexity**: O(1)
 
 **Edge Cases:**
-- Target at rotation point: found correctly ✓
-- Rotation at start or end: works normally ✓
-- Array not actually rotated: works as normal binary search ✓
+- Target at rotation point: found correctly
+- Rotation at start or end: works normally
+- Array not actually rotated: works as normal binary search
 
 **Similar Pattern Problems:**
 - Search in Rotated Sorted Array II (with duplicates - much harder!)
@@ -616,21 +585,21 @@ Expected Output: 1
 
 Original: [1, 2, 3, 4, 5]
 Rotated:  [3, 4, 5, 1, 2]
-                    ↑ minimum after rotation
+                    ^ minimum after rotation
 
 The minimum is always at the rotation point!
 
 Step 1: left=0, right=4, mid=2
         nums[2]=5, nums[4]=2
-        nums[2] > nums[4]? YES → minimum must be in right half
+        nums[2] > nums[4]? YES -> minimum must be in right half
         left = mid + 1 = 3
 
 Step 2: left=3, right=4, mid=3
         nums[3]=1, nums[4]=2
-        nums[3] > nums[4]? NO → minimum is in left half (or at mid)
+        nums[3] > nums[4]? NO -> minimum is in left half (or at mid)
         right = mid = 3
 
-Step 3: left=3, right=3 → Loop ends
+Step 3: left=3, right=3 -> Loop ends
         Return nums[3] = 1
 ```
 
@@ -653,19 +622,14 @@ In a rotated array:
 ```java
 public int findMin(int[] nums) {
     int left = 0, right = nums.length - 1;
-    
-    while (left < right) {  // Use < not <=
+    while (left < right) {
         int mid = left + (right - left) / 2;
-        
         if (nums[mid] > nums[right]) {
-            // Right half is smallest, minimum is there
-            left = mid + 1;  // Can exclude mid since it's larger
+            left = mid + 1;
         } else {
-            // Right half (starting from mid) is sorted and smaller
-            right = mid;    // Keep mid, don't exclude it
+            right = mid;
         }
     }
-    
     return nums[left];
 }
 ```
@@ -679,10 +643,10 @@ public int findMin(int[] nums) {
 **Space Complexity**: O(1)
 
 **Edge Cases:**
-- Array not rotated (minimum at start): works correctly ✓
-- Rotated once (minimum at end): works correctly ✓
-- Single element: loop doesn't execute, returns that element ✓
-- All elements equal except minimum: works correctly ✓
+- Array not rotated (minimum at start): works correctly
+- Rotated once (minimum at end): works correctly
+- Single element: loop doesn't execute, returns that element
+- All elements equal except minimum: works correctly
 
 **Similar Pattern Problems:**
 - Find Minimum in Rotated Sorted Array II (with duplicates - trickier!)
@@ -704,7 +668,7 @@ Input: `piles = [1, 1, 1, 1]`, `h = 4`
 Expected Output: 1
 
 Explanation:
-At speed 1: 1+1+1+1 = 4 hours ✓
+At speed 1: 1+1+1+1 = 4 hours
 
 Different speeds:
 Speed 1: 1+1+1+1 = 4 hours (fits in 4 hours!)
@@ -724,60 +688,31 @@ But we can binary search the answer.
 
 Input: `piles = [1, 1, 6, 1, 7, 1, 1]`, `h = 8`
 ```
-Expected Output: 2
+Expected Output: 6
 
-Speed 1: 1+1+6+1+7+1+1 = 18 hours ✗ (exceeds 8)
-Speed 2: 1+1+3+1+4+1+1 = 12 hours ✗ (exceeds 8)
-Speed 3: 1+1+2+1+3+1+1 = 9 hours ✗ (exceeds 8)
-Speed 4: 1+1+2+1+2+1+1 = 8 hours ✓ (exactly 8!)
-
-But wait, check speed 3 again:
-At speed 3:
-  Pile 1 (1 banana): ceil(1/3) = 1 hour
-  Pile 2 (1 banana): ceil(1/3) = 1 hour
-  Pile 3 (6 bananas): ceil(6/3) = 2 hours
-  Pile 4 (1 banana): ceil(1/3) = 1 hour
-  Pile 5 (7 bananas): ceil(7/3) = 3 hours
-  Pile 6 (1 banana): ceil(1/3) = 1 hour
-  Pile 7 (1 banana): ceil(1/3) = 1 hour
-  Total: 1+1+2+1+3+1+1 = 10 hours (exceeds 8)
-
-Speed 4:
-  Total = 1+1+2+1+2+1+1 = 9 hours (still exceeds!)
-
-Actually recalculate speed 2:
-  Pile 1: ceil(1/2) = 1
-  Pile 2: ceil(1/2) = 1
-  Pile 3: ceil(6/2) = 3
-  Pile 4: ceil(1/2) = 1
-  Pile 5: ceil(7/2) = 4
-  Pile 6: ceil(1/2) = 1
-  Pile 7: ceil(1/2) = 1
-  Total: 1+1+3+1+4+1+1 = 12 hours (exceeds)
-
-Actually the answer should be found by binary search:
+Binary search process:
 min_speed = 1, max_speed = max(piles) = 7
 
 Step 1: left=1, right=7, mid=4
-        canFinish(piles, 8, 4)? 1+1+2+1+2+1+1=9 > 8? NO
+        canFinish(piles, 8, 4)? 1+1+2+1+2+1+1 = 9 > 8? NO
         left = 5
 
 Step 2: left=5, right=7, mid=6
-        canFinish(piles, 8, 6)? 1+1+1+1+2+1+1=8 ≤ 8? YES
+        canFinish(piles, 8, 6)? 1+1+1+1+2+1+1 = 8 <= 8? YES
         right = 6
 
 Step 3: left=5, right=6, mid=5
-        canFinish(piles, 8, 5)? 1+1+2+1+2+1+1=9 ≤ 8? NO
+        canFinish(piles, 8, 5)? 1+1+2+1+2+1+1 = 9 <= 8? NO
         left = 6
 
-Step 4: left=6, right=6 → Loop ends
-        Return 6? But let me verify...
+Step 4: left=6, right=6 -> Loop ends
+        Return 6
 ```
 
 **Key Insight - Search Space is ORDERED:**
 This is NOT searching in an array, but searching in a RANGE of possible answers (speeds).
 The critical observation is:
-- **If speed K works** (can finish in ≤ h hours), then any speed > K also works
+- **If speed K works** (can finish in <= h hours), then any speed > K also works
 - **If speed K doesn't work** (takes > h hours), then any speed < K also doesn't work
 - This MONOTONIC property makes binary search applicable!
 
@@ -786,15 +721,15 @@ We're not searching in data, but in the solution space (1 to max_pile).
 **Binary Search on Answer Pattern:**
 ```mermaid
 graph TD
-    A["Define answer range:<br/>min=1, max=max_pile"] --> B["Binary search the range"]
+    A["Define answer range: min=1, max=max_pile"] --> B["Binary search the range"]
     B --> C["mid = left + (right-left)/2"]
     C --> D["Test: canFinish at speed=mid?"]
-    D -->|Yes<br/>Works| E["right = mid<br/>Try slower speed"]
-    D -->|No<br/>Fails| F["left = mid + 1<br/>Try faster speed"]
+    D -->|Yes Works| E["right = mid Try slower speed"]
+    D -->|No Fails| F["left = mid + 1 Try faster speed"]
     E --> G{"left < right?"}
     F --> G
     G -->|Yes| H["Continue searching"]
-    G -->|No| I["Return left<br/>Minimum working speed"]
+    G -->|No| I["Return left Minimum working speed"]
     H --> C
 ```
 
@@ -809,37 +744,26 @@ graph TD
 ```java
 public int minEatingSpeed(int[] piles, int h) {
     int left = 1, right = 0;
-    
-    // Maximum speed needed is eating the largest pile in 1 hour
     for (int pile : piles) {
         right = Math.max(right, pile);
     }
-    
     while (left < right) {
         int mid = left + (right - left) / 2;
-        
         if (canFinish(piles, h, mid)) {
-            // This speed works, try slower
-            right = mid;  // Could be faster (smaller speed)
+            right = mid;
         } else {
-            // This speed doesn't work, need faster
             left = mid + 1;
         }
     }
-    
-    return left;  // left is the minimum working speed
+    return left;
 }
 
 private boolean canFinish(int[] piles, int h, int speed) {
     long hours = 0;
-    
     for (int pile : piles) {
-        // Ceiling division: (a + b - 1) / b = ceil(a/b)
         hours += (pile + speed - 1) / speed;
-        
-        if (hours > h) return false;  // Optimization: early exit
+        if (hours > h) return false;
     }
-    
     return hours <= h;
 }
 ```
@@ -849,7 +773,7 @@ To calculate hours for eating a pile:
 - Pile = 7, Speed = 2
 - Mathematically: 7/2 = 3.5 hours
 - Actual hours needed: 4 hours (can't have fractional hours)
-- Formula: `ceil(7/2) = (7 + 2 - 1) / 2 = 8 / 2 = 4` ✓
+- Formula: `ceil(7/2) = (7 + 2 - 1) / 2 = 8 / 2 = 4`
 
 **Time Complexity**: O(log(max_pile) * n) where n is number of piles
 - Binary search over speeds: O(log(max_pile))
@@ -858,9 +782,9 @@ To calculate hours for eating a pile:
 **Space Complexity**: O(1)
 
 **Edge Cases:**
-- h equals total time needed to eat at max(piles) speed: returns max(piles) ✓
-- Single pile: binary search still works ✓
-- Very large numbers: use long to avoid overflow ✓
+- h equals total time needed to eat at max(piles) speed: returns max(piles)
+- Single pile: binary search still works
+- Very large numbers: use long to avoid overflow
 
 **Similar Pattern Problems:**
 - Minimum Speed to Finish All Jobs (similar pattern, different context)
@@ -905,8 +829,8 @@ One valid partition:
 LEFT:  [1, 3, | 2, 4]  (4 elements)
 RIGHT: [5, 7, | 6, 8]  (4 elements)
 
-Partition condition: ALL elements on LEFT ≤ ALL elements on RIGHT
-Max on left = 4, Min on right = 5? ✓ Valid!
+Partition condition: ALL elements on LEFT <= ALL elements on RIGHT
+Max on left = 4, Min on right = 5? Valid!
 ```
 
 If we partition correctly:
@@ -920,44 +844,32 @@ We binary search for the correct partition position in nums1 (smaller array):
 
 ```java
 public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-    // Ensure nums1 is the smaller array for optimization
     if (nums1.length > nums2.length) {
         return findMedianSortedArrays(nums2, nums1);
     }
-    
     int m = nums1.length;
     int n = nums2.length;
-    int left = 0, right = m;  // Search range: 0 to m
-    
+    int left = 0, right = m;
     while (left <= right) {
         int partition1 = left + (right - left) / 2;
         int partition2 = (m + n + 1) / 2 - partition1;
-        
-        // Handle edge cases for partition boundaries
         int left1  = (partition1 == 0) ? Integer.MIN_VALUE : nums1[partition1 - 1];
         int right1 = (partition1 == m) ? Integer.MAX_VALUE : nums1[partition1];
-        
         int left2  = (partition2 == 0) ? Integer.MIN_VALUE : nums2[partition2 - 1];
         int right2 = (partition2 == n) ? Integer.MAX_VALUE : nums2[partition2];
-        
-        // Check if partition is valid
         if (left1 <= right2 && left2 <= right1) {
-            // Valid partition found!
             if ((m + n) % 2 == 0) {
                 return (Math.max(left1, left2) + Math.min(right1, right2)) / 2.0;
             } else {
-                return Math.max(left1, left2);  // Odd total, extra on left
+                return Math.max(left1, left2);
             }
         } else if (left1 > right2) {
-            // Too many elements from nums1 on left, reduce
             right = partition1 - 1;
         } else {
-            // Too many elements from nums2 on left, increase
             left = partition1 + 1;
         }
     }
-    
-    return -1.0;  // Should never reach here for valid input
+    return -1.0;
 }
 ```
 
@@ -977,7 +889,7 @@ Step 1: partition1=1
         left2  = nums2[0] = 2
         right2 = Integer.MAX_VALUE (partition2=1 is at boundary)
         
-        Check: 1 <= MAX_VALUE? ✓ and 2 <= 3? ✓
+        Check: 1 <= MAX_VALUE? YES and 2 <= 3? YES
         Valid partition!
         
         Total is odd (3), so median = max(1, 2) = 2.0
@@ -995,7 +907,7 @@ RIGHT: [3] | (nothing from nums2, empty = 1 element)
        (1 from nums1, 0 from nums2)
 
 Validation:
-max(1, 2) = 2 ≤ min(3, MAX) = 3? ✓
+max(1, 2) = 2 <= min(3, MAX) = 3? Valid!
 
 Median = max(left) = max(1, 2) = 2
 ```
@@ -1004,10 +916,10 @@ Median = max(left) = max(1, 2) = 2
 **Space Complexity**: O(1) - only using pointers and temporary variables
 
 **Edge Cases:**
-- Arrays of different sizes: handled by choosing smaller one ✓
-- One empty array: returns median of non-empty array ✓
-- Both empty: invalid input, but formula still works ✓
-- All elements in one array smaller: partition handles correctly ✓
+- Arrays of different sizes: handled by choosing smaller one
+- One empty array: returns median of non-empty array
+- Both empty: invalid input, but formula still works
+- All elements in one array smaller: partition handles correctly
 
 **Similar Pattern Problems:**
 - Median of Two Sorted Lists (identical approach)
@@ -1095,12 +1007,11 @@ int result = (a + b - 1) / b;  // Equivalent to Math.ceil((double)a / b)
 
 ## 🎯 Common Pitfalls to Avoid
 
-- ❌ **Using `mid = (left + right) / 2`**: Causes integer overflow with large numbers
-- ❌ **Forgetting array must be sorted**: Binary search only works on sorted data
-- ❌ **Wrong boundary conditions**: For first/last occurrence, must continue searching after finding
-- ❌ **Incorrect loop termination**: Using `left <= right` when should use `left < right` (or vice versa)
-- ❌ **Confusing `mid + 1` vs `mid`**: Off-by-one errors when updating pointers
-- ❌ **Not handling edge cases**: Empty array, single element, all duplicates
-- ❌ **Assuming all comparisons are for equality**: Some problems use comparisons (peak, rotated)
-- ❌ **Not recognizing binary search can apply**: Missing "search on answer" patterns in non-array problems
-
+- Using `mid = (left + right) / 2`: Causes integer overflow with large numbers
+- Forgetting array must be sorted: Binary search only works on sorted data
+- Wrong boundary conditions: For first/last occurrence, must continue searching after finding
+- Incorrect loop termination: Using `left <= right` when should use `left < right` (or vice versa)
+- Confusing `mid + 1` vs `mid`: Off-by-one errors when updating pointers
+- Not handling edge cases: Empty array, single element, all duplicates
+- Assuming all comparisons are for equality: Some problems use comparisons (peak, rotated)
+- Not recognizing binary search can apply: Missing "search on answer" patterns in non-array problems
