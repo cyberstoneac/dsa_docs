@@ -90,13 +90,33 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Graph</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-graph-simple-explanation">What is a Graph? (Simple Explanation)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#representation">Representation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#common-algorithms">Common Algorithms</a>
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-store-a-graph-representation">How to Store a Graph (Representation)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-adjacency-list-most-common">1. Adjacency List (Most Common)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-adjacency-matrix">2. Adjacency Matrix</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-edge-list">3. Edge List</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-algorithms-what-they-do">Common Algorithms (What They Do)</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#bfs-template">BFS Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dfs-template">DFS Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bfs-vs-dfs-decision-flow">BFS vs DFS Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -207,47 +227,206 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="graph">Graph</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-a-graph-simple-explanation">What is a Graph? (Simple Explanation)</h2>
+<p>Imagine a map of cities connected by roads:
+- <strong>Cities</strong> = Vertices (also called nodes)
+- <strong>Roads</strong> = Edges (connections between cities)</p>
+<p>A graph is just a way to represent connections between things. It could be:
+- Friends on social media (who knows whom)
+- Web pages linking to each other
+- Flights between airports
+- Prerequisites between courses</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li>Set of vertices connected by edges</li>
-<li><strong>Directed Graph</strong>: Edges have direction</li>
-<li><strong>Undirected Graph</strong>: Edges are bidirectional</li>
-<li><strong>Weighted Graph</strong>: Edges have weights/costs</li>
-<li><strong>Cycle</strong>: Path that starts and ends at same vertex</li>
-<li><strong>Connected Component</strong>: Set of vertices where any can reach any other</li>
+<li><strong>Vertex (Node)</strong>: A single point/entity in the graph</li>
+<li><strong>Edge</strong>: A connection between two vertices</li>
+<li><strong>Directed Graph</strong>: Roads are one-way (like a one-way street)</li>
+<li><strong>Undirected Graph</strong>: Roads are two-way (like a normal street)</li>
+<li><strong>Weighted Graph</strong>: Each road has a cost/distance/time</li>
+<li><strong>Path</strong>: A sequence of vertices connected by edges</li>
+<li><strong>Cycle</strong>: A path that starts and ends at the same vertex (like a round trip)</li>
+<li><strong>Connected Component</strong>: A group of vertices where everyone can reach everyone else</li>
+<li><strong>DAG</strong>: Directed Acyclic Graph - directed graph with no cycles (like a family tree)</li>
 </ul>
-<h2 id="representation">Representation</h2>
-<ul>
-<li><strong>Adjacency List</strong>: Array of lists (memory efficient)</li>
-<li><strong>Adjacency Matrix</strong>: 2D array (fast lookup, uses O(V²) space)</li>
-<li><strong>Edge List</strong>: List of edges (useful for some algorithms)</li>
-</ul>
-<h2 id="common-algorithms">Common Algorithms</h2>
-<ul>
-<li><strong>BFS</strong> (Breadth-First Search): Shortest path in unweighted graphs</li>
-<li><strong>DFS</strong> (Depth-First Search): Traversal, cycle detection, topological sort</li>
-<li><strong>Dijkstra</strong>: Shortest path in weighted graphs (non-negative weights)</li>
-<li><strong>Union-Find</strong>: Detect cycles, connected components</li>
-<li><strong>Topological Sort</strong>: Linear ordering of DAG</li>
-<li><strong>Tarjan/Bridges</strong>: Find critical connections</li>
-</ul>
+<h2 id="how-to-store-a-graph-representation">How to Store a Graph (Representation)</h2>
+<h3 id="1-adjacency-list-most-common">1. Adjacency List (Most Common)</h3>
+<p>Think of it like a contact list: for each person, list who they know.
+<pre class="highlight"><code>0 -&gt; [1, 2]
+1 -&gt; [0, 3]
+2 -&gt; [0]
+3 -&gt; [1]</code></pre>
+Uses less memory. Best for sparse graphs.</p>
+<h3 id="2-adjacency-matrix">2. Adjacency Matrix</h3>
+<p>Think of it like a table with checkmarks: row i, column j = 1 if connected.
+<pre class="highlight"><code>   0  1  2  3
+0  0  1  1  0
+1  1  0  0  1
+2  1  0  0  0
+3  0  1  0  0</code></pre>
+Fast to check "are these connected?" but uses O(V^2) memory.</p>
+<h3 id="3-edge-list">3. Edge List</h3>
+<p>Just a list of all connections.
+<pre class="highlight"><code>[[0,1], [0,2], [1,3]]</code></pre>
+Useful for algorithms like Kruskal's.</p>
+<h2 id="common-algorithms-what-they-do">Common Algorithms (What They Do)</h2>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>What It Does</th>
+<th>Real-Life Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BFS</td>
+<td>Explores level by level</td>
+<td>Ripples in water</td>
+</tr>
+<tr>
+<td>DFS</td>
+<td>Goes deep before coming back</td>
+<td>Exploring a maze</td>
+</tr>
+<tr>
+<td>Dijkstra</td>
+<td>Shortest path with weights</td>
+<td>GPS navigation</td>
+</tr>
+<tr>
+<td>Union-Find</td>
+<td>Groups connected things</td>
+<td>Merging friend circles</td>
+</tr>
+<tr>
+<td>Topological Sort</td>
+<td>Orders tasks by dependencies</td>
+<td>Course prerequisites</td>
+</tr>
+</tbody>
+</table>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>BFS for shortest path</li>
-<li>DFS for cycle detection</li>
-<li>Union-Find for connectivity</li>
+<li>BFS for shortest path (unweighted)</li>
+<li>DFS for cycle detection and connectivity</li>
+<li>Union-Find for grouping/merging</li>
 <li>Heap for Dijkstra</li>
-<li>Graph coloring</li>
-<li>Backtracking for paths</li>
+<li>Graph coloring for bipartite checks</li>
+<li>Backtracking for finding all paths</li>
 </ul>
+<hr />
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="bfs-template">BFS Template</h3>
+<pre class="highlight"><code class="language-java">public void bfs(int start, List&lt;List&lt;Integer&gt;&gt; graph) {
+    Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+    boolean[] visited = new boolean[graph.size()];
+    queue.offer(start);
+    visited[start] = true;
+    while (!queue.isEmpty()) {
+        int node = queue.poll();
+        for (int neighbor : graph.get(node)) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                queue.offer(neighbor);
+            }
+        }
+    }
+}</code></pre>
+<h3 id="dfs-template">DFS Template</h3>
+<pre class="highlight"><code class="language-java">public void dfs(int node, List&lt;List&lt;Integer&gt;&gt; graph, boolean[] visited) {
+    visited[node] = true;
+    for (int neighbor : graph.get(node)) {
+        if (!visited[neighbor]) {
+            dfs(neighbor, graph, visited);
+        }
+    }
+}</code></pre>
+<h3 id="bfs-vs-dfs-decision-flow">BFS vs DFS Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Graph Problem"] --&gt; B{"Need shortest path?"}
+    B --&gt;|Yes| C["Use BFS"]
+    B --&gt;|No| D{"Need to explore deeply?"}
+    D --&gt;|Yes| E["Use DFS"]
+    D --&gt;|No| F{"Need to group connected nodes?"}
+    F --&gt;|Yes| G["Use Union-Find"]
+    F --&gt;|No| H{"Need shortest weighted path?"}
+    H --&gt;|Yes| I["Use Dijkstra"]
+    H --&gt;|No| J["Consider Topological Sort or other"]</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-number-of-islands">1. <strong>Number of Islands</strong></h4>
-<p><strong>Explanation</strong>: DFS/BFS on grid. Mark visited cells, count connected components of '1'. Time: O(m<em>n), Space: O(m</em>n).</p>
+<p><strong>Problem Description:</strong>
+You have a 2D grid of '1's (land) and '0's (water). Count how many islands there are. An island is land connected horizontally or vertically (not diagonally).</p>
+<p><strong>Simple Analogy:</strong>
+Imagine a map where '1' is land and '0' is water. You want to count how many separate landmasses exist.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>grid = [
+  ['1','1','0','0','0'],
+  ['1','1','0','0','0'],
+  ['0','0','1','0','0'],
+  ['0','0','0','1','1']
+]</code></pre>
+<pre class="highlight"><code>Expected Output: 3
+
+Visual:
+1 1 0 0 0
+1 1 0 0 0     &lt;- Island 1 (top-left block)
+0 0 1 0 0     &lt;- Island 2 (single cell)
+0 0 0 1 1     &lt;- Island 3 (bottom-right pair)
+
+How DFS works:
+Start at (0,0) = '1':
+  Mark as '0' (visited)
+  Explore all 4 directions recursively
+  This visits the entire top-left island
+  count = 1
+
+Continue scanning:
+(0,1) already '0' (visited)
+(0,2) = '0' skip
+...
+(2,2) = '1':
+  Mark as '0', explore -&gt; just one cell
+  count = 2
+
+(3,3) = '1':
+  Mark as '0', explore -&gt; visits (3,4) too
+  count = 3
+
+Return 3</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>grid = [
+  ['1','1','1'],
+  ['0','1','0'],
+  ['1','1','1']
+]</code></pre>
+<pre class="highlight"><code>Expected Output: 1 (all land is connected)
+
+1 1 1
+0 1 0     &lt;- All connected through center
+1 1 1</code></pre></p>
+<p><strong>Key Insight - Sink the Island:</strong>
+When we find land ('1'), we start a DFS that "sinks" the entire island by changing all connected '1's to '0's. Then we count how many times we had to start a new DFS.</p>
+<p><strong>Why It Works:</strong>
+- Each DFS call marks an entire connected component
+- After marking, those cells won't trigger another count
+- Number of DFS calls = number of islands
+- Grid boundaries and '0' cells stop the recursion</p>
+<p><strong>Visualization - Island Counting:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Scan grid cell by cell"] --&gt; B{"Found '1'?"}
+    B --&gt;|No| C["Move to next cell"]
+    B --&gt;|Yes| D["Start DFS, count++"]
+    D --&gt; E["Mark all connected '1' as '0'"]
+    E --&gt; F["Continue scanning"]
+    C --&gt; F
+    F --&gt; G{"More cells?"}
+    G --&gt;|Yes| A
+    G --&gt;|No| H["Return count"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int numIslands(char[][] grid) {
     if (grid == null || grid.length == 0) return 0;
-
     int count = 0;
     for (int i = 0; i &lt; grid.length; i++) {
         for (int j = 0; j &lt; grid[0].length; j++) {
@@ -264,17 +443,66 @@ private void dfs(char[][] grid, int i, int j) {
     if (i &lt; 0 || i &gt;= grid.length || j &lt; 0 || j &gt;= grid[0].length || grid[i][j] == '0') {
         return;
     }
-
     grid[i][j] = '0';
     dfs(grid, i + 1, j);
     dfs(grid, i - 1, j);
     dfs(grid, i, j + 1);
     dfs(grid, i, j - 1);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Max Area of Island, Number of Connected Components</p>
+<p><strong>Edge Cases:</strong>
+- Empty grid: returns 0
+- All water: returns 0
+- All land: returns 1
+- Single cell '1': returns 1</p>
+<p><strong>Time Complexity</strong>: O(m * n) - visit each cell once
+<strong>Space Complexity</strong>: O(m * n) - recursion stack in worst case</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Max Area of Island
+- Number of Connected Components
+- Surrounded Regions</p>
 <hr />
 <h4 id="2-flood-fill">2. <strong>Flood Fill</strong></h4>
-<p><strong>Explanation</strong>: DFS changing connected pixels of same color to new color. Time: O(m<em>n), Space: O(m</em>n).</p>
+<p><strong>Problem Description:</strong>
+You have an image (2D grid of colors). Starting from a pixel, change its color and the color of all connected pixels of the same original color to a new color. Like the paint bucket tool in MS Paint.</p>
+<p><strong>Simple Analogy:</strong>
+Think of clicking "fill" in a drawing app. The color spreads to all connected same-colored pixels.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>image = [[1,1,1],[1,1,0],[1,0,1]]</code>, <code>sr = 1, sc = 1</code>, <code>color = 2</code>
+<pre class="highlight"><code>Expected Output: [[2,2,2],[2,2,0],[2,0,1]]
+
+Original:
+1 1 1
+1 1 0
+1 0 1
+
+Start at (1,1) which is 1, change to 2:
+DFS spreads to all connected 1s:
+
+2 2 2
+2 2 0
+2 0 1
+
+The '0's and the bottom-right '1' (not connected) stay unchanged.</code></pre></p>
+<p>Input: <code>image = [[0,0,0],[0,0,0]]</code>, <code>sr = 0, sc = 0</code>, <code>color = 0</code>
+<pre class="highlight"><code>Expected Output: [[0,0,0],[0,0,0]]
+
+Original color = 0, new color = 0
+No change needed (already the target color)</code></pre></p>
+<p><strong>Key Insight - Same as Island Counting:</strong>
+This is almost identical to Number of Islands. Instead of counting, we just change colors. The key check is: only change pixels that match the ORIGINAL color.</p>
+<p><strong>Why It Works:</strong>
+- Start DFS from the given pixel
+- Change its color to new color
+- Recursively visit all 4 neighbors
+- Only continue if neighbor has the original color
+- This naturally spreads to the entire connected region</p>
+<p><strong>Visualization - Flood Fill:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Start at (sr, sc)"] --&gt; B{"Is it original color?"}
+    B --&gt;|No| C["Stop, return"]
+    B --&gt;|Yes| D["Change to new color"]
+    D --&gt; E["Visit 4 neighbors"]
+    E --&gt; F["Repeat for each"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int[][] floodFill(int[][] image, int sr, int sc, int color) {
     int original = image[sr][sc];
     if (original != color) {
@@ -287,119 +515,353 @@ private void dfs(int[][] image, int i, int j, int original, int color) {
     if (i &lt; 0 || i &gt;= image.length || j &lt; 0 || j &gt;= image[0].length || image[i][j] != original) {
         return;
     }
-
     image[i][j] = color;
     dfs(image, i + 1, j, original, color);
     dfs(image, i - 1, j, original, color);
     dfs(image, i, j + 1, original, color);
     dfs(image, i, j - 1, original, color);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Surrounded Regions, Pacific Atlantic Water Flow</p>
+<p><strong>Edge Cases:</strong>
+- New color same as original: return unchanged (avoid infinite loop)
+- Single pixel: changes it
+- All same color: changes all
+- No matching neighbors: changes only the starting pixel</p>
+<p><strong>Time Complexity</strong>: O(m * n)
+<strong>Space Complexity</strong>: O(m * n) recursion stack</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Surrounded Regions
+- Pacific Atlantic Water Flow
+- Number of Islands</p>
 <hr />
 <h4 id="3-clone-graph">3. <strong>Clone Graph</strong></h4>
-<p><strong>Explanation</strong>: DFS/BFS creating deep copy. Use HashMap to track visited nodes. Time: O(V+E), Space: O(V).</p>
+<p><strong>Problem Description:</strong>
+Given a reference to a node in a connected undirected graph, return a deep copy (clone) of the graph. Each node has a value and a list of neighbors.</p>
+<p><strong>Simple Analogy:</strong>
+Like photocopying a network of friends. You need to create entirely new nodes, not just reference the old ones.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>Graph: 1 -- 2
+       |    |
+       4 -- 3
+
+adjList = [[2,4],[1,3],[2,4],[1,3]]</code></pre>
+<pre class="highlight"><code>Expected Output: A deep copy of the same graph structure with new node objects
+
+Step 1: Start at node 1
+        Not in map -&gt; create copy, put in map
+        map = {1: copy1}
+
+Step 2: Visit neighbor 2
+        Not in map -&gt; create copy, put in map
+        map = {1: copy1, 2: copy2}
+        copy1.neighbors.add(copy2)
+
+Step 3: Visit neighbor 4 (from node 2's perspective)
+        Not in map -&gt; create copy
+        map = {1: copy1, 2: copy2, 4: copy4}
+        copy2.neighbors.add(copy4)
+
+Step 4: Visit neighbor 1 (from node 4)
+        Already in map -&gt; use copy1
+        copy4.neighbors.add(copy1)
+
+... continues until all nodes visited</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>Graph: 1 (single node, no neighbors)
+
+adjList = [[]]</code></pre>
+<pre class="highlight"><code>Expected Output: A single node with no neighbors
+
+Step 1: Create copy of node 1
+        Return copy</code></pre></p>
+<p><strong>Key Insight - HashMap to Track Copies:</strong>
+Use a HashMap that maps original nodes to their copies. Before creating a copy, check if it already exists. This prevents infinite loops in cyclic graphs.</p>
+<p><strong>Why It Works:</strong>
+- HashMap ensures we create exactly one copy per original node
+- When we encounter an already-copied node, we reuse the copy
+- DFS or BFS both work; DFS is simpler
+- Handles cycles naturally because we check the map first</p>
+<p><strong>Visualization - Clone Graph:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Start at node"] --&gt; B{"Already in map?"}
+    B --&gt;|Yes| C["Return existing copy"]
+    B --&gt;|No| D["Create new copy"]
+    D --&gt; E["Add to map"]
+    E --&gt; F["For each neighbor:"]
+    F --&gt; G["Recursively clone neighbor"]
+    G --&gt; H["Add cloned neighbor to copy's list"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public Node cloneGraph(Node node) {
     if (node == null) return null;
-
     Map&lt;Node, Node&gt; map = new HashMap&lt;&gt;();
     return dfs(node, map);
 }
 
 private Node dfs(Node node, Map&lt;Node, Node&gt; map) {
     if (map.containsKey(node)) return map.get(node);
-
     Node copy = new Node(node.val);
     map.put(node, copy);
-
     for (Node neighbor : node.neighbors) {
         copy.neighbors.add(dfs(neighbor, map));
     }
-
     return copy;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Copy List with Random Pointer</p>
+<p><strong>Edge Cases:</strong>
+- Null node: return null
+- Single node: return single copy
+- Cyclic graph: handled by map
+- Self-loop: handled by map</p>
+<p><strong>Time Complexity</strong>: O(V + E)
+<strong>Space Complexity</strong>: O(V) for the map</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Copy List with Random Pointer
+- Deep Copy of Binary Tree</p>
 <hr />
 <h4 id="4-find-the-town-judge">4. <strong>Find the Town Judge</strong></h4>
-<p><strong>Explanation</strong>: Judge is person that all trust but trusts no one. Count trust relationships. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+In a town of n people, the judge is someone who:
+- Trusts nobody
+- Is trusted by everyone else (n-1 people)</p>
+<p>Given trust relationships trust[i] = [a, b] means a trusts b. Find the judge, or -1 if no judge.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the most popular person who doesn't follow anyone back.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 3</code>, <code>trust = [[1,3],[2,3]]</code>
+<pre class="highlight"><code>Expected Output: 3
+
+Person 1 trusts 3
+Person 2 trusts 3
+Person 3 trusts nobody
+
+Check person 3:
+- Trusted by 2 people (1 and 2) = n-1 = 2 ✓
+- Trusts 0 people ✓
+Judge is 3</code></pre></p>
+<p>Input: <code>n = 3</code>, <code>trust = [[1,3],[2,3],[3,1]]</code>
+<pre class="highlight"><code>Expected Output: -1
+
+Person 1 trusts 3
+Person 2 trusts 3
+Person 3 trusts 1
+
+Person 3 is trusted by 2 people BUT also trusts 1
+So not a judge.
+No other person is trusted by everyone.
+Return -1</code></pre></p>
+<p>Input: <code>n = 1</code>, <code>trust = []</code>
+<pre class="highlight"><code>Expected Output: 1
+
+Only one person, trusts nobody, trusted by everyone (vacuously)
+Person 1 is the judge.</code></pre></p>
+<p><strong>Key Insight - Two Counters:</strong>
+Track two things per person:
+1. How many people they trust (out-degree)
+2. How many people trust them (in-degree)</p>
+<p>The judge has out-degree 0 and in-degree n-1.</p>
+<p><strong>Why It Works:</strong>
+- Judge trusts nobody -&gt; out-degree = 0
+- Everyone else trusts judge -&gt; in-degree = n-1
+- Only one person can satisfy both conditions
+- Simple counting, no graph traversal needed</p>
+<p><strong>Visualization - Town Judge:</strong>
+<pre class="mermaid"><code>graph TD
+    A["trust = [[1,3],[2,3]]"] --&gt; B["Count in-degrees and out-degrees"]
+    B --&gt; C["Person 1: in=0, out=1"]
+    B --&gt; D["Person 2: in=0, out=1"]
+    B --&gt; E["Person 3: in=2, out=0"]
+    E --&gt; F["Person 3 has in=n-1, out=0"]
+    F --&gt; G["Return 3"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int findJudge(int n, int[][] trust) {
     int[] trustCount = new int[n + 1];
     int[] trustedCount = new int[n + 1];
-
     for (int[] t : trust) {
         trustedCount[t[0]]++;
         trustCount[t[1]]++;
     }
-
     for (int i = 1; i &lt;= n; i++) {
         if (trustedCount[i] == 0 &amp;&amp; trustCount[i] == n - 1) {
             return i;
         }
     }
-
     return -1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Single Number (XOR variant)</p>
+<p><strong>Edge Cases:</strong>
+- n = 1, no trust: returns 1
+- No judge exists: returns -1
+- Multiple potential judges: impossible (only one can have in-degree n-1)
+- Self-trust: ignored (judge trusts nobody)</p>
+<p><strong>Time Complexity</strong>: O(n + E)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Celebrity Problem
+- Single Number</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="5-course-schedule-cycle-detection">5. <strong>Course Schedule (Cycle Detection)</strong></h4>
-<p><strong>Explanation</strong>: Detect cycle in directed graph. Use BFS with in-degree. Time: O(V+E), Space: O(V).</p>
+<p><strong>Problem Description:</strong>
+You have numCourses courses to take. Some courses have prerequisites: [a, b] means you must take b before a. Can you finish all courses? (i.e., is there a valid ordering with no cycles?)</p>
+<p><strong>Simple Analogy:</strong>
+Like checking if a set of tasks with dependencies can be completed. If A needs B and B needs A, it's impossible.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>numCourses = 4</code>, <code>prerequisites = [[1,0],[2,1],[3,2]]</code>
+<pre class="highlight"><code>Expected Output: true
+
+Course 0 -&gt; Course 1 -&gt; Course 2 -&gt; Course 3
+(0 has no prereqs, then 1, then 2, then 3)
+
+Step-by-step (Kahn's algorithm / BFS):
+In-degrees: 0:0, 1:1, 2:1, 3:1
+
+Queue initially: [0]
+Process 0: count=1, reduce in-degree of 1 -&gt; 0, add 1 to queue
+Process 1: count=2, reduce in-degree of 2 -&gt; 0, add 2 to queue
+Process 2: count=3, reduce in-degree of 3 -&gt; 0, add 3 to queue
+Process 3: count=4, queue empty
+
+count (4) == numCourses (4) -&gt; Return true</code></pre></p>
+<p>Input: <code>numCourses = 2</code>, <code>prerequisites = [[1,0],[0,1]]</code>
+<pre class="highlight"><code>Expected Output: false
+
+Course 1 needs 0, Course 0 needs 1
+Circular dependency!
+
+In-degrees: 0:1, 1:1
+Queue initially: [] (no course has in-degree 0)
+count = 0 != 2 -&gt; Return false</code></pre></p>
+<p><strong>Key Insight - In-Degree and Queue:</strong>
+Think of courses as nodes and prerequisites as directed edges. A course with no prerequisites (in-degree 0) can be taken first. Remove it, which might free up other courses. If we can remove all courses, no cycle.</p>
+<p><strong>Why It Works:</strong>
+- A cycle means some courses can never have in-degree 0
+- Kahn's algorithm removes nodes with in-degree 0 one by one
+- If we process all nodes, no cycle exists (can finish)
+- If some remain, there's a cycle (can't finish)
+- This is topological sorting in disguise</p>
+<p><strong>Visualization - Course Schedule:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Build graph and in-degrees"] --&gt; B["Queue all nodes with in-degree 0"]
+    B --&gt; C{"Queue empty?"}
+    C --&gt;|No| D["Poll node, count++"]
+    D --&gt; E["Reduce in-degree of neighbors"]
+    E --&gt; F["Add neighbors with in-degree 0 to queue"]
+    F --&gt; C
+    C --&gt;|Yes| G{"count == numCourses?"}
+    G --&gt;|Yes| H["Return true (no cycle)"]
+    G --&gt;|No| I["Return false (cycle exists)"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean canFinish(int numCourses, int[][] prerequisites) {
     int[] inDegree = new int[numCourses];
     List&lt;List&lt;Integer&gt;&gt; graph = new ArrayList&lt;&gt;();
-
     for (int i = 0; i &lt; numCourses; i++) {
         graph.add(new ArrayList&lt;&gt;());
     }
-
     for (int[] prereq : prerequisites) {
         graph.get(prereq[1]).add(prereq[0]);
         inDegree[prereq[0]]++;
     }
-
     Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
     for (int i = 0; i &lt; numCourses; i++) {
         if (inDegree[i] == 0) queue.offer(i);
     }
-
     int count = 0;
     while (!queue.isEmpty()) {
         int course = queue.poll();
         count++;
-
         for (int next : graph.get(course)) {
             inDegree[next]--;
             if (inDegree[next] == 0) queue.offer(next);
         }
     }
-
     return count == numCourses;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Course Schedule II, Topological Sort, Alien Dictionary</p>
+<p><strong>Edge Cases:</strong>
+- No prerequisites: all courses can be taken
+- Self-loop [0,0]: impossible
+- Disconnected graph: still works
+- Linear chain: always possible</p>
+<p><strong>Time Complexity</strong>: O(V + E)
+<strong>Space Complexity</strong>: O(V + E)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Course Schedule II (return the order)
+- Alien Dictionary
+- Topological Sort</p>
 <hr />
 <h4 id="6-pacific-atlantic-water-flow">6. <strong>Pacific Atlantic Water Flow</strong></h4>
-<p><strong>Explanation</strong>: Find cells where water flows to both oceans. Start from edges, work inward using DFS. Time: O(m<em>n), Space: O(m</em>n).</p>
+<p><strong>Problem Description:</strong>
+Given a 2D grid of heights, water can flow from a cell to adjacent cells with height &lt;= current. The Pacific Ocean touches the top and left edges. The Atlantic touches the bottom and right edges. Find all cells where water can flow to BOTH oceans.</p>
+<p><strong>Simple Analogy:</strong>
+Imagine rain falling on mountains. Water flows downhill. Which peaks can drain to both the west coast (Pacific) and east coast (Atlantic)?</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>heights = [
+  [1,2,2,3,5],
+  [3,2,3,4,4],
+  [2,4,5,3,1],
+  [6,7,1,4,5],
+  [5,1,1,2,4]
+]</code></pre>
+<pre class="highlight"><code>Expected Output: [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]
+
+Key insight: Work backwards!
+Instead of checking if water can flow from each cell to ocean,
+start from ocean edges and see which cells can reach them.
+
+Pacific (top + left edges):
+Start DFS from all top row and left column cells
+Water can flow TO these cells from higher neighbors
+Mark all reachable cells
+
+Atlantic (bottom + right edges):
+Start DFS from all bottom row and right column cells
+Mark all reachable cells
+
+Cells marked by both = answer
+
+Pacific reachable:
+Row 0: all
+Col 0: all
+Plus cells reachable from these going uphill
+
+Atlantic reachable:
+Row 4: all
+Col 4: all
+Plus cells reachable going uphill
+
+Intersection = [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>heights = [[1]]</code></pre>
+<pre class="highlight"><code>Expected Output: [[0,0]]
+
+Single cell touches both oceans (corner)</code></pre></p>
+<p><strong>Key Insight - Reverse Thinking (Start from Ocean):</strong>
+Instead of checking each cell (which would be expensive), start DFS from the ocean borders and move INWARD to higher or equal cells. A cell can reach the ocean if the ocean can reach it (going uphill).</p>
+<p><strong>Why It Works:</strong>
+- Water flows from high to low
+- Reverse: we can flow from low to high (going uphill from ocean)
+- If ocean can reach a cell going uphill, water can flow from that cell to ocean
+- Two separate DFS passes (one per ocean) mark reachable cells
+- Intersection gives cells that reach both</p>
+<p><strong>Visualization - Pacific Atlantic:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Start DFS from Pacific edges"] --&gt; B["Mark all reachable cells going uphill"]
+    B --&gt; C["Start DFS from Atlantic edges"]
+    C --&gt; D["Mark all reachable cells going uphill"]
+    D --&gt; E["Find cells marked by both"]
+    E --&gt; F["Return result"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; pacificAtlantic(int[][] heights) {
     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
     int m = heights.length, n = heights[0].length;
     boolean[][] pacific = new boolean[m][n];
     boolean[][] atlantic = new boolean[m][n];
-
-    // DFS from top and left (Pacific)
     for (int i = 0; i &lt; m; i++) {
         dfs(heights, pacific, i, 0);
     }
     for (int j = 0; j &lt; n; j++) {
         dfs(heights, pacific, 0, j);
     }
-
-    // DFS from bottom and right (Atlantic)
     for (int i = 0; i &lt; m; i++) {
         dfs(heights, atlantic, i, n - 1);
     }
     for (int j = 0; j &lt; n; j++) {
         dfs(heights, atlantic, m - 1, j);
     }
-
     for (int i = 0; i &lt; m; i++) {
         for (int j = 0; j &lt; n; j++) {
             if (pacific[i][j] &amp;&amp; atlantic[i][j]) {
@@ -407,7 +869,6 @@ private Node dfs(Node node, Map&lt;Node, Node&gt; map) {
             }
         }
     }
-
     return result;
 }
 
@@ -415,54 +876,97 @@ private void dfs(int[][] heights, boolean[][] visited, int i, int j) {
     if (i &lt; 0 || i &gt;= heights.length || j &lt; 0 || j &gt;= heights[0].length || visited[i][j]) {
         return;
     }
-
     visited[i][j] = true;
-
     int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
     for (int[] dir : dirs) {
         int ni = i + dir[0], nj = j + dir[1];
-        if (ni &gt;= 0 &amp;&amp; ni &lt; heights.length &amp;&amp; nj &gt;= 0 &amp;&amp; nj &lt; heights[0].length &amp;&amp; 
+        if (ni &gt;= 0 &amp;&amp; ni &lt; heights.length &amp;&amp; nj &gt;= 0 &amp;&amp; nj &lt; heights[0].length &amp;&amp;
             heights[ni][nj] &gt;= heights[i][j]) {
             dfs(heights, visited, ni, nj);
         }
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Number of Islands, Surrounded Regions</p>
+<p><strong>Edge Cases:</strong>
+- Single row: all cells touch both oceans (top = Pacific, bottom = Atlantic)
+- Single column: all cells touch both
+- All same height: all cells reach both oceans
+- Single cell: touches both</p>
+<p><strong>Time Complexity</strong>: O(m * n)
+<strong>Space Complexity</strong>: O(m * n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Number of Islands
+- Surrounded Regions
+- Walls and Gates</p>
 <hr />
 <h4 id="7-word-ladder">7. <strong>Word Ladder</strong></h4>
-<p><strong>Explanation</strong>: Shortest transformation path using BFS. Build word graph. Time: O(N<em>L²), Space: O(N</em>L).</p>
+<p><strong>Problem Description:</strong>
+Given two words (beginWord and endWord) and a dictionary, find the length of the shortest transformation sequence from beginWord to endWord. Each step can change exactly one letter, and each intermediate word must be in the dictionary.</p>
+<p><strong>Simple Analogy:</strong>
+Like a word puzzle: change "hit" to "cog" one letter at a time, where each intermediate word is valid.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>beginWord = "hit"</code>, <code>endWord = "cog"</code>, <code>wordList = ["hot","dot","dog","lot","log","cog"]</code>
+<pre class="highlight"><code>Expected Output: 5
+
+Shortest path:
+hit -&gt; hot -&gt; dot -&gt; dog -&gt; cog
+(change 1 letter each time)
+
+BFS level by level:
+Level 1: hit (start)
+Level 2: hot (change i-&gt;o)
+Level 3: dot, lot (change h-&gt;d or h-&gt;l)
+Level 4: dog, log (change t-&gt;g)
+Level 5: cog (change d-&gt;c or l-&gt;c) = endWord!
+
+Return 5</code></pre></p>
+<p>Input: <code>beginWord = "hit"</code>, <code>endWord = "cog"</code>, <code>wordList = ["hot","dot","dog","lot","log"]</code>
+<pre class="highlight"><code>Expected Output: 0
+
+"cog" is not in wordList
+Can't reach endWord
+Return 0</code></pre></p>
+<p><strong>Key Insight - BFS for Shortest Path:</strong>
+Each word is a node. Two words are connected if they differ by exactly one letter. BFS finds the shortest path because BFS explores level by level (all words 1 step away, then 2 steps away, etc.).</p>
+<p><strong>Why It Works:</strong>
+- BFS guarantees shortest path in unweighted graphs
+- Each transformation = one edge
+- Level in BFS = number of transformations
+- Removing words from the set prevents revisiting (optimization)
+- Early return when endWord found gives minimum</p>
+<p><strong>Visualization - Word Ladder:</strong>
+<pre class="mermaid"><code>graph TD
+    A["hit (level 1)"] --&gt; B["hot (level 2)"]
+    B --&gt; C["dot (level 3)"]
+    B --&gt; D["lot (level 3)"]
+    C --&gt; E["dog (level 4)"]
+    D --&gt; F["log (level 4)"]
+    E --&gt; G["cog (level 5)"]
+    F --&gt; G</code></pre></p>
 <pre class="highlight"><code class="language-java">public int ladderLength(String beginWord, String endWord, List&lt;String&gt; wordList) {
     Set&lt;String&gt; words = new HashSet&lt;&gt;(wordList);
     if (!words.contains(endWord)) return 0;
-
     Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
     queue.offer(beginWord);
     words.remove(beginWord);
     int steps = 1;
-
     while (!queue.isEmpty()) {
         int size = queue.size();
-
         for (int i = 0; i &lt; size; i++) {
             String curr = queue.poll();
             if (curr.equals(endWord)) return steps;
-
             for (String neighbor : getNeighbors(curr, words)) {
                 queue.offer(neighbor);
                 words.remove(neighbor);
             }
         }
-
         steps++;
     }
-
     return 0;
 }
 
 private List&lt;String&gt; getNeighbors(String word, Set&lt;String&gt; words) {
     List&lt;String&gt; neighbors = new ArrayList&lt;&gt;();
     char[] chars = word.toCharArray();
-
     for (int i = 0; i &lt; chars.length; i++) {
         char original = chars[i];
         for (char c = 'a'; c &lt;= 'z'; c++) {
@@ -475,51 +979,95 @@ private List&lt;String&gt; getNeighbors(String word, Set&lt;String&gt; words) {
         }
         chars[i] = original;
     }
-
     return neighbors;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Word Ladder II, Minimum Genetic Mutation</p>
+<p><strong>Edge Cases:</strong>
+- endWord not in list: returns 0
+- beginWord == endWord: returns 1 (or 0 depending on definition)
+- No valid path: returns 0
+- Single character words: works</p>
+<p><strong>Time Complexity</strong>: O(N * L^2) where N = words, L = word length
+<strong>Space Complexity</strong>: O(N * L)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Word Ladder II (find all shortest paths)
+- Minimum Genetic Mutation
+- Open the Lock</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="8-critical-connections-in-network-bridges">8. <strong>Critical Connections in Network (Bridges)</strong></h4>
-<p><strong>Explanation</strong>: Find bridges using Tarjan's algorithm. Use discovery time and low value. Time: O(V+E), Space: O(V).</p>
+<p><strong>Problem Description:</strong>
+In a network of n servers connected by undirected edges, find all critical connections (bridges). A bridge is an edge that, if removed, disconnects the network.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding weak links in a chain. If removing a link breaks the chain into two pieces, it's critical.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 4</code>, <code>connections = [[0,1],[1,2],[2,0],[1,3]]</code>
+<pre class="highlight"><code>Expected Output: [[1,3]]
+
+Visual:
+0 --- 1 --- 3
+ \   /
+  \ /
+   2
+
+Edge 0-1: removing it? 0 still connects via 2-1. Not a bridge.
+Edge 1-2: removing it? 1 still connects via 0-2. Not a bridge.
+Edge 2-0: removing it? 2 still connects via 1-0. Not a bridge.
+Edge 1-3: removing it? 3 becomes isolated! BRIDGE.
+
+Return [[1,3]]</code></pre></p>
+<p>Input: <code>n = 2</code>, <code>connections = [[0,1]]</code>
+<pre class="highlight"><code>Expected Output: [[0,1]]
+
+Only one edge, removing it disconnects</code></pre></p>
+<p><strong>Key Insight - Discovery Time and Low Value:</strong>
+Tarjan's algorithm uses two values per node:
+- <strong>disc[u]</strong>: When was u first discovered? (timestamp)
+- <strong>low[u]</strong>: What's the earliest discovered node reachable from u's subtree?</p>
+<p>An edge (u, v) is a bridge if low[v] &gt; disc[u], meaning v's subtree can't reach any ancestor of u.</p>
+<p><strong>Why It Works:</strong>
+- If v's subtree has a back edge to u or higher, low[v] &lt;= disc[u]
+- If no back edge exists, low[v] &gt; disc[u], meaning removing (u,v) disconnects v's subtree
+- DFS explores all edges, tracking discovery times
+- Back edges (to ancestors) update low values</p>
+<p><strong>Visualization - Finding Bridges:</strong>
+<pre class="mermaid"><code>graph TD
+    A["DFS from node 0 (disc=0)"] --&gt; B["Visit 1 (disc=1, low=1)"]
+    B --&gt; C["Visit 2 (disc=2, low=2)"]
+    C --&gt; D["Back edge to 0, low[2]=0"]
+    D --&gt; E["Return to 1, low[1]=min(1,0)=0"]
+    B --&gt; F["Visit 3 (disc=3, low=3)"]
+    F --&gt; G["No back edge, low[3]=3 &gt; disc[1]=1"]
+    G --&gt; H["Bridge found: (1,3)"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; criticalConnections(int n, List&lt;List&lt;Integer&gt;&gt; connections) {
     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
     List&lt;Integer&gt;[] graph = new ArrayList[n];
-
     for (int i = 0; i &lt; n; i++) {
         graph[i] = new ArrayList&lt;&gt;();
     }
-
     for (List&lt;Integer&gt; conn : connections) {
         graph[conn.get(0)].add(conn.get(1));
         graph[conn.get(1)].add(conn.get(0));
     }
-
     int[] disc = new int[n];
     int[] low = new int[n];
     boolean[] visited = new boolean[n];
     int[] time = {0};
-
     for (int i = 0; i &lt; n; i++) {
         if (!visited[i]) {
             dfs(i, -1, disc, low, visited, graph, time, result);
         }
     }
-
     return result;
 }
 
-private void dfs(int u, int parent, int[] disc, int[] low, boolean[] visited, 
+private void dfs(int u, int parent, int[] disc, int[] low, boolean[] visited,
                  List&lt;Integer&gt;[] graph, int[] time, List&lt;List&lt;Integer&gt;&gt; result) {
     visited[u] = true;
     disc[u] = low[u] = time[0]++;
-
     for (int v : graph[u]) {
         if (!visited[v]) {
             dfs(v, u, disc, low, visited, graph, time, result);
             low[u] = Math.min(low[u], low[v]);
-
             if (low[v] &gt; disc[u]) {
                 result.add(Arrays.asList(u, v));
             }
@@ -528,37 +1076,80 @@ private void dfs(int u, int parent, int[] disc, int[] low, boolean[] visited,
         }
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Minimum Height Trees, Network Delay Time</p>
+<p><strong>Edge Cases:</strong>
+- Single edge: it's a bridge
+- No edges: no bridges
+- Fully connected: no bridges
+- Tree structure: all edges are bridges</p>
+<p><strong>Time Complexity</strong>: O(V + E)
+<strong>Space Complexity</strong>: O(V)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Minimum Height Trees
+- Network Delay Time
+- Articulation Points</p>
 <hr />
 <h4 id="9-shortest-path-with-obstacles-elimination">9. <strong>Shortest Path with Obstacles Elimination</strong></h4>
-<p><strong>Explanation</strong>: BFS with state (row, col, obstacles used). Track visited with 3D array. Time: O(m<em>n</em>k), Space: O(m<em>n</em>k).</p>
+<p><strong>Problem Description:</strong>
+Given an m x n grid where 1 = obstacle and 0 = empty, find the shortest path from (0,0) to (m-1,n-1). You can eliminate at most k obstacles.</p>
+<p><strong>Simple Analogy:</strong>
+Like navigating a maze where you can break through at most k walls.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>grid = [[0,0,0],[1,1,0],[0,0,0],[0,1,1],[0,0,0]]</code>, <code>k = 1</code>
+<pre class="highlight"><code>Expected Output: 6
+
+Path: (0,0) -&gt; (0,1) -&gt; (0,2) -&gt; (1,2) -&gt; (2,2) -&gt; (3,2) -&gt; (4,2)
+Eliminated 1 obstacle at (3,2)? No, (3,2) is 1 but we go through (2,2) to (3,2)?
+Wait, let me trace:
+(0,0) 0
+(0,1) 0
+(0,2) 0
+(1,2) 0
+(2,2) 0
+(3,2) 1 -&gt; eliminate this obstacle
+(4,2) 0
+Total steps: 6</code></pre></p>
+<p>Input: <code>grid = [[0,1,1],[1,1,1],[1,1,0]]</code>, <code>k = 1</code>
+<pre class="highlight"><code>Expected Output: -1
+
+Too many obstacles, can't reach with only 1 elimination</code></pre></p>
+<p><strong>Key Insight - BFS with Extra State:</strong>
+Regular BFS state is (row, col). Here we need (row, col, obstacles_used). We track visited[row][col][obstacles] to avoid revisiting the same state.</p>
+<p><strong>Why It Works:</strong>
+- BFS guarantees shortest path in unweighted graphs
+- Extra dimension tracks how many obstacles we've eliminated
+- We can visit the same cell with different obstacle counts
+- Pruning: if k &gt;= m+n-2, we can always reach (just go through obstacles)
+- Early termination when reaching destination</p>
+<p><strong>Visualization - Shortest Path with Obstacles:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Start (0,0) with k=1"] --&gt; B["BFS level by level"]
+    B --&gt; C["State: (row, col, obstacles)"]
+    C --&gt; D{"Reached destination?"}
+    D --&gt;|Yes| E["Return steps"]
+    D --&gt;|No| F["Try 4 directions"]
+    F --&gt; G["Update obstacles if grid cell is 1"]
+    G --&gt; H{"obstacles &lt;= k?"}
+    H --&gt;|Yes| I["Add to queue if not visited"]
+    H --&gt;|No| J["Skip"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int shortestPath(int[][] grid, int k) {
     int m = grid.length, n = grid[0].length;
-    if (k &lt; m - 1 + n - 1) return -1;
-
+    if (k &gt;= m - 1 + n - 1) return m - 1 + n - 1;
     Queue&lt;int[]&gt; queue = new LinkedList&lt;&gt;();
     queue.offer(new int[]{0, 0, 0});
     int[][][] visited = new int[m][n][k + 1];
     visited[0][0][0] = 1;
-
     int steps = 0;
     int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
     while (!queue.isEmpty()) {
         int size = queue.size();
-
         for (int i = 0; i &lt; size; i++) {
             int[] curr = queue.poll();
             int row = curr[0], col = curr[1], obstacles = curr[2];
-
             if (row == m - 1 &amp;&amp; col == n - 1) return steps;
-
             for (int[] dir : dirs) {
                 int nr = row + dir[0], nc = col + dir[1];
-
                 if (nr &gt;= 0 &amp;&amp; nr &lt; m &amp;&amp; nc &gt;= 0 &amp;&amp; nc &lt; n) {
                     int newObstacles = obstacles + grid[nr][nc];
-
                     if (newObstacles &lt;= k &amp;&amp; visited[nr][nc][newObstacles] == 0) {
                         visited[nr][nc][newObstacles] = 1;
                         queue.offer(new int[]{nr, nc, newObstacles});
@@ -566,61 +1157,170 @@ private void dfs(int u, int parent, int[] disc, int[] low, boolean[] visited,
                 }
             }
         }
-
         steps++;
     }
-
     return -1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Shortest Path in Matrix, Path with Minimum Effort</p>
+<p><strong>Edge Cases:</strong>
+- Start == end: returns 0
+- No obstacles: standard BFS
+- Too many obstacles: returns -1
+- k large enough: shortest path without detours</p>
+<p><strong>Time Complexity</strong>: O(m * n * k)
+<strong>Space Complexity</strong>: O(m * n * k)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Shortest Path in Matrix
+- Path with Minimum Effort
+- Minimum Obstacle Removal to Reach Corner</p>
 <hr />
 <h4 id="10-topological-sort-dfs">10. <strong>Topological Sort (DFS)</strong></h4>
-<p><strong>Explanation</strong>: Linear ordering of vertices in DAG. Use DFS with post-order traversal. Time: O(V+E), Space: O(V).</p>
+<p><strong>Problem Description:</strong>
+Given a directed acyclic graph (DAG), return a linear ordering of vertices such that for every edge (u, v), u comes before v.</p>
+<p><strong>Simple Analogy:</strong>
+Like ordering courses: you must take prerequisites before advanced courses. Topological sort gives a valid order.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 6</code>, <code>edges = [[5,2],[5,0],[4,0],[4,1],[2,3],[3,1]]</code>
+<pre class="highlight"><code>Expected Output: [5,4,2,3,1,0] (or any valid topological order)
+
+Graph:
+5 -&gt; 2 -&gt; 3 -&gt; 1
+5 -&gt; 0
+4 -&gt; 0
+4 -&gt; 1
+
+DFS from 5: visit 5, then 2, then 3, then 1
+Post-order: 1, 3, 2, 0? No, let me trace:
+dfs(5): mark 5
+  dfs(2): mark 2
+    dfs(3): mark 3
+      dfs(1): mark 1
+      push 1
+    push 3
+  push 2
+  dfs(0): mark 0
+  push 0
+push 5
+
+Stack: [1, 3, 2, 0, 5] (bottom to top)
+Result: [5, 0, 2, 3, 1] (reverse)
+
+dfs(4): mark 4
+  dfs(0): already visited
+  dfs(1): already visited
+  push 4
+
+Final stack: [1, 3, 2, 0, 5, 4]
+Result: [4, 5, 0, 2, 3, 1]
+
+Valid order: 4 before 0 and 1, 5 before 2 and 0, etc.</code></pre></p>
+<p>Input: <code>n = 3</code>, <code>edges = [[0,1],[1,2],[2,0]]</code>
+<pre class="highlight"><code>Expected Output: [] (cycle detected)
+
+This is a cycle! Topological sort only works on DAG.</code></pre></p>
+<p><strong>Key Insight - Post-Order Reversal:</strong>
+DFS finishes a node only after all its descendants are finished. So the last node to finish has no outgoing edges to unvisited nodes. If we push nodes onto a stack as they finish, popping gives topological order.</p>
+<p><strong>Why It Works:</strong>
+- DFS explores all descendants before finishing a node
+- A node is finished only after all reachable nodes are processed
+- Pushing to stack at finish time and reversing gives topological order
+- For edge (u, v): u is pushed before v finishes? No, v finishes first, so v is pushed first, then u. Reversed: u comes before v. Correct!</p>
+<p><strong>Visualization - Topological Sort:</strong>
+<pre class="mermaid"><code>graph TD
+    A["DFS from each unvisited node"] --&gt; B["Mark node as visited"]
+    B --&gt; C["Recursively visit all neighbors"]
+    C --&gt; D["After all neighbors done, push node to stack"]
+    D --&gt; E["After all DFS, pop stack for result"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;Integer&gt; topologicalSort(int n, int[][] edges) {
     List&lt;Integer&gt;[] graph = new ArrayList[n];
     for (int i = 0; i &lt; n; i++) {
         graph[i] = new ArrayList&lt;&gt;();
     }
-
     for (int[] edge : edges) {
         graph[edge[0]].add(edge[1]);
     }
-
     boolean[] visited = new boolean[n];
     Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
-
     for (int i = 0; i &lt; n; i++) {
         if (!visited[i]) {
             dfs(i, visited, graph, stack);
         }
     }
-
     List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
     while (!stack.isEmpty()) {
         result.add(stack.pop());
     }
-
     return result;
 }
 
 private void dfs(int node, boolean[] visited, List&lt;Integer&gt;[] graph, Stack&lt;Integer&gt; stack) {
     visited[node] = true;
-
     for (int neighbor : graph[node]) {
         if (!visited[neighbor]) {
             dfs(neighbor, visited, graph, stack);
         }
     }
-
     stack.push(node);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Course Schedule, Alien Dictionary, Build Order</p>
+<p><strong>Edge Cases:</strong>
+- No edges: any order works
+- Linear chain: only one valid order
+- Multiple components: each sorted independently
+- Cycle: no valid topological order</p>
+<p><strong>Time Complexity</strong>: O(V + E)
+<strong>Space Complexity</strong>: O(V)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Course Schedule
+- Alien Dictionary
+- Build Order</p>
 <hr />
 <h4 id="11-union-find-disjoint-set">11. <strong>Union-Find (Disjoint Set)</strong></h4>
-<p><strong>Explanation</strong>: Track connected components. Union find with path compression and union by rank. Time: O(α(n)) amortized.</p>
+<p><strong>Problem Description:</strong>
+A data structure that tracks elements partitioned into disjoint sets. Supports two operations: find (which set?) and union (merge two sets).</p>
+<p><strong>Simple Analogy:</strong>
+Like managing friend groups. When two people become friends, merge their groups. Find tells you which group someone belongs to.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 5</code>, operations:
+<pre class="highlight"><code>union(0, 1)
+union(2, 3)
+union(1, 3)
+find(0) == find(3)? Yes (all connected)
+countComponents() = 2 (groups: {0,1,2,3}, {4})</code></pre></p>
+<p><strong>Step-by-step:</strong>
+<pre class="highlight"><code>Initial: parent = [0, 1, 2, 3, 4], rank = [0, 0, 0, 0, 0]
+
+union(0, 1): find(0)=0, find(1)=1, parent[1]=0
+parent = [0, 0, 2, 3, 4]
+
+union(2, 3): find(2)=2, find(3)=3, parent[3]=2
+parent = [0, 0, 2, 2, 4]
+
+union(1, 3): find(1)=0, find(3)=2, parent[2]=0
+parent = [0, 0, 0, 2, 4]
+After path compression: parent[3]=0
+parent = [0, 0, 0, 0, 4]
+
+find(0) = 0, find(3) = 0 -&gt; Same group!
+
+countComponents: roots = {0, 4} -&gt; 2</code></pre></p>
+<p><strong>Key Insight - Path Compression + Union by Rank:</strong>
+- <strong>Path compression</strong>: When finding root, make all nodes on path point directly to root
+- <strong>Union by rank</strong>: Attach smaller tree under larger tree
+- Together they give nearly O(1) amortized operations</p>
+<p><strong>Why It Works:</strong>
+- Each set is a tree with a root
+- find(x) follows parent pointers to root
+- union merges two trees by attaching one root to another
+- Path compression flattens the tree for faster future finds
+- Union by rank keeps trees balanced</p>
+<p><strong>Visualization - Union-Find:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Initial: 5 separate sets"] --&gt; B["union(0,1): 1-&gt;0"]
+    B --&gt; C["union(2,3): 3-&gt;2"]
+    C --&gt; D["union(1,3): 2-&gt;0, 3-&gt;2-&gt;0"]
+    D --&gt; E["After path compression: 3-&gt;0"]
+    E --&gt; F["find(0)=0, find(3)=0"]</code></pre></p>
 <pre class="highlight"><code class="language-java">class UnionFind {
     int[] parent, rank;
-
     public UnionFind(int n) {
         parent = new int[n];
         rank = new int[n];
@@ -628,20 +1328,15 @@ private void dfs(int node, boolean[] visited, List&lt;Integer&gt;[] graph, Stack
             parent[i] = i;
         }
     }
-
     public int find(int x) {
         if (parent[x] != x) {
-            parent[x] = find(parent[x]); // Path compression
+            parent[x] = find(parent[x]);
         }
         return parent[x];
     }
-
     public boolean union(int x, int y) {
         int px = find(x), py = find(y);
-
         if (px == py) return false;
-
-        // Union by rank
         if (rank[px] &lt; rank[py]) {
             parent[px] = py;
         } else if (rank[px] &gt; rank[py]) {
@@ -650,10 +1345,8 @@ private void dfs(int node, boolean[] visited, List&lt;Integer&gt;[] graph, Stack
             parent[py] = px;
             rank[px]++;
         }
-
         return true;
     }
-
     public int countComponents(int n) {
         Set&lt;Integer&gt; roots = new HashSet&lt;&gt;();
         for (int i = 0; i &lt; n; i++) {
@@ -661,92 +1354,142 @@ private void dfs(int node, boolean[] visited, List&lt;Integer&gt;[] graph, Stack
         }
         return roots.size();
     }
-}
-
-// Usage example: Number of connected components
-public int countComponents(int n, int[][] edges) {
-    UnionFind uf = new UnionFind(n);
-
-    for (int[] edge : edges) {
-        uf.union(edge[0], edge[1]);
-    }
-
-    return uf.countComponents(n);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Accounts Merge, Friends of Appropriate Ages, Smallest String with Swaps</p>
+<p><strong>Edge Cases:</strong>
+- Single element: one component
+- No unions: n components
+- All unions: 1 component
+- Union same set: returns false</p>
+<p><strong>Time Complexity</strong>: O(α(n)) amortized per operation (α is inverse Ackermann, nearly constant)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Accounts Merge
+- Friends of Appropriate Ages
+- Smallest String with Swaps</p>
 <hr />
 <h4 id="12-minimum-spanning-tree-kruskals-algorithm">12. <strong>Minimum Spanning Tree - Kruskal's Algorithm</strong></h4>
-<p><strong>Explanation</strong>: Find MST using edges sorted by weight. Union-Find for cycle detection. Time: O(E log E), Space: O(V).</p>
+<p><strong>Problem Description:</strong>
+Given a connected weighted undirected graph, find the Minimum Spanning Tree (MST) - a subset of edges that connects all vertices with minimum total weight.</p>
+<p><strong>Simple Analogy:</strong>
+Like connecting cities with roads at minimum cost, ensuring all cities are connected.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 3</code>, <code>connections = [[1,2,5],[1,3,6],[2,3,1]]</code>
+<pre class="highlight"><code>Expected Output: 6
+
+Edges sorted by weight:
+[2,3,1] - weight 1
+[1,2,5] - weight 5
+[1,3,6] - weight 6
+
+Process:
+1. Add [2,3,1]: 2 and 3 connected, total=1
+2. Add [1,2,5]: 1 connected to {2,3}, total=6
+3. [1,3,6]: already connected (would form cycle), skip
+
+MST edges: [2,3,1] + [1,2,5] = total weight 6</code></pre></p>
+<p>Input: <code>n = 4</code>, <code>connections = [[1,2,3],[3,4,4]]</code>
+<pre class="highlight"><code>Expected Output: -1
+
+Graph is not connected
+Can't form spanning tree</code></pre></p>
+<p><strong>Key Insight - Sort Edges + Union-Find:</strong>
+- Sort all edges by weight
+- Process from smallest to largest
+- Add edge if it doesn't form a cycle (Union-Find check)
+- Stop when we have n-1 edges (spanning tree complete)</p>
+<p><strong>Why It Works:</strong>
+- Greedy works for MST (unlike many problems)
+- Smallest edge that doesn't create cycle must be in some MST
+- Union-Find efficiently detects cycles
+- n-1 edges connect n vertices without cycles</p>
+<p><strong>Visualization - Kruskal's:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Sort edges by weight"] --&gt; B["Process each edge"]
+    B --&gt; C{"Union successful?"}
+    C --&gt;|Yes| D["Add to MST, total += weight"]
+    C --&gt;|No| E["Skip (would form cycle)"]
+    D --&gt; F{"edges == n-1?"}
+    F --&gt;|Yes| G["Return total"]
+    F --&gt;|No| B
+    E --&gt; B</code></pre></p>
 <pre class="highlight"><code class="language-java">public int minimumCost(int n, int[][] connections) {
     Arrays.sort(connections, (a, b) -&gt; a[2] - b[2]);
-
     UnionFind uf = new UnionFind(n + 1);
     int totalCost = 0;
     int edgesUsed = 0;
-
     for (int[] edge : connections) {
         if (uf.union(edge[0], edge[1])) {
             totalCost += edge[2];
             edgesUsed++;
-
             if (edgesUsed == n - 1) break;
         }
     }
-
     return edgesUsed == n - 1 ? totalCost : -1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Connect All Points, Min Cost to Connect Sticks</p>
+<p><strong>Edge Cases:</strong>
+- Already connected: processes until n-1 edges
+- Disconnected: returns -1
+- Single node: returns 0
+- All same weights: works correctly</p>
+<p><strong>Time Complexity</strong>: O(E log E) for sorting
+<strong>Space Complexity</strong>: O(V) for Union-Find</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Connect All Points
+- Min Cost to Connect Sticks
+- Optimize Water Distribution</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-graph-representation">1. <strong>Graph Representation</strong></h3>
 <ul>
-<li>Adjacency list: most common for sparse graphs</li>
-<li>Adjacency matrix: useful when checking edge (u,v) frequently</li>
+<li><strong>Adjacency list</strong>: Best for most problems (sparse graphs)</li>
+<li><strong>Adjacency matrix</strong>: When you need O(1) edge lookup</li>
+<li><strong>Edge list</strong>: For Kruskal's and similar algorithms</li>
 </ul>
 <h3 id="2-traversal-patterns">2. <strong>Traversal Patterns</strong></h3>
 <ul>
-<li>BFS: shortest path (unweighted), level-order</li>
-<li>DFS: topological sort, cycle detection, connectivity</li>
+<li><strong>BFS</strong>: Shortest path (unweighted), level-order, spreading (islands)</li>
+<li><strong>DFS</strong>: Topological sort, cycle detection, connectivity, backtracking</li>
 </ul>
 <h3 id="3-cycle-detection">3. <strong>Cycle Detection</strong></h3>
 <ul>
-<li>Directed: use colors (white, gray, black)</li>
-<li>Undirected: DFS with parent tracking</li>
+<li><strong>Directed</strong>: Use colors (white=unvisited, gray=in-progress, black=done)</li>
+<li><strong>Undirected</strong>: DFS with parent tracking, or Union-Find</li>
 </ul>
 <h3 id="4-shortest-path">4. <strong>Shortest Path</strong></h3>
 <ul>
-<li>Unweighted: BFS</li>
-<li>Weighted (non-negative): Dijkstra</li>
-<li>Weighted (general): Bellman-Ford</li>
+<li><strong>Unweighted</strong>: BFS</li>
+<li><strong>Weighted (non-negative)</strong>: Dijkstra</li>
+<li><strong>Weighted (general)</strong>: Bellman-Ford</li>
+<li><strong>All pairs</strong>: Floyd-Warshall</li>
 </ul>
 <h3 id="5-union-find-applications">5. <strong>Union-Find Applications</strong></h3>
 <ul>
 <li>Connected components</li>
-<li>Cycle detection</li>
-<li>Minimum spanning tree</li>
-<li>Kruskal's algorithm</li>
+<li>Cycle detection in undirected graphs</li>
+<li>Minimum spanning tree (Kruskal's)</li>
+<li>Dynamic connectivity</li>
 </ul>
 <h3 id="6-topological-sort-applications">6. <strong>Topological Sort Applications</strong></h3>
 <ul>
 <li>Course prerequisites</li>
 <li>Build order</li>
-<li>Alien dictionary ordering</li>
+<li>Alien dictionary</li>
 <li>Task scheduling</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Not distinguishing directed vs undirected edges</li>
-<li>❌ Forgetting to mark nodes as visited</li>
-<li>❌ Wrong graph representation for problem type</li>
-<li>❌ Not handling disconnected components</li>
-<li>❌ Integer overflow in path weights</li>
-<li>❌ Assuming positive weights when not guaranteed</li>
-<li>❌ Incorrect Union-Find implementation</li>
-<li>❌ Topological sort on cyclic graph</li>
-<li>❌ Not handling disconnected components</li>
-<li>❌ Integer overflow in path weights</li>
-<li>❌ Assuming positive weights when not guaranteed</li>
+<li>Not distinguishing directed vs undirected edges</li>
+<li>Forgetting to mark nodes as visited (infinite loops!)</li>
+<li>Wrong graph representation for problem type</li>
+<li>Not handling disconnected components</li>
+<li>Integer overflow in path weights (use long)</li>
+<li>Assuming positive weights when not guaranteed</li>
+<li>Incorrect Union-Find implementation (path compression + union by rank)</li>
+<li>Topological sort on cyclic graph (not possible!)</li>
+<li>Not handling edge cases (empty graph, single node)</li>
+<li>Confusing BFS and DFS use cases</li>
+<li>Forgetting that BFS gives shortest path only for unweighted graphs</li>
 </ul>
               
             </div>

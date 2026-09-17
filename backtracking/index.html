@@ -92,7 +92,17 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#time-complexity">Time Complexity</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns">Patterns</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-template">🔹 Basic Template</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#backtracking-template">Backtracking Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#backtracking-decision-flow">Backtracking Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -120,7 +130,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#8-n-queens">8. N Queens</a>
+    <li class="toctree-l4"><a class="reference internal" href="#8-n-queens">8. N-Queens</a>
     </li>
         </ul>
     </li>
@@ -138,9 +148,19 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#5-pruning-techniques">5. Pruning Techniques</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#6-duplicate-handling">6. Duplicate Handling</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#backtracking-decision-flow_1">🔹 Backtracking Decision Flow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#choosing-the-right-pattern">Choosing the Right Pattern</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#complexity-cheat-sheet">Complexity Cheat Sheet</a>
+    </li>
+        </ul>
     </li>
     </ul>
                 </li>
@@ -199,25 +219,41 @@
                 <h1 id="backtracking">Backtracking</h1>
 <h2 id="key-concepts">Key Concepts</h2>
 <ul>
-<li>Explore all possibilities systematically</li>
+<li><strong>Explore all possibilities systematically</strong>: Try each option, recurse, undo, try next</li>
 <li><strong>Search Space</strong>: All valid combinations/permutations/solutions</li>
 <li><strong>Pruning</strong>: Cut branches that can't lead to valid solutions</li>
 <li><strong>State</strong>: Current partial solution being built</li>
 <li><strong>Backtrack</strong>: Undo choices and try alternatives</li>
 <li><strong>Base Case</strong>: When solution is complete or invalid</li>
+<li><strong>Decision Tree</strong>: Each node represents a choice; leaves are complete solutions</li>
 </ul>
 <h2 id="when-to-use">When to Use</h2>
 <ul>
 <li>Generate all permutations/combinations</li>
 <li>Find all valid paths/solutions</li>
-<li>Constraint satisfaction problems</li>
+<li>Constraint satisfaction problems (N-Queens, Sudoku)</li>
 <li>Exhaustive search with optimization</li>
+<li>Problems asking for "all possible" results</li>
 </ul>
 <h2 id="time-complexity">Time Complexity</h2>
 <ul>
-<li>Generally O(N!) or O(2^N) - exponential</li>
+<li>Generally <strong>O(N!)</strong> or <strong>O(2^N)</strong> - exponential</li>
 <li>Pruning can improve practical performance</li>
-<li>Space: O(N) for recursion stack</li>
+<li>Space: <strong>O(N)</strong> for recursion stack</li>
+<li>Output space: can be O(N * 2^N) for storing all solutions</li>
+</ul>
+<h2 id="common-problems">Common Problems</h2>
+<ul>
+<li>Subsets</li>
+<li>Combinations</li>
+<li>Permutations</li>
+<li>Generate Parentheses</li>
+<li>Combination Sum</li>
+<li>Word Search</li>
+<li>Palindrome Partitioning</li>
+<li>N-Queens</li>
+<li>Sudoku Solver</li>
+<li>Letter Combinations of a Phone Number</li>
 </ul>
 <h2 id="patterns">Patterns</h2>
 <ol>
@@ -225,12 +261,116 @@
 <li><strong>Combination pattern</strong>: Choose index range, avoid duplicates</li>
 <li><strong>Partition pattern</strong>: Divide string/array into valid parts</li>
 <li><strong>Board pattern</strong>: N-Queens, Sudoku solving</li>
+<li><strong>Subset pattern</strong>: Include/exclude each element</li>
 </ol>
+<hr />
+<h2 id="basic-template">🔹 Basic Template</h2>
+<h3 id="backtracking-template">Backtracking Template</h3>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; backtrackTemplate(int[] nums) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    backtrack(nums, 0, new ArrayList&lt;&gt;(), result);
+    return result;
+}
+
+private void backtrack(int[] nums, int start, List&lt;Integer&gt; current, List&lt;List&lt;Integer&gt;&gt; result) {
+    if (isComplete(current)) {
+        result.add(new ArrayList&lt;&gt;(current));
+        return;
+    }
+    for (int i = start; i &lt; nums.length; i++) {
+        if (!isValid(current, nums[i])) continue;
+        current.add(nums[i]);
+        backtrack(nums, i + 1, current, result);
+        current.remove(current.size() - 1);
+    }
+}</code></pre>
+<h3 id="backtracking-decision-flow">Backtracking Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Start: current = []"] --&gt; B{"Is current complete?"}
+    B --&gt;|Yes| C["Add to result"]
+    B --&gt;|No| D["For each candidate"]
+    D --&gt; E{"Is candidate valid?"}
+    E --&gt;|No| F["Skip candidate"]
+    E --&gt;|Yes| G["Make choice: add to current"]
+    G --&gt; H["Recurse: backtrack"]
+    H --&gt; I["Undo choice: remove from current"]
+    I --&gt; J{"More candidates?"}
+    F --&gt; J
+    J --&gt;|Yes| D
+    J --&gt;|No| K["Return"]
+    C --&gt; K</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-subsets">1. <strong>Subsets</strong></h4>
-<p><strong>Explanation</strong>: Generate all 2^n subsets. For each element, include or exclude it. Time: O(n*2^n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given an integer array of unique elements, return all possible subsets (the power set). Solution set must not contain duplicate subsets.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>nums = [1, 2, 3]</code>
+<pre class="highlight"><code>Expected Output: [[], [1], [1,2], [1,2,3], [1,3], [2], [2,3], [3]]
+
+Step-by-step execution:
+Start: current=[], result=[[]]
+
+i=0: add 1 -&gt; current=[1]
+     result=[[], [1]]
+     i=1: add 2 -&gt; current=[1,2]
+          result=[[], [1], [1,2]]
+          i=2: add 3 -&gt; current=[1,2,3]
+               result=[[], [1], [1,2], [1,2,3]]
+               remove 3 -&gt; current=[1,2]
+          remove 2 -&gt; current=[1]
+     i=2: add 3 -&gt; current=[1,3]
+          result=[[], [1], [1,2], [1,2,3], [1,3]]
+          remove 3 -&gt; current=[1]
+     remove 1 -&gt; current=[]
+
+i=1: add 2 -&gt; current=[2]
+     result=[[], [1], [1,2], [1,2,3], [1,3], [2]]
+     i=2: add 3 -&gt; current=[2,3]
+          result=[[], [1], [1,2], [1,2,3], [1,3], [2], [2,3]]
+          remove 3 -&gt; current=[2]
+     remove 2 -&gt; current=[]
+
+i=2: add 3 -&gt; current=[3]
+     result=[[], [1], [1,2], [1,2,3], [1,3], [2], [2,3], [3]]
+     remove 3 -&gt; current=[]
+
+Final: [[], [1], [1,2], [1,2,3], [1,3], [2], [2,3], [3]]</code></pre></p>
+<p>Input: <code>nums = [0]</code>
+<pre class="highlight"><code>Expected Output: [[], [0]]
+
+Start: current=[], result=[[]]
+i=0: add 0 -&gt; current=[0]
+     result=[[], [0]]
+     remove 0 -&gt; current=[]
+Final: [[], [0]]</code></pre></p>
+<p><strong>Key Insight - Include/Exclude Decision:</strong>
+At each index, we decide whether to include the current element or not. The <code>start</code> parameter ensures we only consider elements from current position onward, avoiding duplicates. We add to result at every node (not just leaves) because every partial solution is a valid subset.</p>
+<p><strong>Why It Works:</strong>
+- Each element has exactly 2 choices: include or exclude
+- Total subsets = 2^n (each element independently in/out)
+- Adding at every node captures all partial combinations
+- <code>start</code> index prevents revisiting earlier elements (avoids duplicates)
+- Backtracking removes the last element to explore alternative branches</p>
+<p><strong>Time Complexity</strong>: O(n * 2^n) - 2^n subsets, each takes O(n) to copy
+<strong>Space Complexity</strong>: O(n) - recursion depth, plus output space</p>
+<p><strong>Visualization - Subsets Decision Tree:</strong>
+<pre class="mermaid"><code>graph TD
+    A["[]"] --&gt; B["[1]"]
+    A --&gt; C["[]"]
+    B --&gt; D["[1,2]"]
+    B --&gt; E["[1]"]
+    D --&gt; F["[1,2,3]"]
+    D --&gt; G["[1,2]"]
+    E --&gt; H["[1,3]"]
+    E --&gt; I["[1]"]
+    C --&gt; J["[2]"]
+    C --&gt; K["[]"]
+    J --&gt; L["[2,3]"]
+    J --&gt; M["[2]"]
+    K --&gt; N["[3]"]
+    K --&gt; O["[]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; subsets(int[] nums) {
     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
     backtrack(nums, 0, new ArrayList&lt;&gt;(), result);
@@ -239,17 +379,95 @@
 
 private void backtrack(int[] nums, int start, List&lt;Integer&gt; current, List&lt;List&lt;Integer&gt;&gt; result) {
     result.add(new ArrayList&lt;&gt;(current));
-
     for (int i = start; i &lt; nums.length; i++) {
         current.add(nums[i]);
         backtrack(nums, i + 1, current, result);
         current.remove(current.size() - 1);
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Subsets II (with duplicates), Power Set</p>
+<p><strong>Edge Cases:</strong>
+- Empty array: returns [[]] (one empty subset)
+- Single element: returns [[], [element]]
+- All elements: 2^n subsets generated correctly
+- Duplicates in input: handled by Subsets II variant</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Subsets II (with duplicates - sort and skip)
+- Power Set (same problem)
+- Letter Combinations of a Phone Number</p>
 <hr />
 <h4 id="2-combinations">2. <strong>Combinations</strong></h4>
-<p><strong>Explanation</strong>: Choose k elements from n. Similar to subsets but fixed size k. Time: O(C(n,k) * k), Space: O(k).</p>
+<p><strong>Problem Description:</strong>
+Given two integers n and k, return all possible combinations of k numbers chosen from the range [1, n].</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 4, k = 2</code>
+<pre class="highlight"><code>Expected Output: [[1,2], [1,3], [1,4], [2,3], [2,4], [3,4]]
+
+Step-by-step execution:
+Start: current=[], result=[]
+
+i=1: add 1 -&gt; current=[1]
+     i=2: add 2 -&gt; current=[1,2] (size=2=k)
+          result=[[1,2]]
+          remove 2 -&gt; current=[1]
+     i=3: add 3 -&gt; current=[1,3]
+          result=[[1,2], [1,3]]
+          remove 3 -&gt; current=[1]
+     i=4: add 4 -&gt; current=[1,4]
+          result=[[1,2], [1,3], [1,4]]
+          remove 4 -&gt; current=[1]
+     remove 1 -&gt; current=[]
+
+i=2: add 2 -&gt; current=[2]
+     i=3: add 3 -&gt; current=[2,3]
+          result=[[1,2], [1,3], [1,4], [2,3]]
+          remove 3 -&gt; current=[2]
+     i=4: add 4 -&gt; current=[2,4]
+          result=[[1,2], [1,3], [1,4], [2,3], [2,4]]
+          remove 4 -&gt; current=[2]
+     remove 2 -&gt; current=[]
+
+i=3: add 3 -&gt; current=[3]
+     i=4: add 4 -&gt; current=[3,4]
+          result=[[1,2], [1,3], [1,4], [2,3], [2,4], [3,4]]
+          remove 4 -&gt; current=[3]
+     remove 3 -&gt; current=[]
+
+i=4: add 4 -&gt; current=[4]
+     (no more elements to add, size &lt; k)
+     remove 4 -&gt; current=[]
+
+Final: [[1,2], [1,3], [1,4], [2,3], [2,4], [3,4]]</code></pre></p>
+<p>Input: <code>n = 1, k = 1</code>
+<pre class="highlight"><code>Expected Output: [[1]]
+
+i=1: add 1 -&gt; current=[1] (size=1=k)
+     result=[[1]]
+     remove 1 -&gt; current=[]
+Final: [[1]]</code></pre></p>
+<p><strong>Key Insight - Fixed Size with Start Index:</strong>
+Similar to subsets but with a fixed size constraint. The <code>start</code> parameter ensures we don't reuse elements and maintain increasing order. The base case triggers when current size equals k.</p>
+<p><strong>Why It Works:</strong>
+- <code>start</code> index guarantees combinations are in increasing order
+- No duplicates because we only move forward
+- Base case at size k captures exactly k elements
+- Pruning: if remaining elements can't fill to k, we can break early</p>
+<p><strong>Optimization - Pruning:</strong>
+<pre class="highlight"><code class="language-java">// In the loop, we can prune:
+for (int i = start; i &lt;= n - (k - current.size()) + 1; i++) {
+    // This ensures enough elements remain to complete combination
+}</code></pre></p>
+<p><strong>Visualization - Combinations Decision Tree:</strong>
+<pre class="mermaid"><code>graph TD
+    A["[]"] --&gt; B["[1]"]
+    A --&gt; C["[2]"]
+    A --&gt; D["[3]"]
+    A --&gt; E["[4]"]
+    B --&gt; F["[1,2]"]
+    B --&gt; G["[1,3]"]
+    B --&gt; H["[1,4]"]
+    C --&gt; I["[2,3]"]
+    C --&gt; J["[2,4]"]
+    D --&gt; K["[3,4]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; combine(int n, int k) {
     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
     backtrack(n, k, 1, new ArrayList&lt;&gt;(), result);
@@ -261,17 +479,103 @@ private void backtrack(int n, int k, int start, List&lt;Integer&gt; current, Lis
         result.add(new ArrayList&lt;&gt;(current));
         return;
     }
-
     for (int i = start; i &lt;= n; i++) {
         current.add(i);
         backtrack(n, k, i + 1, current, result);
         current.remove(current.size() - 1);
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Combination Sum, Combinations with Duplicates</p>
+<p><strong>Edge Cases:</strong>
+- k = 0: returns [[]] (empty combination)
+- k = n: returns [[1,2,...,n]] (one combination)
+- k &gt; n: no valid combinations, returns []
+- n = 1, k = 1: returns [[1]]</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Combination Sum (unlimited reuse)
+- Combination Sum II (each used once)
+- Combination Sum III (exactly k elements)</p>
 <hr />
 <h4 id="3-permutations">3. <strong>Permutations</strong></h4>
-<p><strong>Explanation</strong>: Generate all n! orderings. Mark visited, try each unused element. Time: O(n*n!), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given an array of distinct integers, return all possible permutations in any order.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>nums = [1, 2, 3]</code>
+<pre class="highlight"><code>Expected Output: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]
+
+Step-by-step execution:
+Start: current=[], used=[F,F,F], result=[]
+
+i=0: used[0]=T, current=[1]
+     i=1: used[1]=T, current=[1,2]
+          i=2: used[2]=T, current=[1,2,3] (size=3)
+               result=[[1,2,3]]
+               undo: current=[1,2], used[2]=F
+          undo: current=[1], used[1]=F
+     i=2: used[2]=T, current=[1,3]
+          i=1: used[1]=T, current=[1,3,2]
+               result=[[1,2,3], [1,3,2]]
+               undo: current=[1,3], used[1]=F
+          undo: current=[1], used[2]=F
+     undo: current=[], used[0]=F
+
+i=1: used[1]=T, current=[2]
+     i=0: used[0]=T, current=[2,1]
+          i=2: used[2]=T, current=[2,1,3]
+               result=[[1,2,3], [1,3,2], [2,1,3]]
+               undo: current=[2,1], used[2]=F
+          undo: current=[2], used[0]=F
+     i=2: used[2]=T, current=[2,3]
+          i=0: used[0]=T, current=[2,3,1]
+               result=[[1,2,3], [1,3,2], [2,1,3], [2,3,1]]
+               undo: current=[2,3], used[0]=F
+          undo: current=[2], used[2]=F
+     undo: current=[], used[1]=F
+
+i=2: used[2]=T, current=[3]
+     i=0: used[0]=T, current=[3,1]
+          i=1: used[1]=T, current=[3,1,2]
+               result=[[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2]]
+               undo: current=[3,1], used[1]=F
+          undo: current=[3], used[0]=F
+     i=1: used[1]=T, current=[3,2]
+          i=0: used[0]=T, current=[3,2,1]
+               result=[[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]
+               undo: current=[3,2], used[0]=F
+          undo: current=[3], used[1]=F
+     undo: current=[], used[2]=F
+
+Final: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]</code></pre></p>
+<p>Input: <code>nums = [1]</code>
+<pre class="highlight"><code>Expected Output: [[1]]
+
+i=0: used[0]=T, current=[1] (size=1=n)
+     result=[[1]]
+     undo: current=[], used[0]=F
+Final: [[1]]</code></pre></p>
+<p><strong>Key Insight - Used Array Tracking:</strong>
+Unlike combinations, permutations care about order. We use a <code>boolean[] used</code> array to track which elements are already in the current permutation. At each step, we try every unused element. Base case triggers when current size equals array length.</p>
+<p><strong>Why It Works:</strong>
+- Every position can be filled by any unused element
+- <code>used</code> array prevents reusing same element in one permutation
+- Total permutations = n! (n choices, then n-1, then n-2, ...)
+- Backtracking undoes both the addition and the used flag</p>
+<p><strong>Visualization - Permutations Decision Tree:</strong>
+<pre class="mermaid"><code>graph TD
+    A["[]"] --&gt; B["[1]"]
+    A --&gt; C["[2]"]
+    A --&gt; D["[3]"]
+    B --&gt; E["[1,2]"]
+    B --&gt; F["[1,3]"]
+    C --&gt; G["[2,1]"]
+    C --&gt; H["[2,3]"]
+    D --&gt; I["[3,1]"]
+    D --&gt; J["[3,2]"]
+    E --&gt; K["[1,2,3]"]
+    F --&gt; L["[1,3,2]"]
+    G --&gt; M["[2,1,3]"]
+    H --&gt; N["[2,3,1]"]
+    I --&gt; O["[3,1,2]"]
+    J --&gt; P["[3,2,1]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; permute(int[] nums) {
     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
     boolean[] used = new boolean[nums.length];
@@ -284,7 +588,6 @@ private void backtrack(int[] nums, boolean[] used, List&lt;Integer&gt; current, 
         result.add(new ArrayList&lt;&gt;(current));
         return;
     }
-
     for (int i = 0; i &lt; nums.length; i++) {
         if (!used[i]) {
             used[i] = true;
@@ -295,11 +598,93 @@ private void backtrack(int[] nums, boolean[] used, List&lt;Integer&gt; current, 
         }
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Permutations II (with duplicates), Next Permutation</p>
+<p><strong>Edge Cases:</strong>
+- Empty array: returns [[]]
+- Single element: returns [[element]]
+- Duplicates: handled by Permutations II (sort and skip)
+- Large n: n! grows very fast (n=10 gives 3.6M permutations)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Permutations II (with duplicates)
+- Next Permutation (iterative)
+- Letter Case Permutation</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="4-generate-parentheses">4. <strong>Generate Parentheses</strong></h4>
-<p><strong>Explanation</strong>: Generate all valid parenthesis combinations. Track open/close counts. Time: O(4^n/sqrt(n)), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given n pairs of parentheses, generate all combinations of well-formed parentheses.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 3</code>
+<pre class="highlight"><code>Expected Output: ["((()))", "(()())", "(())()", "()(())", "()()()"]
+
+Step-by-step execution:
+Start: current="", open=3, close=3, result=[]
+
+open &gt; 0: add "(" -&gt; current="(", open=2, close=3
+    open &gt; 0: add "(" -&gt; current="((", open=1, close=3
+        open &gt; 0: add "(" -&gt; current="(((", open=0, close=3
+            close &gt; open: add ")" -&gt; current="((()", open=0, close=2
+                close &gt; open: add ")" -&gt; current="((())", open=0, close=1
+                    close &gt; open: add ")" -&gt; current="((()))", open=0, close=0
+                        COMPLETE -&gt; result=["((()))"]
+                    undo -&gt; current="((())", close=1
+                undo -&gt; current="((()", close=2
+            undo -&gt; current="(((", close=3
+        undo -&gt; current="((", open=1
+        close &gt; open: add ")" -&gt; current="(()", open=1, close=2
+            open &gt; 0: add "(" -&gt; current="(()(", open=0, close=2
+                close &gt; open: add ")" -&gt; current="(()()", open=0, close=1
+                    close &gt; open: add ")" -&gt; current="(()())", open=0, close=0
+                        COMPLETE -&gt; result=["((()))", "(()())"]
+                    undo -&gt; current="(()()", close=1
+                undo -&gt; current="(()(", close=2
+            undo -&gt; current="(()", open=1
+            close &gt; open: add ")" -&gt; current="(())", open=1, close=1
+                open &gt; 0: add "(" -&gt; current="(())(", open=0, close=1
+                    close &gt; open: add ")" -&gt; current="(())()", open=0, close=0
+                        COMPLETE -&gt; result=["((()))", "(()())", "(())()"]
+                    undo -&gt; current="(())(", close=1
+                undo -&gt; current="(())", open=1
+                close &gt; open: add ")" -&gt; current="(())", open=1, close=0
+                    (close == 0, but open &gt; 0, can't close more)
+                    Actually close &gt; open? 0 &gt; 1? NO -&gt; can't add
+                undo -&gt; current="(())", close=1
+            undo -&gt; current="(()", close=2
+        undo -&gt; current="((", close=3
+    undo -&gt; current="(", open=2
+    close &gt; open: add ")" -&gt; current="()", open=2, close=2
+        ... continues similarly</code></pre></p>
+<p>Input: <code>n = 1</code>
+<pre class="highlight"><code>Expected Output: ["()"]
+
+open &gt; 0: add "(" -&gt; current="(", open=0, close=1
+    close &gt; open: add ")" -&gt; current="()", open=0, close=0
+        COMPLETE -&gt; result=["()"]
+    undo -&gt; current="(", close=1
+undo -&gt; current="", open=1</code></pre></p>
+<p><strong>Key Insight - Open/Close Count Tracking:</strong>
+Track remaining open and close parentheses. Two rules:
+1. Add <code>(</code> only if <code>open &gt; 0</code> (still have opening left)
+2. Add <code>)</code> only if <code>close &gt; open</code> (more closing than opening means we can close)</p>
+<p><strong>Why It Works:</strong>
+- Well-formed parentheses require: never have more <code>)</code> than <code>(</code> at any prefix
+- <code>close &gt; open</code> condition ensures we only close when there's an unclosed <code>(</code>
+- Base case: both open and close reach 0
+- This generates all valid combinations without invalid ones</p>
+<p><strong>Visualization - Generate Parentheses Decision Tree:</strong>
+<pre class="mermaid"><code>graph TD
+    A["''"] --&gt; B["'('"]
+    B --&gt; C["'(('"]
+    B --&gt; D["'()'"]
+    C --&gt; E["'((('"]
+    C --&gt; F["'(()'"]
+    E --&gt; G["'((()'"]
+    F --&gt; H["'(()('"]
+    F --&gt; I["'(())'"]
+    G --&gt; J["'((())'"]
+    H --&gt; K["'(()()'"]
+    I --&gt; L["'(())()'"]
+    J --&gt; M["'((()))'"]
+    K --&gt; N["'(()())'"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;String&gt; generateParenthesis(int n) {
     List&lt;String&gt; result = new ArrayList&lt;&gt;();
     backtrack(n, n, "", result);
@@ -311,19 +696,111 @@ private void backtrack(int open, int close, String current, List&lt;String&gt; r
         result.add(current);
         return;
     }
-
     if (open &gt; 0) {
         backtrack(open - 1, close, current + "(", result);
     }
-
     if (close &gt; open) {
         backtrack(open, close - 1, current + ")", result);
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Generate Valid IP Addresses, Restore IP Addresses</p>
+<p><strong>Edge Cases:</strong>
+- n = 0: returns [""]
+- n = 1: returns ["()"]
+- Large n: Catalan number grows exponentially
+- String concatenation: could use StringBuilder for efficiency</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Generate Valid IP Addresses
+- Restore IP Addresses
+- Letter Combinations of a Phone Number</p>
 <hr />
 <h4 id="5-combination-sum">5. <strong>Combination Sum</strong></h4>
-<p><strong>Explanation</strong>: Find all combinations that sum to target. Reuse elements allowed. Time: O(N^T/M), Space: O(T/M).</p>
+<p><strong>Problem Description:</strong>
+Given an array of distinct integers and a target, return all unique combinations that sum to target. Same number may be used unlimited times.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>candidates = [2, 3, 6, 7]</code>, <code>target = 7</code>
+<pre class="highlight"><code>Expected Output: [[2,2,3], [7]]
+
+Step-by-step execution:
+Start: current=[], remaining=7, start=0
+
+i=0: add 2 -&gt; current=[2], remaining=5, start=0
+     i=0: add 2 -&gt; current=[2,2], remaining=3, start=0
+          i=0: add 2 -&gt; current=[2,2,2], remaining=1, start=0
+               i=0: add 2 -&gt; remaining=-1 &lt; 0, prune
+               i=1: add 3 -&gt; remaining=-2 &lt; 0, prune
+               i=2: add 6 -&gt; remaining=-5 &lt; 0, prune
+               i=3: add 7 -&gt; remaining=-6 &lt; 0, prune
+               undo -&gt; current=[2,2], remaining=3
+          i=1: add 3 -&gt; current=[2,2,3], remaining=0
+               FOUND -&gt; result=[[2,2,3]]
+               undo -&gt; current=[2,2], remaining=3
+          i=2: add 6 -&gt; remaining=-3 &lt; 0, prune
+          i=3: add 7 -&gt; remaining=-4 &lt; 0, prune
+          undo -&gt; current=[2], remaining=5
+     i=1: add 3 -&gt; current=[2,3], remaining=2
+          i=0: add 2 -&gt; current=[2,3,2], remaining=0
+               FOUND -&gt; result=[[2,2,3], [2,3,2]]  &lt;- DUPLICATE!
+               Wait, this shouldn't happen...
+               Actually with start=i, we won't reuse earlier elements
+               i=0: but start=1 now, so i starts at 1
+               i=1: add 3 -&gt; remaining=-1, prune
+               i=2: add 6 -&gt; remaining=-4, prune
+               i=3: add 7 -&gt; remaining=-5, prune
+          undo -&gt; current=[2], remaining=5
+     i=2: add 6 -&gt; remaining=-1, prune
+     i=3: add 7 -&gt; remaining=-2, prune
+     undo -&gt; current=[], remaining=7
+
+i=1: add 3 -&gt; current=[3], remaining=4, start=1
+     i=1: add 3 -&gt; current=[3,3], remaining=1, start=1
+          i=1: add 3 -&gt; remaining=-2, prune
+          i=2: add 6 -&gt; remaining=-5, prune
+          i=3: add 7 -&gt; remaining=-6, prune
+          undo -&gt; current=[3], remaining=4
+     i=2: add 6 -&gt; remaining=-2, prune
+     i=3: add 7 -&gt; remaining=-3, prune
+     undo -&gt; current=[], remaining=7
+
+i=2: add 6 -&gt; current=[6], remaining=1
+     i=2: add 6 -&gt; remaining=-5, prune
+     i=3: add 7 -&gt; remaining=-6, prune
+     undo -&gt; current=[], remaining=7
+
+i=3: add 7 -&gt; current=[7], remaining=0
+     FOUND -&gt; result=[[2,2,3], [7]]
+     undo -&gt; current=[], remaining=7
+
+Final: [[2,2,3], [7]]</code></pre></p>
+<p>Input: <code>candidates = [2, 3, 5]</code>, <code>target = 8</code>
+<pre class="highlight"><code>Expected Output: [[2,2,2,2], [2,3,3], [3,5]]
+
+Multiple combinations found through backtracking</code></pre></p>
+<p><strong>Key Insight - Reuse with Start Index:</strong>
+Unlike combinations, we can reuse elements. But we pass <code>i</code> (not <code>i+1</code>) as the new start, allowing the same element to be picked again. The start index prevents duplicates by maintaining non-decreasing order.</p>
+<p><strong>Why It Works:</strong>
+- Passing <code>i</code> (not <code>i+1</code>) allows reuse of same element
+- Start index prevents combinations like [3,2] when [2,3] already exists
+- Pruning when target &lt; 0 avoids unnecessary recursion
+- Base case target == 0 captures valid combinations</p>
+<p><strong>Optimization - Sort and Prune:</strong>
+<pre class="highlight"><code class="language-java">Arrays.sort(candidates);  // Sort first
+for (int i = start; i &lt; candidates.length; i++) {
+    if (candidates[i] &gt; target) break;  // Prune: all further are larger
+    // ... rest of logic
+}</code></pre></p>
+<p><strong>Visualization - Combination Sum Decision Tree:</strong>
+<pre class="mermaid"><code>graph TD
+    A["[] target=7"] --&gt; B["[2] target=5"]
+    A --&gt; C["[3] target=4"]
+    A --&gt; D["[6] target=1"]
+    A --&gt; E["[7] target=0"]
+    B --&gt; F["[2,2] target=3"]
+    B --&gt; G["[2,3] target=2"]
+    B --&gt; H["[2,6] target=-1"]
+    F --&gt; I["[2,2,2] target=1"]
+    F --&gt; J["[2,2,3] target=0"]
+    E --&gt; K["FOUND: [7]"]
+    J --&gt; L["FOUND: [2,2,3]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) {
     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
     Arrays.sort(candidates);
@@ -336,24 +813,73 @@ private void backtrack(int[] candidates, int target, int start, List&lt;Integer&
         result.add(new ArrayList&lt;&gt;(current));
         return;
     }
-
     if (target &lt; 0) return;
-
     for (int i = start; i &lt; candidates.length; i++) {
+        if (candidates[i] &gt; target) break;
         current.add(candidates[i]);
         backtrack(candidates, target - candidates[i], i, current, result);
         current.remove(current.size() - 1);
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Combination Sum II (no reuse), Combination Sum III (k elements)</p>
+<p><strong>Edge Cases:</strong>
+- Empty candidates: returns []
+- Target smaller than all: returns []
+- Target = 0: returns [[]]
+- Single candidate = target: returns [[target]]</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Combination Sum II (no reuse, skip duplicates)
+- Combination Sum III (exactly k elements)
+- Combination Sum IV (count permutations)</p>
 <hr />
 <h4 id="6-word-search">6. <strong>Word Search</strong></h4>
-<p><strong>Explanation</strong>: DFS on grid checking if word exists. Mark visited cells. Time: O(N*3^L), Space: O(L).</p>
+<p><strong>Problem Description:</strong>
+Given a 2D board of characters and a word, determine if the word exists in the grid. Word can be constructed from adjacent cells (horizontal/vertical), same cell not used twice.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>board = [['A','B','C','E'], ['S','F','C','S'], ['A','D','E','E']]</code>, <code>word = "ABCCED"</code>
+<pre class="highlight"><code>Expected Output: true
+
+Step-by-step execution:
+Find starting 'A' at (0,0)
+
+(0,0)='A' == 'A' -&gt; mark '*', index=1
+    (1,0)='S' != 'B', (0,1)='B' == 'B' -&gt; mark '*', index=2
+        (0,2)='C' == 'C' -&gt; mark '*', index=3
+            (0,3)='E' != 'C', (1,2)='C' == 'C' -&gt; mark '*', index=4
+                (1,1)='F' != 'E', (0,2)='*', (2,2)='E' == 'E' -&gt; mark '*', index=5
+                    (2,1)='D' == 'D' -&gt; mark '*', index=6 == word.length()
+                    RETURN true</code></pre></p>
+<p>Input: <code>board = [['A','B','C','E'], ['S','F','C','S'], ['A','D','E','E']]</code>, <code>word = "ABCB"</code>
+<pre class="highlight"><code>Expected Output: false
+
+(0,0)='A' -&gt; (0,1)='B' -&gt; (0,2)='C' -&gt; back to 'B'? 
+(0,1) already visited, (1,2)='C' not 'B'
+No valid path, return false</code></pre></p>
+<p><strong>Key Insight - Mark and Unmark:</strong>
+Use DFS with backtracking. Mark current cell as visited (e.g., change to <code>*</code>), explore all 4 directions, then unmark (restore original character). This prevents revisiting the same cell in one path.</p>
+<p><strong>Why It Works:</strong>
+- Start DFS from every cell that matches word[0]
+- At each step, check current cell matches expected character
+- Mark visited to avoid cycles
+- Explore all 4 directions recursively
+- Unmark on backtrack to allow other paths to use this cell</p>
+<p><strong>Visualization - Word Search DFS:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Find 'A' at (0,0)"] --&gt; B["Match 'A', mark '*', index=1"]
+    B --&gt; C["Try 4 directions for 'B'"]
+    C --&gt; D["(0,1)='B' matches, mark '*', index=2"]
+    D --&gt; E["Try 4 directions for 'C'"]
+    E --&gt; F["(0,2)='C' matches, mark '*', index=3"]
+    F --&gt; G["Try 4 directions for 'C'"]
+    G --&gt; H["(1,2)='C' matches, mark '*', index=4"]
+    H --&gt; I["Try 4 directions for 'E'"]
+    I --&gt; J["(2,2)='E' matches, mark '*', index=5"]
+    J --&gt; K["Try 4 directions for 'D'"]
+    K --&gt; L["(2,1)='D' matches, index=6"]
+    L --&gt; M["Return true"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean exist(char[][] board, String word) {
     for (int i = 0; i &lt; board.length; i++) {
         for (int j = 0; j &lt; board[0].length; j++) {
-            if (board[i][j] == word.charAt(0) &amp;&amp; 
-                backtrack(board, word, 0, i, j)) {
+            if (board[i][j] == word.charAt(0) &amp;&amp; backtrack(board, word, 0, i, j)) {
                 return true;
             }
         }
@@ -363,27 +889,102 @@ private void backtrack(int[] candidates, int target, int start, List&lt;Integer&
 
 private boolean backtrack(char[][] board, String word, int index, int row, int col) {
     if (index == word.length()) return true;
-
-    if (row &lt; 0 || row &gt;= board.length || col &lt; 0 || col &gt;= board[0].length || 
+    if (row &lt; 0 || row &gt;= board.length || col &lt; 0 || col &gt;= board[0].length ||
         board[row][col] != word.charAt(index)) {
         return false;
     }
-
     char original = board[row][col];
     board[row][col] = '*';
-
     boolean result = backtrack(board, word, index + 1, row + 1, col) ||
                      backtrack(board, word, index + 1, row - 1, col) ||
                      backtrack(board, word, index + 1, row, col + 1) ||
                      backtrack(board, word, index + 1, row, col - 1);
-
     board[row][col] = original;
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Word Search II (multiple words), Search Pattern in Matrix</p>
+<p><strong>Edge Cases:</strong>
+- Empty board: returns false
+- Word longer than cells: returns false
+- Single cell matching word: returns true
+- Word with repeated characters: correctly handles revisits</p>
+<p><strong>Time Complexity</strong>: O(N * 3^L) where N is cells, L is word length
+<strong>Space Complexity</strong>: O(L) for recursion stack</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Word Search II (multiple words - use Trie)
+- Search Pattern in Matrix
+- Number of Islands (similar DFS)</p>
 <hr />
 <h4 id="7-palindrome-partitioning">7. <strong>Palindrome Partitioning</strong></h4>
-<p><strong>Explanation</strong>: Partition string into palindromes. Backtrack exploring all valid partitions. Time: O(N*2^N), Space: O(N).</p>
+<p><strong>Problem Description:</strong>
+Given a string s, partition s such that every substring is a palindrome. Return all possible palindrome partitioning.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "aab"</code>
+<pre class="highlight"><code>Expected Output: [["a","a","b"], ["aa","b"]]
+
+Step-by-step execution:
+Start: current=[], start=0
+
+i=0: substring "a" is palindrome
+     current=["a"], recurse(start=1)
+     i=1: substring "a" is palindrome
+          current=["a","a"], recurse(start=2)
+          i=2: substring "b" is palindrome
+               current=["a","a","b"], recurse(start=3)
+               start == s.length() -&gt; COMPLETE
+               result=[["a","a","b"]]
+               undo -&gt; current=["a","a"]
+          undo -&gt; current=["a"]
+     i=2: substring "ab" is NOT palindrome -&gt; skip
+     undo -&gt; current=[]
+
+i=1: substring "aa" is palindrome
+     current=["aa"], recurse(start=2)
+     i=2: substring "b" is palindrome
+          current=["aa","b"], recurse(start=3)
+          start == s.length() -&gt; COMPLETE
+          result=[["a","a","b"], ["aa","b"]]
+          undo -&gt; current=["aa"]
+     undo -&gt; current=[]
+
+i=2: substring "aab" is NOT palindrome -&gt; skip
+
+Final: [["a","a","b"], ["aa","b"]]</code></pre></p>
+<p>Input: <code>s = "a"</code>
+<pre class="highlight"><code>Expected Output: [["a"]]
+
+i=0: substring "a" is palindrome
+     current=["a"], recurse(start=1)
+     start == s.length() -&gt; COMPLETE
+     result=[["a"]]
+Final: [["a"]]</code></pre></p>
+<p><strong>Key Insight - Try Every Prefix:</strong>
+At each position, try every possible prefix ending at i. If prefix is a palindrome, add it and recurse on the remainder. This ensures all valid partitions are explored.</p>
+<p><strong>Why It Works:</strong>
+- Every partition has a first part (prefix) that must be a palindrome
+- After choosing a palindrome prefix, recursively partition the rest
+- Base case: when we've consumed entire string
+- Palindrome check ensures only valid parts are chosen</p>
+<p><strong>Optimization - Precompute Palindromes:</strong>
+<pre class="highlight"><code class="language-java">// Precompute isPalindrome[i][j] in O(n^2) using DP
+boolean[][] isPal = new boolean[n][n];
+for (int i = n-1; i &gt;= 0; i--) {
+    for (int j = i; j &lt; n; j++) {
+        if (s.charAt(i) == s.charAt(j) &amp;&amp; (j-i &lt;= 2 || isPal[i+1][j-1])) {
+            isPal[i][j] = true;
+        }
+    }
+}</code></pre></p>
+<p><strong>Visualization - Palindrome Partitioning:</strong>
+<pre class="mermaid"><code>graph TD
+    A["'aab', start=0"] --&gt; B["'a' palindrome"]
+    A --&gt; C["'aa' palindrome"]
+    B --&gt; D["'ab', start=1"]
+    C --&gt; E["'b', start=2"]
+    D --&gt; F["'a' palindrome"]
+    D --&gt; G["'ab' not palindrome"]
+    F --&gt; H["'b', start=2"]
+    H --&gt; I["'b' palindrome -&gt; FOUND ['a','a','b']"]
+    E --&gt; J["'b' palindrome -&gt; FOUND ['aa','b']"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;String&gt;&gt; partition(String s) {
     List&lt;List&lt;String&gt;&gt; result = new ArrayList&lt;&gt;();
     backtrack(s, 0, new ArrayList&lt;&gt;(), result);
@@ -395,7 +996,6 @@ private void backtrack(String s, int start, List&lt;String&gt; current, List&lt;
         result.add(new ArrayList&lt;&gt;(current));
         return;
     }
-
     for (int i = start; i &lt; s.length(); i++) {
         if (isPalindrome(s, start, i)) {
             current.add(s.substring(start, i + 1));
@@ -411,11 +1011,91 @@ private boolean isPalindrome(String s, int left, int right) {
     }
     return true;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Palindrome Partitioning II, Cut Palindrome String</p>
+<p><strong>Edge Cases:</strong>
+- Empty string: returns [[]]
+- Single character: returns [[char]]
+- All same characters: many valid partitions
+- No palindrome &gt; 1: only single-char partitions</p>
+<p><strong>Time Complexity</strong>: O(N * 2^N) - 2^N partitions, O(N) palindrome check each
+<strong>Space Complexity</strong>: O(N) - recursion stack</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Palindrome Partitioning II (minimum cuts - DP)
+- Palindrome Partitioning III (k partitions)
+- Cut Palindrome String</p>
 <hr />
 <h3 id="hard">Hard</h3>
-<h4 id="8-n-queens">8. <strong>N Queens</strong></h4>
-<p><strong>Explanation</strong>: Place n queens on n×n board. No two attack each other. Backtrack with pruning. Time: O(n!), Space: O(n).</p>
+<h4 id="8-n-queens">8. <strong>N-Queens</strong></h4>
+<p><strong>Problem Description:</strong>
+Place n queens on an n×n chessboard such that no two queens attack each other. Return all distinct solutions. Each solution contains a distinct board configuration.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 4</code>
+<pre class="highlight"><code>Expected Output: [[".Q..","...Q","Q...","..Q."], ["..Q.","Q...","...Q",".Q.."]]
+
+Step-by-step execution:
+Row 0, Col 0: Place Q at (0,0)
+    Row 1: Col 0 (same column), Col 1 (diagonal), Col 2 OK
+    Place Q at (1,2)
+        Row 2: Col 0 (diagonal), Col 1 OK
+        Place Q at (2,1)
+            Row 3: Col 0 (diagonal), Col 1 (same column), Col 2 (diagonal), Col 3 OK
+            Place Q at (3,3)
+                Row 4 = n -&gt; COMPLETE
+                Solution 1: [".Q..","...Q","Q...","..Q."]
+                Backtrack all the way to Row 0
+
+Row 0, Col 1: Place Q at (0,1)
+    Row 1: Col 0 OK
+    Place Q at (1,0)
+        Row 2: Col 2 OK? (diagonal conflict with (0,1)?)
+        (0,1) and (2,2): row diff=2, col diff=1 -&gt; no conflict
+        Actually (1,0) and (2,2): row diff=1, col diff=2 -&gt; no conflict
+        Place Q at (2,2)? But check (0,1) and (2,2): 2-0=2, 2-1=1 -&gt; no conflict
+        Wait, need to check all previous queens
+        (1,0) and (2,2): row diff=1, col diff=2 -&gt; no conflict
+        Place Q at (2,2)? But check (0,1) and (2,2): 2-0=2, 2-1=1 -&gt; no conflict
+        Actually let me redo: (0,1), (1,0), (2,2)?
+        (0,1) and (1,0): row diff=1, col diff=1 -&gt; DIAGONAL CONFLICT!
+        So (1,0) is invalid after (0,1)
+    Row 1: Col 2? (0,1) and (1,2): row diff=1, col diff=1 -&gt; DIAGONAL CONFLICT
+    Row 1: Col 3 OK
+    Place Q at (1,3)
+        Row 2: Col 0 OK? (0,1) and (2,0): row diff=2, col diff=1 -&gt; no conflict
+        (1,3) and (2,0): row diff=1, col diff=3 -&gt; no conflict
+        Place Q at (2,0)
+            Row 3: Col 2 OK? 
+            (0,1) and (3,2): row diff=3, col diff=1 -&gt; no conflict
+            (1,3) and (3,2): row diff=2, col diff=1 -&gt; no conflict
+            (2,0) and (3,2): row diff=1, col diff=2 -&gt; no conflict
+            Place Q at (3,2)
+                Row 4 = n -&gt; COMPLETE
+                Solution 2: ["..Q.","Q...","...Q",".Q.."]
+
+Final: 2 solutions</code></pre></p>
+<p>Input: <code>n = 1</code>
+<pre class="highlight"><code>Expected Output: [["Q"]]
+
+Row 0, Col 0: Place Q at (0,0)
+Row 1 = n -&gt; COMPLETE
+Solution: ["Q"]</code></pre></p>
+<p><strong>Key Insight - Validity Check with Pruning:</strong>
+For each row, try placing queen in every column. Check if placement is valid (no column conflict, no diagonal conflict with any previously placed queen). If valid, place and recurse. If no valid column, backtrack.</p>
+<p><strong>Why It Works:</strong>
+- One queen per row (guaranteed by recursion structure)
+- Column conflict: check <code>board[i][col] == 'Q'</code> for all previous rows
+- Diagonal conflict: check both diagonals going up-left and up-right
+- Only need to check upward because lower rows aren't placed yet
+- Base case: all n rows filled = valid solution</p>
+<p><strong>Visualization - N-Queens Backtracking:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Row 0: Try col 0"] --&gt; B["Row 1: Try col 2"]
+    A --&gt; C["Row 0: Try col 1"]
+    B --&gt; D["Row 2: Try col 1"]
+    C --&gt; E["Row 1: Try col 3"]
+    D --&gt; F["Row 3: Try col 3"]
+    E --&gt; G["Row 2: Try col 0"]
+    F --&gt; H["SOLUTION 1"]
+    G --&gt; I["Row 3: Try col 2"]
+    I --&gt; J["SOLUTION 2"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;String&gt;&gt; solveNQueens(int n) {
     List&lt;List&lt;String&gt;&gt; result = new ArrayList&lt;&gt;();
     char[][] board = new char[n][n];
@@ -424,7 +1104,6 @@ private boolean isPalindrome(String s, int left, int right) {
             board[i][j] = '.';
         }
     }
-
     backtrack(board, 0, result);
     return result;
 }
@@ -434,7 +1113,6 @@ private void backtrack(char[][] board, int row, List&lt;List&lt;String&gt;&gt; r
         result.add(boardToList(board));
         return;
     }
-
     for (int col = 0; col &lt; board.length; col++) {
         if (isValid(board, row, col)) {
             board[row][col] = 'Q';
@@ -448,15 +1126,12 @@ private boolean isValid(char[][] board, int row, int col) {
     for (int i = 0; i &lt; row; i++) {
         if (board[i][col] == 'Q') return false;
     }
-
     for (int i = row - 1, j = col - 1; i &gt;= 0 &amp;&amp; j &gt;= 0; i--, j--) {
         if (board[i][j] == 'Q') return false;
     }
-
     for (int i = row - 1, j = col + 1; i &gt;= 0 &amp;&amp; j &lt; board.length; i--, j++) {
         if (board[i][j] == 'Q') return false;
     }
-
     return true;
 }
 
@@ -467,51 +1142,152 @@ private List&lt;String&gt; boardToList(char[][] board) {
     }
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: N Queens II (count solutions), Sudoku Solver</p>
+<p><strong>Edge Cases:</strong>
+- n = 1: returns [["Q"]]
+- n = 2, n = 3: no solutions, returns []
+- n = 4: 2 solutions
+- n = 8: 92 solutions</p>
+<p><strong>Time Complexity</strong>: O(n!) - n choices for first row, n-1 for second, etc.
+<strong>Space Complexity</strong>: O(n^2) for board, O(n) for recursion</p>
+<p><strong>Similar Pattern Problems:</strong>
+- N-Queens II (count solutions only)
+- Sudoku Solver (similar backtracking on grid)
+- Knight's Tour</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-combination-pattern-no-reuse">1. <strong>Combination Pattern (No Reuse)</strong></h3>
-<ul>
-<li>Use <code>start</code> index to avoid duplicates</li>
-<li>Explore from start to end</li>
-<li>Perfect for: Combinations, Subsets</li>
-</ul>
+<p><pre class="highlight"><code class="language-java">backtrack(nums, i + 1, current, result);  // i+1 prevents reuse</code></pre>
+- Use <code>start</code> index to avoid duplicates
+- Explore from start to end
+- Perfect for: Combinations, Subsets</p>
 <h3 id="2-permutation-pattern-full-reuse">2. <strong>Permutation Pattern (Full Reuse)</strong></h3>
-<ul>
-<li>Use <code>boolean[] used</code> array</li>
-<li>Try all unused elements</li>
-<li>Perfect for: Permutations, Arrangements</li>
-</ul>
+<p><pre class="highlight"><code class="language-java">if (!used[i]) {
+    used[i] = true;
+    backtrack(nums, used, current, result);
+    used[i] = false;
+}</code></pre>
+- Use <code>boolean[] used</code> array
+- Try all unused elements
+- Perfect for: Permutations, Arrangements</p>
 <h3 id="3-substringpartition-pattern">3. <strong>Substring/Partition Pattern</strong></h3>
-<ul>
-<li>Iterate through indices</li>
-<li>Choose substring, recurse on remainder</li>
-<li>Perfect for: Palindrome Partitioning, IP Addresses</li>
-</ul>
+<p><pre class="highlight"><code class="language-java">for (int i = start; i &lt; s.length(); i++) {
+    if (isValid(s, start, i)) {
+        current.add(s.substring(start, i + 1));
+        backtrack(s, i + 1, current, result);
+        current.remove(current.size() - 1);
+    }
+}</code></pre>
+- Iterate through indices
+- Choose substring, recurse on remainder
+- Perfect for: Palindrome Partitioning, IP Addresses</p>
 <h3 id="4-board-pattern-2d-search">4. <strong>Board Pattern (2D Search)</strong></h3>
-<ul>
-<li>Mark visited cells</li>
-<li>Explore 4 directions</li>
-<li>Unmark on backtrack</li>
-<li>Perfect for: Word Search, N-Queens</li>
-</ul>
+<p><pre class="highlight"><code class="language-java">char original = board[row][col];
+board[row][col] = '*';
+// Explore 4 directions
+board[row][col] = original;</code></pre>
+- Mark visited cells
+- Explore 4 directions
+- Unmark on backtrack
+- Perfect for: Word Search, N-Queens</p>
 <h3 id="5-pruning-techniques">5. <strong>Pruning Techniques</strong></h3>
-<ul>
-<li>Early termination when target reached</li>
-<li>Check validity before recursing</li>
-<li>Skip impossible branches</li>
-</ul>
+<p><pre class="highlight"><code class="language-java">if (target &lt; 0) return;  // Prune invalid
+if (candidates[i] &gt; target) break;  // Prune sorted
+if (close &gt; open) { ... }  // Constraint check</code></pre>
+- Early termination when target reached
+- Check validity before recursing
+- Skip impossible branches</p>
+<h3 id="6-duplicate-handling">6. <strong>Duplicate Handling</strong></h3>
+<p><pre class="highlight"><code class="language-java">Arrays.sort(nums);
+if (i &gt; start &amp;&amp; nums[i] == nums[i-1]) continue;  // Skip duplicates</code></pre>
+- Sort first to group duplicates
+- Skip if same as previous at same level
+- Perfect for: Subsets II, Permutations II, Combination Sum II</p>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Forgetting to undo changes when backtracking</li>
-<li>❌ Not handling duplicates (sort first)</li>
-<li>❌ Incorrect base case conditions</li>
-<li>❌ Not exploring all possibilities</li>
-<li>❌ Inefficient pruning strategies</li>
-<li>❌ Modifying shared data structure</li>
-<li>❌ Off-by-one errors in index management</li>
+<li>❌ Forgetting to undo changes when backtracking (must remove from current, unmark used, restore board)</li>
+<li>❌ Not handling duplicates (sort first, then skip <code>nums[i] == nums[i-1]</code>)</li>
+<li>❌ Incorrect base case conditions (check size == k, target == 0, start == length)</li>
+<li>❌ Not exploring all possibilities (missing directions, wrong loop bounds)</li>
+<li>❌ Inefficient pruning strategies (prune as early as possible)</li>
+<li>❌ Modifying shared data structure (always undo before returning)</li>
+<li>❌ Off-by-one errors in index management (<code>i+1</code> vs <code>i</code>, <code>&lt;=</code> vs <code>&lt;</code>)</li>
+<li>❌ Using <code>List&lt;List&lt;Integer&gt;&gt;</code> directly (must create new ArrayList for each result)</li>
+<li>❌ Forgetting to sort when duplicates need handling</li>
+<li>❌ Not passing <code>start</code> index for combination problems</li>
 </ul>
+<hr />
+<h2 id="backtracking-decision-flow_1">🔹 Backtracking Decision Flow</h2>
+<h3 id="choosing-the-right-pattern">Choosing the Right Pattern</h3>
+<pre class="mermaid"><code>graph TD
+    A["Backtracking Problem"] --&gt; B{"Need all combinations?"}
+    B --&gt;|Yes| C{"Reuse allowed?"}
+    C --&gt;|Yes| D["Combination Sum pattern: pass i"]
+    C --&gt;|No| E["Combination pattern: pass i+1"]
+    B --&gt;|No| F{"Need all permutations?"}
+    F --&gt;|Yes| G{"Duplicates?"}
+    G --&gt;|Yes| H["Sort + used[] + skip duplicates"]
+    G --&gt;|No| I["used[] array pattern"]
+    F --&gt;|No| J{"Partition string/array?"}
+    J --&gt;|Yes| K["Partition pattern: substring + recurse"]
+    J --&gt;|No| L{"2D board search?"}
+    L --&gt;|Yes| M["Board pattern: mark + 4 directions + unmark"]
+    L --&gt;|No| N["Custom pattern: define state + choices + base case"]</code></pre>
+<h3 id="complexity-cheat-sheet">Complexity Cheat Sheet</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Time</th>
+<th>Space</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subsets</td>
+<td>O(n * 2^n)</td>
+<td>O(n)</td>
+<td>Subsets</td>
+</tr>
+<tr>
+<td>Combinations</td>
+<td>O(C(n,k) * k)</td>
+<td>O(k)</td>
+<td>Combinations</td>
+</tr>
+<tr>
+<td>Permutations</td>
+<td>O(n * n!)</td>
+<td>O(n)</td>
+<td>Permutations</td>
+</tr>
+<tr>
+<td>Partition</td>
+<td>O(n * 2^n)</td>
+<td>O(n)</td>
+<td>Palindrome Partitioning</td>
+</tr>
+<tr>
+<td>Board Search</td>
+<td>O(N * 3^L)</td>
+<td>O(L)</td>
+<td>Word Search</td>
+</tr>
+<tr>
+<td>N-Queens</td>
+<td>O(n!)</td>
+<td>O(n^2)</td>
+<td>N-Queens</td>
+</tr>
+<tr>
+<td>Parentheses</td>
+<td>O(4^n/sqrt(n))</td>
+<td>O(n)</td>
+<td>Generate Parentheses</td>
+</tr>
+</tbody>
+</table>
               
             </div>
           </div><footer>

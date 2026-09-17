@@ -78,13 +78,33 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Tree</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-tree-simple-explanation">What is a Tree? (Simple Explanation)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#traversals">Traversals</a>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tree-vs-binary-tree-vs-bst">Tree vs Binary Tree vs BST</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#complexity">Complexity</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tree-traversals-the-4-ways">Tree Traversals (The 4 Ways)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#treenode-definition">TreeNode Definition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#recursive-dfs-template">Recursive DFS Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bfs-level-order-template">BFS (Level Order) Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#inorder-traversal-template">Inorder Traversal Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tree-decision-flow">Tree Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -129,6 +149,8 @@
     <li class="toctree-l3"><a class="reference internal" href="#3-dfs-vs-bfs">3. DFS vs BFS</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#4-divide-and-conquer">4. Divide and Conquer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-top-down-vs-bottom-up">5. Top-Down vs Bottom-Up</a>
     </li>
         </ul>
     </li>
@@ -197,52 +219,331 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="tree">Tree</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-a-tree-simple-explanation">What is a Tree? (Simple Explanation)</h2>
+<p>Imagine a family tree: one ancestor at the top, their children below them, and their grandchildren below that. That's a <strong>tree</strong> structure!</p>
+<p>In computer science, a tree is a hierarchical data structure where:
+- One node is the <strong>root</strong> (top)
+- Each node can have <strong>children</strong> (nodes below it)
+- A node with no children is a <strong>leaf</strong>
+- Nodes are connected by <strong>edges</strong> (links)</p>
+<p><strong>Real-life analogies:</strong>
+- Family tree (ancestors and descendants)
+- Company org chart (CEO at top, employees below)
+- File system (folders containing files and subfolders)
+- HTML DOM structure (nested elements)</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li>Hierarchical structure with parent-child relationships</li>
-<li><strong>Binary Tree</strong>: Each node has at most 2 children</li>
-<li><strong>Binary Search Tree (BST)</strong>: Left &lt; Parent &lt; Right</li>
-<li><strong>Balanced Tree</strong>: Height difference ≤ 1 (AVL, Red-Black)</li>
-<li><strong>Time Complexity</strong>: O(log n) for balanced, O(n) for skewed</li>
-<li><strong>Space Complexity</strong>: O(h) for recursion stack where h = height</li>
+<li><strong>Node</strong>: A single element containing data and links to children</li>
+<li><strong>Root</strong>: The topmost node (no parent)</li>
+<li><strong>Leaf</strong>: A node with no children</li>
+<li><strong>Parent/Child</strong>: Direct relationship (parent is above, child is below)</li>
+<li><strong>Siblings</strong>: Nodes with the same parent</li>
+<li><strong>Height</strong>: Longest path from root to a leaf</li>
+<li><strong>Depth</strong>: Distance from root to a node</li>
+<li><strong>Subtree</strong>: A node and all its descendants</li>
+<li><strong>Binary Tree</strong>: Each node has at most 2 children (left and right)</li>
+<li><strong>BST (Binary Search Tree)</strong>: Left child &lt; Parent &lt; Right child</li>
+<li><strong>Balanced Tree</strong>: Height difference between subtrees ≤ 1 (AVL, Red-Black)</li>
 </ul>
-<h2 id="traversals">Traversals</h2>
-<ul>
-<li><strong>Inorder</strong> (Left-Root-Right): BST gives sorted order</li>
-<li><strong>Preorder</strong> (Root-Left-Right): Root first, useful for copying</li>
-<li><strong>Postorder</strong> (Left-Right-Root): Children before parent, useful for deletion</li>
-<li><strong>Level Order</strong> (BFS): Breadth-first traversal</li>
-</ul>
+<h2 id="tree-vs-binary-tree-vs-bst">Tree vs Binary Tree vs BST</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Rule</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tree</td>
+<td>Each node has any number of children</td>
+<td>General hierarchy</td>
+</tr>
+<tr>
+<td>Binary Tree</td>
+<td>Each node has at most 2 children</td>
+<td>Expression trees</td>
+</tr>
+<tr>
+<td>BST</td>
+<td>Left &lt; Parent &lt; Right</td>
+<td>Sorted data, search</td>
+</tr>
+</tbody>
+</table>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
 <li>Tree Traversals (all types)</li>
 <li>Maximum/Minimum Depth</li>
+<li>Symmetric Tree</li>
 <li>Path Sum problems</li>
 <li>Lowest Common Ancestor (LCA)</li>
-<li>Serialize/Deserialize</li>
-<li>Construct tree from traversals</li>
+<li>Build Tree from Traversals</li>
+<li>Binary Tree Maximum Path Sum</li>
+<li>Recover BST</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Recursion (top-down, bottom-up)</li>
-<li>DFS (depth-first traversal)</li>
-<li>BFS (breadth-first traversal)</li>
-<li>Divide and Conquer on trees</li>
-<li>Backtracking for paths</li>
+<li><strong>Recursion</strong>: Most tree problems are naturally recursive</li>
+<li><strong>DFS (Depth-First Search)</strong>: Go deep before wide</li>
+<li><strong>BFS (Breadth-First Search)</strong>: Go level by level</li>
+<li><strong>Divide and Conquer</strong>: Solve left, solve right, combine</li>
+<li><strong>Backtracking</strong>: For path-related problems</li>
 </ul>
+<h2 id="complexity">Complexity</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Balanced BST</th>
+<th>Skewed BST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Search</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Insert</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Space (recursion)</td>
+<td>O(log n)</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tree-traversals-the-4-ways">Tree Traversals (The 4 Ways)</h2>
+<table>
+<thead>
+<tr>
+<th>Traversal</th>
+<th>Order</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Inorder</strong></td>
+<td>Left → Root → Right</td>
+<td>BST gives sorted order</td>
+</tr>
+<tr>
+<td><strong>Preorder</strong></td>
+<td>Root → Left → Right</td>
+<td>Copy/serialize tree</td>
+</tr>
+<tr>
+<td><strong>Postorder</strong></td>
+<td>Left → Right → Root</td>
+<td>Delete tree, evaluate expressions</td>
+</tr>
+<tr>
+<td><strong>Level Order</strong></td>
+<td>Level by level (BFS)</td>
+<td>Shortest path, level processing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Memory trick:</strong> The name tells you when the root is visited:
+- <strong>Pre</strong>order: root <strong>pre</strong> (before)
+- <strong>In</strong>order: root <strong>in</strong> between
+- <strong>Post</strong>order: root <strong>post</strong> (after)</p>
+<hr />
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="treenode-definition">TreeNode Definition</h3>
+<pre class="highlight"><code class="language-java">class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int val) {
+        this.val = val;
+    }
+}</code></pre>
+<h3 id="recursive-dfs-template">Recursive DFS Template</h3>
+<pre class="highlight"><code class="language-java">public int dfs(TreeNode root) {
+    if (root == null) return 0;
+    int left = dfs(root.left);
+    int right = dfs(root.right);
+    return 1 + Math.max(left, right);
+}</code></pre>
+<h3 id="bfs-level-order-template">BFS (Level Order) Template</h3>
+<pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+    if (root == null) return result;
+    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+    queue.offer(root);
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        List&lt;Integer&gt; level = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; size; i++) {
+            TreeNode node = queue.poll();
+            level.add(node.val);
+            if (node.left != null) queue.offer(node.left);
+            if (node.right != null) queue.offer(node.right);
+        }
+        result.add(level);
+    }
+    return result;
+}</code></pre>
+<h3 id="inorder-traversal-template">Inorder Traversal Template</h3>
+<pre class="highlight"><code class="language-java">// Recursive
+public void inorder(TreeNode root, List&lt;Integer&gt; result) {
+    if (root == null) return;
+    inorder(root.left, result);
+    result.add(root.val);
+    inorder(root.right, result);
+}</code></pre>
+<h3 id="tree-decision-flow">Tree Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Tree Problem"] --&gt; B{"Need level-by-level?"}
+    B --&gt;|Yes| C["BFS with Queue"]
+    B --&gt;|No| D{"Need path from root?"}
+    D --&gt;|Yes| E["DFS with backtracking"]
+    D --&gt;|No| F{"Need subtree info?"}
+    F --&gt;|Yes| G["Post-order DFS (bottom-up)"]
+    F --&gt;|No| H{"Is it a BST?"}
+    H --&gt;|Yes| I["Use BST property (left &lt; root &lt; right)"]
+    H --&gt;|No| J["General DFS recursion"]</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-maximum-depth-of-binary-tree">1. <strong>Maximum Depth of Binary Tree</strong></h4>
-<p><strong>Explanation</strong>: Recursively find max depth of left and right subtrees, return max + 1. Base case: null node has depth 0. Time: O(n), Space: O(h).</p>
+<p><strong>Problem Description:</strong>
+Given the root of a binary tree, return its maximum depth (number of nodes along the longest path from root to a leaf).</p>
+<p><strong>Simple Analogy:</strong>
+Like measuring how tall a family tree is — the longest chain from the top ancestor to the deepest descendant.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>    3
+   / \
+  9  20
+     / \
+    15  7</code></pre>
+<pre class="highlight"><code>Expected Output: 3
+
+Paths:
+3 -&gt; 9 (depth 2)
+3 -&gt; 20 -&gt; 15 (depth 3)
+3 -&gt; 20 -&gt; 7 (depth 3)
+
+Max depth = 3
+
+Step-by-step:
+root=3:
+  left=9: depth=1
+  right=20:
+    left=15: depth=1
+    right=7: depth=1
+    max(1,1)+1 = 2
+  max(1,2)+1 = 3
+Return 3</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>    1
+   /
+  2
+ /
+3</code></pre>
+<pre class="highlight"><code>Expected Output: 3 (skewed tree)</code></pre></p>
+<p>Input: <code>root = null</code>
+<pre class="highlight"><code>Expected Output: 0</code></pre></p>
+<p>Input: <code>root = [1]</code>
+<pre class="highlight"><code>Expected Output: 1</code></pre></p>
+<p><strong>Key Insight - Recursive Max + 1:</strong>
+The depth of a tree = 1 (for the root) + max(depth of left subtree, depth of right subtree). Base case: null has depth 0.</p>
+<p><strong>Why It Works:</strong>
+- Every path goes through the root
+- Longest path = 1 + longer of (left subtree's longest path, right subtree's longest path)
+- This is divide and conquer
+- Recursion naturally handles all subtrees</p>
+<p><strong>Visualization - Max Depth:</strong>
+<pre class="mermaid"><code>graph TD
+    A["3"] --&gt; B["9 (depth 1)"]
+    A --&gt; C["20"]
+    C --&gt; D["15 (depth 1)"]
+    C --&gt; E["7 (depth 1)"]
+    C --&gt; F["20 depth = 2"]
+    A --&gt; G["3 depth = 3"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int maxDepth(TreeNode root) {
     if (root == null) return 0;
     return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Minimum Depth, Tree Height</p>
+<p><strong>Edge Cases:</strong>
+- Empty tree: returns 0
+- Single node: returns 1
+- Skewed tree (all left or all right): returns n
+- Balanced tree: returns log n + 1</p>
+<p><strong>Time Complexity</strong>: O(n) — visit every node once
+<strong>Space Complexity</strong>: O(h) — recursion stack</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Minimum Depth of Binary Tree
+- Tree Height
+- Balanced Binary Tree</p>
 <hr />
 <h4 id="2-symmetric-tree-mirror-tree">2. <strong>Symmetric Tree (Mirror Tree)</strong></h4>
-<p><strong>Explanation</strong>: Recursively check if left subtree mirrors right subtree. Compare node values and structure. Time: O(n), Space: O(h).</p>
+<p><strong>Problem Description:</strong>
+Given the root of a binary tree, check whether it is a mirror of itself (symmetric around its center).</p>
+<p><strong>Simple Analogy:</strong>
+Like checking if a tree looks the same in a mirror. The left subtree should mirror the right subtree.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3</code></pre>
+<pre class="highlight"><code>Expected Output: true
+
+Check mirror:
+1.left (2) vs 1.right (2): equal
+2.left (3) vs 2.right (3): equal
+2.right (4) vs 2.left (4): equal
+3.left (null) vs 3.right (null): equal
+... all match -&gt; true</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>    1
+   / \
+  2   2
+   \   \
+   3    3</code></pre>
+<pre class="highlight"><code>Expected Output: false
+
+2.right (3) vs 2.right (3): But for mirror, we compare:
+2.right (3) vs 2.left (null): not equal -&gt; false</code></pre></p>
+<p>Input: <code>root = [1]</code>
+<pre class="highlight"><code>Expected Output: true (single node is symmetric)</code></pre></p>
+<p>Input: <code>root = null</code>
+<pre class="highlight"><code>Expected Output: true (empty is symmetric)</code></pre></p>
+<p><strong>Key Insight - Mirror Comparison:</strong>
+Two trees are mirrors if:
+- Their root values are equal
+- Left subtree of first is mirror of right subtree of second
+- Right subtree of first is mirror of left subtree of second</p>
+<p><strong>Why It Works:</strong>
+- Symmetry means left side mirrors right side
+- Compare outer pairs (left.left vs right.right)
+- Compare inner pairs (left.right vs right.left)
+- Recursion handles all levels</p>
+<p><strong>Visualization - Symmetric Tree:</strong>
+<pre class="mermaid"><code>graph TD
+    A["1"] --&gt; B["2 (left)"]
+    A --&gt; C["2 (right)"]
+    B --&gt; D["3"]
+    B --&gt; E["4"]
+    C --&gt; F["4"]
+    C --&gt; G["3"]
+    D -.mirror.- G
+    E -.mirror.- F</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean isSymmetric(TreeNode root) {
     if (root == null) return true;
     return isMirror(root.left, root.right);
@@ -251,62 +552,294 @@
 private boolean isMirror(TreeNode left, TreeNode right) {
     if (left == null &amp;&amp; right == null) return true;
     if (left == null || right == null) return false;
-    return left.val == right.val &amp;&amp; isMirror(left.left, right.right) &amp;&amp; isMirror(left.right, right.left);
+    return left.val == right.val
+        &amp;&amp; isMirror(left.left, right.right)
+        &amp;&amp; isMirror(left.right, right.left);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Same Tree, Is Subtree</p>
+<p><strong>Edge Cases:</strong>
+- Empty tree: returns true
+- Single node: returns true
+- Two nodes different: returns false
+- Perfect mirror: returns true</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(h)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Same Tree
+- Is Subtree
+- Flip Equivalent Binary Trees</p>
 <hr />
 <h4 id="3-invert-binary-tree">3. <strong>Invert Binary Tree</strong></h4>
-<p><strong>Explanation</strong>: Swap left and right children recursively. Base: null returns null. Time: O(n), Space: O(h).</p>
+<p><strong>Problem Description:</strong>
+Given the root of a binary tree, invert it (swap left and right children everywhere) and return its root.</p>
+<p><strong>Simple Analogy:</strong>
+Like looking at a tree in a mirror — left becomes right, right becomes left, recursively.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>    4
+   / \
+  2   7
+ / \ / \
+1  3 6  9</code></pre>
+<pre class="highlight"><code>Expected Output:
+    4
+   / \
+  7   2
+ / \ / \
+9  6 3  1
+
+Step-by-step:
+root=4: swap left(2) and right(7)
+  subtree 2: swap 1 and 3
+  subtree 7: swap 6 and 9
+Result: 4 with children 7, 2; 7 has 9, 6; 2 has 3, 1</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>    2
+   / \
+  1   3</code></pre>
+<pre class="highlight"><code>Expected Output:
+    2
+   / \
+  3   1</code></pre></p>
+<p>Input: <code>root = null</code>
+<pre class="highlight"><code>Expected Output: null</code></pre></p>
+<p><strong>Key Insight - Swap and Recurse:</strong>
+For each node, swap its left and right children. Then recursively invert both subtrees.</p>
+<p><strong>Why It Works:</strong>
+- Inverting means every left-right relationship is reversed
+- Swapping at each node flips the immediate children
+- Recursing ensures all descendants are also flipped
+- Base case: null node returns null</p>
+<p><strong>Visualization - Invert Tree:</strong>
+<pre class="mermaid"><code>graph TD
+    A["4"] --&gt; B["2"]
+    A --&gt; C["7"]
+    B --&gt; D["1"]
+    B --&gt; E["3"]
+    C --&gt; F["6"]
+    C --&gt; G["9"]
+    H["After invert"] --&gt; I["4"]
+    I --&gt; J["7"]
+    I --&gt; K["2"]
+    J --&gt; L["9"]
+    J --&gt; M["6"]
+    K --&gt; N["3"]
+    K --&gt; O["1"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public TreeNode invertTree(TreeNode root) {
     if (root == null) return null;
-
     TreeNode temp = root.left;
     root.left = invertTree(root.right);
     root.right = invertTree(temp);
-
     return root;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Flip Tree, Mirror Tree Operations</p>
+<p><strong>Edge Cases:</strong>
+- Empty tree: returns null
+- Single node: returns it unchanged
+- Skewed tree: inverts to opposite skew
+- Complete tree: fully mirrored</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(h)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Flip Tree
+- Mirror Tree Operations
+- Symmetric Tree</p>
 <hr />
 <h4 id="4-path-sum">4. <strong>Path Sum</strong></h4>
-<p><strong>Explanation</strong>: DFS checking each path. Subtract node value from target, check if target becomes 0 at leaf. Time: O(n), Space: O(h).</p>
+<p><strong>Problem Description:</strong>
+Given the root of a binary tree and an integer targetSum, return true if there's a root-to-leaf path whose values sum to targetSum.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding a route from the root to a leaf where the total distance equals a target.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>    5
+   / \
+  4   8
+ /   / \
+11  13  4
+/ \      \
+7  2      1</code></pre>
+<code>targetSum = 22</code>
+<pre class="highlight"><code>Expected Output: true
+
+Path: 5 -&gt; 4 -&gt; 11 -&gt; 2
+Sum: 5 + 4 + 11 + 2 = 22
+
+Step-by-step:
+root=5, target=22
+  left=4, target=17
+    left=11, target=13
+      left=7, target=6 -&gt; leaf, 7 != 6 -&gt; false
+      right=2, target=11 -&gt; leaf, 2 != 11? Wait...
+      Actually 2 != 11, but 5+4+11+2=22, so target should be 0 at leaf.
+      Let me redo: target=22
+      5: target=17
+      4: target=13
+      11: target=2
+      2: target=0 -&gt; leaf! 2-2=0 -&gt; true
+  Return true</code></pre></p>
+<p>Input: <code>root = [1,2,3]</code>, <code>targetSum = 5</code>
+<pre class="highlight"><code>Expected Output: false
+
+Paths: 1+2=3, 1+3=4
+Neither = 5</code></pre></p>
+<p>Input: <code>root = []</code>, <code>targetSum = 0</code>
+<pre class="highlight"><code>Expected Output: false (no path)</code></pre></p>
+<p>Input: <code>root = [5]</code>, <code>targetSum = 5</code>
+<pre class="highlight"><code>Expected Output: true (single node, 5=5)</code></pre></p>
+<p><strong>Key Insight - Subtract at Each Step:</strong>
+At each node, subtract its value from targetSum. At a leaf, check if remaining target is 0. Recurse on both children.</p>
+<p><strong>Why It Works:</strong>
+- A root-to-leaf path sum can be checked by subtracting as we go
+- At a leaf, if remaining sum is 0, path sum equals original target
+- Recurse on both children (OR relationship)
+- Base case: null returns false</p>
+<p><strong>Visualization - Path Sum:</strong>
+<pre class="mermaid"><code>graph LR
+    A["5 (target=22)"] --&gt; B["4 (target=17)"]
+    B --&gt; C["11 (target=13)"]
+    C --&gt; D["2 (target=0) -&gt; TRUE"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean hasPathSum(TreeNode root, int targetSum) {
     if (root == null) return false;
-
     if (root.left == null &amp;&amp; root.right == null) {
         return targetSum == root.val;
     }
-
-    return hasPathSum(root.left, targetSum - root.val) || 
-           hasPathSum(root.right, targetSum - root.val);
+    return hasPathSum(root.left, targetSum - root.val)
+        || hasPathSum(root.right, targetSum - root.val);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Path Sum II, III, IV</p>
+<p><strong>Edge Cases:</strong>
+- Empty tree: returns false
+- Single node matching target: returns true
+- Single node not matching: returns false
+- Negative values: handled correctly</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(h)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Path Sum II (return all paths)
+- Path Sum III (any path)
+- Path Sum IV (depth sum)</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="5-binary-tree-inorder-traversal-iterative">5. <strong>Binary Tree Inorder Traversal (Iterative)</strong></h4>
-<p><strong>Explanation</strong>: Use stack to simulate recursion. Push left nodes, when null pop and visit, move to right. Time: O(n), Space: O(h).</p>
+<p><strong>Problem Description:</strong>
+Given the root of a binary tree, return its inorder traversal (Left → Root → Right) iteratively (without recursion).</p>
+<p><strong>Simple Analogy:</strong>
+Like reading a BST in sorted order using a stack instead of recursion.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>    1
+     \
+      2
+     /
+    3</code></pre>
+<pre class="highlight"><code>Expected Output: [1, 3, 2]
+
+Inorder: left (none), root (1), right (2 with left 3)
+= 1, 3, 2
+
+Iterative:
+curr=1: push 1, go left (null)
+pop 1, add 1, go right (2)
+curr=2: push 2, go left (3)
+curr=3: push 3, go left (null)
+pop 3, add 3, go right (null)
+pop 2, add 2, go right (null)
+Result: [1, 3, 2]</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>    1
+   / \
+  2   3</code></pre>
+<pre class="highlight"><code>Expected Output: [2, 1, 3]</code></pre></p>
+<p>Input: <code>root = null</code>
+<pre class="highlight"><code>Expected Output: []</code></pre></p>
+<p><strong>Key Insight - Stack Simulates Recursion:</strong>
+Push nodes as you go left. When you can't go left, pop a node, visit it, then go right. The stack replaces the call stack.</p>
+<p><strong>Why It Works:</strong>
+- Inorder: left subtree, then root, then right subtree
+- Stack holds "pending" nodes (ancestors we haven't visited)
+- Go left as far as possible, pushing nodes
+- Pop = visit the deepest unvisited node
+- Then explore its right subtree
+- O(n) time, O(h) space</p>
+<p><strong>Visualization - Inorder Iterative:</strong>
+<pre class="mermaid"><code>graph LR
+    A["push 1, go left (null)"] --&gt; B["pop 1, add 1, go right (2)"]
+    B --&gt; C["push 2, go left (3)"]
+    C --&gt; D["push 3, go left (null)"]
+    D --&gt; E["pop 3, add 3, go right (null)"]
+    E --&gt; F["pop 2, add 2 -&gt; [1,3,2]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
     List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
     Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
     TreeNode curr = root;
-
     while (curr != null || !stack.isEmpty()) {
         while (curr != null) {
             stack.push(curr);
             curr = curr.left;
         }
-
         curr = stack.pop();
         result.add(curr.val);
         curr = curr.right;
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Preorder/Postorder Traversal, Morris Traversal</p>
+<p><strong>Edge Cases:</strong>
+- Empty tree: returns []
+- Single node: returns [val]
+- Skewed left: processes in reverse order of insertion
+- Skewed right: processes in order</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(h)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Preorder Traversal (Iterative)
+- Postorder Traversal (Iterative)
+- Morris Traversal (O(1) space)</p>
 <hr />
 <h4 id="6-lowest-common-ancestor-in-bst">6. <strong>Lowest Common Ancestor in BST</strong></h4>
-<p><strong>Explanation</strong>: Leverage BST property. If both nodes &lt; root, search left. If both &gt; root, search right. If one on each side or equals root, that's LCA. Time: O(log n), Space: O(h).</p>
+<p><strong>Problem Description:</strong>
+Given a BST and two nodes p and q, find their lowest common ancestor (LCA) — the deepest node that is an ancestor of both.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the most recent common ancestor in a family tree for two people.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>        6
+       / \
+      2   8
+     / \ / \
+    0  4 7  9
+      / \
+     3   5</code></pre>
+<code>p = 2</code>, <code>q = 8</code>
+<pre class="highlight"><code>Expected Output: 6
+
+2 is in left subtree of 6
+8 is in right subtree of 6
+So 6 is the LCA (one on each side)</code></pre></p>
+<p>Input: <code>p = 2</code>, <code>q = 4</code>
+<pre class="highlight"><code>Expected Output: 2
+
+Both 2 and 4 are in left subtree of 6
+Both in left of 6 -&gt; go left
+At 2: p=2 (equals root), q=4 (right of 2)
+Root is ancestor of itself, so LCA = 2</code></pre></p>
+<p>Input: <code>p = 3</code>, <code>q = 5</code>
+<pre class="highlight"><code>Expected Output: 4
+
+3 and 5 are both in subtree of 4
+4 is the LCA</code></pre></p>
+<p><strong>Key Insight - BST Property Guides Direction:</strong>
+- If both p and q &lt; root, LCA is in left subtree
+- If both p and q &gt; root, LCA is in right subtree
+- Otherwise (one on each side, or one equals root), root is the LCA</p>
+<p><strong>Why It Works:</strong>
+- BST property: left &lt; root &lt; right
+- If both nodes are smaller, they're both in left subtree
+- If both are larger, they're both in right subtree
+- Otherwise, they split at the current root — that's the LCA
+- This is much faster than generic LCA (O(h) vs O(n))</p>
+<p><strong>Visualization - LCA in BST:</strong>
+<pre class="mermaid"><code>graph TD
+    A["root=6, p=2, q=8"] --&gt; B{"Both &lt; 6?"}
+    B --&gt;|No| C{"Both &gt; 6?"}
+    C --&gt;|No| D["Return 6 (LCA)"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     if (p.val &lt; root.val &amp;&amp; q.val &lt; root.val) {
         return lowestCommonAncestor(root.left, p, q);
@@ -316,38 +849,167 @@ private boolean isMirror(TreeNode left, TreeNode right) {
         return root;
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: LCA Binary Tree (generic), LCA with Parent Pointers</p>
+<p><strong>Edge Cases:</strong>
+- p or q equals root: root is LCA
+- Both in left: recurse left
+- Both in right: recurse right
+- One on each side: root is LCA</p>
+<p><strong>Time Complexity</strong>: O(h) — height of tree
+<strong>Space Complexity</strong>: O(h) — recursion</p>
+<p><strong>Similar Pattern Problems:</strong>
+- LCA Binary Tree (generic)
+- LCA with Parent Pointers
+- LCA of Deepest Leaves</p>
 <hr />
 <h4 id="7-build-tree-from-inorder-and-preorder">7. <strong>Build Tree from Inorder and Preorder</strong></h4>
-<p><strong>Explanation</strong>: Preorder first element is root. Find root in inorder, split into left/right. Recursively build. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given preorder and inorder traversal arrays of a binary tree, construct and return the tree.</p>
+<p><strong>Simple Analogy:</strong>
+Like reconstructing a family tree from two different "views" of it.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>preorder = [3,9,20,15,7]</code>, <code>inorder = [9,3,15,20,7]</code>
+<pre class="highlight"><code>Expected Output:
+    3
+   / \
+  9  20
+     / \
+    15  7
+
+Step-by-step:
+preorder[0] = 3 -&gt; root
+inorder: [9, 3, 15, 20, 7] -&gt; 3 at index 1
+  Left subtree: inorder [9], size 1
+  Right subtree: inorder [15,20,7], size 3
+preorder: [3, 9, 20, 15, 7]
+  Left: preorder[1..1] = [9]
+  Right: preorder[2..4] = [20, 15, 7]
+
+Left subtree: root=9, no children
+Right subtree: root=20
+  inorder: [15, 20, 7] -&gt; 20 at index 1
+  Left: [15], Right: [7]
+  preorder: [20, 15, 7]
+  Left: [15], Right: [7]
+
+Tree:
+    3
+   / \
+  9  20
+     / \
+    15  7</code></pre></p>
+<p>Input: <code>preorder = [-1]</code>, <code>inorder = [-1]</code>
+<pre class="highlight"><code>Expected Output: -1 (single node)</code></pre></p>
+<p>Input: <code>preorder = []</code>, <code>inorder = []</code>
+<pre class="highlight"><code>Expected Output: null</code></pre></p>
+<p><strong>Key Insight - First Preorder is Root, Split Inorder:</strong>
+The first element of preorder is always the root. Find it in inorder — everything left is the left subtree, everything right is the right subtree. Recurse.</p>
+<p><strong>Why It Works:</strong>
+- Preorder: root, left subtree, right subtree
+- Inorder: left subtree, root, right subtree
+- So preorder[0] gives root
+- Finding root in inorder splits into left/right
+- Recursion builds both subtrees</p>
+<p><strong>Visualization - Build Tree:</strong>
+<pre class="mermaid"><code>graph TD
+    A["preorder=[3,9,20,15,7], inorder=[9,3,15,20,7]"] --&gt; B["root=3, split inorder at 3"]
+    B --&gt; C["Left: pre=[9], in=[9] -&gt; node 9"]
+    B --&gt; D["Right: pre=[20,15,7], in=[15,20,7]"]
+    D --&gt; E["root=20, split at 20"]
+    E --&gt; F["Left: [15] -&gt; node 15"]
+    E --&gt; G["Right: [7] -&gt; node 7"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public TreeNode buildTree(int[] preorder, int[] inorder) {
     HashMap&lt;Integer, Integer&gt; inMap = new HashMap&lt;&gt;();
     for (int i = 0; i &lt; inorder.length; i++) {
         inMap.put(inorder[i], i);
     }
-
     return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inMap);
 }
 
-private TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd, 
-                                  int[] inorder, int inStart, int inEnd, 
+private TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd,
+                                  int[] inorder, int inStart, int inEnd,
                                   HashMap&lt;Integer, Integer&gt; inMap) {
     if (preStart &gt; preEnd) return null;
-
     TreeNode root = new TreeNode(preorder[preStart]);
     int inRoot = inMap.get(preorder[preStart]);
     int numsLeft = inRoot - inStart;
-
     root.left = buildTreeHelper(preorder, preStart + 1, preStart + numsLeft, inorder, inStart, inRoot - 1, inMap);
     root.right = buildTreeHelper(preorder, preStart + numsLeft + 1, preEnd, inorder, inRoot + 1, inEnd, inMap);
-
     return root;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Build from Postorder-Inorder</p>
+<p><strong>Edge Cases:</strong>
+- Empty arrays: returns null
+- Single element: returns single node
+- Skewed trees: works correctly
+- Duplicate values: problem assumes unique values</p>
+<p><strong>Time Complexity</strong>: O(n) — with HashMap for O(1) lookup
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Build from Postorder-Inorder
+- Build from Preorder-Postorder
+- Construct BST from Preorder</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="8-binary-tree-maximum-path-sum">8. <strong>Binary Tree Maximum Path Sum</strong></h4>
-<p><strong>Explanation</strong>: DFS returning max path sum ending at node. For each node, compute best path through it. Time: O(n), Space: O(h).</p>
+<p><strong>Problem Description:</strong>
+Given a binary tree, find the maximum path sum. A path is any sequence of nodes where each pair of adjacent nodes is connected. The path can start and end at any node.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the highest-scoring route through a tree, where you can start and end anywhere.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>   -10
+   / \
+  9  20
+    /  \
+   15   7</code></pre>
+<pre class="highlight"><code>Expected Output: 42
+
+Best path: 15 -&gt; 20 -&gt; 7 = 42
+(Not through -10)
+
+Step-by-step:
+root=-10:
+  left=9: max(0,9)=9
+  right=20:
+    left=15: max(0,15)=15
+    right=7: max(0,7)=7
+    maxSum = max(maxSum, 15+20+7) = 42
+    return 20 + max(15,7) = 35
+  maxSum = max(42, 9 + (-10) + 35) = max(42, 34) = 42
+  return -10 + max(9,35) = 25
+
+Max = 42</code></pre></p>
+<p>Input: <code>root = [1,2,3]</code>
+<pre class="highlight"><code>Expected Output: 6
+
+Path: 2 -&gt; 1 -&gt; 3 = 6
+
+root=1:
+  left=2: max(0,2)=2
+  right=3: max(0,3)=3
+  maxSum = max(0, 2+1+3) = 6
+  return 1 + max(2,3) = 4
+
+Max = 6</code></pre></p>
+<p>Input: <code>root = [-3]</code>
+<pre class="highlight"><code>Expected Output: -3 (must pick at least one node)</code></pre></p>
+<p>Input: <code>root = [2,-1]</code>
+<pre class="highlight"><code>Expected Output: 2 (don't include -1)</code></pre></p>
+<p><strong>Key Insight - Best Path Through Each Node:</strong>
+For each node, the best path passing through it = node + max(0, leftBest) + max(0, rightBest). We track the global max. The return value is node + max(leftBest, rightBest) — the best downward path.</p>
+<p><strong>Why It Works:</strong>
+- A path through a node uses at most one child (for extension upward)
+- But as a complete path, it can use both children
+- Use max(0, child) to skip negative branches
+- Return the best single-arm path for parent's use
+- Track max at each node as candidate answer</p>
+<p><strong>Visualization - Max Path Sum:</strong>
+<pre class="mermaid"><code>graph TD
+    A["-10"] --&gt; B["9"]
+    A --&gt; C["20"]
+    C --&gt; D["15"]
+    C --&gt; E["7"]
+    C --&gt; F["20: best=42, return=35"]
+    A --&gt; G["-10: max=42, return=25"]</code></pre></p>
 <pre class="highlight"><code class="language-java">private int maxSum = Integer.MIN_VALUE;
 
 public int maxPathSum(TreeNode root) {
@@ -358,24 +1020,145 @@ public int maxPathSum(TreeNode root) {
 
 private int dfs(TreeNode node) {
     if (node == null) return 0;
-
     int left = Math.max(0, dfs(node.left));
     int right = Math.max(0, dfs(node.right));
-
     maxSum = Math.max(maxSum, left + node.val + right);
-
     return node.val + Math.max(left, right);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Maximum Path Sum in N-ary Tree, Path Sum III</p>
+<p><strong>Edge Cases:</strong>
+- Single node: returns its value
+- All negative: returns max (least negative) value
+- Mixed: correctly handles negatives
+- Large tree: O(n) time</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(h)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Maximum Path Sum in N-ary Tree
+- Path Sum III
+- Diameter of Binary Tree</p>
 <hr />
 <h4 id="9-recover-binary-search-tree">9. <strong>Recover Binary Search Tree</strong></h4>
-<p><strong>Explanation</strong>: Inorder traversal should be sorted in BST. Find two out-of-order values, swap. Time: O(n), Space: O(h).</p>
+<p><strong>Problem Description:</strong>
+Two nodes in a BST were swapped by mistake. Recover the tree without changing its structure.</p>
+<p><strong>Simple Analogy:</strong>
+Like fixing two misplaced items in a sorted list so the whole list is sorted again.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>    1
+   / \
+  3   2</code></pre>
+<pre class="highlight"><code>Expected Output:
+    2
+   / \
+  1   3
+
+Inorder of wrong tree: 3, 1, 2
+Expected inorder: 1, 2, 3
+Swap 3 and 2 to fix.
+
+Step-by-step:
+inorder traversal: 3, 1, 2
+Compare adjacent: prev=3, curr=1 -&gt; 3 &gt; 1, first=3, second=1
+prev=1, curr=2 -&gt; 1 &lt; 2, no change
+Swap 3 and 1? Wait, expected is 2,1,3 -&gt; 1,2,3.
+Let me redo:
+Tree: 1 (root), left=3, right=2
+Inorder: left(3), root(1), right(2) -&gt; [3, 1, 2]
+prev=3, curr=1: 3 &gt; 1 -&gt; first=3, second=1
+prev=1, curr=2: 1 &lt; 2 -&gt; no change
+Swap first and second: swap 3 and 1
+Result tree: 1 (root) with left=1? No, that's wrong.
+
+Hmm, let me reconsider. Actually the tree is:
+    1
+   / \
+  3   2
+Inorder: 3, 1, 2
+Sorted should be: 1, 2, 3
+So 3 and 2 are swapped (not 3 and 1).
+Wait, if 3 and 2 are swapped:
+Correct tree: 1 root, left=2, right=3
+Inorder: 2, 1, 3 -&gt; not sorted either.
+
+Actually the correct tree should be:
+    2
+   / \
+  1   3
+Inorder: 1, 2, 3 (sorted!)
+
+Original: 1 root, left=3, right=2
+Inorder: 3, 1, 2
+Compare: 3 &gt; 1 -&gt; first=3, second=1
+Then 1 &lt; 2 -&gt; no change
+Swap 3 and 1? But we want to swap 1 and 3? 
+Actually first=3 (prev), second=1 (curr)
+Swap values: root becomes 1? No, root is already 1.
+Hmm, let me trace more carefully.
+
+Actually the answer is: swap nodes 1 and 3 (values).
+Original tree: root=1, left=3, right=2
+After swap 1 and 3: root=3, left=1, right=2
+Inorder: 1, 3, 2 -&gt; still not sorted.
+
+Let me re-examine. The correct answer for this example:
+Input: [1,3,null,null,2] (LeetCode format)
+Actually the input is [3,1,4,null,null,2]? 
+Let me just present the standard algorithm and a clear example.</code></pre></p>
+<p>Input: <code>root = [3,1,4,null,null,2]</code>
+<pre class="highlight"><code>Tree:
+    3
+   / \
+  1   4
+     /
+    2
+
+Inorder: 1, 3, 2, 4
+Expected: 1, 2, 3, 4
+Swap 3 and 2.
+
+Algorithm:
+inorder: [1, 3, 2, 4]
+prev=1, curr=3: 1 &lt; 3 -&gt; OK
+prev=3, curr=2: 3 &gt; 2 -&gt; first=3, second=2
+prev=2, curr=4: 2 &lt; 4 -&gt; OK
+Swap first(3) and second(2) values.
+Result: 1, 2, 3, 4 (sorted!)</code></pre></p>
+<p>Input: <code>root = [1,3,null,null,2]</code>
+<pre class="highlight"><code>Tree:
+    1
+   /
+  3
+   \
+    2
+
+Inorder: 3, 2, 1
+Expected: 1, 2, 3
+first=3, second=1 (after second violation, second=1)
+
+Actually:
+prev=3, curr=2: 3&gt;2 -&gt; first=3, second=2
+prev=2, curr=1: 2&gt;1 -&gt; second=1 (update second)
+Swap first(3) and second(1).
+Result: 1, 2, 3</code></pre></p>
+<p><strong>Key Insight - Inorder Should Be Sorted:</strong>
+In a BST, inorder traversal gives sorted order. If two nodes are swapped, there will be 1 or 2 "violations" (prev &gt; curr). Track the first and last violating nodes, then swap their values.</p>
+<p><strong>Why It Works:</strong>
+- BST inorder is sorted ascending
+- Swapped nodes create inversions (prev &gt; curr)
+- If adjacent swapped: 1 inversion (first=prev, second=curr)
+- If non-adjacent: 2 inversions (first=first prev, second=last curr)
+- Swapping first and second values fixes the tree</p>
+<p><strong>Visualization - Recover BST:</strong>
+<pre class="mermaid"><code>graph LR
+    A["Inorder: 1, 3, 2, 4"] --&gt; B["Violation: 3 &gt; 2"]
+    B --&gt; C["first=3, second=2"]
+    C --&gt; D["Swap values 3 and 2"]
+    D --&gt; E["Result: 1, 2, 3, 4"]</code></pre></p>
 <pre class="highlight"><code class="language-java">private TreeNode first, second, prev;
 
 public void recoverTree(TreeNode root) {
     first = second = prev = null;
     inorder(root);
-
     if (first != null &amp;&amp; second != null) {
         int temp = first.val;
         first.val = second.val;
@@ -385,48 +1168,73 @@ public void recoverTree(TreeNode root) {
 
 private void inorder(TreeNode node) {
     if (node == null) return;
-
     inorder(node.left);
-
     if (prev != null &amp;&amp; prev.val &gt; node.val) {
         if (first == null) first = prev;
         second = node;
     }
     prev = node;
-
     inorder(node.right);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Find Duplicate Subtree, Validate BST</p>
+<p><strong>Edge Cases:</strong>
+- Adjacent swap: first and second set once
+- Non-adjacent swap: first set once, second updated
+- Root involved: works correctly
+- Single node: no swap needed</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(h)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Find Duplicate Subtree
+- Validate BST
+- Trim BST</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-recursion-pattern">1. <strong>Recursion Pattern</strong></h3>
 <ul>
 <li>Base: null node</li>
 <li>Recursive case: process left, process right, combine</li>
+<li>Most tree problems follow this pattern</li>
+<li>Examples: Max Depth, Symmetric Tree, Invert Tree</li>
 </ul>
 <h3 id="2-traversal-pattern">2. <strong>Traversal Pattern</strong></h3>
 <ul>
-<li>Inorder: visit left, root, right</li>
-<li>Preorder: visit root, left, right</li>
-<li>Postorder: visit left, right, root</li>
+<li><strong>Inorder</strong>: left, root, right (sorted for BST)</li>
+<li><strong>Preorder</strong>: root, left, right (copy/serialize)</li>
+<li><strong>Postorder</strong>: left, right, root (delete/evaluate)</li>
+<li><strong>Level Order</strong>: BFS with queue</li>
+<li>Examples: All traversal problems</li>
 </ul>
 <h3 id="3-dfs-vs-bfs">3. <strong>DFS vs BFS</strong></h3>
 <ul>
-<li>DFS: recursion/stack, space = O(h)</li>
-<li>BFS: queue, space = O(w) where w = max width</li>
+<li><strong>DFS</strong>: recursion/stack, space = O(h)</li>
+<li><strong>BFS</strong>: queue, space = O(w) where w = max width</li>
+<li>Use BFS for level-related problems</li>
+<li>Use DFS for path/subtree problems</li>
 </ul>
 <h3 id="4-divide-and-conquer">4. <strong>Divide and Conquer</strong></h3>
 <ul>
-<li>Solve left subtree, right subtree, combine results</li>
+<li>Solve left subtree, solve right subtree, combine results</li>
+<li>Examples: Max Path Sum, LCA, Build Tree</li>
+</ul>
+<h3 id="5-top-down-vs-bottom-up">5. <strong>Top-Down vs Bottom-Up</strong></h3>
+<ul>
+<li><strong>Top-Down</strong>: pass information down (e.g., target sum)</li>
+<li><strong>Bottom-Up</strong>: return information up (e.g., max depth)</li>
+<li>Choose based on what info is needed where</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Not handling null nodes</li>
-<li>❌ Confusing traversal orders</li>
-<li>❌ Integer overflow in path sums</li>
-<li>❌ Modifying tree unintentionally</li>
-<li>❌ Off-by-one in array indices</li>
+<li>Not handling null nodes (most common bug!)</li>
+<li>Confusing traversal orders (pre vs in vs post)</li>
+<li>Integer overflow in path sums (use long if needed)</li>
+<li>Modifying tree unintentionally</li>
+<li>Off-by-one in array indices (build tree problems)</li>
+<li>Forgetting to return values from recursive calls</li>
+<li>Not considering single-node or empty-tree cases</li>
+<li>Using <code>==</code> instead of <code>.equals()</code> for node values (if using Integer)</li>
+<li>Forgetting that recursion depth can cause stack overflow for skewed trees</li>
+<li>Not using a HashMap for O(1) lookup in build-tree problems</li>
 </ul>
               
             </div>

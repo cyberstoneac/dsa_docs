@@ -62,11 +62,33 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">String</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-string-simple-explanation">What is a String? (Simple Explanation)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#string-vs-stringbuilder-vs-char">String vs StringBuilder vs char[]</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-complexity-cheat-sheet">Key Complexity Cheat Sheet</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#character-frequency-array-lowercase">Character Frequency Array (Lowercase)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#character-frequency-map-general">Character Frequency Map (General)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#two-pointers-palindrome">Two Pointers (Palindrome)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sliding-window-substring">Sliding Window (Substring)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stringbuilder-usage">StringBuilder Usage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#string-decision-flow">String Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -114,7 +136,9 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#3-dynamic-programming">3. Dynamic Programming</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#4-hashing">4. Hashing</a>
+    <li class="toctree-l3"><a class="reference internal" href="#4-hashing-frequency-counting">4. Hashing (Frequency Counting)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-expand-around-center">5. Expand Around Center</a>
     </li>
         </ul>
     </li>
@@ -199,65 +223,338 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="string">String</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-a-string-simple-explanation">What is a String? (Simple Explanation)</h2>
+<p>A string is just a sequence of characters — like a word, a sentence, or a whole book. In programming, strings are everywhere: names, messages, DNA sequences, URLs, code itself.</p>
+<p><strong>Real-life analogies:</strong>
+- A string is like a necklace of beads, where each bead is a character
+- A palindrome is like a mirror — "racecar" reads the same forward and backward
+- An anagram is like rearranging Scrabble tiles — "listen" and "silent" use the same letters</p>
+<p><strong>Important in Java:</strong> Strings are <strong>immutable</strong> — once created, they can't be changed. Every "modification" actually creates a new string. For heavy modifications, use <code>StringBuilder</code>.</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li>Immutable sequences of characters</li>
-<li><strong>StringBuilder</strong> for efficient manipulation (mutable alternative)</li>
-<li>Character arrays for O(1) access</li>
-<li>Pattern matching and searching</li>
+<li><strong>Immutable</strong>: Strings can't be changed after creation (Java)</li>
+<li><strong>StringBuilder</strong>: A mutable (changeable) version for efficient building</li>
+<li><strong>Character Array</strong>: <code>char[]</code> gives O(1) access and is mutable</li>
+<li><strong>Indexing</strong>: <code>s.charAt(i)</code> gives the character at position i — O(1)</li>
+<li><strong>Substring</strong>: <code>s.substring(i, j)</code> gives characters from i to j-1 — O(j-i)</li>
+<li><strong>Length</strong>: <code>s.length()</code> — O(1)</li>
+<li><strong>Comparison</strong>: Use <code>.equals()</code> not <code>==</code> (== compares references)</li>
 </ul>
+<h2 id="string-vs-stringbuilder-vs-char">String vs StringBuilder vs char[]</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>String</th>
+<th>StringBuilder</th>
+<th>char[]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mutable?</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Thread-safe?</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Slow for changes</td>
+<td>Fast for changes</td>
+<td>Fastest</td>
+</tr>
+<tr>
+<td>Use case</td>
+<td>Fixed text</td>
+<td>Building/modifying</td>
+<td>Low-level ops</td>
+</tr>
+</tbody>
+</table>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
+<li>Valid Anagram</li>
+<li>Valid Palindrome</li>
+<li>Reverse String</li>
+<li>First Unique Character</li>
 <li>Longest Substring Without Repeating Characters</li>
-<li>Anagram Check</li>
-<li>Palindromic Substrings</li>
-<li>String Compression</li>
+<li>Longest Palindromic Substring</li>
+<li>Group Anagrams</li>
+<li>Edit Distance</li>
+<li>Minimum Window Substring</li>
 <li>Regular Expression Matching</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Sliding Window</li>
-<li>Two Pointers</li>
-<li>Hashing (Character frequency)</li>
-<li>Dynamic Programming (Edit Distance, Palindromes)</li>
+<li><strong>Sliding Window</strong>: For substrings with constraints</li>
+<li><strong>Two Pointers</strong>: For palindromes and reversals</li>
+<li><strong>Hashing</strong>: Character frequency for anagrams</li>
+<li><strong>Dynamic Programming</strong>: Edit distance, palindrome counting</li>
+<li><strong>Expand Around Center</strong>: Palindrome detection</li>
 </ul>
+<h2 id="key-complexity-cheat-sheet">Key Complexity Cheat Sheet</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>charAt(i)</code></td>
+<td>O(1)</td>
+<td>Direct access</td>
+</tr>
+<tr>
+<td><code>length()</code></td>
+<td>O(1)</td>
+<td>Stored internally</td>
+</tr>
+<tr>
+<td><code>substring(i,j)</code></td>
+<td>O(j-i)</td>
+<td>Creates new string</td>
+</tr>
+<tr>
+<td><code>equals()</code></td>
+<td>O(n)</td>
+<td>Character by character</td>
+</tr>
+<tr>
+<td><code>indexOf()</code></td>
+<td>O(n*m)</td>
+<td>Naive search</td>
+</tr>
+<tr>
+<td>Concatenation <code>+</code></td>
+<td>O(n+m)</td>
+<td>Creates new string</td>
+</tr>
+<tr>
+<td>StringBuilder append</td>
+<td>O(1) amortized</td>
+<td>Much faster</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="character-frequency-array-lowercase">Character Frequency Array (Lowercase)</h3>
+<pre class="highlight"><code class="language-java">int[] count = new int[26];
+for (char c : s.toCharArray()) {
+    count[c - 'a']++;
+}
+// count[0] = number of 'a's, count[1] = number of 'b's, etc.</code></pre>
+<h3 id="character-frequency-map-general">Character Frequency Map (General)</h3>
+<pre class="highlight"><code class="language-java">Map&lt;Character, Integer&gt; freq = new HashMap&lt;&gt;();
+for (char c : s.toCharArray()) {
+    freq.put(c, freq.getOrDefault(c, 0) + 1);
+}</code></pre>
+<h3 id="two-pointers-palindrome">Two Pointers (Palindrome)</h3>
+<pre class="highlight"><code class="language-java">int left = 0, right = s.length() - 1;
+while (left &lt; right) {
+    // Compare s.charAt(left) and s.charAt(right)
+    left++;
+    right--;
+}</code></pre>
+<h3 id="sliding-window-substring">Sliding Window (Substring)</h3>
+<pre class="highlight"><code class="language-java">int left = 0;
+for (int right = 0; right &lt; s.length(); right++) {
+    // Add s.charAt(right) to window
+    while (windowInvalid()) {
+        // Remove s.charAt(left) from window
+        left++;
+    }
+    // Update answer
+}</code></pre>
+<h3 id="stringbuilder-usage">StringBuilder Usage</h3>
+<pre class="highlight"><code class="language-java">StringBuilder sb = new StringBuilder();
+sb.append("hello");
+sb.append(' ');
+sb.append("world");
+sb.insert(0, "&gt;&gt; ");
+sb.reverse();
+String result = sb.toString();</code></pre>
+<h3 id="string-decision-flow">String Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["String Problem"] --&gt; B{"Anagram/frequency?"}
+    B --&gt;|Yes| C["Count characters (int[26] or HashMap)"]
+    B --&gt;|No| D{"Palindrome?"}
+    D --&gt;|Yes| E["Two pointers or expand around center"]
+    D --&gt;|No| F{"Substring with constraint?"}
+    F --&gt;|Yes| G["Sliding window"]
+    F --&gt;|No| H{"Pattern matching?"}
+    H --&gt;|Yes| I["DP or KMP"]
+    H --&gt;|No| J{"String building?"}
+    J --&gt;|Yes| K["StringBuilder"]
+    J --&gt;|No| L["Two pointers or hashing"]</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-valid-anagram">1. <strong>Valid Anagram</strong></h4>
-<p><strong>Explanation</strong>: Two strings are anagrams if they contain same characters with same frequencies. Use character frequency map or sorting approach. Time: O(n log n) for sorting, O(n) for frequency.</p>
+<p><strong>Problem Description:</strong>
+Given two strings s and t, return true if t is an anagram of s. An anagram uses exactly the same characters with the same frequencies.</p>
+<p><strong>Simple Analogy:</strong>
+Like rearranging Scrabble tiles. "listen" and "silent" use the same letters.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "anagram"</code>, <code>t = "nagaram"</code>
+<pre class="highlight"><code>Expected Output: true
+
+Sort both:
+s sorted: "aaagmnr"
+t sorted: "aaagmnr"
+Equal -&gt; true
+
+Or count frequencies:
+s: a=3, n=1, g=1, r=1, m=1
+t: n=1, a=3, g=1, r=1, m=1
+Same counts -&gt; true</code></pre></p>
+<p>Input: <code>s = "rat"</code>, <code>t = "car"</code>
+<pre class="highlight"><code>Expected Output: false
+
+s: r=1, a=1, t=1
+t: c=1, a=1, r=1
+Different (t vs c) -&gt; false</code></pre></p>
+<p>Input: <code>s = "a"</code>, <code>t = "a"</code>
+<pre class="highlight"><code>Expected Output: true</code></pre></p>
+<p>Input: <code>s = "ab"</code>, <code>t = "a"</code>
+<pre class="highlight"><code>Expected Output: false (different lengths)</code></pre></p>
+<p><strong>Key Insight - Same Characters, Same Counts:</strong>
+Two strings are anagrams if and only if they have the same length and the same character frequencies. Either sort both and compare, or count frequencies.</p>
+<p><strong>Why It Works:</strong>
+- Sorting groups identical characters together
+- If sorted strings are equal, they have same characters
+- Alternatively, frequency counting directly compares counts
+- Frequency counting is O(n) vs sorting O(n log n)</p>
+<p><strong>Visualization - Valid Anagram:</strong>
+<pre class="mermaid"><code>graph LR
+    A["s='anagram', t='nagaram'"] --&gt; B["Count s: a3,n1,g1,r1,m1"]
+    B --&gt; C["Count t: a3,n1,g1,r1,m1"]
+    C --&gt; D["Same counts -&gt; true"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean isAnagram(String s, String t) {
     if (s.length() != t.length()) return false;
-
-    char[] arr1 = s.toCharArray();
-    char[] arr2 = t.toCharArray();
-    Arrays.sort(arr1);
-    Arrays.sort(arr2);
-
-    return Arrays.equals(arr1, arr2);
+    int[] count = new int[26];
+    for (int i = 0; i &lt; s.length(); i++) {
+        count[s.charAt(i) - 'a']++;
+        count[t.charAt(i) - 'a']--;
+    }
+    for (int c : count) {
+        if (c != 0) return false;
+    }
+    return true;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Group Anagrams, Finding Anagrams</p>
+<p><strong>Edge Cases:</strong>
+- Different lengths: returns false immediately
+- Empty strings: returns true (both empty)
+- Same characters different order: returns true
+- Same length different chars: returns false</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1) — 26-element array</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Group Anagrams
+- Find All Anagrams in a String
+- Permutation in String</p>
 <hr />
 <h4 id="2-implement-strstr-find-substring">2. <strong>Implement strStr() - Find Substring</strong></h4>
-<p><strong>Explanation</strong>: Find first occurrence of substring. Naive approach checks each position. Can use KMP algorithm for O(n+m). Simple approach with built-in: just iterate and compare substrings.</p>
+<p><strong>Problem Description:</strong>
+Given two strings haystack and needle, return the index of the first occurrence of needle in haystack, or -1 if not found.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding a word in a book using Ctrl+F.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>haystack = "hello"</code>, <code>needle = "ll"</code>
+<pre class="highlight"><code>Expected Output: 2
+
+h e l l o
+0 1 2 3 4
+
+Check i=0: "he" vs "ll"? No
+Check i=1: "el" vs "ll"? No
+Check i=2: "ll" vs "ll"? Yes! Return 2</code></pre></p>
+<p>Input: <code>haystack = "aaaaa"</code>, <code>needle = "bba"</code>
+<pre class="highlight"><code>Expected Output: -1
+
+No occurrence of "bba"</code></pre></p>
+<p>Input: <code>haystack = ""</code>, <code>needle = ""</code>
+<pre class="highlight"><code>Expected Output: 0 (empty needle found at start)</code></pre></p>
+<p>Input: <code>haystack = "abc"</code>, <code>needle = ""</code>
+<pre class="highlight"><code>Expected Output: 0 (empty needle found at start)</code></pre></p>
+<p><strong>Key Insight - Check Every Position:</strong>
+For each position i in haystack (from 0 to n-m), check if the substring of length m starting at i equals needle.</p>
+<p><strong>Why It Works:</strong>
+- Needle can only start at positions 0 to n-m
+- At each position, compare character by character
+- If all match, return i
+- If no position matches, return -1
+- Naive approach O(n*m); KMP gives O(n+m)</p>
+<p><strong>Visualization - strStr:</strong>
+<pre class="mermaid"><code>graph LR
+    A["haystack='hello', needle='ll'"] --&gt; B["i=0: 'he' != 'll'"]
+    B --&gt; C["i=1: 'el' != 'll'"]
+    C --&gt; D["i=2: 'll' == 'll' -&gt; return 2"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int strStr(String haystack, String needle) {
     if (needle.isEmpty()) return 0;
-
     for (int i = 0; i &lt;= haystack.length() - needle.length(); i++) {
         if (haystack.substring(i, i + needle.length()).equals(needle)) {
             return i;
         }
     }
-
     return -1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Implement indexOf, String Matching with Wildcards</p>
+<p><strong>Edge Cases:</strong>
+- Empty needle: returns 0
+- Needle longer than haystack: returns -1
+- Empty haystack: returns -1 (unless needle empty)
+- Needle equals haystack: returns 0</p>
+<p><strong>Time Complexity</strong>: O(n<em>m) naive; O(n+m) with KMP
+</em><em>Space Complexity</em>*: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Implement indexOf
+- String Matching with Wildcards
+- Repeated Substring Pattern</p>
 <hr />
 <h4 id="3-reverse-string">3. <strong>Reverse String</strong></h4>
-<p><strong>Explanation</strong>: Reverse string in-place using two-pointer approach from both ends. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Write a function that reverses a string. The input string is given as a char array, and you must modify it in-place.</p>
+<p><strong>Simple Analogy:</strong>
+Like flipping a word backward — "hello" becomes "olleh".</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = ['h','e','l','l','o']</code>
+<pre class="highlight"><code>Expected Output: ['o','l','l','e','h']
+
+left=0, right=4: swap h, o -&gt; ['o','e','l','l','h']
+left=1, right=3: swap e, l -&gt; ['o','l','l','e','h']
+left=2, right=2: stop (left &gt;= right)</code></pre></p>
+<p>Input: <code>s = ['H','a','n','n','a','h']</code>
+<pre class="highlight"><code>Expected Output: ['h','a','n','n','a','H']
+
+left=0, right=5: swap H, h -&gt; ['h','a','n','n','a','H']
+left=1, right=4: swap a, a -&gt; no change
+left=2, right=3: swap n, n -&gt; no change
+Done</code></pre></p>
+<p>Input: <code>s = ['a']</code>
+<pre class="highlight"><code>Expected Output: ['a'] (single char, nothing to swap)</code></pre></p>
+<p><strong>Key Insight - Two Pointers from Ends:</strong>
+Use two pointers, one at the start and one at the end. Swap characters, move pointers toward center, repeat until they meet.</p>
+<p><strong>Why It Works:</strong>
+- Swapping symmetric positions reverses the string
+- Each swap fixes two positions (left and right)
+- When pointers meet or cross, all positions are fixed
+- In-place, no extra space needed</p>
+<p><strong>Visualization - Reverse String:</strong>
+<pre class="mermaid"><code>graph LR
+    A["h e l l o"] --&gt; B["swap h,o -&gt; o e l l h"]
+    B --&gt; C["swap e,l -&gt; o l l e h"]
+    C --&gt; D["Done: o l l e h"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public void reverseString(char[] s) {
     int left = 0, right = s.length - 1;
-
     while (left &lt; right) {
         char temp = s[left];
         s[left] = s[right];
@@ -266,92 +563,298 @@
         right--;
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Reverse Words, Reverse Vowels</p>
+<p><strong>Edge Cases:</strong>
+- Empty array: nothing to do
+- Single character: nothing to do
+- Two characters: one swap
+- Even/odd length: both work</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Reverse Words in a String
+- Reverse Vowels of a String
+- Reverse String II</p>
 <hr />
 <h4 id="4-first-unique-character-in-a-string">4. <strong>First Unique Character in a String</strong></h4>
-<p><strong>Explanation</strong>: Use HashMap to count character frequencies. Then iterate through string again to find first character with count = 1. Time: O(n), Space: O(1) since max 26 lowercase letters.</p>
-<pre class="highlight"><code class="language-java">public int firstUniqChar(String s) {
-    HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
-    for (char c : s.toCharArray()) {
-        map.put(c, map.getOrDefault(c, 0) + 1);
-    }
+<p><strong>Problem Description:</strong>
+Given a string s, find the first non-repeating character and return its index. If none exists, return -1.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the first person in a crowd who's standing alone (no duplicate).</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "leetcode"</code>
+<pre class="highlight"><code>Expected Output: 0 ('l' appears once)
 
+Count: l=1, e=3, t=1, c=1, o=1, d=1
+
+Scan again:
+i=0: 'l' count=1 -&gt; return 0</code></pre></p>
+<p>Input: <code>s = "loveleetcode"</code>
+<pre class="highlight"><code>Expected Output: 2 ('v' appears once)
+
+Count: l=2, o=2, v=1, e=4, t=1, c=1, d=1
+
+Scan:
+i=0: 'l' count=2, skip
+i=1: 'o' count=2, skip
+i=2: 'v' count=1 -&gt; return 2</code></pre></p>
+<p>Input: <code>s = "aabb"</code>
+<pre class="highlight"><code>Expected Output: -1 (all characters repeat)
+
+Count: a=2, b=2
+No unique character -&gt; return -1</code></pre></p>
+<p><strong>Key Insight - Two Passes:</strong>
+First pass: count frequencies of all characters. Second pass: scan in order and return the first character with count 1.</p>
+<p><strong>Why It Works:</strong>
+- Need to know frequencies before deciding
+- First pass builds the frequency map
+- Second pass preserves original order
+- First index with count 1 is the answer</p>
+<p><strong>Visualization - First Unique Character:</strong>
+<pre class="mermaid"><code>graph LR
+    A["s='loveleetcode'"] --&gt; B["Count: l2,o2,v1,e4,t1,c1,d1"]
+    B --&gt; C["i=0: l count=2, skip"]
+    C --&gt; D["i=1: o count=2, skip"]
+    D --&gt; E["i=2: v count=1 -&gt; return 2"]</code></pre></p>
+<pre class="highlight"><code class="language-java">public int firstUniqChar(String s) {
+    int[] count = new int[26];
+    for (char c : s.toCharArray()) {
+        count[c - 'a']++;
+    }
     for (int i = 0; i &lt; s.length(); i++) {
-        if (map.get(s.charAt(i)) == 1) {
+        if (count[s.charAt(i) - 'a'] == 1) {
             return i;
         }
     }
-
     return -1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: First Unique Number, First Missing Positive</p>
+<p><strong>Edge Cases:</strong>
+- Empty string: returns -1
+- Single character: returns 0
+- All unique: returns 0
+- All duplicates: returns -1</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1) — 26-element array</p>
+<p><strong>Similar Pattern Problems:</strong>
+- First Unique Number
+- First Missing Positive
+- Find the Difference</p>
 <hr />
 <h4 id="5-valid-palindrome">5. <strong>Valid Palindrome</strong></h4>
-<p><strong>Explanation</strong>: Check if string is palindrome ignoring non-alphanumeric characters and case. Use two pointers from both ends, skip non-alphanumeric, compare characters (case-insensitive). Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given a string, determine if it's a palindrome considering only alphanumeric characters and ignoring case.</p>
+<p><strong>Simple Analogy:</strong>
+Like checking if a sentence reads the same forward and backward, ignoring spaces and punctuation.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "A man, a plan, a canal: Panama"</code>
+<pre class="highlight"><code>Expected Output: true
+
+Remove non-alphanumeric, lowercase:
+"amanaplanacanalpanama"
+Read forward and backward: same -&gt; true
+
+Two pointers:
+left=0 ('A'), right=29 ('a')
+Skip non-alnum on both sides
+Compare lowercase -&gt; equal
+Move inward, repeat</code></pre></p>
+<p>Input: <code>s = "race a car"</code>
+<pre class="highlight"><code>Expected Output: false
+
+Cleaned: "raceacar"
+Reversed: "racaecar"
+Not equal -&gt; false
+
+Two pointers:
+left=0 ('r'), right=8 ('r') -&gt; equal, move in
+left=1 ('a'), right=7 ('a') -&gt; equal, move in
+left=2 ('c'), right=6 ('c') -&gt; equal, move in
+left=3 ('e'), right=5 ('a') -&gt; NOT equal -&gt; false</code></pre></p>
+<p>Input: <code>s = " "</code>
+<pre class="highlight"><code>Expected Output: true (empty after cleaning)</code></pre></p>
+<p><strong>Key Insight - Two Pointers with Skipping:</strong>
+Use two pointers from both ends. Skip non-alphanumeric characters. Compare lowercase versions. If all match, it's a palindrome.</p>
+<p><strong>Why It Works:</strong>
+- Only alphanumeric characters matter
+- Case doesn't matter
+- Two pointers check symmetric positions
+- Skipping non-alnum avoids preprocessing
+- O(n) time, O(1) space</p>
+<p><strong>Visualization - Valid Palindrome:</strong>
+<pre class="mermaid"><code>graph LR
+    A["'A man, a plan...'"] --&gt; B["Skip non-alnum, compare"]
+    B --&gt; C["'a' == 'a', move in"]
+    C --&gt; D["'m' == 'm', move in"]
+    D --&gt; E["... all match -&gt; true"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean isPalindrome(String s) {
     int left = 0, right = s.length() - 1;
-
     while (left &lt; right) {
-        while (left &lt; right &amp;&amp; !Character.isAlphanumeric(s.charAt(left))) {
+        while (left &lt; right &amp;&amp; !Character.isLetterOrDigit(s.charAt(left))) {
             left++;
         }
-        while (left &lt; right &amp;&amp; !Character.isAlphanumeric(s.charAt(right))) {
+        while (left &lt; right &amp;&amp; !Character.isLetterOrDigit(s.charAt(right))) {
             right--;
         }
-
         if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
             return false;
         }
         left++;
         right--;
     }
-
     return true;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Valid Palindrome II, Palindromic Substrings</p>
+<p><strong>Edge Cases:</strong>
+- Empty string: returns true
+- Only non-alnum: returns true
+- Single char: returns true
+- Mixed case: handled by toLowerCase
+- Numbers included: alphanumeric includes digits</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Valid Palindrome II (allow one deletion)
+- Palindromic Substrings
+- Palindrome Linked List</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="6-longest-substring-without-repeating-characters">6. <strong>Longest Substring Without Repeating Characters</strong></h4>
-<p><strong>Explanation</strong>: Use sliding window with HashMap tracking character indices. When duplicate found, move left pointer to index after previous occurrence. Track maximum window size. Time: O(n), Space: O(min(m, alphabet_size)).</p>
-<pre class="highlight"><code class="language-java">public int lengthOfLongestSubstring(String s) {
-    HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
-    int maxLen = 0, left = 0;
+<p><strong>Problem Description:</strong>
+Given a string s, find the length of the longest substring without repeating characters.</p>
+<p><strong>Simple Analogy:</strong>
+Like reading a book and finding the longest stretch where no word repeats.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "abcabcbb"</code>
+<pre class="highlight"><code>Expected Output: 3 ("abc")
 
+right=0 ('a'): map={a:0}, maxLen=1
+right=1 ('b'): map={a:0, b:1}, maxLen=2
+right=2 ('c'): map={a:0, b:1, c:2}, maxLen=3
+right=3 ('a'): 'a' at 0, left=max(0,0+1)=1
+              map={a:3, b:1, c:2}, maxLen=max(3,3-1+1)=3
+right=4 ('b'): 'b' at 1, left=max(1,1+1)=2
+              map={a:3, b:4, c:2}, maxLen=max(3,4-2+1)=3
+right=5 ('c'): 'c' at 2, left=max(2,2+1)=3
+              map={a:3, b:4, c:5}, maxLen=max(3,5-3+1)=3
+right=6 ('b'): 'b' at 4, left=max(3,4+1)=5
+              map={a:3, b:6, c:5}, maxLen=max(3,6-5+1)=2
+right=7 ('b'): 'b' at 6, left=max(5,6+1)=7
+              map={a:3, b:7, c:5}, maxLen=max(3,7-7+1)=1
+
+Return 3</code></pre></p>
+<p>Input: <code>s = "bbbbb"</code>
+<pre class="highlight"><code>Expected Output: 1
+
+right=0 ('b'): maxLen=1
+right=1 ('b'): left=1, maxLen=1
+...
+Return 1</code></pre></p>
+<p>Input: <code>s = "pwwkew"</code>
+<pre class="highlight"><code>Expected Output: 3 ("wke")
+
+right=0 ('p'): maxLen=1
+right=1 ('w'): maxLen=2
+right=2 ('w'): 'w' at 1, left=2, maxLen=2
+right=3 ('k'): maxLen=2
+right=4 ('e'): maxLen=3
+right=5 ('w'): 'w' at 2, left=max(2,2+1)=3, maxLen=3
+
+Return 3</code></pre></p>
+<p><strong>Key Insight - Sliding Window with Last Index Map:</strong>
+Store the last index of each character. When we see a duplicate, jump the left pointer to (lastIndex + 1) if that's greater than current left. Track max window size.</p>
+<p><strong>Why It Works:</strong>
+- Map tells us where we last saw each character
+- When we see a duplicate, the window must start after the previous occurrence
+- We take max of current left and lastIndex+1 (can't go backward)
+- Window [left, right] always has unique characters
+- Track max window size</p>
+<p><strong>Visualization - Longest Substring:</strong>
+<pre class="mermaid"><code>graph LR
+    A["'abcabcbb'"] --&gt; B["right=2: 'abc', max=3"]
+    B --&gt; C["right=3: 'a' dup, left=1, window='bca'"]
+    C --&gt; D["right=4: 'b' dup, left=2, window='cab'"]
+    D --&gt; E["max=3"]</code></pre></p>
+<pre class="highlight"><code class="language-java">public int lengthOfLongestSubstring(String s) {
+    Map&lt;Character, Integer&gt; lastIndex = new HashMap&lt;&gt;();
+    int left = 0, maxLen = 0;
     for (int right = 0; right &lt; s.length(); right++) {
         char c = s.charAt(right);
-
-        if (map.containsKey(c)) {
-            left = Math.max(left, map.get(c) + 1);
+        if (lastIndex.containsKey(c)) {
+            left = Math.max(left, lastIndex.get(c) + 1);
         }
-
-        map.put(c, right);
+        lastIndex.put(c, right);
         maxLen = Math.max(maxLen, right - left + 1);
     }
-
     return maxLen;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Longest Repeating Character Replacement, Substring with K Distinct Characters</p>
+<p><strong>Edge Cases:</strong>
+- Empty string: returns 0
+- All same characters: returns 1
+- All distinct: returns n
+- Single character: returns 1</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(min(n, charset))</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Longest Repeating Character Replacement
+- Substring with K Distinct Characters
+- Fruit Into Baskets</p>
 <hr />
 <h4 id="7-longest-palindromic-substring">7. <strong>Longest Palindromic Substring</strong></h4>
-<p><strong>Explanation</strong>: Expand around center approach. For each character (odd length) and between characters (even length) as center, expand outward while palindrome continues. Time: O(n²), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given a string s, return the longest palindromic substring.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the longest mirror-like stretch in a word.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "babad"</code>
+<pre class="highlight"><code>Expected Output: "bab" (or "aba")
+
+Expand around each center:
+i=0: odd "b" -&gt; expand: left=-1, right=1 -&gt; len=1
+     even "ba" -&gt; no match -&gt; len=0
+i=1: odd "a" -&gt; expand: "bab" -&gt; len=3
+     even "ab" -&gt; no match -&gt; len=0
+i=2: odd "b" -&gt; expand: "aba" -&gt; len=3
+     even "ba" -&gt; no match -&gt; len=0
+i=3: odd "a" -&gt; expand: len=1
+     even "ad" -&gt; no match
+i=4: odd "d" -&gt; len=1
+
+Max len=3, start=0 or 1
+Return "bab" (or "aba")</code></pre></p>
+<p>Input: <code>s = "cbbd"</code>
+<pre class="highlight"><code>Expected Output: "bb"
+
+i=0: "c", len=1
+i=1: "b", even "bb" -&gt; len=2, odd "b" -&gt; len=1
+i=2: "b", even "bd" -&gt; no
+i=3: "d", len=1
+
+Max = "bb"</code></pre></p>
+<p>Input: <code>s = "a"</code>
+<pre class="highlight"><code>Expected Output: "a"</code></pre></p>
+<p><strong>Key Insight - Expand Around Center:</strong>
+Every palindrome has a center. For odd-length, center is a character. For even-length, center is between two characters. Expand outward from each center while characters match.</p>
+<p><strong>Why It Works:</strong>
+- 2n-1 possible centers (n single chars, n-1 gaps)
+- For each center, expand while palindrome
+- Track the longest palindrome found
+- O(n²) time, O(1) space
+- Much simpler than DP approach</p>
+<p><strong>Visualization - Longest Palindrome:</strong>
+<pre class="mermaid"><code>graph LR
+    A["'babad'"] --&gt; B["Center 'a' at i=1: expand to 'bab'"]
+    B --&gt; C["Center 'b' at i=2: expand to 'aba'"]
+    C --&gt; D["Max length 3"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public String longestPalindrome(String s) {
     if (s.length() &lt; 2) return s;
-
     int maxLen = 0, start = 0;
-
     for (int i = 0; i &lt; s.length(); i++) {
-        // Odd length palindromes
         int len1 = expandAroundCenter(s, i, i);
-        // Even length palindromes
         int len2 = expandAroundCenter(s, i, i + 1);
-
         int len = Math.max(len1, len2);
         if (len &gt; maxLen) {
             maxLen = len;
             start = i - (len - 1) / 2;
         }
     }
-
     return s.substring(start, start + maxLen);
 }
 
@@ -362,77 +865,216 @@ private int expandAroundCenter(String s, int left, int right) {
     }
     return right - left - 1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Longest Palindromic Subsequence, Palindromic Substrings Count</p>
+<p><strong>Edge Cases:</strong>
+- Single character: returns it
+- Two same characters: returns both
+- All same: returns whole string
+- No palindrome &gt; 1: returns first character</p>
+<p><strong>Time Complexity</strong>: O(n²)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Palindromic Substrings (count)
+- Longest Palindromic Subsequence
+- Shortest Palindrome</p>
 <hr />
 <h4 id="8-group-anagrams">8. <strong>Group Anagrams</strong></h4>
-<p><strong>Explanation</strong>: Sort characters in each string to create canonical form (anagrams have same sorted form). Use HashMap with sorted string as key. Time: O(n * k log k) where n = number of strings, k = max string length.</p>
+<p><strong>Problem Description:</strong>
+Given an array of strings, group anagrams together.</p>
+<p><strong>Simple Analogy:</strong>
+Like sorting Scrabble tiles into groups that can form the same word.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>strs = ["eat","tea","tan","ate","nat","bat"]</code>
+<pre class="highlight"><code>Expected Output: [["eat","tea","ate"],["tan","nat"],["bat"]]
+
+Sort each string:
+"eat" -&gt; "aet"
+"tea" -&gt; "aet"
+"tan" -&gt; "ant"
+"ate" -&gt; "aet"
+"nat" -&gt; "ant"
+"bat" -&gt; "abt"
+
+Group by sorted key:
+"aet": ["eat", "tea", "ate"]
+"ant": ["tan", "nat"]
+"abt": ["bat"]</code></pre></p>
+<p>Input: <code>strs = [""]</code>
+<pre class="highlight"><code>Expected Output: [[""]]</code></pre></p>
+<p>Input: <code>strs = ["a"]</code>
+<pre class="highlight"><code>Expected Output: [["a"]]</code></pre></p>
+<p><strong>Key Insight - Sorted String as Key:</strong>
+Anagrams have the same characters, so sorting them gives the same string. Use this sorted string as a HashMap key to group anagrams.</p>
+<p><strong>Why It Works:</strong>
+- Anagrams share the same sorted form
+- HashMap groups strings by this canonical form
+- All strings with same key are anagrams
+- O(n * k log k) where k = max string length</p>
+<p><strong>Visualization - Group Anagrams:</strong>
+<pre class="mermaid"><code>graph LR
+    A["['eat','tea','tan','ate','nat','bat']"] --&gt; B["Sort each: aet, aet, ant, aet, ant, abt"]
+    B --&gt; C["Group by sorted: aet-&gt;[eat,tea,ate], ant-&gt;[tan,nat], abt-&gt;[bat]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) {
     HashMap&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;&gt;();
-
     for (String str : strs) {
         char[] chars = str.toCharArray();
         Arrays.sort(chars);
         String sorted = new String(chars);
-
         map.putIfAbsent(sorted, new ArrayList&lt;&gt;());
         map.get(sorted).add(str);
     }
-
     return new ArrayList&lt;&gt;(map.values());
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Count Isomorphic Strings, Word Patterns</p>
+<p><strong>Edge Cases:</strong>
+- Empty array: returns empty list
+- Single string: returns single group
+- All anagrams: returns one group
+- No anagrams: each string own group</p>
+<p><strong>Time Complexity</strong>: O(n * k log k)
+<strong>Space Complexity</strong>: O(n * k)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Count Isomorphic Strings
+- Word Patterns
+- Find All Anagrams in a String</p>
 <hr />
 <h4 id="9-edit-distance-levenshtein-distance">9. <strong>Edit Distance (Levenshtein Distance)</strong></h4>
-<p><strong>Explanation</strong>: DP problem. dp[i][j] = minimum operations to convert s1[0...i-1] to s2[0...j-1]. Three operations: insert, delete, replace. If s1[i-1] == s2[j-1]: dp[i][j] = dp[i-1][j-1]. Otherwise: dp[i][j] = 1 + min(replace, insert, delete). Time: O(m<em>n), Space: O(m</em>n).</p>
+<p><strong>Problem Description:</strong>
+Given two strings word1 and word2, return the minimum number of operations (insert, delete, replace) to convert word1 to word2.</p>
+<p><strong>Simple Analogy:</strong>
+Like fixing a typo with minimum keystrokes. How many edits to transform one word into another?</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>word1 = "horse"</code>, <code>word2 = "ros"</code>
+<pre class="highlight"><code>Expected Output: 3
+
+horse -&gt; rorse (replace 'h' with 'r')
+rorse -&gt; rose (delete 'r')
+rose -&gt; ros (delete 'e')
+
+DP table:
+    ""  r  o  s
+""   0  1  2  3
+h    1  1  2  3
+o    2  2  1  2
+r    3  2  2  2
+s    4  3  3  2
+e    5  4  4  3
+
+dp[5][3] = 3</code></pre></p>
+<p>Input: <code>word1 = "intention"</code>, <code>word2 = "execution"</code>
+<pre class="highlight"><code>Expected Output: 5
+
+intention -&gt; inention (remove 't')
+inention -&gt; enention (replace 'i' with 'e')
+enention -&gt; exention (replace 'n' with 'x')
+exention -&gt; exection (replace 'n' with 'c')
+exection -&gt; execution (insert 'u')</code></pre></p>
+<p>Input: <code>word1 = ""</code>, <code>word2 = "abc"</code>
+<pre class="highlight"><code>Expected Output: 3 (insert 3 chars)</code></pre></p>
+<p>Input: <code>word1 = "abc"</code>, <code>word2 = "abc"</code>
+<pre class="highlight"><code>Expected Output: 0 (already equal)</code></pre></p>
+<p><strong>Key Insight - Three Operations:</strong>
+dp[i][j] = min operations to convert word1[0..i] to word2[0..j].
+- If chars match: dp[i][j] = dp[i-1][j-1]
+- If not: dp[i][j] = 1 + min(delete, insert, replace)</p>
+<p><strong>Why It Works:</strong>
+- Optimal substructure: solution uses solutions of smaller prefixes
+- Overlapping subproblems: many prefixes repeat
+- Base cases: dp[i][0] = i (delete all), dp[0][j] = j (insert all)
+- Each cell considers three operations
+- O(m*n) time and space</p>
+<p><strong>Visualization - Edit Distance:</strong>
+<pre class="mermaid"><code>graph LR
+    A["word1='horse', word2='ros'"] --&gt; B["DP table 6x4"]
+    B --&gt; C["dp[5][3]=3"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int minDistance(String word1, String word2) {
     int m = word1.length(), n = word2.length();
     int[][] dp = new int[m + 1][n + 1];
-
     for (int i = 0; i &lt;= m; i++) dp[i][0] = i;
     for (int j = 0; j &lt;= n; j++) dp[0][j] = j;
-
     for (int i = 1; i &lt;= m; i++) {
         for (int j = 1; j &lt;= n; j++) {
             if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
                 dp[i][j] = dp[i - 1][j - 1];
             } else {
-                dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], 
+                dp[i][j] = 1 + Math.min(dp[i - 1][j - 1],
                           Math.min(dp[i - 1][j], dp[i][j - 1]));
             }
         }
     }
-
     return dp[m][n];
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Edit Distance II, Minimum Window Substring</p>
+<p><strong>Edge Cases:</strong>
+- One empty: returns length of other
+- Both empty: returns 0
+- Identical: returns 0
+- Completely different: returns max length</p>
+<p><strong>Time Complexity</strong>: O(m<em>n)
+</em><em>Space Complexity</em><em>: O(m</em>n) — can optimize to O(min(m,n))</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Edit Distance II
+- Minimum Window Substring
+- Regular Expression Matching</p>
 <hr />
 <h4 id="10-minimum-window-substring">10. <strong>Minimum Window Substring</strong></h4>
-<p><strong>Explanation</strong>: Sliding window with two-pointer. Track character frequencies needed. Expand window until all required characters found, then contract from left while still valid. Time: O(m + n), Space: O(alphabet_size).</p>
+<p><strong>Problem Description:</strong>
+Given strings s and t, find the minimum window substring of s that contains all characters of t (including duplicates).</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the smallest snippet of a newspaper containing all required words.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "ADOBECODEBANC"</code>, <code>t = "ABC"</code>
+<pre class="highlight"><code>Expected Output: "BANC"
+
+tCount = {A:1, B:1, C:1}, required=3
+
+Expand right until all found:
+"ADOBEC" -&gt; all found, formed=3
+Shrink left:
+remove A -&gt; "DOBEC" -&gt; missing A, formed=2
+Expand right until A again:
+"DOBECODEBA" -&gt; formed=3
+Shrink:
+remove D -&gt; "OBECODEBA"
+remove O -&gt; "BECODEBA"
+remove B -&gt; "ECODEBA" -&gt; missing B, formed=2
+... continue
+Final window "BANC" is minimum.</code></pre></p>
+<p>Input: <code>s = "a"</code>, <code>t = "a"</code>
+<pre class="highlight"><code>Expected Output: "a"</code></pre></p>
+<p>Input: <code>s = "a"</code>, <code>t = "aa"</code>
+<pre class="highlight"><code>Expected Output: "" (impossible)</code></pre></p>
+<p>Input: <code>s = "aa"</code>, <code>t = "aa"</code>
+<pre class="highlight"><code>Expected Output: "aa"</code></pre></p>
+<p><strong>Key Insight - Expand Until Valid, Shrink While Valid:</strong>
+Expand right until window contains all of t. Then shrink left while still valid, tracking minimum length.</p>
+<p><strong>Why It Works:</strong>
+- Need a window containing all characters of t
+- Expand until valid (formed == required)
+- Once valid, try to shrink to find smaller valid windows
+- Track minimum valid window
+- <code>formed</code> counts fully satisfied characters</p>
+<p><strong>Visualization - Minimum Window:</strong>
+<pre class="mermaid"><code>graph LR
+    A["s='ADOBECODEBANC', t='ABC'"] --&gt; B["Expand to 'ADOBEC'"]
+    B --&gt; C["Shrink to 'BANC'"]
+    C --&gt; D["Minimum window"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public String minWindow(String s, String t) {
     if (t.isEmpty()) return "";
-
     HashMap&lt;Character, Integer&gt; needed = new HashMap&lt;&gt;();
     for (char c : t.toCharArray()) {
         needed.put(c, needed.getOrDefault(c, 0) + 1);
     }
-
     int formed = 0, left = 0, minLen = Integer.MAX_VALUE, minStart = 0;
     HashMap&lt;Character, Integer&gt; window = new HashMap&lt;&gt;();
-
     for (int right = 0; right &lt; s.length(); right++) {
         char c = s.charAt(right);
         window.put(c, window.getOrDefault(c, 0) + 1);
-
         if (needed.containsKey(c) &amp;&amp; window.get(c).equals(needed.get(c))) {
             formed++;
         }
-
         while (left &lt;= right &amp;&amp; formed == needed.size()) {
             if (right - left + 1 &lt; minLen) {
                 minLen = right - left + 1;
                 minStart = left;
             }
-
             char leftChar = s.charAt(left);
             window.put(leftChar, window.get(leftChar) - 1);
             if (needed.containsKey(leftChar) &amp;&amp; window.get(leftChar) &lt; needed.get(leftChar)) {
@@ -441,40 +1083,99 @@ private int expandAroundCenter(String s, int left, int right) {
             left++;
         }
     }
-
     return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Permutation in String, Anagrams in Array</p>
+<p><strong>Edge Cases:</strong>
+- t longer than s: returns ""
+- t has chars not in s: returns ""
+- Exact match: returns s
+- Multiple valid windows: returns smallest</p>
+<p><strong>Time Complexity</strong>: O(m + n)
+<strong>Space Complexity</strong>: O(charset)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Permutation in String
+- Anagrams in Array
+- Smallest Range</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="11-regular-expression-matching">11. <strong>Regular Expression Matching</strong></h4>
-<p><strong>Explanation</strong>: DP problem. dp[i][j] = true if s[0...i-1] matches p[0...j-1]. Handle '.' (any char) and '<em>' (0 or more of previous). Time: O(m</em>n), Space: O(m*n).</p>
+<p><strong>Problem Description:</strong>
+Implement regular expression matching with support for '.' (matches any single character) and '*' (matches zero or more of the preceding element).</p>
+<p><strong>Simple Analogy:</strong>
+Like pattern matching in search/replace, but with wildcards.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "aa"</code>, <code>p = "a"</code>
+<pre class="highlight"><code>Expected Output: false
+
+"a" doesn't match "aa" (missing second a)</code></pre></p>
+<p>Input: <code>s = "aa"</code>, <code>p = "a*"</code>
+<pre class="highlight"><code>Expected Output: true
+
+"a*" means zero or more 'a's
+"aa" matches (two a's)</code></pre></p>
+<p>Input: <code>s = "ab"</code>, <code>p = ".*"</code>
+<pre class="highlight"><code>Expected Output: true
+
+".*" means zero or more of any character
+Matches any string</code></pre></p>
+<p>Input: <code>s = "aab"</code>, <code>p = "c*a*b"</code>
+<pre class="highlight"><code>Expected Output: true
+
+"c*" matches zero c's
+"a*" matches two a's
+"b" matches b
+Total: "aab" matches</code></pre></p>
+<p>Input: <code>s = "mississippi"</code>, <code>p = "mis*is*p*."</code>
+<pre class="highlight"><code>Expected Output: false</code></pre></p>
+<p><strong>Key Insight - DP on Two Strings:</strong>
+dp[i][j] = true if s[0..i-1] matches p[0..j-1].
+- If p[j-1] is normal char or '.': match if s[i-1] matches p[j-1] and dp[i-1][j-1]
+- If p[j-1] is '*': two cases:
+  - Zero occurrences: dp[i][j-2]
+  - One or more: match previous char and dp[i-1][j]</p>
+<p><strong>Why It Works:</strong>
+- Build solution from smaller prefixes
+- '<em>' has two interpretations (zero or more)
+- '.' matches any character
+- Base case: empty pattern matches empty string
+- Handle '</em>' at start of pattern carefully</p>
+<p><strong>Visualization - Regex Matching:</strong>
+<pre class="mermaid"><code>graph LR
+    A["s='aa', p='a*'"] --&gt; B["dp table 3x3"]
+    B --&gt; C["dp[2][2]=true"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean isMatch(String s, String p) {
     int m = s.length(), n = p.length();
     boolean[][] dp = new boolean[m + 1][n + 1];
     dp[0][0] = true;
-
     for (int j = 1; j &lt;= n; j++) {
         if (p.charAt(j - 1) == '*') {
             dp[0][j] = dp[0][j - 2];
         }
     }
-
     for (int i = 1; i &lt;= m; i++) {
         for (int j = 1; j &lt;= n; j++) {
             if (p.charAt(j - 1) == '*') {
-                dp[i][j] = dp[i][j - 2] || 
+                dp[i][j] = dp[i][j - 2] ||
                            (dp[i - 1][j] &amp;&amp; (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1)));
             } else {
-                dp[i][j] = dp[i - 1][j - 1] &amp;&amp; 
+                dp[i][j] = dp[i - 1][j - 1] &amp;&amp;
                            (p.charAt(j - 1) == '.' || p.charAt(j - 1) == s.charAt(i - 1));
             }
         }
     }
-
     return dp[m][n];
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Wildcard Matching, Word Pattern Matching</p>
+<p><strong>Edge Cases:</strong>
+- Empty pattern: matches empty string only
+- Empty string: pattern must be all '<em>'
+- ".</em>" pattern: matches anything
+- Multiple '*': handled by DP</p>
+<p><strong>Time Complexity</strong>: O(m<em>n)
+</em><em>Space Complexity</em><em>: O(m</em>n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Wildcard Matching
+- Word Pattern Matching
+- Glob Matching</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-sliding-window">1. <strong>Sliding Window</strong></h3>
@@ -482,32 +1183,47 @@ private int expandAroundCenter(String s, int left, int right) {
 <li>Maintain window of characters</li>
 <li>Expand/contract based on condition</li>
 <li>Used for: Substrings, character frequency</li>
+<li>Examples: Longest Substring Without Repeating</li>
 </ul>
 <h3 id="2-two-pointers">2. <strong>Two Pointers</strong></h3>
 <ul>
 <li>Start from opposite ends</li>
 <li>Move towards center</li>
-<li>Used for: Palindromes, validation</li>
+<li>Used for: Palindromes, validation, reversal</li>
+<li>Examples: Valid Palindrome, Reverse String</li>
 </ul>
 <h3 id="3-dynamic-programming">3. <strong>Dynamic Programming</strong></h3>
 <ul>
 <li>Build solution from smaller subproblems</li>
 <li>Used for: Edit distance, pattern matching</li>
+<li>Examples: Edit Distance, Regular Expression Matching</li>
 </ul>
-<h3 id="4-hashing">4. <strong>Hashing</strong></h3>
+<h3 id="4-hashing-frequency-counting">4. <strong>Hashing (Frequency Counting)</strong></h3>
 <ul>
 <li>Character frequency maps</li>
 <li>Canonical forms for anagrams</li>
-<li>Used for: Anagrams, duplicates</li>
+<li>Used for: Anagrams, duplicates, unique characters</li>
+<li>Examples: Valid Anagram, Group Anagrams</li>
+</ul>
+<h3 id="5-expand-around-center">5. <strong>Expand Around Center</strong></h3>
+<ul>
+<li>For each possible center, expand outward</li>
+<li>Used for: Palindromic substrings</li>
+<li>Examples: Longest Palindromic Substring</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Not handling empty strings</li>
-<li>❌ Case sensitivity issues</li>
-<li>❌ Not considering special characters</li>
-<li>❌ String concatenation in loops (creates new objects)</li>
-<li>❌ Inefficient string comparisons</li>
+<li>Not handling empty strings</li>
+<li>Case sensitivity issues (use toLowerCase)</li>
+<li>Not considering special characters (use isLetterOrDigit)</li>
+<li>String concatenation in loops (use StringBuilder)</li>
+<li>Inefficient string comparisons (use .equals, not ==)</li>
+<li>Forgetting that Strings are immutable in Java</li>
+<li>Not handling Unicode or multi-byte characters</li>
+<li>Off-by-one errors in substring indices (end is exclusive)</li>
+<li>Not considering all edge cases for regex ('*' at start)</li>
+<li>Using <code>charAt</code> when char array would be faster for repeated access</li>
 </ul>
               
             </div>

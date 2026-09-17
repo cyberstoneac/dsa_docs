@@ -74,13 +74,29 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Linked List</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-linked-list-simple-explanation">What is a Linked List? (Simple Explanation)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#variants">Variants</a>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#variants-different-types">Variants (Different Types)</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#node-definition">Node Definition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#traverse-template">Traverse Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dummy-node-template">Dummy Node Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fast-and-slow-pointer-template">Fast and Slow Pointer Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#linked-list-decision-flow">Linked List Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -129,6 +145,8 @@
     <li class="toctree-l3"><a class="reference internal" href="#3-reversal">3. Reversal</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#4-two-pass-algorithm">4. Two-Pass Algorithm</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-hashmap-linked-list">5. HashMap + Linked List</a>
     </li>
         </ul>
     </li>
@@ -201,19 +219,32 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="linked-list">Linked List</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-a-linked-list-simple-explanation">What is a Linked List? (Simple Explanation)</h2>
+<p>Imagine a treasure hunt where each clue tells you where to find the next clue. You can't jump directly to clue #5 — you must start at clue #1 and follow the chain. That's a linked list!</p>
+<p>A linked list is a chain of "nodes," where each node contains:
+- <strong>Data</strong> (the value)
+- <strong>A pointer/reference</strong> to the next node</p>
+<p>Unlike an array (where elements sit side-by-side in memory), linked list nodes can be scattered anywhere in memory. The "chain" is created by pointers.</p>
+<p><strong>Real-life analogies:</strong>
+- A train where each car is connected to the next
+- A scavenger hunt where each clue leads to the next
+- A playlist where each song knows the next song</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li>Nodes pointing to next element (or previous in doubly linked)</li>
-<li>No random access (O(n) to reach element)</li>
-<li><strong>Time Complexity</strong>: O(1) for insertion/deletion at known position, O(n) for search</li>
-<li>Efficient for insertions/deletions compared to arrays</li>
+<li><strong>Node</strong>: A single element containing data and a pointer to the next node</li>
+<li><strong>Head</strong>: The first node in the list (entry point)</li>
+<li><strong>Tail</strong>: The last node (its next pointer is null)</li>
+<li><strong>No Random Access</strong>: To reach the 5th element, you must traverse 1→2→3→4→5</li>
+<li><strong>Time Complexity</strong>: O(1) insert/delete at known position, O(n) to search</li>
 <li><strong>Space Complexity</strong>: O(n) for n nodes</li>
+<li><strong>Advantage over arrays</strong>: Efficient insertions/deletions (no shifting needed)</li>
+<li><strong>Disadvantage</strong>: No O(1) access by index</li>
 </ul>
-<h2 id="variants">Variants</h2>
+<h2 id="variants-different-types">Variants (Different Types)</h2>
 <ul>
-<li>Singly Linked List (next pointer only)</li>
-<li>Doubly Linked List (next and previous pointers)</li>
-<li>Circular Linked List (last node points to first)</li>
+<li><strong>Singly Linked List</strong>: Each node points only to the next node. Like a one-way chain.</li>
+<li><strong>Doubly Linked List</strong>: Each node points to both next and previous. Like a two-way chain. More memory but can traverse both directions.</li>
+<li><strong>Circular Linked List</strong>: Last node points back to the first. Like a circle with no end.</li>
 </ul>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
@@ -221,40 +252,198 @@
 <li>Detect Cycle (Floyd's Algorithm)</li>
 <li>Merge Two Sorted Lists</li>
 <li>Remove Nth Node From End</li>
+<li>Add Two Numbers</li>
+<li>Sort List</li>
+<li>Copy List with Random Pointer</li>
 <li>LRU Cache (uses linked list + hashmap)</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Fast and Slow Pointers</li>
-<li>Recursion</li>
-<li>Dummy Node (simplifies code)</li>
-<li>Two-Pass Algorithm</li>
+<li><strong>Fast and Slow Pointers</strong>: Two pointers moving at different speeds</li>
+<li><strong>Dummy Node</strong>: A fake node before head to simplify edge cases</li>
+<li><strong>Recursion</strong>: Often elegant for linked list problems</li>
+<li><strong>Two-Pass Algorithm</strong>: First pass gathers info, second pass uses it</li>
+<li><strong>Reversal</strong>: Reverse the chain to change direction</li>
 </ul>
+<hr />
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="node-definition">Node Definition</h3>
+<pre class="highlight"><code class="language-java">class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}</code></pre>
+<h3 id="traverse-template">Traverse Template</h3>
+<pre class="highlight"><code class="language-java">ListNode curr = head;
+while (curr != null) {
+    // Process curr.val
+    curr = curr.next;
+}</code></pre>
+<h3 id="dummy-node-template">Dummy Node Template</h3>
+<pre class="highlight"><code class="language-java">ListNode dummy = new ListNode(0);
+dummy.next = head;
+ListNode curr = dummy;
+// ... build list using curr.next = ...
+return dummy.next;</code></pre>
+<h3 id="fast-and-slow-pointer-template">Fast and Slow Pointer Template</h3>
+<pre class="highlight"><code class="language-java">ListNode slow = head, fast = head;
+while (fast != null &amp;&amp; fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+}
+// slow is now at middle</code></pre>
+<h3 id="linked-list-decision-flow">Linked List Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Linked List Problem"] --&gt; B{"Need to find middle?"}
+    B --&gt;|Yes| C["Fast and Slow Pointers"]
+    B --&gt;|No| D{"Need to detect cycle?"}
+    D --&gt;|Yes| E["Fast and Slow Pointers"]
+    D --&gt;|No| F{"Need to merge lists?"}
+    F --&gt;|Yes| G["Dummy Node + Two Pointers"]
+    F --&gt;|No| H{"Need to reverse?"}
+    H --&gt;|Yes| I["Three Pointers (prev, curr, next)"]
+    H --&gt;|No| J{"Need O(1) access by key?"}
+    J --&gt;|Yes| K["Linked List + HashMap (LRU)"]
+    J --&gt;|No| L["Traverse with curr pointer"]</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-reverse-linked-list">1. <strong>Reverse Linked List</strong></h4>
-<p><strong>Explanation</strong>: Iterative approach with three pointers. Previous starts as null, current at head. Reverse link, then move pointers forward. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Reverse a singly linked list and return the new head.</p>
+<p><strong>Simple Analogy:</strong>
+Like reversing a chain of paper clips. Each clip's "hook" now points backward instead of forward.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5 -&gt; null</code>
+<pre class="highlight"><code>Expected Output: 5 -&gt; 4 -&gt; 3 -&gt; 2 -&gt; 1 -&gt; null
+
+Step-by-step:
+Initial: prev=null, curr=1
+
+Step 1: next=2, curr.next=prev(null), prev=1, curr=2
+        1 -&gt; null
+Step 2: next=3, curr.next=prev(1), prev=2, curr=3
+        2 -&gt; 1 -&gt; null
+Step 3: next=4, curr.next=prev(2), prev=3, curr=4
+        3 -&gt; 2 -&gt; 1 -&gt; null
+Step 4: next=5, curr.next=prev(3), prev=4, curr=5
+        4 -&gt; 3 -&gt; 2 -&gt; 1 -&gt; null
+Step 5: next=null, curr.next=prev(4), prev=5, curr=null
+        5 -&gt; 4 -&gt; 3 -&gt; 2 -&gt; 1 -&gt; null
+
+Return prev (5)</code></pre></p>
+<p>Input: <code>null</code>
+<pre class="highlight"><code>Expected Output: null</code></pre></p>
+<p>Input: <code>1 -&gt; null</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; null</code></pre></p>
+<p><strong>Key Insight - Three Pointers:</strong>
+To reverse a link, we need to know the previous node. So we keep three pointers: prev (behind), curr (current), and next (ahead, saved before we break the link). We reverse curr's pointer to point to prev, then shift all three forward.</p>
+<p><strong>Why It Works:</strong>
+- We process each node exactly once
+- Before changing curr.next, we save the original next
+- Then we point curr.next backward to prev
+- Then we advance prev and curr
+- When curr becomes null, prev is the new head</p>
+<p><strong>Visualization - Reverse Linked List:</strong>
+<pre class="mermaid"><code>graph LR
+    A["null &lt;- 1"] --&gt; B["1 &lt;- 2"]
+    B --&gt; C["2 &lt;- 3"]
+    C --&gt; D["3 &lt;- 4"]
+    D --&gt; E["4 &lt;- 5"]
+    E --&gt; F["5 -&gt; null (new head)"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public ListNode reverseList(ListNode head) {
     ListNode prev = null, curr = head;
-
     while (curr != null) {
-        ListNode next = curr.next; // Save next
-        curr.next = prev;           // Reverse link
-        prev = curr;                // Move prev
-        curr = next;                // Move curr
+        ListNode next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
     }
-
     return prev;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Reverse List II, Reverse Nodes in K-Group</p>
+<p><strong>Edge Cases:</strong>
+- Empty list: returns null
+- Single node: returns that node
+- Two nodes: swaps them
+- Long list: works correctly</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Reverse List II (reverse between positions)
+- Reverse Nodes in K-Group
+- Palindrome Linked List</p>
 <hr />
 <h4 id="2-merge-two-sorted-lists">2. <strong>Merge Two Sorted Lists</strong></h4>
-<p><strong>Explanation</strong>: Use dummy node, two pointers on both lists. Compare values, add smaller to result, move that pointer. Add remaining nodes at end. Time: O(m+n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Merge two sorted linked lists into one sorted list by splicing together their nodes.</p>
+<p><strong>Simple Analogy:</strong>
+Like merging two sorted queues of people into one sorted queue. Compare the front of each, pick the smaller, move forward.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>list1 = 1 -&gt; 2 -&gt; 4</code>, <code>list2 = 1 -&gt; 3 -&gt; 4</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 4
+
+Step 1: dummy -&gt; null, curr=dummy
+        list1=1, list2=1
+        list1.val=1 &lt;= list2.val=1 -&gt; pick list1
+        curr.next = 1, list1=2, curr=1
+
+Step 2: list1=2, list2=1
+        list2.val=1 &lt; list1.val=2 -&gt; pick list2
+        curr.next = 1, list2=3, curr=1
+
+Step 3: list1=2, list2=3
+        list1.val=2 &lt;= list2.val=3 -&gt; pick list1
+        curr.next = 2, list1=4, curr=2
+
+Step 4: list1=4, list2=3
+        list2.val=3 &lt; list1.val=4 -&gt; pick list2
+        curr.next = 3, list2=4, curr=3
+
+Step 5: list1=4, list2=4
+        list1.val=4 &lt;= list2.val=4 -&gt; pick list1
+        curr.next = 4, list1=null, curr=4
+
+Step 6: list1=null, list2=4
+        list1 is null -&gt; attach remaining list2
+        curr.next = 4, list2=null, curr=4
+
+Result: dummy.next = 1 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 4</code></pre></p>
+<p>Input: <code>list1 = null</code>, <code>list2 = 1 -&gt; 2</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 2
+
+While loop doesn't execute
+curr.next = list2 (since list1 is null)
+Return dummy.next</code></pre></p>
+<p>Input: <code>list1 = 5</code>, <code>list2 = 1 -&gt; 2 -&gt; 3</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 2 -&gt; 3 -&gt; 5
+
+list1=5, list2=1: pick 1
+list1=5, list2=2: pick 2
+list1=5, list2=3: pick 3
+list1=5, list2=null: attach 5
+Result: 1 -&gt; 2 -&gt; 3 -&gt; 5</code></pre></p>
+<p><strong>Key Insight - Dummy Node:</strong>
+The dummy node is a fake start that simplifies the code. We don't have to handle the "first node" case specially. We just build the merged list starting from dummy.next.</p>
+<p><strong>Why It Works:</strong>
+- Both lists are sorted, so the smallest remaining element is always at one of the two heads
+- Compare the two heads, pick the smaller, advance that list
+- Dummy node avoids edge cases (empty result list)
+- At the end, one list may still have nodes — attach them</p>
+<p><strong>Visualization - Merge Two Sorted Lists:</strong>
+<pre class="mermaid"><code>graph TD
+    A["dummy -&gt; null"] --&gt; B["Compare 1 and 1: pick 1"]
+    B --&gt; C["Compare 2 and 1: pick 1"]
+    C --&gt; D["Compare 2 and 3: pick 2"]
+    D --&gt; E["Compare 4 and 3: pick 3"]
+    E --&gt; F["Compare 4 and 4: pick 4"]
+    F --&gt; G["Attach remaining 4"]
+    G --&gt; H["Result: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
     ListNode dummy = new ListNode(0);
     ListNode curr = dummy;
-
     while (list1 != null &amp;&amp; list2 != null) {
         if (list1.val &lt; list2.val) {
             curr.next = list1;
@@ -265,95 +454,360 @@
         }
         curr = curr.next;
     }
-
     curr.next = (list1 != null) ? list1 : list2;
     return dummy.next;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Merge K Sorted Lists, Merge Multiple Lists</p>
+<p><strong>Edge Cases:</strong>
+- Both empty: returns null
+- One empty: returns the other
+- One element each: compares and merges
+- Duplicate values: handled correctly</p>
+<p><strong>Time Complexity</strong>: O(m + n)
+<strong>Space Complexity</strong>: O(1) - reusing existing nodes</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Merge K Sorted Lists
+- Merge Sorted Array
+- Merge Two Sorted Lists II</p>
 <hr />
 <h4 id="3-delete-node-in-a-linked-list">3. <strong>Delete Node in a Linked List</strong></h4>
-<p><strong>Explanation</strong>: Copy next node's value to current, then skip next node (remove it). Works because we can't access previous in given constraint. Time: O(1), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Delete a node from a singly linked list, given only that node. You don't have access to the head.</p>
+<p><strong>Simple Analogy:</strong>
+Like removing a car from a train when you only know the car, not the engine. You can't go backward, so you must copy the next car's contents and skip it.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>head = 4 -&gt; 5 -&gt; 1 -&gt; 9</code>, <code>node = 5</code> (the node with value 5)
+<pre class="highlight"><code>Expected Output: 4 -&gt; 1 -&gt; 9
+
+Step 1: node.val = 5, node.next = 1
+Step 2: Copy next node's value: node.val = 1
+        List becomes: 4 -&gt; 1 -&gt; 1 -&gt; 9 (we have two 1s)
+Step 3: Skip next node: node.next = node.next.next
+        List becomes: 4 -&gt; 1 -&gt; 9
+
+Return (nothing, list modified in place)</code></pre></p>
+<p>Input: <code>head = 1 -&gt; 2 -&gt; 3</code>, <code>node = 2</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 3
+
+node.val = 3
+node.next = null
+List: 1 -&gt; 3</code></pre></p>
+<p>Input: <code>head = 1 -&gt; 2</code>, <code>node = 1</code>
+<pre class="highlight"><code>Expected Output: 2
+
+node.val = 2
+node.next = null
+List: 2</code></pre></p>
+<p><strong>Key Insight - Copy and Skip:</strong>
+Since we can't access the previous node, we can't just unlink the current node. Instead, we copy the next node's value into the current node, then remove the next node. This effectively "shifts" the next node's data into the current position.</p>
+<p><strong>Why It Works:</strong>
+- We can only modify the current node and everything after it
+- By copying the next node's value, the current node now "looks like" the next node
+- By skipping the next node, we remove the duplicate
+- The list is now correct (the deleted value is gone)</p>
+<p><strong>Visualization - Delete Node:</strong>
+<pre class="mermaid"><code>graph LR
+    A["4 -&gt; 5 -&gt; 1 -&gt; 9"] --&gt; B["Copy 1 into 5: 4 -&gt; 1 -&gt; 1 -&gt; 9"]
+    B --&gt; C["Skip next: 4 -&gt; 1 -&gt; 9"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public void deleteNode(ListNode node) {
     node.val = node.next.val;
     node.next = node.next.next;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Delete Node II, Unlink Nodes</p>
+<p><strong>Edge Cases:</strong>
+- Node is the last node: problem guarantees it's not
+- Node is the head: works (we don't need previous)
+- Single node list: problem guarantees node is not last
+- Multiple nodes: works correctly</p>
+<p><strong>Time Complexity</strong>: O(1)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Delete Node II
+- Unlink Nodes
+- Remove Elements</p>
 <hr />
 <h4 id="4-remove-nth-node-from-end-of-list">4. <strong>Remove Nth Node From End of List</strong></h4>
-<p><strong>Explanation</strong>: Two-pass or two-pointer approach. Fast pointer goes n steps ahead. Both move together until fast reaches end. Use dummy for edge case (removing head). Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given a linked list, remove the nth node from the end of the list and return its head.</p>
+<p><strong>Simple Analogy:</strong>
+Like removing the 2nd book from the end of a shelf when you can only count from the front. Use two pointers to create a "window" of size n.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>head = 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5</code>, <code>n = 2</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 2 -&gt; 3 -&gt; 5
+
+Step 1: Create dummy: dummy -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5
+        fast = slow = dummy
+
+Step 2: Move fast n+1=3 steps ahead
+        fast = dummy -&gt; 1 -&gt; 2 -&gt; 3
+
+Step 3: Move both until fast reaches end
+        fast=3, slow=dummy -&gt; move
+        fast=4, slow=1 -&gt; move
+        fast=5, slow=2 -&gt; move
+        fast=null, slow=3 -&gt; stop
+
+Step 4: slow.next = slow.next.next (skip node 4)
+        1 -&gt; 2 -&gt; 3 -&gt; 5
+
+Return dummy.next = 1</code></pre></p>
+<p>Input: <code>head = 1</code>, <code>n = 1</code>
+<pre class="highlight"><code>Expected Output: null (remove the only node)
+
+dummy -&gt; 1
+fast moves 2 steps: fast=null
+slow stays at dummy
+slow.next = slow.next.next = null
+Return dummy.next = null</code></pre></p>
+<p>Input: <code>head = 1 -&gt; 2</code>, <code>n = 1</code>
+<pre class="highlight"><code>Expected Output: 1
+
+dummy -&gt; 1 -&gt; 2
+fast moves 2 steps: fast=2
+Move both: fast=null, slow=dummy
+Wait, let me redo:
+Move fast n+1=2 steps: dummy-&gt;1-&gt;2, fast=2
+Move both: fast=null, slow=1
+slow.next = slow.next.next = null
+List: 1
+Return 1</code></pre></p>
+<p><strong>Key Insight - Two Pointers with Gap:</strong>
+Maintain a gap of n+1 between fast and slow. When fast reaches the end, slow is exactly at the node BEFORE the one to remove. Then we can easily skip the target node.</p>
+<p><strong>Why It Works:</strong>
+- Fast pointer creates a "lead" of n+1 steps
+- When fast hits null, slow is at position (length - n - 1) from start
+- That's exactly the node before the one we want to remove
+- Using dummy handles the edge case of removing the head
+- This is a one-pass solution</p>
+<p><strong>Visualization - Remove Nth From End:</strong>
+<pre class="mermaid"><code>graph LR
+    A["dummy -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5"] --&gt; B["fast moves 3 steps: fast=3"]
+    B --&gt; C["Move both: fast=4, slow=1"]
+    C --&gt; D["Move both: fast=5, slow=2"]
+    D --&gt; E["Move both: fast=null, slow=3"]
+    E --&gt; F["slow.next = slow.next.next: skip 4"]
+    F --&gt; G["Result: 1 -&gt; 2 -&gt; 3 -&gt; 5"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public ListNode removeNthFromEnd(ListNode head, int n) {
     ListNode dummy = new ListNode(0);
     dummy.next = head;
     ListNode fast = dummy, slow = dummy;
-
-    // Move fast n+1 steps ahead
     for (int i = 0; i &lt;= n; i++) {
         fast = fast.next;
     }
-
-    // Move both until fast reaches end
     while (fast != null) {
         fast = fast.next;
         slow = slow.next;
     }
-
     slow.next = slow.next.next;
     return dummy.next;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Remove Kth Element, Remove Elements</p>
+<p><strong>Edge Cases:</strong>
+- Remove head: dummy handles it
+- Remove last node: works correctly
+- Single node: removes it, returns null
+- n larger than list: problem guarantees valid n</p>
+<p><strong>Time Complexity</strong>: O(n) - single pass
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Remove Kth Element
+- Remove Elements
+- Delete Middle Node</p>
 <hr />
 <h4 id="5-linked-list-cycle">5. <strong>Linked List Cycle</strong></h4>
-<p><strong>Explanation</strong>: Floyd's cycle detection (fast and slow pointers). Fast moves 2 steps, slow moves 1 step. If they meet, cycle exists. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given the head of a linked list, determine if the list has a cycle (a node points back to a previous node).</p>
+<p><strong>Simple Analogy:</strong>
+Like two runners on a circular track. One runs fast (2 steps), one runs slow (1 step). If there's a cycle, the fast runner will eventually "lap" the slow runner and they'll meet.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>3 -&gt; 2 -&gt; 0 -&gt; -4 -&gt; (back to 2)</code>
+<pre class="highlight"><code>Expected Output: true
+
+Cycle exists: -4 points back to 2
+
+Step 1: fast=3, slow=3
+Step 2: fast=0 (3-&gt;2-&gt;0), slow=2 (3-&gt;2)
+Step 3: fast=2 (0-&gt;-4-&gt;2), slow=0 (2-&gt;0)
+Step 4: fast=0 (2-&gt;0-&gt;-4)? Wait, let me redo:
+Actually: 3 -&gt; 2 -&gt; 0 -&gt; -4 -&gt; 2 -&gt; 0 -&gt; -4 -&gt; ...
+fast: 3 -&gt; 0 -&gt; 2 -&gt; -4 -&gt; 0 -&gt; ...
+slow: 3 -&gt; 2 -&gt; 0 -&gt; -4 -&gt; 2 -&gt; ...
+
+fast and slow will meet at some node
+Return true</code></pre></p>
+<p>Input: <code>1 -&gt; 2 -&gt; null</code>
+<pre class="highlight"><code>Expected Output: false
+
+No cycle
+fast: 1 -&gt; null (fast.next is null, stop)
+Return false</code></pre></p>
+<p>Input: <code>null</code>
+<pre class="highlight"><code>Expected Output: false</code></pre></p>
+<p><strong>Key Insight - Floyd's Cycle Detection:</strong>
+If there's a cycle, a fast pointer (2 steps) will eventually catch up to a slow pointer (1 step) inside the cycle. If there's no cycle, the fast pointer will reach the end (null).</p>
+<p><strong>Why It Works:</strong>
+- In a cycle, fast gains on slow by 1 node per step
+- Eventually fast "laps" slow and they meet
+- If no cycle, fast reaches null first
+- This is O(n) time and O(1) space (no hashset needed!)
+- Proof: distance between them decreases by 1 each step inside cycle</p>
+<p><strong>Visualization - Cycle Detection:</strong>
+<pre class="mermaid"><code>graph LR
+    A["3 -&gt; 2 -&gt; 0 -&gt; -4"] --&gt; B["-4 points back to 2"]
+    B --&gt; C["fast and slow meet inside cycle"]
+    C --&gt; D["Return true"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean hasCycle(ListNode head) {
     ListNode fast = head, slow = head;
-
     while (fast != null &amp;&amp; fast.next != null) {
         fast = fast.next.next;
         slow = slow.next;
-
         if (fast == slow) {
             return true;
         }
     }
-
     return false;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Detect Cycle II (find start), Cycle Length</p>
+<p><strong>Edge Cases:</strong>
+- Empty list: returns false
+- Single node, no cycle: returns false
+- Single node pointing to itself: returns true
+- Long list with cycle: correctly detects</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Detect Cycle II (find the start of cycle)
+- Cycle Length
+- Happy Number (uses same technique)</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="6-add-two-numbers">6. <strong>Add Two Numbers</strong></h4>
-<p><strong>Explanation</strong>: Traverse both lists simultaneously, add digits with carry. Create new node for each sum digit. Handle final carry. Time: O(max(m,n)), Space: O(max(m,n)).</p>
+<p><strong>Problem Description:</strong>
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order. Add the two numbers and return the sum as a linked list.</p>
+<p><strong>Simple Analogy:</strong>
+Like adding two numbers on paper, but the digits are written right-to-left. Start from the ones place, add with carry, move left.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>l1 = 2 -&gt; 4 -&gt; 3</code> (represents 342), <code>l2 = 5 -&gt; 6 -&gt; 4</code> (represents 465)
+<pre class="highlight"><code>Expected Output: 7 -&gt; 0 -&gt; 8 (represents 807)
+
+342 + 465 = 807
+
+Step 1: sum = 2 + 5 + 0 = 7, carry = 0, digit = 7
+        result: 7
+Step 2: sum = 4 + 6 + 0 = 10, carry = 1, digit = 0
+        result: 7 -&gt; 0
+Step 3: sum = 3 + 4 + 1 = 8, carry = 0, digit = 8
+        result: 7 -&gt; 0 -&gt; 8
+Step 4: both lists null, carry=0 -&gt; stop
+
+Return 7 -&gt; 0 -&gt; 8</code></pre></p>
+<p>Input: <code>l1 = 9 -&gt; 9</code>, <code>l2 = 1</code>
+<pre class="highlight"><code>Expected Output: 0 -&gt; 0 -&gt; 1 (represents 100)
+
+99 + 1 = 100
+
+Step 1: sum = 9 + 1 + 0 = 10, carry = 1, digit = 0
+Step 2: sum = 9 + 0 + 1 = 10, carry = 1, digit = 0
+Step 3: l1=null, l2=null, carry=1 -&gt; sum = 0+0+1=1, carry=0, digit=1
+Result: 0 -&gt; 0 -&gt; 1</code></pre></p>
+<p>Input: <code>l1 = 0</code>, <code>l2 = 0</code>
+<pre class="highlight"><code>Expected Output: 0</code></pre></p>
+<p><strong>Key Insight - Grade School Addition:</strong>
+Process both lists simultaneously, digit by digit. Keep a carry. Create a new node for each digit. Continue until both lists are exhausted AND carry is 0.</p>
+<p><strong>Why It Works:</strong>
+- The lists are in reverse order, so the head is the ones place
+- We can process both lists from head to tail simultaneously
+- At each step, add the two digits plus any carry
+- The new digit is sum % 10, the new carry is sum / 10
+- If one list is shorter, treat missing digits as 0
+- Final carry creates an extra node</p>
+<p><strong>Visualization - Add Two Numbers:</strong>
+<pre class="mermaid"><code>graph LR
+    A["2 -&gt; 4 -&gt; 3"] --&gt; B["+ 5 -&gt; 6 -&gt; 4"]
+    B --&gt; C["7 -&gt; 0 -&gt; 8"]
+    C --&gt; D["342 + 465 = 807"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
     ListNode dummy = new ListNode(0);
     ListNode curr = dummy;
     int carry = 0;
-
     while (l1 != null || l2 != null || carry != 0) {
         int sum = (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0) + carry;
         carry = sum / 10;
         curr.next = new ListNode(sum % 10);
         curr = curr.next;
-
         l1 = (l1 != null) ? l1.next : null;
         l2 = (l2 != null) ? l2.next : null;
     }
-
     return dummy.next;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Add Two Numbers II, Multiply Two Lists</p>
+<p><strong>Edge Cases:</strong>
+- Different lengths: treat missing digits as 0
+- Final carry: creates extra node
+- Both zero: returns 0
+- Large numbers: works correctly</p>
+<p><strong>Time Complexity</strong>: O(max(m, n))
+<strong>Space Complexity</strong>: O(max(m, n)) for result</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Add Two Numbers II (digits in forward order)
+- Multiply Two Lists
+- Add Binary</p>
 <hr />
 <h4 id="7-sort-list-merge-sort">7. <strong>Sort List (Merge Sort)</strong></h4>
-<p><strong>Explanation</strong>: Divide using slow/fast pointers, then merge sorted halves. Time: O(n log n), Space: O(log n) for recursion stack.</p>
+<p><strong>Problem Description:</strong>
+Sort a linked list in O(n log n) time and O(1) space (or O(log n) with recursion).</p>
+<p><strong>Simple Analogy:</strong>
+Like sorting a deck of cards by splitting into two piles, sorting each, then merging. This is merge sort.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>4 -&gt; 2 -&gt; 1 -&gt; 3</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 2 -&gt; 3 -&gt; 4
+
+Step 1: Find middle (slow/fast)
+        4 -&gt; 2 -&gt; 1 -&gt; 3
+        slow ends at 2, mid=2
+        Split: left = 4 -&gt; 2, right = 1 -&gt; 3
+        Actually, mid.next = null, so left = 4 -&gt; 2, right = 1 -&gt; 3
+
+Step 2: Recursively sort left
+        left = 4 -&gt; 2
+        mid = 4, split: left=4, right=2
+        sort(4) = 4, sort(2) = 2
+        merge(4, 2) = 2 -&gt; 4
+
+Step 3: Recursively sort right
+        right = 1 -&gt; 3
+        merge(1, 3) = 1 -&gt; 3
+
+Step 4: Merge sorted halves
+        merge(2-&gt;4, 1-&gt;3) = 1 -&gt; 2 -&gt; 3 -&gt; 4
+
+Return 1 -&gt; 2 -&gt; 3 -&gt; 4</code></pre></p>
+<p>Input: <code>-1 -&gt; 5 -&gt; 3 -&gt; 4 -&gt; 0</code>
+<pre class="highlight"><code>Expected Output: -1 -&gt; 0 -&gt; 3 -&gt; 4 -&gt; 5
+
+Same process recursively</code></pre></p>
+<p>Input: <code>null</code>
+<pre class="highlight"><code>Expected Output: null</code></pre></p>
+<p><strong>Key Insight - Merge Sort on Linked List:</strong>
+Merge sort is perfect for linked lists because:
+1. Finding the middle is easy (slow/fast pointers)
+2. Merging two sorted lists is O(n)
+3. No random access needed (unlike quicksort)</p>
+<p><strong>Why It Works:</strong>
+- Divide: Find middle, split into two halves
+- Conquer: Recursively sort each half
+- Combine: Merge two sorted halves into one
+- Base case: list of 0 or 1 node is already sorted
+- This gives O(n log n) time</p>
+<p><strong>Visualization - Sort List:</strong>
+<pre class="mermaid"><code>graph TD
+    A["4 -&gt; 2 -&gt; 1 -&gt; 3"] --&gt; B["Split: [4,2] and [1,3]"]
+    B --&gt; C["Sort [4,2] -&gt; [2,4]"]
+    B --&gt; D["Sort [1,3] -&gt; [1,3]"]
+    C --&gt; E["Merge: [1,2,3,4]"]
+    D --&gt; E</code></pre></p>
 <pre class="highlight"><code class="language-java">public ListNode sortList(ListNode head) {
     if (head == null || head.next == null) return head;
-
     ListNode mid = getMid(head);
     ListNode midNext = mid.next;
     mid.next = null;
-
     ListNode left = sortList(head);
     ListNode right = sortList(midNext);
-
     return merge(left, right);
 }
 
@@ -369,7 +823,6 @@ private ListNode getMid(ListNode head) {
 private ListNode merge(ListNode l1, ListNode l2) {
     ListNode dummy = new ListNode(0);
     ListNode curr = dummy;
-
     while (l1 != null &amp;&amp; l2 != null) {
         if (l1.val &lt; l2.val) {
             curr.next = l1;
@@ -380,43 +833,148 @@ private ListNode merge(ListNode l1, ListNode l2) {
         }
         curr = curr.next;
     }
-
     curr.next = (l1 != null) ? l1 : l2;
     return dummy.next;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Quick Sort Linked List, Insertion Sort List</p>
+<p><strong>Edge Cases:</strong>
+- Empty list: returns null
+- Single node: returns it
+- Two nodes: sorts correctly
+- Duplicates: handled correctly</p>
+<p><strong>Time Complexity</strong>: O(n log n)
+<strong>Space Complexity</strong>: O(log n) for recursion stack</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Quick Sort Linked List
+- Insertion Sort List
+- Merge K Sorted Lists</p>
 <hr />
 <h4 id="8-copy-list-with-random-pointer">8. <strong>Copy List with Random Pointer</strong></h4>
-<p><strong>Explanation</strong>: Two-pass: first pass creates nodes and stores mapping. Second pass copies links. Or use interweaving to avoid extra hashmap. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+A linked list has nodes with an extra "random" pointer that can point to any node or null. Create a deep copy of the list.</p>
+<p><strong>Simple Analogy:</strong>
+Like photocopying a complex document where each page has a note pointing to another page. The copy must have its own notes pointing to the copied pages, not the originals.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>7 -&gt; 13 -&gt; 11 -&gt; 10 -&gt; 1</code> with random pointers:
+<pre class="highlight"><code>7.random = null
+13.random = 7
+11.random = 1
+10.random = 11
+1.random = 7
+
+Step 1: First pass - create all copy nodes
+        map = {7: copy7, 13: copy13, 11: copy11, 10: copy10, 1: copy1}
+
+Step 2: Second pass - set next and random pointers
+        copy7.next = map[13] = copy13
+        copy7.random = map[null] = null
+        copy13.next = map[11] = copy11
+        copy13.random = map[7] = copy7
+        ... and so on
+
+Return copy7</code></pre></p>
+<p>Input: <code>null</code>
+<pre class="highlight"><code>Expected Output: null</code></pre></p>
+<p>Input: <code>1 -&gt; 2</code> with 1.random = 2, 2.random = 1
+<pre class="highlight"><code>Expected Output: A deep copy with same structure
+
+map = {1: copy1, 2: copy2}
+copy1.next = copy2, copy1.random = copy2
+copy2.next = null, copy2.random = copy1
+Return copy1</code></pre></p>
+<p><strong>Key Insight - HashMap for Mapping:</strong>
+Use a HashMap to map each original node to its copy. First pass creates all copy nodes. Second pass sets the next and random pointers using the map.</p>
+<p><strong>Why It Works:</strong>
+- We need to create entirely new nodes (deep copy)
+- Random pointers can point anywhere, so we need to know all copies first
+- HashMap gives O(1) lookup of copy for any original
+- Two passes: one to create, one to link
+- This handles random pointers elegantly</p>
+<p><strong>Visualization - Copy List:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Original: 7-&gt;13-&gt;11-&gt;10-&gt;1"] --&gt; B["Pass 1: Create copies, map originals to copies"]
+    B --&gt; C["Pass 2: Set next and random pointers"]
+    C --&gt; D["Return copy of head"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public Node copyRandomList(Node head) {
     HashMap&lt;Node, Node&gt; map = new HashMap&lt;&gt;();
     Node curr = head;
-
-    // First pass: create all nodes
     while (curr != null) {
         map.put(curr, new Node(curr.val));
         curr = curr.next;
     }
-
-    // Second pass: set pointers
     curr = head;
     while (curr != null) {
         map.get(curr).next = map.get(curr.next);
         map.get(curr).random = map.get(curr.random);
         curr = curr.next;
     }
-
     return map.get(head);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Deep Copy Graph, Clone Tree</p>
+<p><strong>Edge Cases:</strong>
+- Empty list: returns null
+- Single node: copies it, random can be null or self
+- Random points to null: handled by map.get(null) = null
+- Random points to self: handled by map</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(n) for the map</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Deep Copy Graph
+- Clone Tree
+- Clone N-ary Tree</p>
 <hr />
 <h4 id="9-reorder-list">9. <strong>Reorder List</strong></h4>
-<p><strong>Explanation</strong>: Find middle, reverse second half, merge alternately. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given a singly linked list, reorder it as: first node, last node, second node, second-last node, etc.</p>
+<p><strong>Simple Analogy:</strong>
+Like shuffling a deck by taking one from the top and one from the bottom, alternating.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>1 -&gt; 2 -&gt; 3 -&gt; 4</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 4 -&gt; 2 -&gt; 3
+
+Step 1: Find middle
+        slow=2, fast=4 -&gt; mid=2
+        Split: left=1-&gt;2, right=3-&gt;4
+        Actually, mid.next = null, so left=1-&gt;2, right=3-&gt;4
+
+Step 2: Reverse second half
+        right = 4 -&gt; 3
+
+Step 3: Merge alternately
+        1 -&gt; 4 -&gt; 2 -&gt; 3
+
+Return 1 -&gt; 4 -&gt; 2 -&gt; 3</code></pre></p>
+<p>Input: <code>1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 5</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 5 -&gt; 2 -&gt; 4 -&gt; 3
+
+Step 1: Find middle
+        slow=3, fast=5 -&gt; mid=3
+        left=1-&gt;2-&gt;3, right=4-&gt;5
+
+Step 2: Reverse right
+        right = 5 -&gt; 4
+
+Step 3: Merge
+        1 -&gt; 5 -&gt; 2 -&gt; 4 -&gt; 3</code></pre></p>
+<p>Input: <code>1</code>
+<pre class="highlight"><code>Expected Output: 1</code></pre></p>
+<p><strong>Key Insight - Three Steps:</strong>
+1. Find the middle of the list
+2. Reverse the second half
+3. Merge the two halves alternately</p>
+<p><strong>Why It Works:</strong>
+- Reordering needs to interleave first half (forward) with second half (backward)
+- Finding middle with slow/fast pointers
+- Reversing second half gives us the backward order
+- Merging alternately produces the required order
+- O(n) time, O(1) space</p>
+<p><strong>Visualization - Reorder List:</strong>
+<pre class="mermaid"><code>graph TD
+    A["1-&gt;2-&gt;3-&gt;4"] --&gt; B["Find mid: left=1-&gt;2, right=3-&gt;4"]
+    B --&gt; C["Reverse right: 4-&gt;3"]
+    C --&gt; D["Merge: 1-&gt;4-&gt;2-&gt;3"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public void reorderList(ListNode head) {
     ListNode mid = getMid(head);
     ListNode second = mid.next;
     mid.next = null;
-
     second = reverse(second);
     merge(head, second);
 }
@@ -425,57 +983,177 @@ private void merge(ListNode l1, ListNode l2) {
     while (l1 != null) {
         ListNode l1Next = l1.next;
         ListNode l2Next = l2.next;
-
         l1.next = l2;
         l1 = l1Next;
-
         if (l1 != null) {
             l2.next = l1;
             l2 = l2Next;
         }
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Reorder Deque, Zigzag Traversal</p>
+<p><strong>Edge Cases:</strong>
+- Empty list: returns immediately
+- Single node: returns it
+- Two nodes: reorders correctly
+- Odd length: middle node stays in place</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Reorder Deque
+- Zigzag Traversal
+- Palindrome Linked List</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="10-merge-k-sorted-lists">10. <strong>Merge k Sorted Lists</strong></h4>
-<p><strong>Explanation</strong>: Use min heap (priority queue) with head of each list. Pop min, add to result, push next node from same list. Time: O(n log k), Space: O(k).</p>
+<p><strong>Problem Description:</strong>
+Given an array of k sorted linked lists, merge them into one sorted linked list.</p>
+<p><strong>Simple Analogy:</strong>
+Like merging k sorted piles of cards into one sorted pile. At each step, pick the smallest card from the top of any pile.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>lists = [1-&gt;4-&gt;5, 1-&gt;3-&gt;4, 2-&gt;6]</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 4 -&gt; 5 -&gt; 6
+
+Step 1: Put heads in min-heap: [1(list1), 1(list2), 2(list3)]
+
+Step 2: Pop 1(list1), add to result, push next (4)
+        heap = [1(list2), 2(list3), 4(list1)]
+        result: 1
+
+Step 3: Pop 1(list2), add to result, push next (3)
+        heap = [2(list3), 3(list2), 4(list1)]
+        result: 1 -&gt; 1
+
+Step 4: Pop 2(list3), add to result, push next (6)
+        heap = [3(list2), 4(list1), 6(list3)]
+        result: 1 -&gt; 1 -&gt; 2
+
+Step 5: Pop 3(list2), add to result, push next (4)
+        heap = [4(list1), 4(list2), 6(list3)]
+        result: 1 -&gt; 1 -&gt; 2 -&gt; 3
+
+Step 6: Pop 4(list1), add to result, push next (5)
+        heap = [4(list2), 5(list1), 6(list3)]
+        result: 1 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4
+
+Step 7: Pop 4(list2), add to result, no next
+        heap = [5(list1), 6(list3)]
+        result: 1 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 4
+
+Step 8: Pop 5(list1), add to result, no next
+        heap = [6(list3)]
+        result: ... -&gt; 5
+
+Step 9: Pop 6(list3), add to result
+        heap = []
+        result: 1 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 4 -&gt; 5 -&gt; 6
+
+Return result</code></pre></p>
+<p>Input: <code>lists = []</code>
+<pre class="highlight"><code>Expected Output: null (empty)</code></pre></p>
+<p>Input: <code>lists = [null, 1-&gt;2, null]</code>
+<pre class="highlight"><code>Expected Output: 1 -&gt; 2</code></pre></p>
+<p><strong>Key Insight - Min-Heap of Heads:</strong>
+The smallest remaining element is always one of the list heads. A min-heap of heads gives us the smallest in O(log k). After popping, the next node from that list becomes the new head.</p>
+<p><strong>Why It Works:</strong>
+- Each list is sorted, so its smallest element is at the head
+- The global smallest is among all heads
+- Min-heap finds it in O(log k)
+- After popping, the next from that list joins the heap
+- Total: n nodes, each O(log k) = O(n log k)</p>
+<p><strong>Visualization - Merge K Lists:</strong>
+<pre class="mermaid"><code>graph TD
+    A["3 lists: [1,4,5], [1,3,4], [2,6]"] --&gt; B["Heap: [1,1,2]"]
+    B --&gt; C["Pop 1, push 4"]
+    C --&gt; D["Pop 1, push 3"]
+    D --&gt; E["Pop 2, push 6"]
+    E --&gt; F["Pop 3, push 4"]
+    F --&gt; G["Pop 4, push 5"]
+    G --&gt; H["Pop 4, pop 5, pop 6"]
+    H --&gt; I["Result: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public ListNode mergeKLists(ListNode[] lists) {
     PriorityQueue&lt;ListNode&gt; pq = new PriorityQueue&lt;&gt;((a, b) -&gt; a.val - b.val);
-
     for (ListNode list : lists) {
         if (list != null) pq.offer(list);
     }
-
     ListNode dummy = new ListNode(0);
     ListNode curr = dummy;
-
     while (!pq.isEmpty()) {
         ListNode node = pq.poll();
         curr.next = node;
         curr = curr.next;
-
         if (node.next != null) {
             pq.offer(node.next);
         }
     }
-
     return dummy.next;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Merge Multiple Streams, K-way Merge</p>
+<p><strong>Edge Cases:</strong>
+- Empty array: returns null
+- All null lists: returns null
+- One list: returns it
+- Different lengths: works correctly</p>
+<p><strong>Time Complexity</strong>: O(n log k) where n = total nodes
+<strong>Space Complexity</strong>: O(k) for the heap</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Merge Multiple Streams
+- K-way Merge
+- Smallest Range Covering K Lists</p>
 <hr />
 <h4 id="11-lru-cache">11. <strong>LRU Cache</strong></h4>
-<p><strong>Explanation</strong>: Doubly linked list + HashMap. HashMap stores key→node mapping. Doubly linked list maintains LRU order. On access, move node to front. Time: O(1), Space: O(capacity).</p>
+<p><strong>Problem Description:</strong>
+Design a data structure that follows Least Recently Used (LRU) eviction policy. Support get(key) and put(key, value) in O(1) time.</p>
+<p><strong>Simple Analogy:</strong>
+Like a small bookshelf that holds only 3 books. When you want to add a 4th, you remove the one you haven't touched in the longest time.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>LRUCache cache = new LRUCache(2);
+cache.put(1, 1);   // cache: {1=1}
+cache.put(2, 2);   // cache: {1=1, 2=2}
+cache.get(1);       // returns 1, cache: {1=1, 2=2} (1 is now most recent)
+cache.put(3, 3);    // evicts 2, cache: {1=1, 3=3}
+cache.get(2);       // returns -1 (not found)
+cache.put(4, 4);    // evicts 1, cache: {3=3, 4=4}
+cache.get(1);       // returns -1 (not found)
+cache.get(3);       // returns 3
+cache.get(4);       // returns 4</code></pre></p>
+<p><strong>Step-by-step:</strong>
+<pre class="highlight"><code>put(1,1): map={1:node1}, list=[1]
+put(2,2): map={1:node1, 2:node2}, list=[2,1] (2 at front)
+get(1):   returns 1, list=[1,2] (move 1 to front)
+put(3,3): capacity full, evict 2 (last), map={1:node1, 3:node3}, list=[3,1]
+get(2):   returns -1
+put(4,4): evict 1, map={3:node3, 4:node4}, list=[4,3]
+get(1):   returns -1
+get(3):   returns 3, list=[3,4]
+get(4):   returns 4, list=[4,3]</code></pre></p>
+<p><strong>Key Insight - HashMap + Doubly Linked List:</strong>
+- <strong>HashMap</strong>: O(1) lookup of node by key
+- <strong>Doubly Linked List</strong>: O(1) move-to-front and remove-last
+- Most recently used = front of list
+- Least recently used = back of list
+- When capacity exceeded, remove from back</p>
+<p><strong>Why It Works:</strong>
+- HashMap gives O(1) access to any node
+- Doubly linked list allows O(1) removal and insertion at any position
+- We can move a node to front in O(1) (remove + add at front)
+- We can remove the LRU node in O(1) (it's at the back)
+- Combined: both operations in O(1)</p>
+<p><strong>Visualization - LRU Cache:</strong>
+<pre class="mermaid"><code>graph LR
+    A["put(1,1)"] --&gt; B["map={1:1}, list=[1]"]
+    B --&gt; C["put(2,2): map={1:1,2:2}, list=[2,1]"]
+    C --&gt; D["get(1): list=[1,2]"]
+    D --&gt; E["put(3,3): evict 2, list=[3,1]"]
+    E --&gt; F["get(2): -1"]
+    F --&gt; G["put(4,4): evict 1, list=[4,3]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">class LRUCache {
     private int capacity;
     private HashMap&lt;Integer, Node&gt; map;
     private Node head, tail;
-
     class Node {
         int key, val;
         Node prev, next;
     }
-
     public LRUCache(int capacity) {
         this.capacity = capacity;
         this.map = new HashMap&lt;&gt;();
@@ -484,14 +1162,12 @@ private void merge(ListNode l1, ListNode l2) {
         head.next = tail;
         tail.prev = head;
     }
-
     public int get(int key) {
         if (!map.containsKey(key)) return -1;
         Node node = map.get(key);
         moveToFront(node);
         return node.val;
     }
-
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             Node node = map.get(key);
@@ -508,61 +1184,83 @@ private void merge(ListNode l1, ListNode l2) {
             addToFront(node);
         }
     }
-
     private void moveToFront(Node node) {
         removeNode(node);
         addToFront(node);
     }
-
     private void addToFront(Node node) {
         node.next = head.next;
         node.prev = head;
         head.next.prev = node;
         head.next = node;
     }
-
     private void removeNode(Node node) {
         node.prev.next = node.next;
         node.next.prev = node.prev;
     }
-
     private void removeLast() {
         Node last = tail.prev;
         removeNode(last);
         map.remove(last.key);
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: LFU Cache, Time-based Key-Value Store</p>
+<p><strong>Edge Cases:</strong>
+- Capacity 1: works correctly
+- Get non-existent key: returns -1
+- Put existing key: updates value, moves to front
+- Put new key when full: evicts LRU</p>
+<p><strong>Time Complexity</strong>: O(1) for both get and put
+<strong>Space Complexity</strong>: O(capacity)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- LFU Cache
+- Time-based Key-Value Store
+- Design Twitter</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-fast-and-slow-pointers">1. <strong>Fast and Slow Pointers</strong></h3>
 <ul>
-<li>Detect cycle, find middle, find kth node</li>
+<li><strong>Detect cycle</strong>: Fast catches slow inside cycle</li>
+<li><strong>Find middle</strong>: When fast reaches end, slow is at middle</li>
+<li><strong>Find kth from end</strong>: Fast leads by k, when fast ends, slow is at target</li>
 <li>Fast moves 2 steps, slow moves 1</li>
 </ul>
 <h3 id="2-dummy-node">2. <strong>Dummy Node</strong></h3>
 <ul>
-<li>Simplifies edge cases (removing head, merging)</li>
-<li>Always has dummy point to head</li>
+<li>A fake node before head</li>
+<li>Simplifies edge cases (removing head, merging empty lists)</li>
+<li>Always return dummy.next</li>
+<li>Examples: Merge Two Lists, Remove Nth From End, Partition List</li>
 </ul>
 <h3 id="3-reversal">3. <strong>Reversal</strong></h3>
 <ul>
-<li>Reverse links to change direction</li>
-<li>Used in reordering, palindrome checks</li>
+<li>Three pointers: prev, curr, next</li>
+<li>Reverse links one by one</li>
+<li>Used in: Reverse List, Reorder List, Palindrome Check</li>
 </ul>
 <h3 id="4-two-pass-algorithm">4. <strong>Two-Pass Algorithm</strong></h3>
 <ul>
-<li>First pass gathers info</li>
-<li>Second pass uses info for solution</li>
+<li>First pass gathers info (length, nodes)</li>
+<li>Second pass uses info to solve</li>
+<li>Examples: Remove Nth From End (two-pointer is one-pass alternative)</li>
+</ul>
+<h3 id="5-hashmap-linked-list">5. <strong>HashMap + Linked List</strong></h3>
+<ul>
+<li>Combine O(1) lookup with O(1) ordering</li>
+<li>Used in: LRU Cache, Copy List with Random Pointer</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Forgetting to handle null pointers</li>
-<li>❌ Creating cycles accidentally (breaking links correctly)</li>
-<li>❌ Not using dummy node when helpful</li>
-<li>❌ Off-by-one errors with fast/slow pointers</li>
-<li>❌ Not updating pointers correctly during reversal</li>
+<li>Forgetting to handle null pointers (empty list, single node)</li>
+<li>Creating cycles accidentally (breaking links incorrectly)</li>
+<li>Not using dummy node when it simplifies edge cases</li>
+<li>Off-by-one errors with fast/slow pointers</li>
+<li>Not updating pointers correctly during reversal</li>
+<li>Losing reference to next node before changing curr.next</li>
+<li>Not handling the case where fast reaches end (odd vs even length)</li>
+<li>Forgetting to set the last node's next to null after reversal</li>
+<li>Modifying the list while iterating without saving next</li>
+<li>Assuming the list has a cycle when it doesn't (infinite loop)</li>
 </ul>
               
             </div>

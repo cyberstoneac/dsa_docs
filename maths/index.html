@@ -106,11 +106,29 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Maths</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-this-simple-explanation">What is this? (Simple Explanation)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-formulas-cheat-sheet">Key Formulas (Cheat Sheet)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#gcd-euclidean-algorithm">GCD (Euclidean Algorithm)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lcm">LCM</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fast-exponentiation-modular">Fast Exponentiation (Modular)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prime-check-sqrt-method">Prime Check (sqrt method)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#maths-decision-flow">Maths Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -156,6 +174,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#4-digit-manipulation">4. Digit Manipulation</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-gcd-euclidean-algorithm">5. GCD (Euclidean Algorithm)</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
@@ -195,12 +215,23 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="maths">Maths</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-this-simple-explanation">What is this? (Simple Explanation)</h2>
+<p>Many coding problems are math problems in disguise. This topic covers the math tricks and formulas that show up again and again in interviews and competitive programming.</p>
+<p><strong>Real-life analogies:</strong>
+- <strong>GCD/LCM</strong>: Finding the largest tile size that fits two rooms exactly
+- <strong>Prime numbers</strong>: Building blocks of all numbers (like atoms for numbers)
+- <strong>Modulo arithmetic</strong>: Clock arithmetic (13:00 = 1:00 on a 12-hour clock)
+- <strong>Digit manipulation</strong>: Reading a number digit by digit like a phone number</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li>Number theory basics (GCD, LCM, Primes)</li>
-<li>Modulo arithmetic for large numbers</li>
-<li>Digit manipulation and counting</li>
-<li>Mathematical patterns and formulas</li>
+<li><strong>GCD (Greatest Common Divisor)</strong>: The largest number that divides two numbers evenly. GCD(12, 8) = 4</li>
+<li><strong>LCM (Least Common Multiple)</strong>: The smallest number that both numbers divide evenly. LCM(4, 6) = 12</li>
+<li><strong>Prime Number</strong>: A number &gt; 1 with only two divisors: 1 and itself. 2, 3, 5, 7, 11, ...</li>
+<li><strong>Composite</strong>: A number with more than two divisors. 4, 6, 8, 9, ...</li>
+<li><strong>Modulo (%)</strong>: Remainder after division. 17 % 5 = 2</li>
+<li><strong>Modular Arithmetic</strong>: Math where numbers "wrap around" at a modulus (like a clock)</li>
+<li><strong>Fast Exponentiation</strong>: Computing base^exp quickly (O(log exp) instead of O(exp))</li>
+<li><strong>Digital Root</strong>: Summing digits until one remains. root(38) = 3+8 = 11 -&gt; 1+1 = 2</li>
 </ul>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
@@ -209,28 +240,174 @@
 <li>GCD and LCM calculations</li>
 <li>Prime factorization</li>
 <li>Digit operations</li>
+<li>Happy Number</li>
+<li>Ugly Number</li>
+<li>Excel Sheet Column Number</li>
+<li>Factorial Trailing Zeroes</li>
+<li>Integer to English Words</li>
+<li>Super Power</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Euclidean Algorithm (GCD)</li>
-<li>Sieve of Eratosthenes (primes)</li>
-<li>Fast Exponentiation</li>
-<li>Digit DP</li>
-<li>Modular Arithmetic</li>
+<li><strong>Euclidean Algorithm</strong>: Fast GCD using repeated modulo</li>
+<li><strong>Sieve of Eratosthenes</strong>: Mark all primes up to n</li>
+<li><strong>Fast Exponentiation</strong>: Binary exponentiation for base^exp % mod</li>
+<li><strong>Digit DP</strong>: Dynamic programming on digits</li>
+<li><strong>Modular Arithmetic</strong>: Keep numbers small with modulo</li>
 </ul>
+<h2 id="key-formulas-cheat-sheet">Key Formulas (Cheat Sheet)</h2>
+<table>
+<thead>
+<tr>
+<th>Formula</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gcd(a, b) = gcd(b, a % b)</code></td>
+<td>Euclidean algorithm</td>
+</tr>
+<tr>
+<td><code>lcm(a, b) = a * b / gcd(a, b)</code></td>
+<td>Relationship</td>
+</tr>
+<tr>
+<td><code>(a + b) % m = ((a % m) + (b % m)) % m</code></td>
+<td>Modular addition</td>
+</tr>
+<tr>
+<td><code>(a * b) % m = ((a % m) * (b % m)) % m</code></td>
+<td>Modular multiplication</td>
+</tr>
+<tr>
+<td><code>(a - b) % m = ((a % m) - (b % m) + m) % m</code></td>
+<td>Modular subtraction</td>
+</tr>
+<tr>
+<td><code>root(n) = 1 + (n - 1) % 9</code> (for n &gt; 0)</td>
+<td>Digital root</td>
+</tr>
+<tr>
+<td><code>trailingZeros(n!) = floor(n/5) + floor(n/25) + ...</code></td>
+<td>Count 5s</td>
+</tr>
+<tr>
+<td><code>base^exp % mod</code> via binary</td>
+<td>Fast exponentiation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="gcd-euclidean-algorithm">GCD (Euclidean Algorithm)</h3>
+<pre class="highlight"><code class="language-java">public int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+// Recursive version
+public int gcdRecursive(int a, int b) {
+    return b == 0 ? a : gcdRecursive(b, a % b);
+}</code></pre>
+<h3 id="lcm">LCM</h3>
+<pre class="highlight"><code class="language-java">public int lcm(int a, int b) {
+    return a / gcd(a, b) * b;  // Divide first to avoid overflow
+}</code></pre>
+<h3 id="fast-exponentiation-modular">Fast Exponentiation (Modular)</h3>
+<pre class="highlight"><code class="language-java">public long power(long base, long exp, long mod) {
+    long result = 1;
+    base %= mod;
+    while (exp &gt; 0) {
+        if (exp % 2 == 1) {
+            result = (result * base) % mod;
+        }
+        base = (base * base) % mod;
+        exp /= 2;
+    }
+    return result;
+}</code></pre>
+<h3 id="prime-check-sqrt-method">Prime Check (sqrt method)</h3>
+<pre class="highlight"><code class="language-java">public boolean isPrime(int n) {
+    if (n &lt; 2) return false;
+    for (int i = 2; i * i &lt;= n; i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}</code></pre>
+<h3 id="maths-decision-flow">Maths Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Math Problem"] --&gt; B{"Prime-related?"}
+    B --&gt;|Yes| C{"Need many primes?"}
+    C --&gt;|Yes| D["Sieve of Eratosthenes"]
+    C --&gt;|No| E["sqrt(n) primality check"]
+    B --&gt;|No| F{"GCD/LCM?"}
+    F --&gt;|Yes| G["Euclidean algorithm"]
+    F --&gt;|No| H{"Large power?"}
+    H --&gt;|Yes| I["Fast exponentiation"]
+    H --&gt;|No| J{"Digit manipulation?"}
+    J --&gt;|Yes| K["Extract digits with % 10 and / 10"]
+    J --&gt;|No| L["Modular arithmetic or formula"]</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-count-primes">1. <strong>Count Primes</strong></h4>
-<p><strong>Explanation</strong>: Use Sieve of Eratosthenes. Mark all multiples of each prime as non-prime. Time: O(n log log n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given an integer n, count the number of prime numbers strictly less than n.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding all the "special" numbers up to n. Instead of checking each one individually (slow), we use a clever marking system.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 10</code>
+<pre class="highlight"><code>Expected Output: 4 (primes less than 10: 2, 3, 5, 7)
+
+Sieve of Eratosthenes:
+Step 1: Mark all numbers 2..9 as potentially prime
+        [F, F, T, T, T, T, T, T, T, T]  (index 0,1 are false)
+        Actually: isPrime[2]=true, isPrime[3]=true, ..., isPrime[9]=true
+
+Step 2: Start with i=2 (prime)
+        Mark multiples of 2 starting from 4: 4, 6, 8 -&gt; false
+        [F, F, T, T, F, T, F, T, F, T]
+
+Step 3: i=3 (still prime)
+        Mark multiples of 3 starting from 9: 9 -&gt; false
+        [F, F, T, T, F, T, F, T, F, F]
+
+Step 4: i=4 (not prime, skip)
+        i=5 (5*5=25 &gt; 10, stop)
+
+Step 5: Count primes: 2, 3, 5, 7 -&gt; 4
+
+Return 4</code></pre></p>
+<p>Input: <code>n = 2</code>
+<pre class="highlight"><code>Expected Output: 0 (no primes less than 2)</code></pre></p>
+<p>Input: <code>n = 20</code>
+<pre class="highlight"><code>Expected Output: 8 (primes: 2, 3, 5, 7, 11, 13, 17, 19)</code></pre></p>
+<p><strong>Key Insight - Mark Multiples, Not Check Each:</strong>
+Instead of checking each number individually (O(n√n)), we start with 2 and mark all its multiples as non-prime. Then 3, then 5, etc. Each remaining unmarked number is prime.</p>
+<p><strong>Why It Works:</strong>
+- Every composite number has a prime factor &lt;= √n
+- When we process prime i, all smaller primes have already marked their multiples
+- So if isPrime[i] is still true, i must be prime
+- We start marking from i*i because smaller multiples were marked by smaller primes
+- Total work: O(n log log n) — very fast</p>
+<p><strong>Visualization - Sieve of Eratosthenes:</strong>
+<pre class="mermaid"><code>graph TD
+    A["n=10, all marked prime 2..9"] --&gt; B["i=2: mark 4,6,8"]
+    B --&gt; C["i=3: mark 9"]
+    C --&gt; D["i=4: skip (not prime)"]
+    D --&gt; E["i=5: 5*5&gt;10, stop"]
+    E --&gt; F["Primes: 2,3,5,7 -&gt; count=4"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int countPrimes(int n) {
     if (n &lt; 2) return 0;
-
     boolean[] isPrime = new boolean[n];
     for (int i = 2; i &lt; n; i++) {
         isPrime[i] = true;
     }
-
     for (int i = 2; i * i &lt; n; i++) {
         if (isPrime[i]) {
             for (int j = i * i; j &lt; n; j += i) {
@@ -238,20 +415,77 @@
             }
         }
     }
-
     int count = 0;
     for (boolean prime : isPrime) {
         if (prime) count++;
     }
     return count;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Prime Factorization, Smallest Prime Factor</p>
+<p><strong>Edge Cases:</strong>
+- n = 0 or 1: returns 0
+- n = 2: returns 0 (no primes less than 2)
+- n = 3: returns 1 (only 2)
+- Large n: sieve is efficient</p>
+<p><strong>Time Complexity</strong>: O(n log log n)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Prime Factorization
+- Smallest Prime Factor
+- Count Primes in Range</p>
 <hr />
 <h4 id="2-happy-number">2. <strong>Happy Number</strong></h4>
-<p><strong>Explanation</strong>: Repeatedly sum squares of digits. If reaches 1, happy. If cycle detected, not happy. Use hashset to detect cycles. Time: O(log n), Space: O(log n).</p>
+<p><strong>Problem Description:</strong>
+A happy number is defined by: starting with any positive integer, replace it by the sum of the squares of its digits. Repeat until the number equals 1 (happy) or loops endlessly in a cycle (not happy).</p>
+<p><strong>Simple Analogy:</strong>
+Like a digital chain reaction. Each number's digits are squared and summed. If you reach 1, you're happy. If you loop, you're not.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 19</code>
+<pre class="highlight"><code>Expected Output: true
+
+19 -&gt; 1^2 + 9^2 = 1 + 81 = 82
+82 -&gt; 8^2 + 2^2 = 64 + 4 = 68
+68 -&gt; 6^2 + 8^2 = 36 + 64 = 100
+100 -&gt; 1^2 + 0^2 + 0^2 = 1
+Reached 1 -&gt; HAPPY!</code></pre></p>
+<p>Input: <code>n = 2</code>
+<pre class="highlight"><code>Expected Output: false
+
+2 -&gt; 4
+4 -&gt; 16
+16 -&gt; 1 + 36 = 37
+37 -&gt; 9 + 49 = 58
+58 -&gt; 25 + 64 = 89
+89 -&gt; 64 + 64 = 128
+128 -&gt; 1 + 4 + 64 = 69
+69 -&gt; 36 + 81 = 117
+117 -&gt; 1 + 1 + 49 = 51
+51 -&gt; 25 + 1 = 26
+26 -&gt; 4 + 36 = 40
+40 -&gt; 16 + 0 = 16  &lt;- We've seen 16 before! CYCLE!
+Not happy -&gt; return false</code></pre></p>
+<p>Input: <code>n = 1</code>
+<pre class="highlight"><code>Expected Output: true (already 1)</code></pre></p>
+<p>Input: <code>n = 7</code>
+<pre class="highlight"><code>Expected Output: true
+
+7 -&gt; 49 -&gt; 97 -&gt; 130 -&gt; 10 -&gt; 1
+HAPPY!</code></pre></p>
+<p><strong>Key Insight - Cycle Detection:</strong>
+The process either reaches 1 or enters a cycle. We use a HashSet to track seen numbers. If we see a number again, we're in a cycle (not happy). If we reach 1, we're happy.</p>
+<p><strong>Why It Works:</strong>
+- Every number eventually reaches 1 or enters a cycle
+- HashSet detects the cycle
+- No infinite loop possible
+- This is like Floyd's cycle detection but with a set</p>
+<p><strong>Visualization - Happy Number:</strong>
+<pre class="mermaid"><code>graph LR
+    A["19"] --&gt; B["82"]
+    B --&gt; C["68"]
+    C --&gt; D["100"]
+    D --&gt; E["1 (HAPPY!)"]
+    F["2"] --&gt; G["4"] --&gt; H["16"] --&gt; I["37"] --&gt; J["... cycle ..."]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean isHappy(int n) {
     HashSet&lt;Integer&gt; seen = new HashSet&lt;&gt;();
-
     while (n != 1 &amp;&amp; !seen.contains(n)) {
         seen.add(n);
         int sum = 0;
@@ -262,53 +496,249 @@
         }
         n = sum;
     }
-
     return n == 1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Digit Cycle Detection, Sum of Digits</p>
+<p><strong>Edge Cases:</strong>
+- n = 1: returns true
+- n = 0: not a positive integer (problem guarantees positive)
+- n = 2, 3, 4, 5, 6: all unhappy
+- n = 7: happy</p>
+<p><strong>Time Complexity</strong>: O(log n) — number of digits
+<strong>Space Complexity</strong>: O(log n) — for the set</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Digit Cycle Detection
+- Sum of Digits
+- Linked List Cycle (Floyd's)</p>
 <hr />
 <h4 id="3-ugly-number">3. <strong>Ugly Number</strong></h4>
-<p><strong>Explanation</strong>: Check if number only has prime factors 2, 3, 5. Repeatedly divide by these factors. If result is 1, ugly number. Time: O(log n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+An ugly number is a positive integer whose prime factors are only 2, 3, and 5. Given an integer n, return true if n is ugly.</p>
+<p><strong>Simple Analogy:</strong>
+Like checking if a number is made only from "building blocks" 2, 3, and 5. If any other prime sneaks in, it's not ugly.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 6</code>
+<pre class="highlight"><code>Expected Output: true
+
+6 = 2 * 3
+Only factors are 2 and 3 -&gt; ugly
+
+Divide by 2: 6/2 = 3
+Divide by 3: 3/3 = 1
+Result is 1 -&gt; true</code></pre></p>
+<p>Input: <code>n = 8</code>
+<pre class="highlight"><code>Expected Output: true
+
+8 = 2 * 2 * 2
+Only factor is 2 -&gt; ugly
+
+8/2=4, 4/2=2, 2/2=1
+Result 1 -&gt; true</code></pre></p>
+<p>Input: <code>n = 14</code>
+<pre class="highlight"><code>Expected Output: false
+
+14 = 2 * 7
+Factor 7 is not 2, 3, or 5 -&gt; not ugly
+
+14/2 = 7
+7 is not divisible by 2, 3, or 5
+7 != 1 -&gt; false</code></pre></p>
+<p>Input: <code>n = 1</code>
+<pre class="highlight"><code>Expected Output: true (1 has no prime factors, considered ugly)</code></pre></p>
+<p>Input: <code>n = 0</code>
+<pre class="highlight"><code>Expected Output: false (not positive)</code></pre></p>
+<p><strong>Key Insight - Divide Out All 2s, 3s, 5s:</strong>
+Repeatedly divide n by 2, 3, and 5 as long as it's divisible. If we end up with 1, the original number had only these prime factors. If anything else remains, it's not ugly.</p>
+<p><strong>Why It Works:</strong>
+- Any number with only prime factors 2, 3, 5 can be reduced to 1 by dividing these out
+- If a different prime factor exists, it can't be divided out
+- Order doesn't matter (commutative)
+- This is prime factorization in disguise</p>
+<p><strong>Visualization - Ugly Number:</strong>
+<pre class="mermaid"><code>graph LR
+    A["6"] --&gt; B["/2 = 3"]
+    B --&gt; C["/3 = 1"]
+    C --&gt; D["1 -&gt; UGLY"]
+    E["14"] --&gt; F["/2 = 7"]
+    F --&gt; G["7 not divisible by 2,3,5"]
+    G --&gt; H["7 != 1 -&gt; NOT UGLY"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean isUgly(int n) {
     if (n &lt;= 0) return false;
-
     while (n % 2 == 0) n /= 2;
     while (n % 3 == 0) n /= 3;
     while (n % 5 == 0) n /= 5;
-
     return n == 1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Ugly Number II, Super Ugly Number</p>
+<p><strong>Edge Cases:</strong>
+- n = 0: returns false (not positive)
+- n = 1: returns true (no prime factors)
+- n negative: returns false
+- n = 2, 3, 5: returns true</p>
+<p><strong>Time Complexity</strong>: O(log n) — number of divisions
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Ugly Number II (find nth ugly number)
+- Super Ugly Number
+- Prime Factorization</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="4-power-of-three">4. <strong>Power of Three</strong></h4>
-<p><strong>Explanation</strong>: Check if n is power of 3. Method 1: keep dividing by 3. Method 2: use log (log_3(n) = log(n)/log(3)). Time: O(log n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given an integer n, return true if it is a power of three.</p>
+<p><strong>Simple Analogy:</strong>
+Like checking if a number can be repeatedly divided by 3 to reach 1.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 27</code>
+<pre class="highlight"><code>Expected Output: true
+
+27 / 3 = 9
+9 / 3 = 3
+3 / 3 = 1
+Reached 1 -&gt; true</code></pre></p>
+<p>Input: <code>n = 0</code>
+<pre class="highlight"><code>Expected Output: false (0 is not a power of 3)</code></pre></p>
+<p>Input: <code>n = 45</code>
+<pre class="highlight"><code>Expected Output: false
+
+45 / 3 = 15
+15 / 3 = 5
+5 % 3 != 0, 5 != 1
+Not a power of 3 -&gt; false</code></pre></p>
+<p>Input: <code>n = 1</code>
+<pre class="highlight"><code>Expected Output: true (3^0 = 1)</code></pre></p>
+<p><strong>Key Insight - Divide by 3 Until Not Divisible:</strong>
+Repeatedly divide n by 3 as long as it's divisible. If we end up with 1, it's a power of 3. Otherwise, it's not.</p>
+<p><strong>Why It Works:</strong>
+- Any power of 3 can be reduced to 1 by dividing by 3
+- Any non-power will have a remainder or reach a number not divisible by 3
+- Order doesn't matter
+- Simple and O(log n)</p>
+<p><strong>Visualization - Power of Three:</strong>
+<pre class="mermaid"><code>graph LR
+    A["27"] --&gt; B["/3 = 9"]
+    B --&gt; C["/3 = 3"]
+    C --&gt; D["/3 = 1"]
+    D --&gt; E["1 -&gt; TRUE"]
+    F["45"] --&gt; G["/3 = 15"]
+    G --&gt; H["/3 = 5"]
+    H --&gt; I["5 % 3 != 0 -&gt; FALSE"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean isPowerOfThree(int n) {
     if (n &lt;= 0) return false;
-
     while (n % 3 == 0) {
         n /= 3;
     }
-
     return n == 1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Power of Two, Power of Four, Power of K</p>
+<p><strong>Edge Cases:</strong>
+- n = 0: returns false
+- n = 1: returns true (3^0 = 1)
+- n negative: returns false
+- n = 3: returns true</p>
+<p><strong>Time Complexity</strong>: O(log n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Power of Two
+- Power of Four
+- Power of K</p>
 <hr />
 <h4 id="5-excel-sheet-column-number">5. <strong>Excel Sheet Column Number</strong></h4>
-<p><strong>Explanation</strong>: Treat as base-26 conversion. A=1, Z=26, AA=27. Build number by: result = result*26 + (char - 'A' + 1). Time: O(length), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given a column title as it appears in Excel (A, B, ..., Z, AA, AB, ..., ZZ, AAA, ...), return its corresponding column number.</p>
+<p><strong>Simple Analogy:</strong>
+Like a base-26 number system, but instead of digits 0-25, we use letters A-Z representing 1-26.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>columnTitle = "A"</code>
+<pre class="highlight"><code>Expected Output: 1
+
+result = 0 * 26 + (A - A + 1) = 1
+Return 1</code></pre></p>
+<p>Input: <code>columnTitle = "AB"</code>
+<pre class="highlight"><code>Expected Output: 28
+
+Step 1: 'A' -&gt; result = 0 * 26 + 1 = 1
+Step 2: 'B' -&gt; result = 1 * 26 + 2 = 28
+Return 28</code></pre></p>
+<p>Input: <code>columnTitle = "ZY"</code>
+<pre class="highlight"><code>Expected Output: 701
+
+Step 1: 'Z' -&gt; result = 0 * 26 + 26 = 26
+Step 2: 'Y' -&gt; result = 26 * 26 + 25 = 676 + 25 = 701
+Return 701</code></pre></p>
+<p>Input: <code>columnTitle = "ZZZ"</code>
+<pre class="highlight"><code>Expected Output: 18278
+
+Z=26, Z=26, Z=26
+result = 0
+result = 0*26 + 26 = 26
+result = 26*26 + 26 = 702
+result = 702*26 + 26 = 18252 + 26 = 18278
+Return 18278</code></pre></p>
+<p><strong>Key Insight - Base-26 Conversion:</strong>
+It's just like converting a base-26 number to decimal, except digits are 1-26 (not 0-25). Process characters left to right: result = result * 26 + (char - 'A' + 1).</p>
+<p><strong>Why It Works:</strong>
+- Each character position represents a power of 26
+- 'A' = 1, 'B' = 2, ..., 'Z' = 26
+- Building left to right: shift existing value by one base-26 digit
+- This is the same as converting any base to decimal</p>
+<p><strong>Visualization - Excel Column:</strong>
+<pre class="mermaid"><code>graph LR
+    A["AB"] --&gt; B["'A': result = 0*26+1 = 1"]
+    B --&gt; C["'B': result = 1*26+2 = 28"]
+    C --&gt; D["Return 28"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int titleToNumber(String columnTitle) {
     int result = 0;
-
     for (char c : columnTitle.toCharArray()) {
         result = result * 26 + (c - 'A' + 1);
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Excel Sheet Column Title, Number to Excel</p>
+<p><strong>Edge Cases:</strong>
+- Single character: returns its position
+- All Zs: returns large number
+- "A": returns 1
+- Empty string: not valid (problem guarantees non-empty)</p>
+<p><strong>Time Complexity</strong>: O(n) — n = string length
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Excel Sheet Column Title (reverse)
+- Number to Excel
+- Base Conversion</p>
 <hr />
 <h4 id="6-add-digits">6. <strong>Add Digits</strong></h4>
-<p><strong>Explanation</strong>: Repeatedly sum digits until single digit. Or use digital root formula: root = 1 + (n-1) % 9. Time: O(log n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given an integer num, repeatedly add all its digits until the result has only one digit. Return that digit.</p>
+<p><strong>Simple Analogy:</strong>
+Like reducing a number to its "digital root." Example: 38 -&gt; 3+8=11 -&gt; 1+1=2.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>num = 38</code>
+<pre class="highlight"><code>Expected Output: 2
+
+38 -&gt; 3 + 8 = 11
+11 -&gt; 1 + 1 = 2
+Return 2</code></pre></p>
+<p>Input: <code>num = 0</code>
+<pre class="highlight"><code>Expected Output: 0</code></pre></p>
+<p>Input: <code>num = 9</code>
+<pre class="highlight"><code>Expected Output: 9 (already single digit)</code></pre></p>
+<p>Input: <code>num = 12345</code>
+<pre class="highlight"><code>Expected Output: 6
+
+1+2+3+4+5 = 15
+1+5 = 6
+Return 6</code></pre></p>
+<p><strong>Key Insight - Digital Root Formula:</strong>
+The digital root of a number (for n &gt; 0) is <code>1 + (n - 1) % 9</code>. This is a mathematical property: every number is congruent to its digit sum modulo 9.</p>
+<p><strong>Why It Works:</strong>
+- Modulo 9, a number equals its digit sum
+- Example: 38 mod 9 = 2, and 3+8=11, 1+1=2 ✓
+- Special case: multiples of 9 have digital root 9, not 0
+- Formula <code>1 + (n-1) % 9</code> handles this: n=9 -&gt; 1+8%9=9, n=18 -&gt; 1+17%9=9
+- For n=0, return 0</p>
+<p><strong>Visualization - Add Digits:</strong>
+<pre class="mermaid"><code>graph LR
+    A["38"] --&gt; B["3+8=11"]
+    B --&gt; C["1+1=2"]
+    C --&gt; D["Return 2"]
+    E["Formula: 1+(38-1)%9 = 1+37%9 = 1+1 = 2"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int addDigits(int num) {
     while (num &gt;= 10) {
         int sum = 0;
@@ -323,37 +753,140 @@
 
 // Or one-liner formula:
 // return num == 0 ? 0 : 1 + (num - 1) % 9;</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Sum of Digits, Digital Root Variants</p>
+<p><strong>Edge Cases:</strong>
+- num = 0: returns 0
+- num single digit: returns it
+- num = 9: returns 9 (not 0)
+- num = 18: returns 9</p>
+<p><strong>Time Complexity</strong>: O(log n) for loop, O(1) for formula
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Sum of Digits
+- Digital Root Variants
+- Repeated Digit Sum</p>
 <hr />
 <h4 id="7-factorial-trailing-zeroes">7. <strong>Factorial Trailing Zeroes</strong></h4>
-<p><strong>Explanation</strong>: Count pairs of 2 and 5. Since factors of 2 &gt; 5, count 5s. Divide by 5, 25, 125... Time: O(log n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given an integer n, return the number of trailing zeroes in n! (n factorial).</p>
+<p><strong>Simple Analogy:</strong>
+Trailing zeroes come from pairs of 2 and 5. Since there are always more 2s than 5s, we just count the 5s.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>n = 5</code>
+<pre class="highlight"><code>Expected Output: 1
+
+5! = 120 -&gt; one trailing zero
+
+Count 5s: floor(5/5) = 1
+Return 1</code></pre></p>
+<p>Input: <code>n = 10</code>
+<pre class="highlight"><code>Expected Output: 2
+
+10! = 3628800 -&gt; two trailing zeros
+
+floor(10/5) = 2
+Return 2</code></pre></p>
+<p>Input: <code>n = 25</code>
+<pre class="highlight"><code>Expected Output: 6
+
+25! has 6 trailing zeros
+
+floor(25/5) = 5
+floor(25/25) = 1
+Total = 6
+
+Why 25? Because 25 = 5*5, contributing two 5s.</code></pre></p>
+<p>Input: <code>n = 100</code>
+<pre class="highlight"><code>Expected Output: 24
+
+floor(100/5) = 20
+floor(100/25) = 4
+floor(100/125) = 0
+Total = 24</code></pre></p>
+<p><strong>Key Insight - Count Factors of 5:</strong>
+Trailing zeroes = number of times 10 divides n! = min(count of 2s, count of 5s). Since 2s are more abundant, just count 5s. Count = floor(n/5) + floor(n/25) + floor(n/125) + ...</p>
+<p><strong>Why It Works:</strong>
+- 10 = 2 × 5
+- Each pair of 2 and 5 creates a trailing zero
+- Multiples of 5 contribute one 5 each
+- Multiples of 25 contribute an extra 5
+- Multiples of 125 contribute yet another 5
+- So sum up floor(n/5), floor(n/25), floor(n/125), ...</p>
+<p><strong>Visualization - Trailing Zeroes:</strong>
+<pre class="mermaid"><code>graph LR
+    A["n=25"] --&gt; B["floor(25/5) = 5"]
+    B --&gt; C["floor(25/25) = 1"]
+    C --&gt; D["floor(25/125) = 0"]
+    D --&gt; E["Total = 6"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int trailingZeroes(int n) {
     int count = 0;
-
     while (n &gt; 0) {
         n /= 5;
         count += n;
     }
-
     return count;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Trailing Zeroes in Product, Prime Factorization Count</p>
+<p><strong>Edge Cases:</strong>
+- n = 0: returns 0
+- n &lt; 5: returns 0
+- n = 5: returns 1
+- Large n: use long for intermediate</p>
+<p><strong>Time Complexity</strong>: O(log n) — base 5
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Trailing Zeroes in Product
+- Prime Factorization Count
+- Count Factors</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="8-integer-to-english-words">8. <strong>Integer to English Words</strong></h4>
-<p><strong>Explanation</strong>: Break number into groups (ones, thousands, millions, billions). Convert each group using helper functions. Combine with appropriate scale words. Time: O(1), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Convert a non-negative integer to its English words representation.</p>
+<p><strong>Simple Analogy:</strong>
+Like reading a number out loud in English. Break it into groups of three digits (ones, thousands, millions, billions).</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>num = 123</code>
+<pre class="highlight"><code>Expected Output: "One Hundred Twenty Three"
+
+123 -&gt; "One Hundred" + "Twenty Three"</code></pre></p>
+<p>Input: <code>num = 12345</code>
+<pre class="highlight"><code>Expected Output: "Twelve Thousand Three Hundred Forty Five"
+
+12345 = 12 thousand + 345
+= "Twelve Thousand" + "Three Hundred Forty Five"</code></pre></p>
+<p>Input: <code>num = 1234567</code>
+<pre class="highlight"><code>Expected Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+
+1234567 = 1 million + 234 thousand + 567
+= "One Million" + "Two Hundred Thirty Four Thousand" + "Five Hundred Sixty Seven"</code></pre></p>
+<p>Input: <code>num = 0</code>
+<pre class="highlight"><code>Expected Output: "Zero"</code></pre></p>
+<p><strong>Key Insight - Group by Thousands:</strong>
+Break the number into groups of 3 digits: ones, thousands, millions, billions. Convert each group to words, then append the scale word.</p>
+<p><strong>Why It Works:</strong>
+- English numbers are structured in groups of 3 digits
+- 1-19 have unique names
+- 20-99 are tens + ones
+- 100-999 are digit + "Hundred" + rest
+- Each group gets a scale suffix (Thousand, Million, Billion)
+- Combining these handles any number up to billions</p>
+<p><strong>Visualization - Number to Words:</strong>
+<pre class="mermaid"><code>graph TD
+    A["1234567"] --&gt; B["Group: 1 | 234 | 567"]
+    B --&gt; C["1 Million"]
+    B --&gt; D["234 Thousand"]
+    B --&gt; E["567"]
+    C --&gt; F["Combine: One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"]
+    D --&gt; F
+    E --&gt; F</code></pre></p>
 <pre class="highlight"><code class="language-java">public String numberToWords(int num) {
     if (num == 0) return "Zero";
-
     String[] thousands = {"", "Thousand", "Million", "Billion"};
     String[] ones = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
-    String[] teens = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", 
+    String[] teens = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
                       "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
     String[] tens = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
-
     List&lt;String&gt; result = new ArrayList&lt;&gt;();
     int groupIndex = 0;
-
     while (num &gt; 0) {
         if (num % 1000 != 0) {
             result.add(0, convertHundred(num % 1000, ones, teens, tens) + thousands[groupIndex]);
@@ -361,22 +894,16 @@
         num /= 1000;
         groupIndex++;
     }
-
     return String.join(" ", result).trim();
 }
 
 private String convertHundred(int num, String[] ones, String[] teens, String[] tens) {
     List&lt;String&gt; words = new ArrayList&lt;&gt;();
-
-    if (num == 0) {
-        return "";
-    }
-
+    if (num == 0) return "";
     if (num / 100 &gt; 0) {
         words.add(ones[num / 100]);
         words.add("Hundred");
     }
-
     if (num % 100 &gt;= 10 &amp;&amp; num % 100 &lt; 20) {
         words.add(teens[num % 100 - 10]);
     } else {
@@ -387,29 +914,73 @@ private String convertHundred(int num, String[] ones, String[] teens, String[] t
             words.add(ones[num % 10]);
         }
     }
-
     return String.join(" ", words);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Roman to Integer, Integer to Roman</p>
+<p><strong>Edge Cases:</strong>
+- num = 0: returns "Zero"
+- num = 100: returns "One Hundred"
+- num = 1000000: returns "One Million"
+- num with internal zeros: handled correctly</p>
+<p><strong>Time Complexity</strong>: O(1) — max 10 digits
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Roman to Integer
+- Integer to Roman
+- Number to Words (other languages)</p>
 <hr />
 <h4 id="9-super-power">9. <strong>Super Power</strong></h4>
-<p><strong>Explanation</strong>: Use modular exponentiation. Compute base^(2*k) = (base^k)^2. Process digits from left to right: result = (result^10 * base^digit) % mod. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Calculate a^b mod 1337 where a is a positive integer and b is an extremely large positive integer given as an array of digits.</p>
+<p><strong>Simple Analogy:</strong>
+Like computing a huge power on a clock with 1337 positions. We only care about where the hand lands, not how many full rotations.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>a = 2</code>, <code>b = [3]</code>
+<pre class="highlight"><code>Expected Output: 8
+
+2^3 = 8, 8 % 1337 = 8</code></pre></p>
+<p>Input: <code>a = 2</code>, <code>b = [1, 0]</code>
+<pre class="highlight"><code>Expected Output: 1024
+
+2^10 = 1024, 1024 % 1337 = 1024</code></pre></p>
+<p>Input: <code>a = 1</code>, <code>b = [4, 3, 3, 8, 5, 2]</code>
+<pre class="highlight"><code>Expected Output: 1
+
+1^anything = 1</code></pre></p>
+<p>Input: <code>a = 2147483647</code>, <code>b = [2, 0, 0]</code>
+<pre class="highlight"><code>Expected Output: 1198
+
+2147483647^200 mod 1337
+Process digits from left:
+result = 1
+digit 2: result = power(1, 10) * power(2147483647, 2) % 1337
+...</code></pre></p>
+<p><strong>Key Insight - Process Digits Left to Right:</strong>
+Instead of computing the huge exponent directly, process the exponent digit by digit. For each new digit d:
+<code>result = (result^10 * a^d) % mod</code></p>
+<p><strong>Why It Works:</strong>
+- If exponent = [d1, d2, d3], then exponent = d1<em>100 + d2</em>10 + d3
+- a^(d1<em>100 + d2</em>10 + d3) = (a^100)^d1 * (a^10)^d2 * a^d3
+- Processing left to right: <code>result = result^10 * a^digit</code>
+- Modulo after each step keeps numbers small
+- Fast exponentiation computes a^digit in O(log digit)</p>
+<p><strong>Visualization - Super Power:</strong>
+<pre class="mermaid"><code>graph LR
+    A["a=2, b=[1,0]"] --&gt; B["digit 1: result = 1^10 * 2^1 = 2"]
+    B --&gt; C["digit 0: result = 2^10 * 2^0 = 1024"]
+    C --&gt; D["1024 % 1337 = 1024"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int superPower(int base, int[] exponent) {
     int mod = 1337;
     int result = 1;
-
     for (int digit : exponent) {
         result = power(result, 10, mod);
         result = (result * power(base, digit, mod)) % mod;
     }
-
     return result;
 }
 
 private int power(int base, int exp, int mod) {
     int result = 1;
     base %= mod;
-
     while (exp &gt; 0) {
         if (exp % 2 == 1) {
             result = (result * base) % mod;
@@ -417,10 +988,19 @@ private int power(int base, int exp, int mod) {
         base = (base * base) % mod;
         exp /= 2;
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Fast Exponentiation, Modular Arithmetic</p>
+<p><strong>Edge Cases:</strong>
+- a = 1: returns 1
+- b = [0]: returns 1 (anything^0 = 1)
+- Large a: base %= mod handles it
+- Large b: processed digit by digit</p>
+<p><strong>Time Complexity</strong>: O(n) where n = number of digits
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Fast Exponentiation
+- Modular Arithmetic
+- Pow(x, n)</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-sieve-of-eratosthenes">1. <strong>Sieve of Eratosthenes</strong></h3>
@@ -428,33 +1008,50 @@ private int power(int base, int exp, int mod) {
 <li>Mark multiples of primes as non-prime</li>
 <li>Efficient for prime range queries</li>
 <li>Time: O(n log log n)</li>
+<li>Space: O(n)</li>
+<li>Examples: Count Primes, Prime Factorization</li>
 </ul>
 <h3 id="2-modular-arithmetic">2. <strong>Modular Arithmetic</strong></h3>
 <ul>
-<li>(a + b) % m = ((a % m) + (b % m)) % m</li>
-<li>(a * b) % m = ((a % m) * (b % m)) % m</li>
-<li>Use for preventing overflow</li>
+<li><code>(a + b) % m = ((a % m) + (b % m)) % m</code></li>
+<li><code>(a * b) % m = ((a % m) * (b % m)) % m</code></li>
+<li><code>(a - b) % m = ((a % m) - (b % m) + m) % m</code></li>
+<li>Use for preventing overflow in large calculations</li>
+<li>Examples: Super Power, Fast Exponentiation</li>
 </ul>
 <h3 id="3-fast-exponentiation">3. <strong>Fast Exponentiation</strong></h3>
 <ul>
-<li>Compute base^exp % mod efficiently</li>
-<li>Binary exponentiation approach</li>
-<li>Time: O(log exp)</li>
+<li>Compute <code>base^exp % mod</code> in O(log exp)</li>
+<li>Binary exponentiation: square base, halve exp</li>
+<li>Examples: Pow(x,n), Super Power</li>
 </ul>
 <h3 id="4-digit-manipulation">4. <strong>Digit Manipulation</strong></h3>
 <ul>
-<li>Extract digits: num % 10</li>
-<li>Process from right to left</li>
-<li>Reconstruct numbers by building</li>
+<li>Extract last digit: <code>num % 10</code></li>
+<li>Remove last digit: <code>num / 10</code></li>
+<li>Process from right to left (or reverse string)</li>
+<li>Examples: Add Digits, Happy Number, Excel Column</li>
+</ul>
+<h3 id="5-gcd-euclidean-algorithm">5. <strong>GCD (Euclidean Algorithm)</strong></h3>
+<ul>
+<li><code>gcd(a, b) = gcd(b, a % b)</code></li>
+<li>Base case: <code>gcd(a, 0) = a</code></li>
+<li>Time: O(log min(a, b))</li>
+<li>Examples: Fraction simplification, LCM</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Integer overflow in multiplication</li>
-<li>❌ Not handling edge cases (0, 1, negative numbers)</li>
-<li>❌ Inefficient prime checking (O(n) instead of O(√n))</li>
-<li>❌ Wrong modulo application order</li>
-<li>❌ Off-by-one in digit counting</li>
+<li>Integer overflow in multiplication (use long)</li>
+<li>Not handling edge cases (0, 1, negative numbers)</li>
+<li>Inefficient prime checking (O(n) instead of O(√n))</li>
+<li>Wrong modulo application order (apply mod after each operation)</li>
+<li>Off-by-one in digit counting</li>
+<li>Forgetting that <code>a % b</code> can be negative in some languages</li>
+<li>Using <code>int</code> when <code>long</code> is needed for intermediate results</li>
+<li>Not handling special cases in digital root (multiples of 9)</li>
+<li>Forgetting that 1 is not a prime number</li>
+<li>Using <code>i * i &lt;= n</code> instead of <code>i &lt;= sqrt(n)</code> (same, but watch for overflow)</li>
 </ul>
               
             </div>

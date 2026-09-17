@@ -94,13 +94,29 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Intervals</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-are-intervals-simple-explanation">What are Intervals? (Simple Explanation)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#overlap-condition">Overlap Condition</a>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#patterns">Patterns</a>
+    <li class="toctree-l2"><a class="reference internal" href="#overlap-condition-the-most-important-rule">Overlap Condition (The Most Important Rule!)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#complexity">Complexity</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#merge-intervals-template">Merge Intervals Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#overlap-check-template">Overlap Check Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sweep-line-template">Sweep Line Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#interval-decision-flow">Interval Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -138,7 +154,9 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#3-greedy-interval-selection">3. Greedy Interval Selection</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#4-comparison-for-overlaps">4. Comparison for Overlaps</a>
+    <li class="toctree-l3"><a class="reference internal" href="#4-two-pointers-for-intersection">4. Two Pointers for Intersection</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-overlap-comparison-rules">5. Overlap Comparison Rules</a>
     </li>
         </ul>
     </li>
@@ -191,46 +209,98 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="intervals">Intervals</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-are-intervals-simple-explanation">What are Intervals? (Simple Explanation)</h2>
+<p>An <strong>interval</strong> is just a range with a start and an end, like [2, 5]. Think of it as:
+- A meeting from 2 PM to 5 PM
+- A hotel room booked from day 2 to day 5
+- A movie showing from minute 2 to minute 5</p>
+<p>Intervals show up everywhere in real life:
+- Calendar events (meetings, appointments)
+- Resource bookings (rooms, cars, equipment)
+- Time ranges (working hours, shifts)
+- Geographic regions (a section of a road)</p>
+<p><strong>The big question in interval problems:</strong> Do these two intervals overlap? And if so, how do we combine them or count them?</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li><strong>Interval</strong>: Pair [start, end] representing a range</li>
-<li><strong>Overlap</strong>: Two intervals overlap if one doesn't end before other starts</li>
-<li><strong>Merge</strong>: Combine overlapping intervals</li>
-<li><strong>Sort</strong>: Usually by start time, then by end time</li>
-<li><strong>Sweep Line</strong>: Process events (start/end) in order</li>
-<li><strong>Common Problems</strong>: Meeting rooms, interval scheduling, skyline</li>
+<li><strong>Interval</strong>: A pair [start, end] representing a range of values</li>
+<li><strong>Overlap</strong>: Two intervals overlap if one doesn't completely end before the other starts</li>
+<li><strong>Merge</strong>: Combine two overlapping intervals into one bigger interval</li>
+<li><strong>Sort</strong>: Most interval problems require sorting first (usually by start time)</li>
+<li><strong>Sweep Line</strong>: Imagine a vertical line sweeping from left to right. At each point, we know which intervals are "active."</li>
+<li><strong>Events</strong>: A start is an "open" event, an end is a "close" event</li>
 </ul>
-<h2 id="overlap-condition">Overlap Condition</h2>
+<h2 id="overlap-condition-the-most-important-rule">Overlap Condition (The Most Important Rule!)</h2>
+<p>Two intervals <strong>a = [a.start, a.end]</strong> and <strong>b = [b.start, b.end]</strong>:</p>
+<p><strong>NOT Overlapping</strong> (they are separate):
+<pre class="highlight"><code>a.end &lt; b.start   OR   b.end &lt; a.start</code></pre>
+Visually:
+<pre class="highlight"><code>a: |-----|
+b:         |-----|    (b starts after a ends)</code></pre></p>
+<p><strong>Overlapping</strong> (they share some region):
+<pre class="highlight"><code>a.start &lt;= b.end   AND   b.start &lt;= a.end</code></pre>
+Visually:
+<pre class="highlight"><code>a: |-----|
+b:     |-----|        (they share the middle part)</code></pre></p>
+<p><strong>Merged Interval</strong> (when overlapping):
+<pre class="highlight"><code>merged = [min(a.start, b.start), max(a.end, b.end)]</code></pre></p>
+<p><strong>Important:</strong> Whether intervals that "touch" (a.end == b.start) are considered overlapping depends on the problem. For meetings, [1,3] and [3,5] usually don't overlap (one ends when the other starts). For inclusive ranges, they might.</p>
+<h2 id="common-problems">Common Problems</h2>
 <ul>
-<li><strong>Not Overlapping</strong>: a.end &lt; b.start or b.end &lt; a.start</li>
-<li><strong>Overlapping</strong>: a.start ≤ b.end and b.start ≤ a.end</li>
-<li><strong>Merged Interval</strong>: [min(starts), max(ends)]</li>
+<li>Merge Intervals</li>
+<li>Insert Interval</li>
+<li>Meeting Rooms</li>
+<li>Meeting Rooms II (minimum rooms)</li>
+<li>Non-overlapping Intervals</li>
+<li>Skyline Problem</li>
+<li>Interval List Intersections</li>
 </ul>
-<h2 id="patterns">Patterns</h2>
+<h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ol>
-<li><strong>Sort &amp; Merge</strong>: Sort by start, merge adjacent</li>
-<li><strong>Sweep Line</strong>: Track active intervals at each point</li>
-<li><strong>Priority Queue</strong>: Process intervals by priority</li>
+<li><strong>Sort &amp; Merge</strong>: Sort by start time, then merge adjacent overlapping intervals</li>
+<li><strong>Sweep Line</strong>: Create start/end events, process them in order</li>
+<li><strong>Priority Queue</strong>: Process intervals by end time or priority</li>
+<li><strong>Two Pointers</strong>: For finding intersections between two interval lists</li>
 </ol>
 <h2 id="complexity">Complexity</h2>
-<ul>
-<li>Sort: O(n log n)</li>
-<li>Merge: O(n)</li>
-<li>Total: Usually O(n log n)</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sort</td>
+<td>O(n log n)</td>
+<td>Usually the bottleneck</td>
+</tr>
+<tr>
+<td>Merge</td>
+<td>O(n)</td>
+<td>Single pass after sorting</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>O(n log n)</td>
+<td>Dominated by sort</td>
+</tr>
+<tr>
+<td>Space</td>
+<td>O(n)</td>
+<td>For result or heap</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
-<h3 id="easy">Easy</h3>
-<h4 id="1-merge-intervals">1. <strong>Merge Intervals</strong></h4>
-<p><strong>Explanation</strong>: Sort by start time, merge overlapping intervals. Time: O(n log n), Space: O(1).</p>
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="merge-intervals-template">Merge Intervals Template</h3>
 <pre class="highlight"><code class="language-java">public int[][] merge(int[][] intervals) {
     if (intervals.length &lt;= 1) return intervals;
-
     Arrays.sort(intervals, (a, b) -&gt; a[0] - b[0]);
-
     List&lt;int[]&gt; merged = new ArrayList&lt;&gt;();
     int[] current = intervals[0];
-
     for (int i = 1; i &lt; intervals.length; i++) {
         if (intervals[i][0] &lt;= current[1]) {
             current[1] = Math.max(current[1], intervals[i][1]);
@@ -239,74 +309,397 @@
             current = intervals[i];
         }
     }
-
     merged.add(current);
     return merged.toArray(new int[0][]);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Insert Interval, Remove Interval Overlap</p>
+<h3 id="overlap-check-template">Overlap Check Template</h3>
+<pre class="highlight"><code class="language-java">// Check if two intervals overlap (inclusive)
+boolean overlaps(int[] a, int[] b) {
+    return a[0] &lt;= b[1] &amp;&amp; b[0] &lt;= a[1];
+}
+
+// Check if two intervals overlap (exclusive of touching)
+boolean overlapsStrict(int[] a, int[] b) {
+    return a[0] &lt; b[1] &amp;&amp; b[0] &lt; a[1];
+}</code></pre>
+<h3 id="sweep-line-template">Sweep Line Template</h3>
+<pre class="highlight"><code class="language-java">// Create events: (time, type, data)
+// type: 0 for start, 1 for end
+List&lt;int[]&gt; events = new ArrayList&lt;&gt;();
+for (int[] interval : intervals) {
+    events.add(new int[]{interval[0], 0, interval[1]});
+    events.add(new int[]{interval[1], 1, interval[1]});
+}
+// Sort by time, start before end
+events.sort((a, b) -&gt; a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
+// Process events in order</code></pre>
+<h3 id="interval-decision-flow">Interval Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Interval Problem"] --&gt; B{"Need to merge overlapping?"}
+    B --&gt;|Yes| C["Sort by start, merge"]
+    B --&gt;|No| D{"Need to count max concurrent?"}
+    D --&gt;|Yes| E["Sweep line or heap"]
+    D --&gt;|No| F{"Need min removals?"}
+    F --&gt;|Yes| G["Sort by end, greedy"]
+    F --&gt;|No| H{"Need intersection of two lists?"}
+    H --&gt;|Yes| I["Two pointers"]
+    H --&gt;|No| J["Consider sweep line or custom"]</code></pre>
+<hr />
+<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
+<h3 id="easy">Easy</h3>
+<h4 id="1-merge-intervals">1. <strong>Merge Intervals</strong></h4>
+<p><strong>Problem Description:</strong>
+Given a list of intervals, merge all overlapping intervals and return the result.</p>
+<p><strong>Simple Analogy:</strong>
+Imagine you have several meetings scheduled. Some overlap. You want to combine them into blocks of continuous busy time.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>intervals = [[1,3],[2,6],[8,10],[15,18]]</code>
+<pre class="highlight"><code>Expected Output: [[1,6],[8,10],[15,18]]
+
+Visual:
+[1,3]: |---|
+[2,6]:   |-----|
+[8,10]:          |--|
+[15,18]:                |---|
+
+Step 1: Sort by start (already sorted)
+[[1,3], [2,6], [8,10], [15,18]]
+
+Step 2: current = [1,3]
+i=1: [2,6] -&gt; 2 &lt;= 3? YES, overlap
+     current = [1, max(3,6)] = [1,6]
+i=2: [8,10] -&gt; 8 &lt;= 6? NO, no overlap
+     Add [1,6] to result
+     current = [8,10]
+i=3: [15,18] -&gt; 15 &lt;= 10? NO
+     Add [8,10] to result
+     current = [15,18]
+
+Step 3: Add [15,18] to result
+
+Result: [[1,6], [8,10], [15,18]]</code></pre></p>
+<p>Input: <code>intervals = [[1,4],[4,5]]</code>
+<pre class="highlight"><code>Expected Output: [[1,5]]
+
+[1,4]: |----|
+[4,5]:     |---|
+They touch at 4. Since 4 &lt;= 4, they overlap (merge).
+
+current = [1,4]
+i=1: [4,5] -&gt; 4 &lt;= 4? YES
+     current = [1, max(4,5)] = [1,5]
+
+Result: [[1,5]]</code></pre></p>
+<p>Input: <code>intervals = [[1,4],[0,4]]</code>
+<pre class="highlight"><code>Expected Output: [[0,4]]
+
+Sort: [[0,4],[1,4]]
+current = [0,4]
+i=1: [1,4] -&gt; 1 &lt;= 4? YES
+     current = [0, max(4,4)] = [0,4]
+
+Result: [[0,4]]</code></pre></p>
+<p><strong>Key Insight - Sort by Start, Then Merge:</strong>
+After sorting by start time, intervals that overlap will be adjacent. We keep a "current" interval and extend its end when we find an overlap. When we find a non-overlapping interval, we finalize the current one and start a new one.</p>
+<p><strong>Why It Works:</strong>
+- Sorting ensures intervals are processed in order of start time
+- If the next interval starts before or at current's end, they overlap
+- Merging extends the end to cover both
+- If the next interval starts after current's end, no future interval can overlap with current (since they're sorted by start)
+- This is optimal and handles all cases in one pass</p>
+<p><strong>Visualization - Merge Intervals:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Sort by start"] --&gt; B["current = intervals[0]"]
+    B --&gt; C{"More intervals?"}
+    C --&gt;|No| D["Add current to result"]
+    C --&gt;|Yes| E{"next.start &lt;= current.end?"}
+    E --&gt;|Yes| F["current.end = max(current.end, next.end)"]
+    E --&gt;|No| G["Add current, current = next"]
+    F --&gt; C
+    G --&gt; C</code></pre></p>
+<pre class="highlight"><code class="language-java">public int[][] merge(int[][] intervals) {
+    if (intervals.length &lt;= 1) return intervals;
+    Arrays.sort(intervals, (a, b) -&gt; a[0] - b[0]);
+    List&lt;int[]&gt; merged = new ArrayList&lt;&gt;();
+    int[] current = intervals[0];
+    for (int i = 1; i &lt; intervals.length; i++) {
+        if (intervals[i][0] &lt;= current[1]) {
+            current[1] = Math.max(current[1], intervals[i][1]);
+        } else {
+            merged.add(current);
+            current = intervals[i];
+        }
+    }
+    merged.add(current);
+    return merged.toArray(new int[0][]);
+}</code></pre>
+<p><strong>Edge Cases:</strong>
+- Empty array: returns empty
+- Single interval: returns it as-is
+- All overlapping: merges into one
+- No overlapping: returns all unchanged
+- Touching intervals (end == start): merged (inclusive)</p>
+<p><strong>Time Complexity</strong>: O(n log n) - sorting dominates
+<strong>Space Complexity</strong>: O(n) - for result list</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Insert Interval
+- Remove Interval Overlap
+- Employee Free Time</p>
 <hr />
 <h4 id="2-insert-interval">2. <strong>Insert Interval</strong></h4>
-<p><strong>Explanation</strong>: Insert new interval and merge. Handle non-overlapping before/after. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given a sorted list of non-overlapping intervals, insert a new interval and merge if necessary.</p>
+<p><strong>Simple Analogy:</strong>
+Like adding a new meeting to your calendar. It might overlap with existing meetings, so you need to merge them.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>intervals = [[1,3],[6,9]]</code>, <code>newInterval = [2,5]</code>
+<pre class="highlight"><code>Expected Output: [[1,5],[6,9]]
+
+Visual:
+[1,3]: |---|
+[2,5]:   |-----|
+[6,9]:         |---|
+
+Step 1: Add intervals before newInterval (end &lt; newStart)
+[1,3].end=3 &lt; 2? NO, so stop
+
+Step 2: Merge overlapping (start &lt;= newEnd)
+[1,3].start=1 &lt;= 5? YES -&gt; newInterval = [min(1,2), max(3,5)] = [1,5]
+[6,9].start=6 &lt;= 5? NO -&gt; stop
+
+Step 3: Add newInterval [1,5]
+Step 4: Add remaining [6,9]
+
+Result: [[1,5],[6,9]]</code></pre></p>
+<p>Input: <code>intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]]</code>, <code>newInterval = [4,8]</code>
+<pre class="highlight"><code>Expected Output: [[1,2],[3,10],[12,16]]
+
+Step 1: Before newInterval (end &lt; 4)
+[1,2] -&gt; 2 &lt; 4? YES, add to result
+[3,5] -&gt; 5 &lt; 4? NO, stop
+result = [[1,2]]
+
+Step 2: Merge overlapping (start &lt;= 8)
+[3,5] -&gt; 3 &lt;= 8? YES -&gt; newInterval = [min(3,4), max(5,8)] = [3,8]
+[6,7] -&gt; 6 &lt;= 8? YES -&gt; newInterval = [min(3,6), max(8,7)] = [3,8]
+[8,10] -&gt; 8 &lt;= 8? YES -&gt; newInterval = [min(3,8), max(8,10)] = [3,10]
+[12,16] -&gt; 12 &lt;= 10? NO, stop
+
+Step 3: Add newInterval [3,10]
+result = [[1,2],[3,10]]
+
+Step 4: Add remaining
+[12,16] -&gt; result = [[1,2],[3,10],[12,16]]
+
+Result: [[1,2],[3,10],[12,16]]</code></pre></p>
+<p>Input: <code>intervals = [[1,5]]</code>, <code>newInterval = [2,3]</code>
+<pre class="highlight"><code>Expected Output: [[1,5]]
+
+Step 1: [1,5].end=5 &lt; 2? NO, stop
+Step 2: [1,5].start=1 &lt;= 3? YES -&gt; newInterval = [min(1,2), max(5,3)] = [1,5]
+Step 3: Add [1,5]
+Result: [[1,5]]</code></pre></p>
+<p><strong>Key Insight - Three Phases:</strong>
+The sorted input makes this easy. We have three phases:
+1. <strong>Before</strong>: Intervals completely before newInterval (end &lt; new.start). Add directly.
+2. <strong>Overlap</strong>: Intervals overlapping with newInterval (start &lt;= new.end). Merge by extending newInterval.
+3. <strong>After</strong>: Intervals completely after newInterval. Add directly.</p>
+<p><strong>Why It Works:</strong>
+- The input is already sorted, so we don't need to re-sort
+- Phase 1 captures all intervals that end before newInterval starts
+- Phase 2 merges all intervals that overlap with newInterval
+- Phase 3 adds the rest
+- One pass, O(n) time</p>
+<p><strong>Visualization - Insert Interval:</strong>
+<pre class="mermaid"><code>graph TD
+    A["newInterval = [2,5]"] --&gt; B["Phase 1: Add intervals with end &lt; 2"]
+    B --&gt; C["Phase 2: Merge intervals with start &lt;= 5"]
+    C --&gt; D["Phase 3: Add remaining intervals"]
+    D --&gt; E["Return result"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int[][] insert(int[][] intervals, int[] newInterval) {
     List&lt;int[]&gt; result = new ArrayList&lt;&gt;();
     int i = 0;
-
-    // Add intervals before newInterval
     while (i &lt; intervals.length &amp;&amp; intervals[i][1] &lt; newInterval[0]) {
         result.add(intervals[i++]);
     }
-
-    // Merge overlapping intervals
     while (i &lt; intervals.length &amp;&amp; intervals[i][0] &lt;= newInterval[1]) {
         newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
         newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
         i++;
     }
-
     result.add(newInterval);
-
-    // Add remaining intervals
     while (i &lt; intervals.length) {
         result.add(intervals[i++]);
     }
-
     return result.toArray(new int[0][]);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Insert Range, Merge Sorted Intervals</p>
+<p><strong>Edge Cases:</strong>
+- newInterval before all: added first
+- newInterval after all: added last
+- newInterval overlaps all: merges into one
+- Empty intervals list: returns [newInterval]</p>
+<p><strong>Time Complexity</strong>: O(n) - single pass
+<strong>Space Complexity</strong>: O(n) - for result</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Merge Intervals
+- Insert Range
+- Range Module</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="3-meeting-rooms">3. <strong>Meeting Rooms</strong></h4>
-<p><strong>Explanation</strong>: Sort by start time, check if any two meetings overlap. Time: O(n log n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given an array of meeting times, determine if a person can attend all meetings.</p>
+<p><strong>Simple Analogy:</strong>
+Like checking if your calendar has any conflicts. If two meetings overlap, you can't attend both.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>intervals = [[0,30],[5,10],[15,20]]</code>
+<pre class="highlight"><code>Expected Output: false
+
+[0,30]: |--------------------------|
+[5,10]:     |---|
+[15,20]:              |----|
+
+[0,30] and [5,10] overlap -&gt; can't attend both
+Return false</code></pre></p>
+<p>Input: <code>intervals = [[7,10],[2,4]]</code>
+<pre class="highlight"><code>Expected Output: true
+
+Sort: [[2,4],[7,10]]
+
+[2,4]:  |---|
+[7,10]:      |---|
+
+[2,4].end=4 &lt; [7,10].start=7 -&gt; no overlap
+Return true</code></pre></p>
+<p>Input: <code>intervals = [[1,5],[5,10]]</code>
+<pre class="highlight"><code>Expected Output: true (if touching is not overlap)
+
+[1,5]: |----|
+[5,10]:     |----|
+
+5 &lt; 5? NO -&gt; no overlap
+Return true</code></pre></p>
+<p><strong>Key Insight - Sort and Check Adjacent:</strong>
+After sorting by start time, just check if any meeting starts before the previous one ends. If so, there's an overlap.</p>
+<p><strong>Why It Works:</strong>
+- Sorting puts meetings in chronological order
+- If meeting i starts before meeting i-1 ends, they overlap
+- We only need to check adjacent pairs (sorted order guarantees this)
+- If no adjacent overlaps, no overlaps at all</p>
+<p><strong>Visualization - Meeting Rooms:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Sort by start time"] --&gt; B["Check adjacent pairs"]
+    B --&gt; C{"next.start &lt; prev.end?"}
+    C --&gt;|Yes| D["Return false (conflict)"]
+    C --&gt;|No| E["Continue"]
+    E --&gt; F{"More pairs?"}
+    F --&gt;|Yes| B
+    F --&gt;|No| G["Return true (no conflict)"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean canAttendMeetings(int[][] intervals) {
     Arrays.sort(intervals, (a, b) -&gt; a[0] - b[0]);
-
     for (int i = 1; i &lt; intervals.length; i++) {
         if (intervals[i][0] &lt; intervals[i - 1][1]) {
             return false;
         }
     }
-
     return true;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Meeting Rooms II, Minimum Rooms Required</p>
+<p><strong>Edge Cases:</strong>
+- Empty list: returns true
+- Single meeting: returns true
+- Touching meetings: depends on definition
+- All overlapping: returns false</p>
+<p><strong>Time Complexity</strong>: O(n log n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Meeting Rooms II
+- Merge Intervals
+- Non-overlapping Intervals</p>
 <hr />
 <h4 id="4-meeting-rooms-ii-minimum-rooms">4. <strong>Meeting Rooms II (Minimum Rooms)</strong></h4>
-<p><strong>Explanation</strong>: Count max concurrent meetings. Use heap or sweep line. Time: O(n log n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given meeting times, find the minimum number of conference rooms needed to hold all meetings.</p>
+<p><strong>Simple Analogy:</strong>
+Like scheduling classes in classrooms. How many classrooms do you need so no two classes conflict?</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>intervals = [[0,30],[5,10],[15,20]]</code>
+<pre class="highlight"><code>Expected Output: 2
+
+[0,30]: |--------------------------|
+[5,10]:     |---|
+[15,20]:              |----|
+
+At time 5: meeting [0,30] and [5,10] both active -&gt; 2 rooms
+At time 15: [0,30] and [15,20] active -&gt; 2 rooms
+Max concurrent = 2
+
+Method: sort starts and ends separately
+starts = [0, 5, 15]
+ends = [10, 20, 30]
+
+i=0, j=0: starts[0]=0 &lt; ends[0]=10 -&gt; rooms=1, i=1, max=1
+i=1, j=0: starts[1]=5 &lt; ends[0]=10 -&gt; rooms=2, i=2, max=2
+i=2, j=0: starts[2]=15 &lt; ends[0]=10? NO -&gt; rooms=1, j=1
+i=2, j=1: starts[2]=15 &lt; ends[1]=20? YES -&gt; rooms=2, i=3, max=2
+i=3 -&gt; loop ends
+
+Return 2</code></pre></p>
+<p>Input: <code>intervals = [[7,10],[2,4]]</code>
+<pre class="highlight"><code>Expected Output: 1
+
+Sort: [[2,4],[7,10]]
+starts = [2, 7]
+ends = [4, 10]
+
+i=0: 2 &lt; 4 -&gt; rooms=1, i=1
+i=1: 7 &lt; 4? NO -&gt; rooms=0, j=1
+i=1: 7 &lt; 10 -&gt; rooms=1, i=2
+Loop ends
+Max = 1
+
+Return 1</code></pre></p>
+<p>Input: <code>intervals = [[1,5],[2,6],[3,7]]</code>
+<pre class="highlight"><code>Expected Output: 3
+
+All three overlap at time 3.
+starts = [1,2,3]
+ends = [5,6,7]
+
+i=0: 1&lt;5 -&gt; rooms=1
+i=1: 2&lt;5 -&gt; rooms=2
+i=2: 3&lt;5 -&gt; rooms=3
+Max = 3
+
+Return 3</code></pre></p>
+<p><strong>Key Insight - Count Overlaps with Sweep:</strong>
+Think of time as a line. A meeting "opens" at start and "closes" at end. The maximum number of simultaneously open meetings is the answer. Sort starts and ends separately, then use two pointers.</p>
+<p><strong>Why It Works:</strong>
+- Each start means a room is needed; each end means a room is freed
+- If a start comes before the earliest end, we need a new room
+- If an end comes before the next start, we free a room
+- Max rooms ever needed = answer
+- Two sorted arrays + two pointers = O(n log n)</p>
+<p><strong>Visualization - Meeting Rooms II:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Sort starts and ends separately"] --&gt; B["i=0, j=0, rooms=0, max=0"]
+    B --&gt; C{"starts[i] &lt; ends[j]?"}
+    C --&gt;|Yes| D["rooms++, i++, max=max(max, rooms)"]
+    C --&gt;|No| E["rooms--, j++"]
+    D --&gt; F{"i &lt; n?"}
+    E --&gt; F
+    F --&gt;|Yes| C
+    F --&gt;|No| G["Return max"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int minMeetingRooms(int[][] intervals) {
     int[] starts = new int[intervals.length];
     int[] ends = new int[intervals.length];
-
     for (int i = 0; i &lt; intervals.length; i++) {
         starts[i] = intervals[i][0];
         ends[i] = intervals[i][1];
     }
-
     Arrays.sort(starts);
     Arrays.sort(ends);
-
     int rooms = 0, maxRooms = 0;
     int i = 0, j = 0;
-
     while (i &lt; intervals.length) {
         if (starts[i] &lt; ends[j]) {
             rooms++;
@@ -317,21 +710,76 @@
         }
         maxRooms = Math.max(maxRooms, rooms);
     }
-
     return maxRooms;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Minimum Flights to Connect All Cities, Rooms Required</p>
+<p><strong>Edge Cases:</strong>
+- Empty list: returns 0
+- Single meeting: returns 1
+- All non-overlapping: returns 1
+- All overlapping: returns n</p>
+<p><strong>Time Complexity</strong>: O(n log n)
+<strong>Space Complexity</strong>: O(n) - for starts and ends arrays</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Minimum Flights to Connect All Cities
+- Rooms Required
+- Car Pooling</p>
 <hr />
 <h4 id="5-non-overlapping-intervals">5. <strong>Non-overlapping Intervals</strong></h4>
-<p><strong>Explanation</strong>: Remove minimum intervals to make rest non-overlapping. Greedy by end time. Time: O(n log n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given intervals, find the minimum number of intervals to remove so the rest are non-overlapping.</p>
+<p><strong>Simple Analogy:</strong>
+Like scheduling as many meetings as possible in one room. You may need to decline some to avoid conflicts.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>intervals = [[1,2],[2,3],[3,4],[1,3]]</code>
+<pre class="highlight"><code>Expected Output: 1
+
+Sort by end: [[1,2],[2,3],[1,3],[3,4]]
+
+prevEnd = 2 (end of first)
+i=1: [2,3] -&gt; start=2 &lt; prevEnd=2? NO -&gt; keep, prevEnd=3
+i=2: [1,3] -&gt; start=1 &lt; prevEnd=3? YES -&gt; remove, count=1
+i=3: [3,4] -&gt; start=3 &lt; prevEnd=3? NO -&gt; keep, prevEnd=4
+
+Removed: 1</code></pre></p>
+<p>Input: <code>intervals = [[1,2],[1,2],[1,2]]</code>
+<pre class="highlight"><code>Expected Output: 2
+
+Sort by end: [[1,2],[1,2],[1,2]]
+
+prevEnd = 2
+i=1: start=1 &lt; 2 -&gt; remove, count=1
+i=2: start=1 &lt; 2 -&gt; remove, count=2
+
+Removed: 2</code></pre></p>
+<p>Input: <code>intervals = [[1,2],[2,3]]</code>
+<pre class="highlight"><code>Expected Output: 0
+
+prevEnd = 2
+i=1: start=2 &lt; 2? NO -&gt; keep
+
+Removed: 0</code></pre></p>
+<p><strong>Key Insight - Sort by End, Greedy:</strong>
+To maximize non-overlapping intervals (equivalently, minimize removals), sort by END time. Always keep the interval that ends earliest. This leaves maximum room for future intervals.</p>
+<p><strong>Why It Works:</strong>
+- The interval with the earliest end conflicts with the fewest future intervals
+- By keeping it, we maximize the chance of fitting more intervals
+- This greedy choice is provably optimal for interval scheduling
+- Any interval we remove must be replaced by one that ends later (worse choice)</p>
+<p><strong>Visualization - Non-overlapping Intervals:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Sort by end time"] --&gt; B["prevEnd = first.end"]
+    B --&gt; C{"Next interval start &lt; prevEnd?"}
+    C --&gt;|Yes| D["Remove it, count++"]
+    C --&gt;|No| E["Keep it, prevEnd = its end"]
+    D --&gt; F{"More intervals?"}
+    E --&gt; F
+    F --&gt;|Yes| C
+    F --&gt;|No| G["Return count"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int eraseOverlapIntervals(int[][] intervals) {
     if (intervals.length &lt;= 1) return 0;
-
     Arrays.sort(intervals, (a, b) -&gt; a[1] - b[1]);
-
     int removed = 0;
     int prevEnd = intervals[0][1];
-
     for (int i = 1; i &lt; intervals.length; i++) {
         if (intervals[i][0] &lt; prevEnd) {
             removed++;
@@ -339,85 +787,191 @@
             prevEnd = intervals[i][1];
         }
     }
-
     return removed;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Maximum Non-overlapping Intervals, Interval Scheduling</p>
+<p><strong>Edge Cases:</strong>
+- Empty list: returns 0
+- Single interval: returns 0
+- All same interval: returns n-1
+- No overlaps: returns 0</p>
+<p><strong>Time Complexity</strong>: O(n log n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Maximum Non-overlapping Intervals
+- Interval Scheduling
+- Minimum Arrows to Burst Balloons</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="6-skyline-problem">6. <strong>Skyline Problem</strong></h4>
-<p><strong>Explanation</strong>: Merge building heights at each x-coordinate. Use sweep line with multiset. Time: O(n log n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given buildings as [left, right, height], return the skyline (silhouette) as a list of key points [x, height].</p>
+<p><strong>Simple Analogy:</strong>
+Like looking at a city's silhouette against the sunset. Where does the outline change height?</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>buildings = [[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]</code>
+<pre class="highlight"><code>Expected Output: [[2,10],[3,15],[7,12],[12,0],[15,10],[19,8],[24,0]]
+
+Visual:
+Building 1: [2,9,10]   |---------| height 10
+Building 2: [3,7,15]     |-----|   height 15
+Building 3: [5,12,12]      |------| height 12
+Building 4: [15,20,10]                    |----| height 10
+Building 5: [19,24,8]                       |----| height 8
+
+Skyline changes:
+x=2: height becomes 10
+x=3: height becomes 15
+x=7: height becomes 12 (building 2 ends)
+x=12: height becomes 0 (building 3 ends)
+x=15: height becomes 10
+x=19: height becomes 8 (building 4 ends, building 5 starts)
+x=24: height becomes 0
+
+Result: [[2,10],[3,15],[7,12],[12,0],[15,10],[19,8],[24,0]]</code></pre></p>
+<p>Input: <code>buildings = [[0,2,3],[2,5,3]]</code>
+<pre class="highlight"><code>Expected Output: [[0,3],[5,0]]
+
+Two buildings of same height, touching at x=2.
+No height change at x=2.</code></pre></p>
+<p>Input: <code>buildings = [[1,2,1],[1,2,2],[1,2,3]]</code>
+<pre class="highlight"><code>Expected Output: [[1,3],[2,0]]
+
+Three buildings all starting at 1, ending at 2, with heights 1,2,3.
+Max height is 3 at x=1.
+At x=2, all end, height becomes 0.</code></pre></p>
+<p><strong>Key Insight - Sweep Line with Max-Height Tracking:</strong>
+Treat each building as two events: a "start" event (building begins) and an "end" event (building ends). Process events left to right. At each event, update the count of active heights. The maximum active height is the current skyline height. Record whenever this max changes.</p>
+<p><strong>Why It Works:</strong>
+- The skyline only changes at start or end of a building
+- At each event, we know exactly which buildings are active
+- The skyline height = max height among active buildings
+- We record the x-coordinate whenever this max changes
+- Using a TreeMap (or multiset) tracks heights efficiently</p>
+<p><strong>Visualization - Skyline:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Create events: start and end for each building"] --&gt; B["Sort events by x, start before end"]
+    B --&gt; C["Process each event"]
+    C --&gt; D{"Start event?"}
+    D --&gt;|Yes| E["Add height to multiset"]
+    D --&gt;|No| F["Remove height from multiset"]
+    E --&gt; G["Get current max height"]
+    F --&gt; G
+    G --&gt; H{"Max height changed?"}
+    H --&gt;|Yes| I["Add [x, maxHeight] to result"]
+    H --&gt;|No| J["Skip"]
+    I --&gt; K{"More events?"}
+    J --&gt; K
+    K --&gt;|Yes| C
+    K --&gt;|No| L["Return result"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; getSkyline(int[][] buildings) {
     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
     List&lt;int[]&gt; events = new ArrayList&lt;&gt;();
-
     for (int[] b : buildings) {
-        events.add(new int[]{b[0], 0, b[2]}); // start, type (0=start, 1=end), height
+        events.add(new int[]{b[0], 0, b[2]});
         events.add(new int[]{b[1], 1, b[2]});
     }
-
     events.sort((a, b) -&gt; a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
-
     TreeMap&lt;Integer, Integer&gt; heightCount = new TreeMap&lt;&gt;();
     heightCount.put(0, 1);
     int prevMaxHeight = 0;
-
     for (int[] event : events) {
         int x = event[0], type = event[1], h = event[2];
-
         if (type == 0) {
             heightCount.put(h, heightCount.getOrDefault(h, 0) + 1);
         } else {
             heightCount.put(h, heightCount.get(h) - 1);
             if (heightCount.get(h) == 0) heightCount.remove(h);
         }
-
         int maxHeight = heightCount.lastKey();
-
         if (maxHeight != prevMaxHeight) {
             result.add(Arrays.asList(x, maxHeight));
             prevMaxHeight = maxHeight;
         }
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Rectangle Area II, Largest Rectangle in Histogram</p>
+<p><strong>Edge Cases:</strong>
+- Single building: two points (start and end)
+- Overlapping buildings: skyline follows max heights
+- Equal heights: no change recorded
+- Touching buildings: handled by event sorting</p>
+<p><strong>Time Complexity</strong>: O(n log n) - sorting and TreeMap operations
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Rectangle Area II
+- Largest Rectangle in Histogram
+- The Skyline Problem</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-merge-pattern">1. <strong>Merge Pattern</strong></h3>
 <ul>
 <li>Sort by start time</li>
-<li>Merge when overlapping</li>
-<li>Update end to max of current and next</li>
+<li>Keep "current" interval, extend when overlapping</li>
+<li>Add to result when no more overlap</li>
+<li>Examples: Merge Intervals, Insert Interval</li>
 </ul>
 <h3 id="2-sweep-line-pattern">2. <strong>Sweep Line Pattern</strong></h3>
 <ul>
 <li>Create events for start/end</li>
-<li>Process in order</li>
-<li>Track active intervals/height/count</li>
+<li>Sort events by position</li>
+<li>Process in order, tracking active state</li>
+<li>Examples: Meeting Rooms II, Skyline Problem</li>
 </ul>
 <h3 id="3-greedy-interval-selection">3. <strong>Greedy Interval Selection</strong></h3>
 <ul>
 <li>Sort by end time</li>
-<li>Pick interval, skip overlapping</li>
+<li>Pick interval, skip overlapping ones</li>
 <li>Maximizes non-overlapping count</li>
+<li>Examples: Non-overlapping Intervals, Activity Selection</li>
 </ul>
-<h3 id="4-comparison-for-overlaps">4. <strong>Comparison for Overlaps</strong></h3>
+<h3 id="4-two-pointers-for-intersection">4. <strong>Two Pointers for Intersection</strong></h3>
 <ul>
-<li>a.end &gt;= b.start (inclusive end)</li>
-<li>a.end &gt; b.start (exclusive end)</li>
-<li>Depends on problem definition</li>
+<li>Given two sorted interval lists</li>
+<li>Use two pointers to find overlaps</li>
+<li>Advance the one that ends first</li>
+<li>Examples: Interval List Intersections</li>
 </ul>
+<h3 id="5-overlap-comparison-rules">5. <strong>Overlap Comparison Rules</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a.end &lt; b.start</code></td>
+<td>a is completely before b</td>
+</tr>
+<tr>
+<td><code>a.end == b.start</code></td>
+<td>Touching (may or may not overlap)</td>
+</tr>
+<tr>
+<td><code>a.start &lt;= b.end &amp;&amp; b.start &lt;= a.end</code></td>
+<td>Overlapping</td>
+</tr>
+<tr>
+<td><code>a.start &lt; b.end &amp;&amp; b.start &lt; a.end</code></td>
+<td>Overlapping (strict)</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Wrong overlap condition</li>
-<li>❌ Not handling edge cases (touching intervals)</li>
-<li>❌ Forgetting to sort</li>
-<li>❌ Incorrect comparison for interval sorting</li>
-<li>❌ Off-by-one in merge condition</li>
-<li>❌ Not considering inclusive vs exclusive ends</li>
+<li>Wrong overlap condition (using <code>&lt;</code> vs <code>&lt;=</code> incorrectly)</li>
+<li>Not handling edge cases (touching intervals, empty input)</li>
+<li>Forgetting to sort (or sorting by the wrong key)</li>
+<li>Incorrect comparison for interval sorting (start vs end)</li>
+<li>Off-by-one in merge condition</li>
+<li>Not considering inclusive vs exclusive ends</li>
+<li>Using start-time sort when end-time sort is needed (greedy problems)</li>
+<li>Forgetting that intervals may touch (end == start)</li>
+<li>Not handling single-interval or empty-list cases</li>
+<li>In sweep line, forgetting to process starts before ends at the same x</li>
+<li>Using <code>O(n^2)</code> overlap checks instead of sorting + single pass</li>
 </ul>
               
             </div>

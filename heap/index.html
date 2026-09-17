@@ -82,11 +82,29 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Heap / Priority Queue</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-heap-simple-explanation">What is a Heap? (Simple Explanation)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#when-to-use">When to Use</a>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#when-to-use-a-heap">When to Use a Heap</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#complexity">Complexity</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#javas-priorityqueue">Java's PriorityQueue</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#min-heap-template">Min-Heap Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#max-heap-template">Max-Heap Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#k-largest-elements-template">K Largest Elements Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#heap-decision-flow">Heap Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -122,11 +140,13 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#1-k-largestsmallest-pattern">1. K Largest/Smallest Pattern</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#2-merge-k-collections">2. Merge k Collections</a>
+    <li class="toctree-l3"><a class="reference internal" href="#2-merge-k-collections">2. Merge K Collections</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#3-two-heap-pattern">3. Two Heap Pattern</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#4-lazy-deletion">4. Lazy Deletion</a>
+    <li class="toctree-l3"><a class="reference internal" href="#4-greedy-with-heap">4. Greedy with Heap</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-lazy-deletion">5. Lazy Deletion</a>
     </li>
         </ul>
     </li>
@@ -191,170 +211,597 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="heap-priority-queue">Heap / Priority Queue</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-a-heap-simple-explanation">What is a Heap? (Simple Explanation)</h2>
+<p>Imagine a hospital emergency room. Patients are not treated in the order they arrive — the most critical patient is treated first, regardless of when they arrived. That's a <strong>priority queue</strong>: a collection where each element has a "priority," and the highest (or lowest) priority element is always served first.</p>
+<p>A <strong>heap</strong> is the most common way to implement a priority queue. It's like a special tree where:
+- The smallest element is always at the top (min-heap), OR
+- The largest element is always at the top (max-heap)</p>
+<p><strong>Real-life analogies:</strong>
+- Hospital ER (treat most critical first)
+- Task scheduler (most urgent task first)
+- Merging multiple sorted playlists by "next song"
+- Finding top 10 scores in a game</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li><strong>Min Heap</strong>: Parent ≤ Children (smallest at top)</li>
-<li><strong>Max Heap</strong>: Parent ≥ Children (largest at top)</li>
-<li><strong>Priority Queue</strong>: Abstract data type with priority ordering</li>
-<li><strong>Heapify</strong>: Maintain heap property after insertion/deletion</li>
-<li><strong>Heap Operations</strong>: Insert O(log n), Delete O(log n), Peek O(1)</li>
-<li><strong>Array Representation</strong>: Root at index 0, left child at 2i+1, right at 2i+2</li>
+<li><strong>Min Heap</strong>: Parent is smaller than or equal to its children. Smallest element at the top. Like a pyramid where the smallest is at the peak.</li>
+<li><strong>Max Heap</strong>: Parent is larger than or equal to its children. Largest element at the top. Like a pyramid where the largest is at the peak.</li>
+<li><strong>Priority Queue</strong>: An abstract data type (ADT) where each element has a priority. We can always get the highest-priority element quickly.</li>
+<li><strong>Heapify</strong>: The process of rearranging elements to restore the heap property (after insert or delete).</li>
+<li><strong>Array Representation</strong>: Heaps are stored as arrays! No pointers needed.</li>
+<li>Root at index 0</li>
+<li>Left child of index i: <code>2*i + 1</code></li>
+<li>Right child of index i: <code>2*i + 2</code></li>
+<li>Parent of index i: <code>(i - 1) / 2</code></li>
 </ul>
-<h2 id="when-to-use">When to Use</h2>
+<p><strong>Important:</strong> A heap is NOT a fully sorted array. It only guarantees that the top element is min (or max). The rest can be in any order that maintains the heap property.</p>
+<h2 id="when-to-use-a-heap">When to Use a Heap</h2>
 <ul>
 <li>Find k largest/smallest elements</li>
 <li>Merge sorted lists/streams</li>
-<li>Scheduling problems (earliest deadline)</li>
+<li>Scheduling problems (earliest deadline first)</li>
 <li>Huffman coding, Dijkstra's algorithm</li>
 <li>Load balancing, system design</li>
+<li>Running median of a data stream</li>
+<li>Top K frequent elements</li>
 </ul>
 <h2 id="complexity">Complexity</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build heap</td>
+<td>O(n)</td>
+<td>From unsorted array</td>
+</tr>
+<tr>
+<td>Insert</td>
+<td>O(log n)</td>
+<td>Bubble up</td>
+</tr>
+<tr>
+<td>Delete (extract top)</td>
+<td>O(log n)</td>
+<td>Bubble down</td>
+</tr>
+<tr>
+<td>Peek (get top)</td>
+<td>O(1)</td>
+<td>Just look at root</td>
+</tr>
+<tr>
+<td>Heapify</td>
+<td>O(log n)</td>
+<td>Restore property</td>
+</tr>
+<tr>
+<td>Space</td>
+<td>O(n)</td>
+<td>Array storage</td>
+</tr>
+</tbody>
+</table>
+<h2 id="javas-priorityqueue">Java's PriorityQueue</h2>
+<pre class="highlight"><code class="language-java">// Min-heap (default)
+PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();
+
+// Max-heap (custom comparator)
+PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
+
+// Min-heap with custom objects
+PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((a, b) -&gt; a[0] - b[0]);</code></pre>
+<h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Build heap: O(n)</li>
-<li>Insert: O(log n)</li>
-<li>Delete: O(log n)</li>
-<li>Heapify: O(log n)</li>
-<li>Space: O(n)</li>
+<li><strong>K largest/smallest</strong>: Use min-heap for k largest, max-heap for k smallest</li>
+<li><strong>Merge k collections</strong>: Heap of "next element" from each collection</li>
+<li><strong>Two heaps</strong>: Max-heap for left half, min-heap for right half (median)</li>
+<li><strong>Lazy deletion</strong>: Mark items as deleted but keep in heap</li>
+<li><strong>Greedy with heap</strong>: Always pick the best available option</li>
 </ul>
+<hr />
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="min-heap-template">Min-Heap Template</h3>
+<pre class="highlight"><code class="language-java">PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();
+minHeap.offer(5);
+minHeap.offer(2);
+minHeap.offer(8);
+int smallest = minHeap.peek();  // 2
+int removed = minHeap.poll();   // 2</code></pre>
+<h3 id="max-heap-template">Max-Heap Template</h3>
+<pre class="highlight"><code class="language-java">PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
+maxHeap.offer(5);
+maxHeap.offer(2);
+maxHeap.offer(8);
+int largest = maxHeap.peek();  // 8</code></pre>
+<h3 id="k-largest-elements-template">K Largest Elements Template</h3>
+<pre class="highlight"><code class="language-java">public int[] kLargest(int[] nums, int k) {
+    PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();
+    for (int num : nums) {
+        minHeap.offer(num);
+        if (minHeap.size() &gt; k) {
+            minHeap.poll();  // Remove smallest
+        }
+    }
+    // minHeap now contains k largest
+    int[] result = new int[k];
+    for (int i = k - 1; i &gt;= 0; i--) {
+        result[i] = minHeap.poll();
+    }
+    return result;
+}</code></pre>
+<h3 id="heap-decision-flow">Heap Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Heap Problem"] --&gt; B{"Need k largest?"}
+    B --&gt;|Yes| C["Min-heap of size k"]
+    B --&gt;|No| D{"Need k smallest?"}
+    D --&gt;|Yes| E["Max-heap of size k"]
+    D --&gt;|No| F{"Need median/middle?"}
+    F --&gt;|Yes| G["Two heaps: max for left, min for right"]
+    F --&gt;|No| H{"Merging k sorted things?"}
+    H --&gt;|Yes| I["Min-heap of next elements"]
+    H --&gt;|No| J{"Always need best available?"}
+    J --&gt;|Yes| K["Greedy with heap"]
+    J --&gt;|No| L["Consider other data structures"]</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-kth-largest-element-in-array">1. <strong>Kth Largest Element in Array</strong></h4>
-<p><strong>Explanation</strong>: Use min-heap of size k. When size &gt; k, remove smallest. Remaining top is kth largest. Time: O(n log k), Space: O(k).</p>
+<p><strong>Problem Description:</strong>
+Given an integer array and an integer k, return the kth largest element in the array.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the 3rd highest score in a game. You don't need to sort everything — just keep track of the top 3.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>nums = [3, 2, 1, 5, 6, 4]</code>, <code>k = 2</code>
+<pre class="highlight"><code>Expected Output: 5 (2nd largest is 5)
+
+Sorted: [1, 2, 3, 4, 5, 6]
+2nd largest = 5
+
+Using min-heap of size k=2:
+num=3: heap=[3]
+num=2: heap=[2,3]
+num=1: heap=[1,2,3] -&gt; size&gt;2, poll 1 -&gt; heap=[2,3]
+num=5: heap=[2,3,5] -&gt; size&gt;2, poll 2 -&gt; heap=[3,5]
+num=6: heap=[3,5,6] -&gt; size&gt;2, poll 3 -&gt; heap=[5,6]
+num=4: heap=[4,5,6] -&gt; size&gt;2, poll 4 -&gt; heap=[5,6]
+
+Heap top = 5 = 2nd largest</code></pre></p>
+<p>Input: <code>nums = [3, 2, 3, 1, 2, 4, 5, 5, 6]</code>, <code>k = 4</code>
+<pre class="highlight"><code>Expected Output: 4 (4th largest)
+
+Sorted: [1, 2, 2, 3, 3, 4, 5, 5, 6]
+4th largest = 4
+
+Min-heap of size 4:
+Process all, keep top 4: [4, 5, 5, 6]
+Heap top = 4 = 4th largest</code></pre></p>
+<p>Input: <code>nums = [1]</code>, <code>k = 1</code>
+<pre class="highlight"><code>Expected Output: 1
+
+Only one element, it's the 1st largest</code></pre></p>
+<p><strong>Key Insight - Min-Heap of Size K:</strong>
+To find the kth largest, keep a min-heap of the k largest elements seen so far. The top of the heap (smallest of these k) is the kth largest. If a new element is larger than the top, it belongs in the top k, so we remove the smallest and add the new one.</p>
+<p><strong>Why It Works:</strong>
+- The heap always contains the k largest elements seen so far
+- The smallest of these k is the kth largest
+- Any element smaller than the heap top can't be in the top k
+- Any element larger than the heap top should replace it
+- This is greedy: always maintain the best k</p>
+<p><strong>Visualization - Kth Largest:</strong>
+<pre class="mermaid"><code>graph TD
+    A["nums=[3,2,1,5,6,4], k=2"] --&gt; B["Process 3: heap=[3]"]
+    B --&gt; C["Process 2: heap=[2,3]"]
+    C --&gt; D["Process 1: heap=[2,3], poll 1"]
+    D --&gt; E["Process 5: heap=[3,5], poll 2"]
+    E --&gt; F["Process 6: heap=[5,6], poll 3"]
+    F --&gt; G["Process 4: heap=[5,6], poll 4"]
+    G --&gt; H["Top = 5 = 2nd largest"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int findKthLargest(int[] nums, int k) {
     PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();
-
     for (int num : nums) {
         minHeap.offer(num);
         if (minHeap.size() &gt; k) {
             minHeap.poll();
         }
     }
-
     return minHeap.peek();
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Kth Smallest Element, K Closest Points</p>
+<p><strong>Edge Cases:</strong>
+- k = 1: returns maximum
+- k = n: returns minimum
+- Duplicates: handled correctly
+- Single element: returns that element</p>
+<p><strong>Time Complexity</strong>: O(n log k) - each insert/poll is O(log k)
+<strong>Space Complexity</strong>: O(k) - heap size</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Kth Smallest Element (use max-heap)
+- K Closest Points to Origin
+- Top K Frequent Elements</p>
 <hr />
 <h4 id="2-last-stone-weight">2. <strong>Last Stone Weight</strong></h4>
-<p><strong>Explanation</strong>: Max heap. Pop two heaviest, if different push difference. Time: O(n log n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+You have stones with weights. Repeatedly take the two heaviest stones. If they're equal, both are destroyed. If not, the lighter is destroyed and the heavier becomes their difference. Return the weight of the last stone, or 0 if none remain.</p>
+<p><strong>Simple Analogy:</strong>
+Like a smash-up derby where cars of different sizes collide. Smaller car is destroyed, larger car loses size equal to smaller.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>stones = [2, 7, 4, 1, 8, 1]</code>
+<pre class="highlight"><code>Expected Output: 1
+
+Max-heap: [8, 7, 4, 2, 1, 1]
+
+Step 1: pop 8, 7 -&gt; diff=1, push 1
+        heap = [4, 2, 1, 1, 1]
+
+Step 2: pop 4, 2 -&gt; diff=2, push 2
+        heap = [2, 1, 1, 1]
+
+Step 3: pop 2, 1 -&gt; diff=1, push 1
+        heap = [1, 1, 1]
+
+Step 4: pop 1, 1 -&gt; diff=0, don't push
+        heap = [1]
+
+Return 1</code></pre></p>
+<p>Input: <code>stones = [1]</code>
+<pre class="highlight"><code>Expected Output: 1
+
+Only one stone, return its weight</code></pre></p>
+<p>Input: <code>stones = [2, 2]</code>
+<pre class="highlight"><code>Expected Output: 0
+
+pop 2, 2 -&gt; equal, both destroyed
+heap = []
+Return 0</code></pre></p>
+<p><strong>Key Insight - Max-Heap for Heaviest:</strong>
+We always need the two heaviest stones. A max-heap gives us the heaviest in O(log n). After smashing, if there's a remainder, push it back.</p>
+<p><strong>Why It Works:</strong>
+- Max-heap always gives the two largest in O(log n)
+- Process repeats until 0 or 1 stone remains
+- This simulates the process exactly
+- Greedy: always take the two heaviest as the problem states</p>
+<p><strong>Visualization - Last Stone Weight:</strong>
+<pre class="mermaid"><code>graph TD
+    A["stones=[2,7,4,1,8,1]"] --&gt; B["Max-heap: [8,7,4,2,1,1]"]
+    B --&gt; C["Smash 8,7 -&gt; push 1"]
+    C --&gt; D["Smash 4,2 -&gt; push 2"]
+    D --&gt; E["Smash 2,1 -&gt; push 1"]
+    E --&gt; F["Smash 1,1 -&gt; both gone"]
+    F --&gt; G["Return 1"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int lastStoneWeight(int[] stones) {
     PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
-
     for (int stone : stones) {
         maxHeap.offer(stone);
     }
-
     while (maxHeap.size() &gt; 1) {
         int first = maxHeap.poll();
         int second = maxHeap.poll();
-
         if (first != second) {
             maxHeap.offer(first - second);
         }
     }
-
     return maxHeap.isEmpty() ? 0 : maxHeap.peek();
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Last Stone Weight II, Relative Sort Array</p>
+<p><strong>Edge Cases:</strong>
+- Single stone: returns its weight
+- Two equal stones: returns 0
+- Two different stones: returns difference
+- Many stones: works correctly</p>
+<p><strong>Time Complexity</strong>: O(n log n) - each smash is O(log n)
+<strong>Space Complexity</strong>: O(n) - heap size</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Last Stone Weight II
+- Relative Sort Array</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="3-kth-closest-points-to-origin">3. <strong>Kth Closest Points to Origin</strong></h4>
-<p><strong>Explanation</strong>: Max heap of k closest points by distance. Time: O(n log k), Space: O(k).</p>
+<p><strong>Problem Description:</strong>
+Given an array of points and an integer k, return the k closest points to the origin (0, 0). Distance is Euclidean.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the k nearest restaurants to your location. You don't need to sort all restaurants — just keep the k closest.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>points = [[1,3],[-2,2]]</code>, <code>k = 1</code>
+<pre class="highlight"><code>Expected Output: [[-2,2]]
+
+Distances:
+[1,3]: sqrt(1+9) = sqrt(10) ≈ 3.16
+[-2,2]: sqrt(4+4) = sqrt(8) ≈ 2.83
+
+Closest: [-2,2]</code></pre></p>
+<p>Input: <code>points = [[3,3],[5,-1],[-2,4]]</code>, <code>k = 2</code>
+<pre class="highlight"><code>Expected Output: [[3,3],[-2,4]]
+
+Distances:
+[3,3]: 18
+[5,-1]: 26
+[-2,4]: 20
+
+Two closest: [3,3] (18) and [-2,4] (20)</code></pre></p>
+<p><strong>Key Insight - Max-Heap of Size K:</strong>
+To find k closest, keep a max-heap of the k closest points seen so far. The top of the heap is the farthest among the k closest. If a new point is closer than the top, it belongs in the k closest.</p>
+<p><strong>Why It Works:</strong>
+- We want the k smallest distances
+- Max-heap keeps the k smallest, with the largest of these at top
+- Any point farther than the top can't be in the k closest
+- Any point closer than the top should replace it
+- This is the mirror of Kth Largest</p>
+<p><strong>Visualization - K Closest Points:</strong>
+<pre class="mermaid"><code>graph TD
+    A["points=[[1,3],[-2,2]], k=1"] --&gt; B["Process [1,3]: dist=10, heap=[[1,3]]"]
+    B --&gt; C["Process [-2,2]: dist=8, heap=[[-2,2]]"]
+    C --&gt; D["Top = [-2,2] = closest"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int[][] kClosest(int[][] points, int k) {
-    PriorityQueue&lt;int[]&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; 
+    PriorityQueue&lt;int[]&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt;
         (b[0] * b[0] + b[1] * b[1]) - (a[0] * a[0] + a[1] * a[1])
     );
-
     for (int[] point : points) {
         maxHeap.offer(point);
         if (maxHeap.size() &gt; k) {
             maxHeap.poll();
         }
     }
-
     int[][] result = new int[k][2];
     int index = 0;
     while (!maxHeap.isEmpty()) {
         result[index++] = maxHeap.poll();
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Top K Frequent Elements, K Closest Elements</p>
+<p><strong>Edge Cases:</strong>
+- k = 1: returns closest point
+- k = n: returns all points
+- Duplicate distances: any order works
+- Origin itself: distance 0, always closest</p>
+<p><strong>Time Complexity</strong>: O(n log k)
+<strong>Space Complexity</strong>: O(k)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Top K Frequent Elements
+- K Closest Elements
+- Find K Pairs with Smallest Sums</p>
 <hr />
 <h4 id="4-top-k-frequent-elements">4. <strong>Top K Frequent Elements</strong></h4>
-<p><strong>Explanation</strong>: Count frequencies, use min-heap of size k. Time: O(n log k), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given an integer array and an integer k, return the k most frequent elements in any order.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the top k most popular songs in a playlist. First count how many times each song appears, then pick the top k.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>nums = [1,1,1,2,2,3]</code>, <code>k = 2</code>
+<pre class="highlight"><code>Expected Output: [1, 2]
+
+Step 1: Count frequencies
+freq = {1: 3, 2: 2, 3: 1}
+
+Step 2: Min-heap of size k by frequency
+num=1 (freq 3): heap=[1]
+num=2 (freq 2): heap=[2,1] (sorted by freq)
+num=3 (freq 1): heap=[3,1,2]? Wait...
+Let me redo: heap is ordered by frequency
+num=1 (freq 3): heap=[1]
+num=2 (freq 2): heap=[2,1] -&gt; but size=2=k, no poll
+num=3 (freq 1): heap=[3,2,1]? Actually heap.add(3), size=3&gt;2, poll min freq = 3
+heap=[1,2]
+
+Result: [1, 2]</code></pre></p>
+<p>Input: <code>nums = [1]</code>, <code>k = 1</code>
+<pre class="highlight"><code>Expected Output: [1]
+
+freq = {1: 1}
+heap = [1]
+Result = [1]</code></pre></p>
+<p>Input: <code>nums = [1,2,1,2,1,2,3,1,3,2]</code>, <code>k = 2</code>
+<pre class="highlight"><code>Expected Output: [1, 2] (1 appears 4 times, 2 appears 4 times, 3 appears 2 times)
+
+freq = {1: 4, 2: 4, 3: 2}
+heap of size 2: [1, 2]
+Result = [1, 2]</code></pre></p>
+<p><strong>Key Insight - Count Then Heap:</strong>
+First count frequencies using a HashMap. Then use a min-heap of size k, ordered by frequency. The heap keeps the k most frequent elements.</p>
+<p><strong>Why It Works:</strong>
+- Frequency counting gives us the "priority" of each element
+- Min-heap of size k keeps the k highest priorities (frequencies)
+- The smallest frequency in the heap is the "threshold"
+- Any element with higher frequency replaces the threshold
+- This is the K Largest pattern with frequency as the key</p>
+<p><strong>Visualization - Top K Frequent:</strong>
+<pre class="mermaid"><code>graph TD
+    A["nums=[1,1,1,2,2,3], k=2"] --&gt; B["Count: {1:3, 2:2, 3:1}"]
+    B --&gt; C["Min-heap by freq, size 2"]
+    C --&gt; D["Process 1: heap=[1]"]
+    D --&gt; E["Process 2: heap=[2,1]"]
+    E --&gt; F["Process 3: heap=[1,2], poll 3"]
+    F --&gt; G["Result: [1,2]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int[] topKFrequent(int[] nums, int k) {
     Map&lt;Integer, Integer&gt; count = new HashMap&lt;&gt;();
     for (int num : nums) {
         count.put(num, count.getOrDefault(num, 0) + 1);
     }
-
     PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; count.get(a) - count.get(b));
-
     for (int num : count.keySet()) {
         minHeap.offer(num);
         if (minHeap.size() &gt; k) {
             minHeap.poll();
         }
     }
-
     int[] result = new int[k];
     int index = 0;
     while (!minHeap.isEmpty()) {
         result[index++] = minHeap.poll();
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Top K Frequent Words, Rearrange String K Distance Apart</p>
+<p><strong>Edge Cases:</strong>
+- k = 1: returns most frequent
+- k = number of distinct elements: returns all
+- All same frequency: any k elements
+- Single element: returns that element</p>
+<p><strong>Time Complexity</strong>: O(n log k)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Top K Frequent Words
+- Rearrange String K Distance Apart
+- Sort Characters by Frequency</p>
 <hr />
 <h4 id="5-merge-k-sorted-lists">5. <strong>Merge K Sorted Lists</strong></h4>
-<p><strong>Explanation</strong>: Min-heap with list nodes. Pop smallest, add its next node. Time: O(n log k), Space: O(k).</p>
+<p><strong>Problem Description:</strong>
+Given an array of k sorted linked lists, merge them into one sorted linked list.</p>
+<p><strong>Simple Analogy:</strong>
+Like merging k sorted playlists into one big sorted playlist. At each step, pick the smallest "next song" from all playlists.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>lists = [[1,4,5],[1,3,4],[2,6]]</code>
+<pre class="highlight"><code>Expected Output: [1,1,2,3,4,4,5,6]
+
+Min-heap of first nodes: [1(from list1), 1(from list2), 2(from list3)]
+
+Step 1: pop 1(list1), add to result, push next 4
+        heap = [1(list2), 2(list3), 4(list1)]
+Step 2: pop 1(list2), add to result, push next 3
+        heap = [2(list3), 3(list2), 4(list1)]
+Step 3: pop 2(list3), add to result, push next 6
+        heap = [3(list2), 4(list1), 6(list3)]
+Step 4: pop 3(list2), add to result, push next 4
+        heap = [4(list1), 4(list2), 6(list3)]
+Step 5: pop 4(list1), add to result, push next 5
+        heap = [4(list2), 5(list1), 6(list3)]
+Step 6: pop 4(list2), add to result, no next
+        heap = [5(list1), 6(list3)]
+Step 7: pop 5(list1), add to result, no next
+        heap = [6(list3)]
+Step 8: pop 6(list3), add to result, no next
+        heap = []
+
+Result: 1 -&gt; 1 -&gt; 2 -&gt; 3 -&gt; 4 -&gt; 4 -&gt; 5 -&gt; 6</code></pre></p>
+<p>Input: <code>lists = []</code>
+<pre class="highlight"><code>Expected Output: [] (empty)</code></pre></p>
+<p>Input: <code>lists = [[]]</code>
+<pre class="highlight"><code>Expected Output: [] (single empty list)</code></pre></p>
+<p><strong>Key Insight - Heap of "Next" Nodes:</strong>
+Put the head of each list in a min-heap. Pop the smallest, add it to the result, and push its next node. Repeat until heap is empty.</p>
+<p><strong>Why It Works:</strong>
+- The smallest unprocessed node must be the head of some list
+- Min-heap gives us the smallest head in O(log k)
+- After popping, the next node from that list becomes a candidate
+- This is like merging 2 lists, but with k lists using a heap
+- Total nodes processed = n, each O(log k)</p>
+<p><strong>Visualization - Merge K Lists:</strong>
+<pre class="mermaid"><code>graph TD
+    A["3 lists: [1,4,5], [1,3,4], [2,6]"] --&gt; B["Heap: [1,1,2]"]
+    B --&gt; C["Pop 1(list1), push 4"]
+    C --&gt; D["Pop 1(list2), push 3"]
+    D --&gt; E["Pop 2(list3), push 6"]
+    E --&gt; F["Pop 3, push 4"]
+    F --&gt; G["Pop 4, push 5"]
+    G --&gt; H["Pop 4, pop 5, pop 6"]
+    H --&gt; I["Result: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public ListNode mergeKLists(ListNode[] lists) {
     PriorityQueue&lt;ListNode&gt; minHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; a.val - b.val);
-
     for (ListNode list : lists) {
         if (list != null) {
             minHeap.offer(list);
         }
     }
-
     ListNode dummy = new ListNode(0);
     ListNode current = dummy;
-
     while (!minHeap.isEmpty()) {
         ListNode smallest = minHeap.poll();
         current.next = smallest;
         current = current.next;
-
         if (smallest.next != null) {
             minHeap.offer(smallest.next);
         }
     }
-
     return dummy.next;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Merge Sorted Array, Merge K Sorted Arrays</p>
+<p><strong>Edge Cases:</strong>
+- Empty array of lists: returns null
+- All lists empty: returns null
+- One list: returns it as-is
+- Different lengths: works correctly</p>
+<p><strong>Time Complexity</strong>: O(n log k) where n = total nodes
+<strong>Space Complexity</strong>: O(k) for heap</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Merge Sorted Array
+- Merge K Sorted Arrays
+- Smallest Range Covering K Lists</p>
 <hr />
 <h4 id="6-find-median-from-data-stream">6. <strong>Find Median from Data Stream</strong></h4>
-<p><strong>Explanation</strong>: Max heap for smaller half, min heap for larger half. Time: O(log n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Design a data structure that supports adding numbers and finding the median of all numbers added so far.</p>
+<p><strong>Simple Analogy:</strong>
+Like a running median tracker. As numbers come in, you need to quickly answer "what's the middle value?"</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>addNum(1)
+addNum(2)
+findMedian() -&gt; 1.5
+addNum(3)
+findMedian() -&gt; 2</code></pre></p>
+<pre class="highlight"><code>Step 1: addNum(1)
+        maxHeap=[1], minHeap=[]
+        median = 1
+
+Step 2: addNum(2)
+        2 &gt; maxHeap.top(1), so push to minHeap
+        maxHeap=[1], minHeap=[2]
+        Sizes equal, median = (1+2)/2 = 1.5
+
+Step 3: addNum(3)
+        3 &gt; maxHeap.top(1), push to minHeap
+        minHeap=[2,3]
+        minHeap.size(2) &gt; maxHeap.size(1), move 2 to maxHeap
+        maxHeap=[1,2], minHeap=[3]
+        maxHeap.size(2) &gt; minHeap.size(1), median = 2</code></pre>
+<p>Input:
+<pre class="highlight"><code>addNum(5)
+findMedian() -&gt; 5
+addNum(3)
+findMedian() -&gt; 4
+addNum(8)
+findMedian() -&gt; 5</code></pre></p>
+<pre class="highlight"><code>Step 1: addNum(5) -&gt; maxHeap=[5], median=5
+Step 2: addNum(3) -&gt; 3&lt;=5, maxHeap=[3,5], sizes: max=2, min=0
+        Rebalance: move 5 to minHeap -&gt; maxHeap=[3], minHeap=[5]
+        median = (3+5)/2 = 4
+Step 3: addNum(8) -&gt; 8&gt;3, minHeap=[5,8], sizes: max=1, min=2
+        Rebalance: move 5 to maxHeap -&gt; maxHeap=[3,5], minHeap=[8]
+        median = 5</code></pre>
+<p><strong>Key Insight - Two Heaps:</strong>
+Maintain two heaps:
+- <strong>Max-heap (left)</strong>: contains the smaller half of numbers
+- <strong>Min-heap (right)</strong>: contains the larger half of numbers</p>
+<p>Keep sizes balanced (differ by at most 1). The median is either the top of max-heap (odd count) or average of both tops (even count).</p>
+<p><strong>Why It Works:</strong>
+- All elements in max-heap are &lt;= all elements in min-heap
+- Max-heap's top is the largest of the smaller half
+- Min-heap's top is the smallest of the larger half
+- If sizes are balanced, median is between these two
+- If max-heap has one extra, its top is the median
+- This gives O(log n) add and O(1) find</p>
+<p><strong>Visualization - Median Finder:</strong>
+<pre class="mermaid"><code>graph TD
+    A["addNum(1)"] --&gt; B["maxHeap=[1], minHeap=[]"]
+    B --&gt; C["addNum(2): push to minHeap"]
+    C --&gt; D["maxHeap=[1], minHeap=[2]"]
+    D --&gt; E["median = (1+2)/2 = 1.5"]
+    E --&gt; F["addNum(3): push to minHeap, rebalance"]
+    F --&gt; G["maxHeap=[1,2], minHeap=[3]"]
+    G --&gt; H["median = 2"]</code></pre></p>
 <pre class="highlight"><code class="language-java">class MedianFinder {
     private PriorityQueue&lt;Integer&gt; maxHeap;
     private PriorityQueue&lt;Integer&gt; minHeap;
-
     public MedianFinder() {
         maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
         minHeap = new PriorityQueue&lt;&gt;();
     }
-
     public void addNum(int num) {
         if (maxHeap.isEmpty() || num &lt;= maxHeap.peek()) {
             maxHeap.offer(num);
         } else {
             minHeap.offer(num);
         }
-
         if (maxHeap.size() &gt; minHeap.size() + 1) {
             minHeap.offer(maxHeap.poll());
         }
@@ -362,7 +809,6 @@
             maxHeap.offer(minHeap.poll());
         }
     }
-
     public double findMedian() {
         if (maxHeap.size() &gt; minHeap.size()) {
             return maxHeap.peek();
@@ -370,33 +816,87 @@
         return (maxHeap.peek() + minHeap.peek()) / 2.0;
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Find Median of BST, Find Mode in BST</p>
+<p><strong>Edge Cases:</strong>
+- No numbers: invalid call
+- Single number: returns it
+- Two numbers: returns average
+- All same numbers: works correctly</p>
+<p><strong>Time Complexity</strong>: O(log n) for addNum, O(1) for findMedian
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Find Median of BST
+- Find Mode in BST
+- Sliding Window Median</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="7-ipo-maximum-capital">7. <strong>IPO (Maximum Capital)</strong></h4>
-<p><strong>Explanation</strong>: Simulate projects sorted by capital. Max-heap of available projects. Time: O(n log n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+You have k projects to choose from. Each project has a capital requirement and a profit. You start with capital w. You can work on at most k projects (one at a time). After completing a project, its profit adds to your capital. Maximize your final capital.</p>
+<p><strong>Simple Analogy:</strong>
+Like investing: you have some money, you can invest in projects you can afford, and each project gives you profit that you can reinvest.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>k = 2</code>, <code>w = 0</code>, <code>profits = [1,2,3]</code>, <code>capital = [0,1,1]</code>
+<pre class="highlight"><code>Expected Output: 4
+
+Projects: (capital, profit)
+P1: (0, 1)
+P2: (1, 2)
+P3: (1, 3)
+
+Step 1: Capital=0, can afford P1 (capital 0)
+        Choose P1 (profit 1), w = 0+1 = 1
+Step 2: Capital=1, can afford P2 (capital 1) and P3 (capital 1)
+        Choose P3 (profit 3), w = 1+3 = 4
+
+Return 4</code></pre></p>
+<p>Input: <code>k = 3</code>, <code>w = 0</code>, <code>profits = [1,2,3]</code>, <code>capital = [0,1,2]</code>
+<pre class="highlight"><code>Expected Output: 6
+
+Step 1: Capital=0, choose P1 (profit 1), w=1
+Step 2: Capital=1, choose P2 (profit 2), w=3
+Step 3: Capital=3, choose P3 (profit 3), w=6
+
+Return 6</code></pre></p>
+<p>Input: <code>k = 1</code>, <code>w = 0</code>, <code>profits = [1,2,3]</code>, <code>capital = [1,1,2]</code>
+<pre class="highlight"><code>Expected Output: 0
+
+Can't afford any project (all need capital &gt;= 1)
+Return 0</code></pre></p>
+<p><strong>Key Insight - Greedy with Two Heaps (or Sort + Heap):</strong>
+Sort projects by capital. Use a max-heap for profits of affordable projects. At each step:
+1. Add all projects we can now afford to the max-heap
+2. Pick the project with the highest profit
+3. Add its profit to our capital
+4. Repeat k times</p>
+<p><strong>Why It Works:</strong>
+- At each step, we want the highest profit among affordable projects
+- As capital increases, more projects become affordable
+- Greedy works: always pick the best available project
+- The heap gives us O(log n) selection of best profit
+- We never need to "un-choose" a project</p>
+<p><strong>Visualization - IPO:</strong>
+<pre class="mermaid"><code>graph TD
+    A["k=2, w=0, P1(0,1), P2(1,2), P3(1,3)"] --&gt; B["Sort by capital: P1, P2, P3"]
+    B --&gt; C["Step 1: w=0, add P1 to heap, pick profit 1"]
+    C --&gt; D["w=1, heap empty"]
+    D --&gt; E["Step 2: w=1, add P2, P3 to heap, pick profit 3"]
+    E --&gt; F["w=4, return 4"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
     int n = profits.length;
     Project[] projects = new Project[n];
-
     for (int i = 0; i &lt; n; i++) {
         projects[i] = new Project(capital[i], profits[i]);
     }
-
     Arrays.sort(projects, (a, b) -&gt; a.capital - b.capital);
-
     PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
     int i = 0;
-
     for (int j = 0; j &lt; k; j++) {
         while (i &lt; n &amp;&amp; projects[i].capital &lt;= w) {
             maxHeap.offer(projects[i++].profit);
         }
-
         if (maxHeap.isEmpty()) break;
         w += maxHeap.poll();
     }
-
     return w;
 }
 
@@ -407,42 +907,67 @@ class Project {
         this.profit = profit;
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Stock Market Prediction, Resource Allocation</p>
+<p><strong>Edge Cases:</strong>
+- k = 0: returns w
+- No affordable projects: returns w
+- All projects affordable: picks k highest profits
+- Single project: picks it if affordable</p>
+<p><strong>Time Complexity</strong>: O(n log n + k log n)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Stock Market Prediction
+- Resource Allocation
+- Course Schedule III</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-k-largestsmallest-pattern">1. <strong>K Largest/Smallest Pattern</strong></h3>
 <ul>
-<li>Use min-heap for k largest (size k, peek is smallest of k largest)</li>
-<li>Use max-heap for k smallest (size k, peek is largest of k smallest)</li>
-<li>Keep heap size ≤ k</li>
+<li><strong>K largest</strong>: Min-heap of size k. The top is the kth largest.</li>
+<li><strong>K smallest</strong>: Max-heap of size k. The top is the kth smallest.</li>
+<li>Keep heap size &lt;= k by polling when size exceeds k.</li>
+<li>Examples: Kth Largest, K Closest Points, Top K Frequent</li>
 </ul>
-<h3 id="2-merge-k-collections">2. <strong>Merge k Collections</strong></h3>
+<h3 id="2-merge-k-collections">2. <strong>Merge K Collections</strong></h3>
 <ul>
-<li>Put first element from each collection in heap</li>
-<li>Pop smallest, add its next element</li>
-<li>Continue until heap empty</li>
+<li>Put the first element of each collection in a min-heap</li>
+<li>Pop the smallest, add its next element</li>
+<li>Continue until heap is empty</li>
+<li>Examples: Merge K Sorted Lists, Merge K Sorted Arrays</li>
 </ul>
 <h3 id="3-two-heap-pattern">3. <strong>Two Heap Pattern</strong></h3>
 <ul>
-<li>Max heap for left half</li>
-<li>Min heap for right half</li>
-<li>Balance sizes for median/middle queries</li>
+<li>Max-heap for the "left half" (smaller elements)</li>
+<li>Min-heap for the "right half" (larger elements)</li>
+<li>Keep sizes balanced (differ by at most 1)</li>
+<li>Median = top of larger heap, or average of both tops</li>
+<li>Examples: Find Median from Data Stream, Sliding Window Median</li>
 </ul>
-<h3 id="4-lazy-deletion">4. <strong>Lazy Deletion</strong></h3>
+<h3 id="4-greedy-with-heap">4. <strong>Greedy with Heap</strong></h3>
 <ul>
-<li>Mark deleted items but keep in heap</li>
+<li>At each step, pick the best available option</li>
+<li>Use heap to efficiently get the best</li>
+<li>Examples: IPO, Task Scheduler, Minimum Refueling Stops</li>
+</ul>
+<h3 id="5-lazy-deletion">5. <strong>Lazy Deletion</strong></h3>
+<ul>
+<li>Mark items as deleted but keep in heap</li>
 <li>Check validity when popping</li>
 <li>Saves deletion cost</li>
+<li>Examples: Sliding Window Maximum, Design Twitter</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Wrong comparator for min/max heap</li>
-<li>❌ Heap not properly balanced</li>
-<li>❌ Not handling heap size properly</li>
-<li>❌ Comparison with null values</li>
-<li>❌ Integer overflow in distance calculations</li>
-<li>❌ Not updating heap after peek</li>
+<li>Wrong comparator for min/max heap (e.g., <code>(a, b) -&gt; a - b</code> for max-heap)</li>
+<li>Not handling heap size properly (forgetting to poll when size &gt; k)</li>
+<li>Comparison with null values (in custom objects)</li>
+<li>Integer overflow in distance calculations (use long for squares)</li>
+<li>Not updating heap after peek (peek doesn't remove)</li>
+<li>Forgetting to balance two heaps (median problem)</li>
+<li>Using heap when a simple sort would suffice</li>
+<li>Not considering duplicates in frequency problems</li>
+<li>Forgetting that PriorityQueue in Java is min-heap by default</li>
+<li>Using <code>(a, b) -&gt; b - a</code> for max-heap (works, but <code>(a, b) -&gt; Integer.compare(b, a)</code> is safer for overflow)</li>
 </ul>
               
             </div>

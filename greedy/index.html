@@ -114,13 +114,25 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Greedy Algorithm</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-greedy-algorithm-simple-explanation">What is a Greedy Algorithm? (Simple Explanation)</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#when-to-use-greedy">When to Use Greedy</a>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#when-to-use-greedy-vs-dynamic-programming">When to Use Greedy (vs Dynamic Programming)</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-template">🔹 Basic Template</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#greedy-template">Greedy Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#greedy-decision-flow">Greedy Decision Flow</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#greedy-vs-dp-decision-flow">Greedy vs DP Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -170,9 +182,21 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#4-simulation">4. Simulation</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-two-pass-technique">5. Two-Pass Technique</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#6-frequency-based-formula">6. Frequency-Based Formula</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#greedy-decision-flow_1">🔹 Greedy Decision Flow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#choosing-the-right-approach">Choosing the Right Approach</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#complexity-cheat-sheet">Complexity Cheat Sheet</a>
+    </li>
+        </ul>
     </li>
     </ul>
                 </li>
@@ -201,43 +225,151 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="greedy-algorithm">Greedy Algorithm</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-a-greedy-algorithm-simple-explanation">What is a Greedy Algorithm? (Simple Explanation)</h2>
+<p>Imagine you're at a buffet and want to eat as much as possible. A greedy strategy would be: "At each step, take the biggest piece of food available." You don't plan ahead or reconsider — you just grab the best thing right now.</p>
+<p>That's exactly what a greedy algorithm does:
+- <strong>Look at the current situation</strong>
+- <strong>Make the choice that looks best right now</strong>
+- <strong>Never look back or reconsider</strong>
+- <strong>Hope that these local choices lead to the globally best answer</strong></p>
+<p>Sometimes this works perfectly (like getting the maximum number of non-overlapping meetings). Sometimes it fails badly (like trying to make change for 30 cents with coins [25, 10, 1] — greedy picks 25 then 5 ones, but 3 tens would be better... wait, 3 tens is 30, that works too. Let me use a better example: coins [1, 3, 4] to make 6. Greedy picks 4, then 1, then 1 = 3 coins. Optimal is 3 + 3 = 2 coins. Greedy fails!).</p>
+<p><strong>Key idea:</strong> Greedy works when making the locally optimal choice at each step leads to the globally optimal solution. This is called the <strong>greedy choice property</strong>.</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li>Local optimal choice leads to global optimum</li>
-<li>Make best choice at each step without reconsidering</li>
-<li>Cannot be applied to all problems (prove greedy choice property)</li>
+<li><strong>Greedy Choice Property</strong>: A locally optimal choice leads to a globally optimal solution</li>
+<li><strong>Optimal Substructure</strong>: An optimal solution contains optimal solutions to subproblems</li>
+<li><strong>No Reconsideration</strong>: Once a choice is made, it's never undone</li>
+<li><strong>Sorting Often Helps</strong>: Many greedy problems become obvious after sorting</li>
+<li><strong>Proof Needed</strong>: You must prove greedy works; it's not always correct!</li>
 </ul>
-<h2 id="when-to-use-greedy">When to Use Greedy</h2>
-<ul>
-<li>Optimal substructure exists</li>
-<li>Greedy choice property holds (local = global)</li>
-<li>Cannot work if future choices dependent on current</li>
-</ul>
+<h2 id="when-to-use-greedy-vs-dynamic-programming">When to Use Greedy (vs Dynamic Programming)</h2>
+<p>Use greedy when:
+- You can prove that the best local choice is always part of the best global solution
+- The problem has the "greedy choice property"
+- Future decisions don't affect the validity of past choices</p>
+<p>Use DP instead when:
+- You need to consider multiple options and pick the best overall
+- Local optimal doesn't guarantee global optimal
+- You need to remember past decisions</p>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
-<li>Activity Selection / Interval Scheduling</li>
-<li>Fractional Knapsack</li>
+<li>Assign Cookies</li>
 <li>Jump Game</li>
 <li>Gas Station</li>
+<li>Best Time to Buy and Sell Stock</li>
+<li>Partition Labels</li>
+<li>Jump Game II</li>
+<li>Task Scheduler</li>
+<li>Queue Reconstruction by Height</li>
 <li>Candy Distribution</li>
-<li>Meeting Rooms</li>
+<li>Minimum Number of Refueling Stops</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Sorting for greedy order</li>
-<li>Priority queues</li>
-<li>Two pointers with greedy condition</li>
-<li>Simulation with best choice at each step</li>
+<li><strong>Sorting for greedy order</strong>: Sort to establish optimal processing order</li>
+<li><strong>Priority queues</strong>: Always pick the best available option</li>
+<li><strong>Two pointers with greedy condition</strong>: Sweep through data making choices</li>
+<li><strong>Simulation with best choice at each step</strong>: Follow algorithm step-by-step</li>
+<li><strong>Track maximum/minimum reach</strong>: Keep best-so-far values</li>
 </ul>
+<hr />
+<h2 id="basic-template">🔹 Basic Template</h2>
+<h3 id="greedy-template">Greedy Template</h3>
+<pre class="highlight"><code class="language-java">public int greedyTemplate(int[] nums) {
+    // Step 1: Sort if needed
+    Arrays.sort(nums);
+    // Step 2: Initialize state
+    int result = 0;
+    int currentState = 0;
+    // Step 3: Make greedy choice at each step
+    for (int num : nums) {
+        if (shouldTake(num, currentState)) {
+            result++;
+            currentState = update(num, currentState);
+        }
+    }
+    return result;
+}</code></pre>
+<h3 id="greedy-decision-flow">Greedy Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Start: Sort input if needed"] --&gt; B["Initialize state"]
+    B --&gt; C{"More elements to process?"}
+    C --&gt;|No| D["Return result"]
+    C --&gt;|Yes| E["Examine current element"]
+    E --&gt; F{"Is this the best local choice?"}
+    F --&gt;|Yes| G["Take it, update state"]
+    F --&gt;|No| H["Skip it"]
+    G --&gt; C
+    H --&gt; C</code></pre>
+<h3 id="greedy-vs-dp-decision-flow">Greedy vs DP Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Optimization Problem"] --&gt; B{"Can you prove local = global?"}
+    B --&gt;|Yes| C["Use Greedy"]
+    B --&gt;|No| D{"Do subproblems overlap?"}
+    D --&gt;|Yes| E["Use Dynamic Programming"]
+    D --&gt;|No| F["Use Divide and Conquer or Backtracking"]</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-assign-cookies">1. <strong>Assign Cookies</strong></h4>
-<p><strong>Explanation</strong>: Greedy: match smallest cookie with smallest child greed factor. Sort both arrays, use two pointers. Time: O(n log n + m log m), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+You have children with greed factors (how big a cookie they need) and cookies with sizes. Each child can get at most one cookie. A child is content if the cookie size &gt;= their greed factor. Maximize the number of content children.</p>
+<p><strong>Simple Analogy:</strong>
+Like matching kids to cookies. Give the smallest cookie that satisfies the least greedy child, then move on.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>g = [1, 2, 3]</code>, <code>s = [1, 1]</code>
+<pre class="highlight"><code>Expected Output: 1
+
+Children greed: [1, 2, 3]
+Cookies size: [1, 1]
+
+Sort both (already sorted):
+Child 1 (greed 1) gets cookie 1 -&gt; content!
+Child 2 (greed 2) tries cookie 1 -&gt; too small, no more cookies
+Child 3 (greed 3) -&gt; no cookies left
+
+Content children = 1</code></pre></p>
+<p>Input: <code>g = [1, 2]</code>, <code>s = [1, 2, 3]</code>
+<pre class="highlight"><code>Expected Output: 2
+
+Children greed: [1, 2]
+Cookies size: [1, 2, 3]
+
+Child 1 (greed 1) gets cookie 1 -&gt; content!
+Child 2 (greed 2) gets cookie 2 -&gt; content!
+Cookie 3 unused
+
+Content children = 2</code></pre></p>
+<p>Input: <code>g = [10, 9, 8, 7]</code>, <code>s = [5, 6, 7, 8]</code>
+<pre class="highlight"><code>Expected Output: 2
+
+Sorted: g = [7, 8, 9, 10], s = [5, 6, 7, 8]
+
+Child 7 gets cookie 7 -&gt; content
+Child 8 gets cookie 8 -&gt; content
+Child 9 -&gt; no cookie &gt;= 9
+Child 10 -&gt; no cookie
+
+Content children = 2</code></pre></p>
+<p><strong>Key Insight - Match Smallest to Smallest:</strong>
+Sort both arrays. Use two pointers. If current cookie can satisfy current child, assign it and move both pointers. Otherwise, the cookie is too small — try the next cookie (move cookie pointer only).</p>
+<p><strong>Why It Works:</strong>
+- The least greedy child should get the smallest cookie that satisfies them
+- This leaves larger cookies for greedier children
+- If we gave a large cookie to a small-greed child, we might waste it
+- Greedy choice: always satisfy the easiest child with the smallest possible cookie</p>
+<p><strong>Visualization - Assign Cookies:</strong>
+<pre class="mermaid"><code>graph TD
+    A["g=[1,2,3], s=[1,1]"] --&gt; B["Sort both"]
+    B --&gt; C["child=0, cookie=0"]
+    C --&gt; D{"s[0]=1 &gt;= g[0]=1?"}
+    D --&gt;|Yes| E["Assign, child=1, cookie=1"]
+    E --&gt; F{"s[1]=1 &gt;= g[1]=2?"}
+    F --&gt;|No| G["cookie=2"]
+    G --&gt; H["No more cookies, return child=1"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int findContentChildren(int[] g, int[] s) {
     Arrays.sort(g);
     Arrays.sort(s);
-
     int childIdx = 0, cookieIdx = 0;
     while (childIdx &lt; g.length &amp;&amp; cookieIdx &lt; s.length) {
         if (s[cookieIdx] &gt;= g[childIdx]) {
@@ -245,235 +377,952 @@
         }
         cookieIdx++;
     }
-
     return childIdx;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Two Sum Closest, Best Time to Trade</p>
+<p><strong>Edge Cases:</strong>
+- No children: returns 0
+- No cookies: returns 0
+- All cookies too small: returns 0
+- All cookies satisfy all children: returns number of children</p>
+<p><strong>Time Complexity</strong>: O(n log n + m log m) - sorting dominates
+<strong>Space Complexity</strong>: O(1) - only pointers</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Two Sum Closest
+- Best Time to Buy and Sell Stock</p>
 <hr />
 <h4 id="2-jump-game">2. <strong>Jump Game</strong></h4>
-<p><strong>Explanation</strong>: Track maximum reachable index. If current position &gt; max reach, stuck. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+You're given an array where nums[i] is the maximum jump length from position i. Starting at index 0, can you reach the last index?</p>
+<p><strong>Simple Analogy:</strong>
+Like hopping on stepping stones. Each stone tells you how far you can jump. Can you make it to the other side?</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>nums = [2, 3, 1, 1, 4]</code>
+<pre class="highlight"><code>Expected Output: true
+
+Start at index 0 (value 2): can jump to index 1 or 2
+Jump to index 1 (value 3): can jump to index 2, 3, or 4
+Jump to index 4: DONE!
+
+maxReach tracking:
+i=0: maxReach = max(0, 0+2) = 2
+i=1: maxReach = max(2, 1+3) = 4 (can reach end!)
+Return true</code></pre></p>
+<p>Input: <code>nums = [3, 2, 1, 0, 4]</code>
+<pre class="highlight"><code>Expected Output: false
+
+i=0: maxReach = 3
+i=1: maxReach = max(3, 1+2) = 3
+i=2: maxReach = max(3, 2+1) = 3
+i=3: maxReach = max(3, 3+0) = 3
+i=4: i=4 &gt; maxReach=3 -&gt; STUCK! Return false</code></pre></p>
+<p>Input: <code>nums = [0]</code>
+<pre class="highlight"><code>Expected Output: true (already at last index)</code></pre></p>
+<p><strong>Key Insight - Track Maximum Reach:</strong>
+As you scan through the array, keep track of the farthest index you can reach. At each position, update maxReach = max(maxReach, i + nums[i]). If your current index exceeds maxReach, you're stuck.</p>
+<p><strong>Why It Works:</strong>
+- If you can reach index i, you can reach any index up to maxReach
+- The greedy choice: always extend your reach as far as possible
+- If you ever find yourself at a position beyond your reach, it's impossible
+- If maxReach reaches the last index, return true</p>
+<p><strong>Visualization - Jump Game:</strong>
+<pre class="mermaid"><code>graph TD
+    A["nums=[2,3,1,1,4]"] --&gt; B["i=0: maxReach=2"]
+    B --&gt; C["i=1: maxReach=max(2,4)=4"]
+    C --&gt; D["maxReach &gt;= 4 (last index)"]
+    D --&gt; E["Return true"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean canJump(int[] nums) {
     int maxReach = 0;
-
     for (int i = 0; i &lt; nums.length; i++) {
         if (i &gt; maxReach) return false;
         maxReach = Math.max(maxReach, i + nums[i]);
         if (maxReach &gt;= nums.length - 1) return true;
     }
-
     return false;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Jump Game II, Jump Game III</p>
+<p><strong>Edge Cases:</strong>
+- Single element: always true (already at end)
+- First element 0 with more elements: false
+- All zeros except last: depends
+- Large jumps: works correctly</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Jump Game II (minimum jumps)
+- Jump Game III (can reach zero)
+- Jump Game VII (with constraints)</p>
 <hr />
 <h4 id="3-gas-station">3. <strong>Gas Station</strong></h4>
-<p><strong>Explanation</strong>: Track total gas - cost. If negative, reset start. If overall total &gt;= 0, answer exists. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+There are n gas stations in a circle. gas[i] is fuel at station i, cost[i] is fuel needed to travel from station i to i+1. Find the starting station index to complete the circle, or -1 if impossible.</p>
+<p><strong>Simple Analogy:</strong>
+Like planning a road trip around a circular route. You need to find where to start so you never run out of gas.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>gas = [1, 2, 3, 4, 5]</code>, <code>cost = [3, 4, 5, 1, 2]</code>
+<pre class="highlight"><code>Expected Output: 3
+
+Net gas at each station: [-2, -2, -2, 3, 3]
+
+Start at 0: total = -2, current = -2 &lt; 0 -&gt; reset start=1
+Start at 1: total = -4, current = -2 &lt; 0 -&gt; reset start=2
+Start at 2: total = -6, current = -2 &lt; 0 -&gt; reset start=3
+Start at 3: total = -3, current = 3 &gt;= 0
+Start at 4: total = 0, current = 6 &gt;= 0
+total &gt;= 0 -&gt; return start=3</code></pre></p>
+<p>Input: <code>gas = [2, 3, 4]</code>, <code>cost = [3, 4, 3]</code>
+<pre class="highlight"><code>Expected Output: -1
+
+Net: [-1, -1, 1]
+Total = -1 &lt; 0 -&gt; impossible
+Return -1</code></pre></p>
+<p>Input: <code>gas = [5, 1, 2, 3, 4]</code>, <code>cost = [4, 4, 1, 5, 1]</code>
+<pre class="highlight"><code>Expected Output: 4
+
+Net: [1, -3, 1, -2, 3]
+Total = 0 &gt;= 0
+
+Start at 0: current=1
+i=1: current=1-3=-2 &lt; 0 -&gt; reset start=2
+i=2: current=1
+i=3: current=1-2=-1 &lt; 0 -&gt; reset start=4
+i=4: current=3
+total=0 &gt;= 0 -&gt; return start=4</code></pre></p>
+<p><strong>Key Insight - Total and Current:</strong>
+- <strong>Total</strong>: sum of (gas[i] - cost[i]) over all stations. If total &lt; 0, impossible.
+- <strong>Current</strong>: running sum from the current starting candidate. If current &lt; 0, no station from start to i can be the answer, so reset start to i+1.</p>
+<p><strong>Why It Works:</strong>
+- If total gas &gt;= total cost, a solution exists (and is unique)
+- If current becomes negative at station i, starting anywhere between start and i will also fail
+- This is because the deficit accumulates; starting later only makes it worse
+- So we can greedily skip to i+1 as the new candidate start</p>
+<p><strong>Visualization - Gas Station:</strong>
+<pre class="mermaid"><code>graph TD
+    A["gas=[1,2,3,4,5], cost=[3,4,5,1,2]"] --&gt; B["Net: [-2,-2,-2,3,3]"]
+    B --&gt; C["Start 0: current=-2 &lt; 0, start=1"]
+    C --&gt; D["Start 1: current=-2 &lt; 0, start=2"]
+    D --&gt; E["Start 2: current=-2 &lt; 0, start=3"]
+    E --&gt; F["Start 3: current=3 &gt;= 0"]
+    F --&gt; G["Start 4: current=6 &gt;= 0"]
+    G --&gt; H["total=0 &gt;= 0, return 3"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int canCompleteCircuit(int[] gas, int[] cost) {
     int total = 0, current = 0, start = 0;
-
     for (int i = 0; i &lt; gas.length; i++) {
         total += gas[i] - cost[i];
         current += gas[i] - cost[i];
-
         if (current &lt; 0) {
             current = 0;
             start = i + 1;
         }
     }
-
     return total &gt;= 0 ? start : -1;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Gas Station II, Circular Rotation</p>
+<p><strong>Edge Cases:</strong>
+- Total gas &lt; total cost: returns -1
+- Single station with enough gas: returns 0
+- Exactly enough gas: returns some valid start
+- All stations have surplus: returns 0</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Gas Station II
+- Circular Rotation</p>
 <hr />
 <h4 id="4-best-time-to-buy-and-sell-stock">4. <strong>Best Time to Buy and Sell Stock</strong></h4>
-<p><strong>Explanation</strong>: Track minimum price, calculate max profit. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given an array of stock prices, find the maximum profit from buying one day and selling on a later day. If no profit possible, return 0.</p>
+<p><strong>Simple Analogy:</strong>
+Like buying and selling a stock. You want to buy low and sell high, but you must buy before you sell.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>prices = [7, 1, 5, 3, 6, 4]</code>
+<pre class="highlight"><code>Expected Output: 5 (buy at 1, sell at 6)
+
+minPrice tracking:
+i=0: minPrice=7, maxProfit=0
+i=1: maxProfit=max(0, 1-7)=0, minPrice=1
+i=2: maxProfit=max(0, 5-1)=4, minPrice=1
+i=3: maxProfit=max(4, 3-1)=4, minPrice=1
+i=4: maxProfit=max(4, 6-1)=5, minPrice=1
+i=5: maxProfit=max(5, 4-1)=5, minPrice=1
+
+Return 5</code></pre></p>
+<p>Input: <code>prices = [7, 6, 4, 3, 1]</code>
+<pre class="highlight"><code>Expected Output: 0 (prices only decrease)
+
+minPrice: 7, 6, 4, 3, 1
+maxProfit: 0, 0, 0, 0, 0
+Return 0</code></pre></p>
+<p>Input: <code>prices = [1, 2]</code>
+<pre class="highlight"><code>Expected Output: 1
+
+i=0: minPrice=1, maxProfit=0
+i=1: maxProfit=max(0, 2-1)=1, minPrice=1
+Return 1</code></pre></p>
+<p><strong>Key Insight - Track Minimum So Far:</strong>
+As you iterate, keep track of the minimum price seen so far (best buying opportunity). At each day, calculate profit if you sold today (current price - minPrice). Track the maximum profit.</p>
+<p><strong>Why It Works:</strong>
+- The optimal buying day must come before the optimal selling day
+- By tracking minimum price as you go, you always know the best buying opportunity up to current day
+- For each selling day, compute the best possible profit
+- Taking the maximum over all selling days gives the answer
+- This is greedy because we only need to remember the best buy so far</p>
+<p><strong>Visualization - Stock Profit:</strong>
+<pre class="mermaid"><code>graph TD
+    A["prices=[7,1,5,3,6,4]"] --&gt; B["i=0: min=7, profit=0"]
+    B --&gt; C["i=1: min=1, profit=0"]
+    C --&gt; D["i=2: profit=max(0,5-1)=4, min=1"]
+    D --&gt; E["i=3: profit=max(4,3-1)=4, min=1"]
+    E --&gt; F["i=4: profit=max(4,6-1)=5, min=1"]
+    F --&gt; G["i=5: profit=max(5,4-1)=5, min=1"]
+    G --&gt; H["Return 5"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int maxProfit(int[] prices) {
     int minPrice = prices[0];
     int maxProfit = 0;
-
     for (int i = 1; i &lt; prices.length; i++) {
         maxProfit = Math.max(maxProfit, prices[i] - minPrice);
         minPrice = Math.min(minPrice, prices[i]);
     }
-
     return maxProfit;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Best Time to Buy Stock II, III</p>
+<p><strong>Edge Cases:</strong>
+- Single day: no transaction possible, returns 0
+- Decreasing prices: returns 0
+- Increasing prices: returns last - first
+- Same prices: returns 0</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Best Time to Buy and Sell Stock II (multiple transactions)
+- Best Time to Buy and Sell Stock III (at most 2 transactions)
+- Best Time to Buy and Sell Stock with Cooldown</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="5-partition-labels">5. <strong>Partition Labels</strong></h4>
-<p><strong>Explanation</strong>: Find last occurrence of each character. When current index reaches last occurrence, partition found. Time: O(n), Space: O(26).</p>
+<p><strong>Problem Description:</strong>
+Given a string s, partition it into as many parts as possible such that each letter appears in at most one part. Return the sizes of these parts.</p>
+<p><strong>Simple Analogy:</strong>
+Like cutting a string into pieces where no letter is split across pieces. Each piece is "self-contained."</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "ababcbacadefegdehijhklij"</code>
+<pre class="highlight"><code>Expected Output: [9, 7, 8]
+
+First, find last occurrence of each character:
+a: 8, b: 5, c: 7, d: 14, e: 15, f: 11, g: 13, h: 19, i: 22, j: 23, k: 20, l: 21
+
+Start at index 0 ('a'), last occurrence is 8, so end = 8
+Scanning: i=0 to 8, update end if any char's last occurrence is beyond 8
+At i=8, end=8, so first partition is [0..8] = 9 characters
+
+Next partition starts at 9 ('d'), last occurrence is 14, end=14
+At i=14, end=14, second partition is [9..14] = 6? Wait...
+Let me recount: index 9 to 14 is 6 characters, but expected is 7.
+
+Hmm, let me check: d:14, e:15, f:11, g:13
+At i=9 ('d'), end=14
+i=10 ('e'), end=max(14,15)=15
+i=11 ('f'), end=max(15,11)=15
+i=12 ('e'), end=15
+i=13 ('g'), end=max(15,13)=15
+i=14 ('d'), end=15
+i=15 ('e'), end=15, i==end -&gt; partition [9..15] = 7 characters
+
+Then [16..22] = 8 characters? Let me verify.
+Expected output is [9, 7, 8], total = 24, correct!</code></pre></p>
+<p>Input: <code>s = "eccbbbbdec"</code>
+<pre class="highlight"><code>Expected Output: [10]
+
+Last occurrences:
+e: 8, c: 9, b: 5, d: 7
+Start at 0 ('e'), end=8
+i=0: end=max(8,8)=8
+i=1 ('c'): end=max(8,9)=9
+i=2 ('c'): end=9
+i=3 ('b'): end=9
+i=4 ('b'): end=9
+i=5 ('b'): end=9
+i=6 ('b'): end=9
+i=7 ('d'): end=9
+i=8 ('e'): end=9
+i=9 ('c'): end=9, i==end -&gt; partition of size 10
+
+Return [10]</code></pre></p>
+<p><strong>Key Insight - Last Occurrence Tracking:</strong>
+Precompute the last occurrence index of each character. Then scan from left to right. For each partition, the end is the maximum last occurrence of all characters seen so far. When the current index equals this end, we've found a valid partition.</p>
+<p><strong>Why It Works:</strong>
+- A partition is valid if it contains all occurrences of every character it includes
+- The end of a partition must be at least the maximum last occurrence of all its characters
+- As we scan, we extend the end to cover new characters
+- When current index equals end, no character extends beyond, so partition is complete
+- This greedy approach gives the maximum number of partitions</p>
+<p><strong>Visualization - Partition Labels:</strong>
+<pre class="mermaid"><code>graph TD
+    A["s='ababcbacadefegdehijhklij'"] --&gt; B["Last occ: a:8, b:5, c:7, d:14, e:15, f:11, g:13, h:19, i:22, j:23, k:20, l:21"]
+    B --&gt; C["Start=0, end=8"]
+    C --&gt; D["i=0..8: update end, at i=8 end=8"]
+    D --&gt; E["Partition 1: size 9"]
+    E --&gt; F["Start=9, end=15"]
+    F --&gt; G["Partition 2: size 7"]
+    G --&gt; H["Start=16, end=23"]
+    H --&gt; I["Partition 3: size 8"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;Integer&gt; partitionLabels(String s) {
     int[] lastOccurrence = new int[26];
     for (int i = 0; i &lt; s.length(); i++) {
         lastOccurrence[s.charAt(i) - 'a'] = i;
     }
-
     List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
     int start = 0, end = 0;
-
     for (int i = 0; i &lt; s.length(); i++) {
         end = Math.max(end, lastOccurrence[s.charAt(i) - 'a']);
-
         if (i == end) {
             result.add(end - start + 1);
             start = end + 1;
         }
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Merge Intervals, Video Stitching</p>
+<p><strong>Edge Cases:</strong>
+- Empty string: returns []
+- Single character: returns [1]
+- All same characters: returns [length]
+- All distinct characters: returns [1, 1, 1, ...]</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1) - fixed 26 characters</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Merge Intervals
+- Video Stitching</p>
 <hr />
 <h4 id="6-jump-game-ii">6. <strong>Jump Game II</strong></h4>
-<p><strong>Explanation</strong>: Track farthest reach in current jump level. When reaching end of level, increment jumps. Time: O(n), Space: O(1).</p>
+<p><strong>Problem Description:</strong>
+Given an array where nums[i] is the maximum jump length from position i, find the minimum number of jumps to reach the last index.</p>
+<p><strong>Simple Analogy:</strong>
+Like the first Jump Game, but now you want the FEWEST jumps, not just any path.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>nums = [2, 3, 1, 1, 4]</code>
+<pre class="highlight"><code>Expected Output: 2
+
+Jump 1: from index 0 to index 1 (or 2)
+Jump 2: from index 1 to index 4 (last index)
+
+jumps=0, farthest=0, endOfJump=0
+
+i=0: farthest=max(0, 0+2)=2
+     i==endOfJump (0==0)? YES -&gt; jumps=1, endOfJump=2
+
+i=1: farthest=max(2, 1+3)=4
+     i==endOfJump (1==2)? NO
+
+i=2: farthest=max(4, 2+1)=4
+     i==endOfJump (2==2)? YES -&gt; jumps=2, endOfJump=4
+
+Loop ends (i &lt; n-1 = 4, but we stop at i=3)
+Actually loop is i &lt; nums.length - 1, so i=0,1,2,3
+
+i=3: farthest=max(4, 3+1)=4
+     i==endOfJump (3==4)? NO
+
+Return jumps=2</code></pre></p>
+<p>Input: <code>nums = [2, 3, 0, 1, 4]</code>
+<pre class="highlight"><code>Expected Output: 2
+
+Jump 1: 0 -&gt; 1 (or 2)
+Jump 2: 1 -&gt; 4
+Return 2</code></pre></p>
+<p>Input: <code>nums = [0]</code>
+<pre class="highlight"><code>Expected Output: 0 (already at last index)</code></pre></p>
+<p><strong>Key Insight - BFS-like Level Tracking:</strong>
+Think of it like BFS levels. Each "level" is the range of indices reachable with the current number of jumps. When you reach the end of a level, you must jump again, and the new level extends to the farthest reachable index.</p>
+<p><strong>Why It Works:</strong>
+- <code>farthest</code> = farthest index reachable with jumps+1 jumps
+- <code>endOfJump</code> = last index reachable with current jumps
+- When i reaches endOfJump, we need one more jump
+- The new endOfJump becomes the farthest we could reach from the previous level
+- This is greedy: always extend as far as possible before jumping</p>
+<p><strong>Visualization - Jump Game II:</strong>
+<pre class="mermaid"><code>graph TD
+    A["nums=[2,3,1,1,4]"] --&gt; B["i=0: farthest=2, i==end(0) -&gt; jumps=1, end=2"]
+    B --&gt; C["i=1: farthest=max(2,4)=4"]
+    C --&gt; D["i=2: farthest=4, i==end(2) -&gt; jumps=2, end=4"]
+    D --&gt; E["i=3: farthest=4"]
+    E --&gt; F["Return jumps=2"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int jump(int[] nums) {
     int jumps = 0, farthest = 0, endOfJump = 0;
-
     for (int i = 0; i &lt; nums.length - 1; i++) {
         farthest = Math.max(farthest, i + nums[i]);
-
         if (i == endOfJump) {
             jumps++;
             endOfJump = farthest;
         }
     }
-
     return jumps;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Jump Game with Obstacles, Minimum Jumps</p>
+<p><strong>Edge Cases:</strong>
+- Single element: returns 0
+- Two elements with jump &gt;= 1: returns 1
+- All elements 1: returns n-1
+- Large jumps: fewer jumps needed</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Jump Game (can reach end?)
+- Jump Game with Obstacles
+- Minimum Jumps</p>
 <hr />
 <h4 id="7-task-scheduler">7. <strong>Task Scheduler</strong></h4>
-<p><strong>Explanation</strong>: Greedy based on frequency. Arrange highest frequency tasks first with cooldown. Formula: (maxFreq - 1) * (cooldown + 1) + count of maxFreq tasks. Time: O(n), Space: O(26).</p>
+<p><strong>Problem Description:</strong>
+Given a list of tasks (characters) and a cooldown n, find the least number of intervals needed to complete all tasks. Same task must have at least n intervals between them.</p>
+<p><strong>Simple Analogy:</strong>
+Like scheduling tasks on a CPU where the same task needs a cooldown period before it can run again. What's the minimum total time?</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>tasks = ["A","A","A","B","B","B"]</code>, <code>n = 2</code>
+<pre class="highlight"><code>Expected Output: 8
+
+Frequencies: A:3, B:3
+maxFreq = 3
+
+Formula: (maxFreq - 1) * (n + 1) + count_of_maxFreq
+= (3-1) * (2+1) + 2
+= 2 * 3 + 2
+= 8
+
+Schedule: A B _ A B _ A B (where _ is idle)
+Intervals: 8
+
+Let's verify: A B idle A B idle A B = 8 intervals</code></pre></p>
+<p>Input: <code>tasks = ["A","A","A","B","B","B"]</code>, <code>n = 0</code>
+<pre class="highlight"><code>Expected Output: 6
+
+No cooldown needed
+Just run all tasks: A A A B B B = 6</code></pre></p>
+<p>Input: <code>tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"]</code>, <code>n = 2</code>
+<pre class="highlight"><code>Expected Output: 16
+
+Frequencies: A:6, others:1
+maxFreq = 6
+Count of maxFreq = 1
+
+Formula: (6-1) * (2+1) + 1 = 15 + 1 = 16
+
+But wait, total tasks = 12, and formula gives 16 &gt; 12, so answer is 16.
+
+Schedule: A _ _ A _ _ A _ _ A _ _ A _ _ A
+Plus B,C,D,E,F,G fill some gaps
+Still 16 intervals minimum.</code></pre></p>
+<p><strong>Key Insight - Frequency-Based Formula:</strong>
+The most frequent task determines the structure. If maxFreq = f, we need (f-1) blocks of (n+1) intervals, plus one final interval for the last occurrence. If multiple tasks have maxFreq, add them to the last block.</p>
+<p><strong>Why It Works:</strong>
+- The most frequent task creates "gaps" that must be filled
+- Each gap between same tasks needs n other tasks or idle
+- Total = (maxFreq - 1) * (n + 1) + (number of tasks with maxFreq)
+- If total tasks &gt; this formula, no idle needed (return tasks.length)
+- This is the minimum because the most frequent task dictates the structure</p>
+<p><strong>Visualization - Task Scheduler:</strong>
+<pre class="mermaid"><code>graph TD
+    A["tasks=[A,A,A,B,B,B], n=2"] --&gt; B["Freq: A:3, B:3"]
+    B --&gt; C["maxFreq=3, count=2"]
+    C --&gt; D["Formula: (3-1)*(2+1)+2 = 8"]
+    D --&gt; E["Schedule: A B _ A B _ A B"]
+    E --&gt; F["Return 8"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int leastInterval(char[] tasks, int n) {
     int[] freq = new int[26];
     for (char c : tasks) {
         freq[c - 'A']++;
     }
-
     Arrays.sort(freq);
     int maxFreq = freq[25];
     int intervals = (maxFreq - 1) * (n + 1);
-
     for (int i = 25; i &gt;= 0 &amp;&amp; freq[i] == maxFreq; i--) {
         intervals++;
     }
-
     return Math.max(intervals, tasks.length);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Scheduler, Cooldown Scheduling</p>
+<p><strong>Edge Cases:</strong>
+- Single task: returns 1
+- All same tasks: formula applies
+- n = 0: returns tasks.length
+- Many different tasks: no idle needed</p>
+<p><strong>Time Complexity</strong>: O(n) - n = number of tasks
+<strong>Space Complexity</strong>: O(1) - fixed 26 characters</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Scheduler
+- Cooldown Scheduling
+- Rearrange String k Distance Apart</p>
 <hr />
 <h4 id="8-queue-reconstruction-by-height">8. <strong>Queue Reconstruction by Height</strong></h4>
-<p><strong>Explanation</strong>: Sort by height descending, position ascending. Insert each person at position (greedy insertion). Time: O(n²), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given people with heights and k values (number of people in front with height &gt;= current), reconstruct the queue.</p>
+<p><strong>Simple Analogy:</strong>
+Like arranging people in a line based on "how many taller people are in front of me."</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]</code>
+<pre class="highlight"><code>Expected Output: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+
+Step 1: Sort by height descending, then k ascending
+[[7,0],[7,1],[6,1],[5,0],[5,2],[4,4]]
+
+Step 2: Insert each person at index k
+Insert [7,0] at 0: [[7,0]]
+Insert [7,1] at 1: [[7,0],[7,1]]
+Insert [6,1] at 1: [[7,0],[6,1],[7,1]]
+Insert [5,0] at 0: [[5,0],[7,0],[6,1],[7,1]]
+Insert [5,2] at 2: [[5,0],[7,0],[5,2],[6,1],[7,1]]
+Insert [4,4] at 4: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+
+Result: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]</code></pre></p>
+<p>Input: <code>people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]</code>
+<pre class="highlight"><code>Expected Output: [[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
+
+Sorted: [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
+Insert:
+[6,0] at 0: [[6,0]]
+[5,0] at 0: [[5,0],[6,0]]
+[4,0] at 0: [[4,0],[5,0],[6,0]]
+[3,2] at 2: [[4,0],[5,0],[3,2],[6,0]]
+[2,2] at 2: [[4,0],[5,0],[2,2],[3,2],[6,0]]
+[1,4] at 4: [[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]</code></pre></p>
+<p><strong>Key Insight - Process Tallest First:</strong>
+Sort by height descending, then k ascending. Insert each person at position k in the result list. Since taller people are already placed, the k value correctly represents how many taller people should be in front.</p>
+<p><strong>Why It Works:</strong>
+- Tallest people are placed first; they don't care about shorter people
+- When inserting a shorter person, all currently placed people are taller or equal
+- So inserting at index k guarantees exactly k taller people in front
+- This is greedy: process in order of decreasing height</p>
+<p><strong>Visualization - Queue Reconstruction:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Sort by height desc, k asc"] --&gt; B["[7,0],[7,1],[6,1],[5,0],[5,2],[4,4]"]
+    B --&gt; C["Insert [7,0] at 0"]
+    C --&gt; D["Insert [7,1] at 1"]
+    D --&gt; E["Insert [6,1] at 1"]
+    E --&gt; F["Insert [5,0] at 0"]
+    F --&gt; G["Insert [5,2] at 2"]
+    G --&gt; H["Insert [4,4] at 4"]
+    H --&gt; I["Result: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int[][] reconstructQueue(int[][] people) {
     Arrays.sort(people, (a, b) -&gt; a[0] == b[0] ? a[1] - b[1] : b[0] - a[0]);
-
     List&lt;int[]&gt; result = new LinkedList&lt;&gt;();
     for (int[] person : people) {
         result.add(person[1], person);
     }
-
     return result.toArray(new int[result.size()][]);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Height Sorting, Queue Ordering</p>
+<p><strong>Edge Cases:</strong>
+- Single person: returns as-is
+- All same height: sort by k, insert in order
+- All different heights: works correctly
+- k = 0 for all: tallest first</p>
+<p><strong>Time Complexity</strong>: O(n^2) - LinkedList insertion
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Height Sorting
+- Queue Ordering</p>
 <hr />
 <h4 id="9-candy">9. <strong>Candy</strong></h4>
-<p><strong>Explanation</strong>: Two passes: ensure rating increase gets candy increase, and rating decrease gets candy decrease. Time: O(n), Space: O(n).</p>
-<pre class="highlight"><code class="language-java">public int distributeCandies(int[] ratings) {
+<p><strong>Problem Description:</strong>
+There are n children in a line with ratings. Each child must get at least 1 candy. Children with higher ratings than their neighbors must get more candies. Find minimum total candies.</p>
+<p><strong>Simple Analogy:</strong>
+Like distributing candies to kids based on their "deservingness" ratings. Better-rated kids should get more than worse-rated neighbors.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>ratings = [1, 0, 2]</code>
+<pre class="highlight"><code>Expected Output: 5
+
+Step 1: Give everyone 1 candy: [1, 1, 1]
+
+Step 2: Left to right:
+i=1: rating 0 &lt; 1, no change
+i=2: rating 2 &gt; 0, candies[2] = candies[1] + 1 = 2
+candies = [1, 1, 2]
+
+Step 3: Right to left:
+i=1: rating 0 &lt; 2, no change
+i=0: rating 1 &gt; 0, candies[0] = max(1, candies[1]+1) = max(1, 2) = 2
+candies = [2, 1, 2]
+
+Total = 2 + 1 + 2 = 5</code></pre></p>
+<p>Input: <code>ratings = [1, 2, 2]</code>
+<pre class="highlight"><code>Expected Output: 4
+
+Step 1: [1, 1, 1]
+
+Step 2: Left to right:
+i=1: 2 &gt; 1, candies[1] = 2
+i=2: 2 == 2, no change
+candies = [1, 2, 1]
+
+Step 3: Right to left:
+i=1: 2 == 2, no change
+i=0: 1 &lt; 2, no change
+candies = [1, 2, 1]
+
+Total = 4</code></pre></p>
+<p>Input: <code>ratings = [1, 3, 2, 2, 1]</code>
+<pre class="highlight"><code>Expected Output: 7
+
+Step 1: [1, 1, 1, 1, 1]
+
+Step 2: Left to right:
+i=1: 3 &gt; 1, candies[1] = 2
+i=2: 2 &lt; 3, no change
+i=3: 2 == 2, no change
+i=4: 1 &lt; 2, no change
+candies = [1, 2, 1, 1, 1]
+
+Step 3: Right to left:
+i=3: 2 &gt; 1, candies[3] = max(1, candies[4]+1) = 2
+i=2: 2 == 2, no change
+i=1: 3 &gt; 2, candies[1] = max(2, candies[2]+1) = max(2, 2) = 2
+i=0: 1 &lt; 3, no change
+candies = [1, 2, 2, 2, 1]
+
+Wait, that doesn't seem right. Let me redo:
+After step 2: [1, 2, 1, 1, 1]
+Step 3 (right to left):
+i=3: rating 2 &gt; rating 1, candies[3] = max(1, candies[4]+1) = max(1, 2) = 2
+     candies = [1, 2, 1, 2, 1]
+i=2: rating 2 == rating 2, no change
+i=1: rating 3 &gt; rating 2, candies[1] = max(2, candies[2]+1) = max(2, 2) = 2
+     candies = [1, 2, 1, 2, 1]
+i=0: rating 1 &lt; rating 3, no change
+
+Total = 1 + 2 + 1 + 2 + 1 = 7
+Correct!</code></pre></p>
+<p><strong>Key Insight - Two Passes:</strong>
+- First pass (left to right): ensure increasing ratings get more candies
+- Second pass (right to left): ensure decreasing ratings get more candies
+- Take max of both passes at each position
+- This handles all neighbor relationships</p>
+<p><strong>Why It Works:</strong>
+- Each child must satisfy constraints with both left and right neighbors
+- Left-to-right pass handles left neighbor constraints
+- Right-to-left pass handles right neighbor constraints
+- Taking max ensures both constraints are satisfied
+- Minimum total because we start with 1 and only increase when necessary</p>
+<p><strong>Visualization - Candy Distribution:</strong>
+<pre class="mermaid"><code>graph TD
+    A["ratings=[1,0,2]"] --&gt; B["Init: [1,1,1]"]
+    B --&gt; C["L-&gt;R: [1,1,2]"]
+    C --&gt; D["R-&gt;L: [2,1,2]"]
+    D --&gt; E["Total = 5"]</code></pre></p>
+<pre class="highlight"><code class="language-java">public int candy(int[] ratings) {
     int n = ratings.length;
     int[] candies = new int[n];
     Arrays.fill(candies, 1);
-
-    // Left to right: if rating increases, candy increases
     for (int i = 1; i &lt; n; i++) {
         if (ratings[i] &gt; ratings[i - 1]) {
             candies[i] = candies[i - 1] + 1;
         }
     }
-
-    // Right to left: ensure decrease is respected
     for (int i = n - 2; i &gt;= 0; i--) {
         if (ratings[i] &gt; ratings[i + 1]) {
             candies[i] = Math.max(candies[i], candies[i + 1] + 1);
         }
     }
-
     int total = 0;
     for (int candy : candies) total += candy;
     return total;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Candy Distribution Variants</p>
+<p><strong>Edge Cases:</strong>
+- Single child: returns 1
+- All same ratings: returns n
+- Strictly increasing: returns n(n+1)/2
+- Strictly decreasing: returns n(n+1)/2</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Candy Distribution Variants
+- Trapping Rain Water (similar two-pass idea)</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="10-merge-triplets-to-form-target-triplet">10. <strong>Merge Triplets to Form Target Triplet</strong></h4>
-<p><strong>Explanation</strong>: Greedily select triplets that don't exceed target and contribute maximum matching values. Time: O(n*3), Space: O(3).</p>
+<p><strong>Problem Description:</strong>
+Given triplets and a target triplet, determine if you can choose some triplets and merge them (taking element-wise max) to form the target.</p>
+<p><strong>Simple Analogy:</strong>
+Like combining ingredients. You can mix different combinations, taking the maximum of each component, to get exactly the target.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>triplets = [[2,5,3],[1,8,4],[1,7,5]]</code>, <code>target = [2,7,5]</code>
+<pre class="highlight"><code>Expected Output: true
+
+Consider [2,5,3]: all &lt;= target? 2&lt;=2, 5&lt;=7, 3&lt;=5 -&gt; YES
+current = max([0,0,0], [2,5,3]) = [2,5,3]
+
+Consider [1,8,4]: 8 &gt; 7 -&gt; exceeds target, skip
+
+Consider [1,7,5]: all &lt;= target? 1&lt;=2, 7&lt;=7, 5&lt;=5 -&gt; YES
+current = max([2,5,3], [1,7,5]) = [2,7,5]
+
+current == target -&gt; true</code></pre></p>
+<p>Input: <code>triplets = [[3,4,5],[4,5,6]]</code>, <code>target = [3,2,5]</code>
+<pre class="highlight"><code>Expected Output: false
+
+[3,4,5]: 4 &gt; 2 -&gt; exceeds, skip
+[4,5,6]: 4 &gt; 3 -&gt; exceeds, skip
+
+current = [0,0,0] != target
+Return false</code></pre></p>
+<p>Input: <code>triplets = [[2,5,3],[2,3,4],[1,2,5],[5,2,3]]</code>, <code>target = [5,5,5]</code>
+<pre class="highlight"><code>Expected Output: true
+
+[2,5,3]: all &lt;= 5 -&gt; current = [2,5,3]
+[2,3,4]: all &lt;= 5 -&gt; current = [2,5,4]
+[1,2,5]: all &lt;= 5 -&gt; current = [2,5,5]
+[5,2,3]: all &lt;= 5 -&gt; current = [5,5,5]
+
+current == target -&gt; true</code></pre></p>
+<p><strong>Key Insight - Only Consider Valid Triplets:</strong>
+A triplet is useful only if all its elements are &lt;= corresponding target elements. Among useful triplets, take element-wise max. If the result equals target, return true.</p>
+<p><strong>Why It Works:</strong>
+- If any element exceeds target, that triplet can't be used (would make result too large)
+- Taking max of all valid triplets gives the best possible result
+- If this max equals target, we can form target
+- If not, no combination can form target (since we've taken the maximum possible)</p>
+<p><strong>Visualization - Merge Triplets:</strong>
+<pre class="mermaid"><code>graph TD
+    A["triplets=[[2,5,3],[1,8,4],[1,7,5]]"] --&gt; B["target=[2,7,5]"]
+    B --&gt; C["[2,5,3]: valid, current=[2,5,3]"]
+    C --&gt; D["[1,8,4]: invalid (8&gt;7)"]
+    D --&gt; E["[1,7,5]: valid, current=[2,7,5]"]
+    E --&gt; F["current == target -&gt; true"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean mergeTriplets(int[][] triplets, int[] target) {
     int[] current = {0, 0, 0};
-
     for (int[] triplet : triplets) {
-        // Only consider if doesn't exceed target
         if (triplet[0] &lt;= target[0] &amp;&amp; triplet[1] &lt;= target[1] &amp;&amp; triplet[2] &lt;= target[2]) {
             current[0] = Math.max(current[0], triplet[0]);
             current[1] = Math.max(current[1], triplet[1]);
             current[2] = Math.max(current[2], triplet[2]);
         }
     }
-
     return Arrays.equals(current, target);
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Merge Pairs, Greedy Selection</p>
+<p><strong>Edge Cases:</strong>
+- Single triplet equals target: returns true
+- No valid triplets: returns false
+- Multiple valid triplets: works correctly
+- Target has zeros: handled correctly</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(1)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Merge Pairs
+- Greedy Selection</p>
 <hr />
 <h4 id="11-minimum-number-of-refueling-stops">11. <strong>Minimum Number of Refueling Stops</strong></h4>
-<p><strong>Explanation</strong>: Greedy with heap. Drive as far as possible, use best previous fuel station when stuck. Time: O(n log n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+A car starts with startFuel and needs to reach target. There are gas stations along the way. Find the minimum number of refueling stops needed, or -1 if impossible.</p>
+<p><strong>Simple Analogy:</strong>
+Like planning a road trip with limited fuel. You can choose which gas stations to stop at. What's the minimum number of stops?</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>target = 100</code>, <code>startFuel = 10</code>, <code>stations = [[10,60],[20,30],[30,30],[60,40]]</code>
+<pre class="highlight"><code>Expected Output: 2
+
+Start with 10 fuel, can reach station at 10.
+Stations within reach: [10,60] -&gt; add 60 to heap
+Heap: [60]
+
+Need to go further. Pop 60, reach = 10 + 60 = 70, stops = 1
+Now reach stations up to 70: [20,30], [30,30], [60,40]
+Add all to heap: heap = [40, 30, 30, 60]? Actually max-heap: [60, 40, 30, 30]
+Wait, [10,60] was already popped. New stations: 20,30,60
+Heap: [40, 30, 30]
+
+Pop 40, reach = 70 + 40 = 110 &gt;= 100, stops = 2
+Return 2</code></pre></p>
+<p>Input: <code>target = 100</code>, <code>startFuel = 50</code>, <code>stations = [[25,25],[50,50]]</code>
+<pre class="highlight"><code>Expected Output: 1
+
+Start with 50, can reach station at 25 and 50.
+Stations within reach: [25,25], [50,50]
+Heap: [50, 25]
+
+Need to go further? reach=50 &lt; 100
+Pop 50, reach = 50 + 50 = 100 &gt;= 100, stops = 1
+Return 1</code></pre></p>
+<p>Input: <code>target = 100</code>, <code>startFuel = 10</code>, <code>stations = [[20,30]]</code>
+<pre class="highlight"><code>Expected Output: -1
+
+Start with 10, can't reach station at 20.
+No stations within reach, heap empty -&gt; return -1</code></pre></p>
+<p><strong>Key Insight - Greedy with Max-Heap:</strong>
+Drive as far as possible. When you can't reach further, use the best (largest fuel) station you've passed but didn't use. This is greedy because you always want the most fuel when you need it.</p>
+<p><strong>Why It Works:</strong>
+- You should only refuel when necessary (to minimize stops)
+- When you must refuel, choose the station with the most fuel (max-heap)
+- This maximizes your reach with each stop
+- If you can't reach any station and heap is empty, impossible
+- This is like BFS where each "level" is a refueling stop</p>
+<p><strong>Visualization - Refueling Stops:</strong>
+<pre class="mermaid"><code>graph TD
+    A["target=100, startFuel=10"] --&gt; B["Reach=10, heap=[]"]
+    B --&gt; C["Add stations within 10: [10,60]"]
+    C --&gt; D["Heap=[60]"]
+    D --&gt; E["Pop 60, reach=70, stops=1"]
+    E --&gt; F["Add stations within 70: [20,30],[30,30],[60,40]"]
+    F --&gt; G["Heap=[40,30,30]"]
+    G --&gt; H["Pop 40, reach=110 &gt;= 100, stops=2"]
+    H --&gt; I["Return 2"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int minRefuelStops(int target, int startFuel, int[][] stations) {
     PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;((a, b) -&gt; b - a);
     int reach = startFuel, i = 0, stops = 0;
-
     while (reach &lt; target) {
         while (i &lt; stations.length &amp;&amp; stations[i][0] &lt;= reach) {
             maxHeap.offer(stations[i][1]);
             i++;
         }
-
         if (maxHeap.isEmpty()) return -1;
-
         reach += maxHeap.poll();
         stops++;
     }
-
     return stops;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Refueling Stations, Minimum Moves</p>
+<p><strong>Edge Cases:</strong>
+- Start fuel &gt;= target: returns 0
+- No stations: returns -1 if can't reach
+- Single station enough: returns 1
+- Multiple stations needed: works correctly</p>
+<p><strong>Time Complexity</strong>: O(n log n) - heap operations
+<strong>Space Complexity</strong>: O(n) - heap</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Refueling Stations
+- Minimum Moves
+- Jump Game with Fuel</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-sorting-for-greedy-order">1. <strong>Sorting for Greedy Order</strong></h3>
 <ul>
-<li>Sort to establish optimal order</li>
-<li>Considers multiple criteria</li>
+<li>Sort to establish optimal processing order</li>
+<li>Often by one criterion, break ties with another</li>
+<li>Examples: Assign Cookies, Queue Reconstruction</li>
 </ul>
 <h3 id="2-two-pointers">2. <strong>Two Pointers</strong></h3>
 <ul>
 <li>Sweep through array making greedy choices</li>
 <li>Often with sorted input</li>
+<li>Examples: Assign Cookies, Container with Most Water</li>
 </ul>
 <h3 id="3-priority-queue-heap">3. <strong>Priority Queue / Heap</strong></h3>
 <ul>
 <li>Maintain best choices available</li>
 <li>Greedy selection from candidates</li>
+<li>Examples: Task Scheduler, Refueling Stops</li>
 </ul>
 <h3 id="4-simulation">4. <strong>Simulation</strong></h3>
 <ul>
 <li>Follow algorithm step by step</li>
 <li>Make optimal choice at each step</li>
+<li>Examples: Jump Game, Gas Station</li>
+</ul>
+<h3 id="5-two-pass-technique">5. <strong>Two-Pass Technique</strong></h3>
+<ul>
+<li>Process left to right, then right to left</li>
+<li>Combine results with max/min</li>
+<li>Examples: Candy, Trapping Rain Water</li>
+</ul>
+<h3 id="6-frequency-based-formula">6. <strong>Frequency-Based Formula</strong></h3>
+<ul>
+<li>Use counts to derive answer directly</li>
+<li>Examples: Task Scheduler, Partition Labels</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Applying greedy without proving optimality</li>
-<li>❌ Not considering counter-examples</li>
-<li>❌ Wrong ordering/sorting criteria</li>
-<li>❌ Not handling edge cases (empty, single element)</li>
-<li>❌ Greedily choosing locally without considering global impact</li>
+<li>Applying greedy without proving optimality (greedy can fail!)</li>
+<li>Not considering counter-examples before committing to greedy</li>
+<li>Wrong ordering/sorting criteria (always verify with examples)</li>
+<li>Not handling edge cases (empty, single element, all same)</li>
+<li>Greedily choosing locally without considering global impact</li>
+<li>Forgetting to sort when order matters</li>
+<li>Using greedy when DP is needed (check if local = global)</li>
+<li>Not using a heap when "best available" is needed</li>
+<li>Off-by-one errors in interval/partition problems</li>
+<li>Not considering all constraints when making greedy choice</li>
 </ul>
+<hr />
+<h2 id="greedy-decision-flow_1">🔹 Greedy Decision Flow</h2>
+<h3 id="choosing-the-right-approach">Choosing the Right Approach</h3>
+<pre class="mermaid"><code>graph TD
+    A["Optimization Problem"] --&gt; B{"Can you prove local = global?"}
+    B --&gt;|Yes| C["Use Greedy"]
+    B --&gt;|No| D{"Do subproblems overlap?"}
+    D --&gt;|Yes| E["Use Dynamic Programming"]
+    D --&gt;|No| F["Use Divide and Conquer or Backtracking"]
+    C --&gt; G{"Need best available option?"}
+    G --&gt;|Yes| H["Use Priority Queue / Heap"]
+    G --&gt;|No| I{"Need specific order?"}
+    I --&gt;|Yes| J["Sort first, then greedy"]
+    I --&gt;|No| K["Simulate with best choice at each step"]</code></pre>
+<h3 id="complexity-cheat-sheet">Complexity Cheat Sheet</h3>
+<table>
+<thead>
+<tr>
+<th>Problem Type</th>
+<th>Technique</th>
+<th>Time</th>
+<th>Space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assign Cookies</td>
+<td>Sort + Two Pointers</td>
+<td>O(n log n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Jump Game</td>
+<td>Track Max Reach</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Gas Station</td>
+<td>Total + Current</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Stock Profit</td>
+<td>Track Min Price</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Partition Labels</td>
+<td>Last Occurrence</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Jump Game II</td>
+<td>BFS Levels</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Task Scheduler</td>
+<td>Frequency Formula</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Queue Reconstruction</td>
+<td>Sort + Insert</td>
+<td>O(n^2)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Candy</td>
+<td>Two Passes</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Merge Triplets</td>
+<td>Track Max</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Refueling Stops</td>
+<td>Greedy + Heap</td>
+<td>O(n log n)</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
               
             </div>
           </div><footer>

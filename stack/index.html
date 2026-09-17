@@ -66,11 +66,27 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Stack</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-stack-simple-explanation">What is a Stack? (Simple Explanation)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stack-vs-queue-quick-comparison">Stack vs Queue (Quick Comparison)</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#stack-using-javas-stack">Stack Using Java's Stack</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stack-using-arraydeque-faster-preferred">Stack Using ArrayDeque (Faster, Preferred)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monotonic-stack-template-next-greater-element">Monotonic Stack Template (Next Greater Element)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stack-decision-flow">Stack Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -108,7 +124,11 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#2-stack-with-auxiliary-data">2. Stack with Auxiliary Data</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#3-recursion-to-iteration">3. Recursion to Iteration</a>
+    <li class="toctree-l3"><a class="reference internal" href="#3-stack-for-matching">3. Stack for Matching</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-stack-for-expression-evaluation">4. Stack for Expression Evaluation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-stack-for-collision-simulation">5. Stack for Collision Simulation</a>
     </li>
         </ul>
     </li>
@@ -189,39 +209,182 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="stack">Stack</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-a-stack-simple-explanation">What is a Stack? (Simple Explanation)</h2>
+<p>Imagine a stack of plates. You can only add a plate to the top, and you can only remove a plate from the top. The last plate you put on is the first one you take off. That's a <strong>stack</strong>!</p>
+<p>A stack is a "Last In, First Out" (LIFO) data structure:
+- <strong>Push</strong>: Add to the top
+- <strong>Pop</strong>: Remove from the top
+- <strong>Peek</strong>: Look at the top without removing</p>
+<p><strong>Real-life analogies:</strong>
+- Stack of plates in a cafeteria
+- Browser back button (most recent page first)
+- Undo/redo in text editors
+- Function call stack in programming</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li>LIFO (Last In First Out) data structure</li>
-<li>Push (add) and Pop (remove) from top</li>
+<li><strong>LIFO</strong>: Last In, First Out — the last element added is the first removed</li>
+<li><strong>Top</strong>: The only accessible position (for push/pop/peek)</li>
+<li><strong>Push</strong>: Add an element to the top — O(1)</li>
+<li><strong>Pop</strong>: Remove the top element — O(1)</li>
+<li><strong>Peek</strong>: Look at the top element without removing — O(1)</li>
 <li><strong>Time Complexity</strong>: O(1) for push/pop/peek</li>
-<li><strong>Space Complexity</strong>: O(n) for storage</li>
+<li><strong>Space Complexity</strong>: O(n) for n elements</li>
 </ul>
+<h2 id="stack-vs-queue-quick-comparison">Stack vs Queue (Quick Comparison)</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Stack</th>
+<th>Queue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Order</td>
+<td>LIFO (Last In First Out)</td>
+<td>FIFO (First In First Out)</td>
+</tr>
+<tr>
+<td>Add</td>
+<td>At top</td>
+<td>At rear</td>
+</tr>
+<tr>
+<td>Remove</td>
+<td>From top</td>
+<td>From front</td>
+</tr>
+<tr>
+<td>Analogy</td>
+<td>Stack of plates</td>
+<td>Line at store</td>
+</tr>
+</tbody>
+</table>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
 <li>Valid Parentheses</li>
-<li>Next Greater Element</li>
 <li>Min Stack (track minimum efficiently)</li>
 <li>Evaluate Reverse Polish Notation</li>
+<li>Daily Temperatures</li>
+<li>Asteroid Collision</li>
 <li>Largest Rectangle in Histogram</li>
+<li>Decode String</li>
+<li>Next Greater Element</li>
+<li>Trapping Rain Water</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>Monotonic Stack (maintain increasing/decreasing order)</li>
-<li>Stack with Auxiliary Data Structure</li>
-<li>Using Stack for Recursion/DFS</li>
+<li><strong>Monotonic Stack</strong>: Maintain increasing/decreasing order</li>
+<li><strong>Stack with Auxiliary Data Structure</strong>: Track min/max alongside values</li>
+<li><strong>Stack for Expression Evaluation</strong>: Postfix, infix, RPN</li>
+<li><strong>Stack for DFS/Recursion</strong>: Convert recursion to iteration</li>
+<li><strong>Stack for Matching</strong>: Parentheses, brackets, tags</li>
 </ul>
+<hr />
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="stack-using-javas-stack">Stack Using Java's Stack</h3>
+<pre class="highlight"><code class="language-java">Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+stack.push(1);        // Add to top
+stack.push(2);
+int top = stack.peek();  // Look at top (returns 2)
+int removed = stack.pop(); // Remove top (removes 2)
+boolean empty = stack.isEmpty();</code></pre>
+<h3 id="stack-using-arraydeque-faster-preferred">Stack Using ArrayDeque (Faster, Preferred)</h3>
+<pre class="highlight"><code class="language-java">Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
+stack.push(1);
+stack.push(2);
+int top = stack.peek();
+int removed = stack.pop();
+boolean empty = stack.isEmpty();</code></pre>
+<h3 id="monotonic-stack-template-next-greater-element">Monotonic Stack Template (Next Greater Element)</h3>
+<pre class="highlight"><code class="language-java">public int[] nextGreater(int[] nums) {
+    int n = nums.length;
+    int[] result = new int[n];
+    Arrays.fill(result, -1);
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;(); // Store indices
+    for (int i = 0; i &lt; n; i++) {
+        while (!stack.isEmpty() &amp;&amp; nums[i] &gt; nums[stack.peek()]) {
+            int prevIndex = stack.pop();
+            result[prevIndex] = nums[i];
+        }
+        stack.push(i);
+    }
+    return result;
+}</code></pre>
+<h3 id="stack-decision-flow">Stack Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["Stack Problem"] --&gt; B{"Matching pairs?"}
+    B --&gt;|Yes| C["Push opening, pop on closing"]
+    B --&gt;|No| D{"Need next greater/smaller?"}
+    D --&gt;|Yes| E["Monotonic Stack"]
+    D --&gt;|No| F{"Need min/max tracking?"}
+    F --&gt;|Yes| G["Stack + auxiliary stack"]
+    F --&gt;|No| H{"Expression evaluation?"}
+    H --&gt;|Yes| I["Operand stack + operator logic"]
+    H --&gt;|No| J{"DFS/backtracking?"}
+    J --&gt;|Yes| K["Use stack to simulate recursion"]
+    J --&gt;|No| L["Consider other structures"]</code></pre>
 <hr />
 <h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
 <h3 id="easy">Easy</h3>
 <h4 id="1-valid-parentheses">1. <strong>Valid Parentheses</strong></h4>
-<p><strong>Explanation</strong>: Use stack to track opening brackets. For each closing bracket, check if it matches top of stack. If matches, pop. If doesn't match or stack empty when needed, return false. Stack should be empty at end. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given a string containing just '(', ')', '{', '}', '[' and ']', determine if the input string is valid. A string is valid if open brackets are closed by the same type and in the correct order.</p>
+<p><strong>Simple Analogy:</strong>
+Like checking if brackets in a math expression are properly matched. Every opening bracket must have a matching closing bracket.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "()"</code>
+<pre class="highlight"><code>Expected Output: true
+
+i=0 '(': push -&gt; stack=['(']
+i=1 ')': matches '(', pop -&gt; stack=[]
+End: stack empty -&gt; true</code></pre></p>
+<p>Input: <code>s = "()[]{}"</code>
+<pre class="highlight"><code>Expected Output: true
+
+i=0 '(': push -&gt; stack=['(']
+i=1 ')': matches '(', pop -&gt; stack=[]
+i=2 '[': push -&gt; stack=['[']
+i=3 ']': matches '[', pop -&gt; stack=[]
+i=4 '{': push -&gt; stack=['{']
+i=5 '}': matches '{', pop -&gt; stack=[]
+End: stack empty -&gt; true</code></pre></p>
+<p>Input: <code>s = "(]"</code>
+<pre class="highlight"><code>Expected Output: false
+
+i=0 '(': push -&gt; stack=['(']
+i=1 ']': top is '(', expected ']' match is '[' -&gt; mismatch!
+Return false</code></pre></p>
+<p>Input: <code>s = "([)]"</code>
+<pre class="highlight"><code>Expected Output: false
+
+i=0 '(': push -&gt; stack=['(']
+i=1 '[': push -&gt; stack=['(', '[']
+i=2 ')': top is '[', expected match is '(' -&gt; mismatch!
+Return false</code></pre></p>
+<p><strong>Key Insight - Stack for Matching:</strong>
+Opening brackets are pushed onto the stack. When a closing bracket is encountered, it must match the top of the stack. If it does, pop. If not, invalid. At the end, stack must be empty.</p>
+<p><strong>Why It Works:</strong>
+- The most recent unmatched opening bracket is always at the top
+- A closing bracket must match this most recent opening (LIFO)
+- If it doesn't, the brackets are in the wrong order
+- If stack is non-empty at end, some openings weren't closed
+- O(n) time, O(n) space</p>
+<p><strong>Visualization - Valid Parentheses:</strong>
+<pre class="mermaid"><code>graph LR
+    A["'()'"] --&gt; B["push '('"]
+    B --&gt; C["')' matches '(', pop"]
+    C --&gt; D["stack empty -&gt; true"]
+    E["'([)]'"] --&gt; F["push '(', '['"]
+    F --&gt; G["')' vs '[' -&gt; mismatch -&gt; false"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public boolean isValid(String s) {
     Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
     HashMap&lt;Character, Character&gt; map = new HashMap&lt;&gt;();
     map.put(')', '(');
     map.put(']', '[');
     map.put('}', '{');
-
     for (char c : s.toCharArray()) {
         if (map.containsKey(c)) {
             if (stack.isEmpty() || stack.pop() != map.get(c)) {
@@ -231,53 +394,165 @@
             stack.push(c);
         }
     }
-
     return stack.isEmpty();
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Valid Parentheses II, Check if Balanced</p>
+<p><strong>Edge Cases:</strong>
+- Empty string: returns true (vacuously valid)
+- Single opening: returns false
+- Single closing: returns false
+- Only openings: returns false
+- Only closings: returns false</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Valid Parentheses II
+- Check if Balanced
+- Remove Invalid Parentheses</p>
 <hr />
 <h4 id="2-min-stack">2. <strong>Min Stack</strong></h4>
-<p><strong>Explanation</strong>: Maintain two stacks - one for values, one for tracking minimum at each level. When pushing, also push min(current, prev_min). When popping, pop from both stacks. Time: O(1) for all ops, Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Design a stack that supports push, pop, top, and retrieving the minimum element in O(1) time.</p>
+<p><strong>Simple Analogy:</strong>
+Like a stack of plates where you always know the weight of the lightest plate in the stack.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin();  // returns -3
+minStack.pop();
+minStack.top();     // returns 0
+minStack.getMin();  // returns -2</code></pre></p>
+<p><strong>Step-by-step:</strong>
+<pre class="highlight"><code>push(-2): stack=[-2], minStack=[-2]
+push(0):  stack=[-2, 0], minStack=[-2, -2]
+push(-3): stack=[-2, 0, -3], minStack=[-2, -2, -3]
+getMin(): minStack top = -3
+pop():    stack=[-2, 0], minStack=[-2, -2]
+top():    stack top = 0
+getMin(): minStack top = -2</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>push(5), push(3), push(7)
+getMin() -&gt; 3
+pop()
+getMin() -&gt; 3
+pop()
+getMin() -&gt; 5</code></pre></p>
+<p><strong>Step-by-step:</strong>
+<pre class="highlight"><code>push(5): stack=[5], minStack=[5]
+push(3): stack=[5,3], minStack=[5,3] (3 &lt; 5)
+push(7): stack=[5,3,7], minStack=[5,3,3] (min(7,3)=3)
+getMin(): 3
+pop():    stack=[5,3], minStack=[5,3]
+getMin(): 3
+pop():    stack=[5], minStack=[5]
+getMin(): 5</code></pre></p>
+<p><strong>Key Insight - Auxiliary Min Stack:</strong>
+Maintain two stacks: one for values, one for minimums. The min stack at each level stores the minimum of all elements up to that level. When we push, we push min(new_value, current_min). When we pop, we pop from both.</p>
+<p><strong>Why It Works:</strong>
+- The min stack mirrors the value stack
+- At each level, minStack[i] = min of stack[0..i]
+- So minStack.top is always the minimum of all current elements
+- Popping from both keeps them in sync
+- All operations O(1)</p>
+<p><strong>Visualization - Min Stack:</strong>
+<pre class="mermaid"><code>graph LR
+    A["push(-2): stack=[-2], min=[-2]"] --&gt; B["push(0): stack=[-2,0], min=[-2,-2]"]
+    B --&gt; C["push(-3): stack=[-2,0,-3], min=[-2,-2,-3]"]
+    C --&gt; D["getMin() = -3"]
+    D --&gt; E["pop(): min=[-2,-2]"]
+    E --&gt; F["getMin() = -2"]</code></pre></p>
 <pre class="highlight"><code class="language-java">class MinStack {
     private Stack&lt;Integer&gt; stack;
     private Stack&lt;Integer&gt; minStack;
-
     public MinStack() {
         stack = new Stack&lt;&gt;();
         minStack = new Stack&lt;&gt;();
     }
-
     public void push(int val) {
         stack.push(val);
         minStack.push(Math.min(val, minStack.isEmpty() ? val : minStack.peek()));
     }
-
     public void pop() {
         stack.pop();
         minStack.pop();
     }
-
     public int top() {
         return stack.peek();
     }
-
     public int getMin() {
         return minStack.peek();
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Max Stack, Stack with Duplicate Min</p>
+<p><strong>Edge Cases:</strong>
+- Empty stack: operations invalid (problem guarantees non-empty)
+- Duplicate minimums: handled correctly
+- Negative values: works correctly
+- Single element: top = min = that element</p>
+<p><strong>Time Complexity</strong>: O(1) for all operations
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Max Stack
+- Stack with Duplicate Min
+- Design a Stack with Increment</p>
 <hr />
 <h3 id="medium">Medium</h3>
 <h4 id="3-evaluate-reverse-polish-notation">3. <strong>Evaluate Reverse Polish Notation</strong></h4>
-<p><strong>Explanation</strong>: Process tokens left to right. Numbers go to stack. When operator found, pop two operands, apply operation, push result back. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Evaluate the value of an arithmetic expression in Reverse Polish Notation (postfix). Valid operators are +, -, *, /. Each operand may be an integer or another expression.</p>
+<p><strong>Simple Analogy:</strong>
+Like a calculator that reads operations after the numbers. "3 4 +" means 3 + 4 = 7.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>tokens = ["2","1","+","3","*"]</code>
+<pre class="highlight"><code>Expected Output: 9
+
+Expression: ((2 + 1) * 3) = 9
+
+Step-by-step:
+"2": push 2 -&gt; stack=[2]
+"1": push 1 -&gt; stack=[2, 1]
+"+": pop 1, pop 2, compute 2+1=3, push 3 -&gt; stack=[3]
+"3": push 3 -&gt; stack=[3, 3]
+"*": pop 3, pop 3, compute 3*3=9, push 9 -&gt; stack=[9]
+
+Return 9</code></pre></p>
+<p>Input: <code>tokens = ["4","13","5","/","+"]</code>
+<pre class="highlight"><code>Expected Output: 6
+
+Expression: (4 + (13 / 5)) = 4 + 2 = 6
+
+Step-by-step:
+"4": push 4 -&gt; stack=[4]
+"13": push 13 -&gt; stack=[4, 13]
+"5": push 5 -&gt; stack=[4, 13, 5]
+"/": pop 5, pop 13, compute 13/5=2, push 2 -&gt; stack=[4, 2]
+"+": pop 2, pop 4, compute 4+2=6, push 6 -&gt; stack=[6]
+
+Return 6</code></pre></p>
+<p>Input: <code>tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]</code>
+<pre class="highlight"><code>Expected Output: 22</code></pre></p>
+<p><strong>Key Insight - Stack for Operands:</strong>
+Process tokens left to right. Numbers go to stack. When an operator appears, pop two operands, apply the operation, push the result. Order matters for - and /: the second popped is the left operand.</p>
+<p><strong>Why It Works:</strong>
+- RPN is designed for stack evaluation
+- Operands are pushed as encountered
+- Operators consume the top two operands
+- Result is pushed back for further use
+- At end, single value remains</p>
+<p><strong>Visualization - RPN Evaluation:</strong>
+<pre class="mermaid"><code>graph LR
+    A["'2' push 2"] --&gt; B["'1' push 1"]
+    B --&gt; C["'+' pop 1,2 -&gt; 3 push"]
+    C --&gt; D["'3' push 3"]
+    D --&gt; E["'*' pop 3,3 -&gt; 9 push"]
+    E --&gt; F["Return 9"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int evalRPN(String[] tokens) {
     Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
-
     for (String token : tokens) {
         if (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/")) {
             int b = stack.pop();
             int a = stack.pop();
-
             int result;
             switch (token) {
                 case "+": result = a + b; break;
@@ -291,18 +566,81 @@
             stack.push(Integer.parseInt(token));
         }
     }
-
     return stack.pop();
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Basic Calculator, Expression Evaluation</p>
+<p><strong>Edge Cases:</strong>
+- Single number: returns it
+- Division by zero: not in problem
+- Negative numbers: handled
+- Large results: int handles typical cases</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Basic Calculator
+- Expression Evaluation
+- Infix to Postfix</p>
 <hr />
 <h4 id="4-daily-temperatures">4. <strong>Daily Temperatures</strong></h4>
-<p><strong>Explanation</strong>: Monotonic stack approach. For each day, compare with stack top. If current temp &gt; top's temp, found the answer for that day. Pop and compare again. Push current to stack. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given an array of daily temperatures, return an array where each element is the number of days until a warmer temperature. If no warmer day exists, use 0.</p>
+<p><strong>Simple Analogy:</strong>
+Like waiting for a warmer day. For each day, how many days until it's warmer?</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>temperatures = [73, 74, 75, 71, 69, 72, 76, 73]</code>
+<pre class="highlight"><code>Expected Output: [1, 1, 4, 2, 1, 1, 0, 0]
+
+Step-by-step (monotonic stack of indices):
+i=0 (73): stack=[0]
+i=1 (74): 74 &gt; 73, pop 0, result[0]=1-0=1, push 1
+          stack=[1]
+i=2 (75): 75 &gt; 74, pop 1, result[1]=2-1=1, push 2
+          stack=[2]
+i=3 (71): 71 &lt; 75, push 3
+          stack=[2, 3]
+i=4 (69): 69 &lt; 71, push 4
+          stack=[2, 3, 4]
+i=5 (72): 72 &gt; 69, pop 4, result[4]=5-4=1
+          72 &gt; 71, pop 3, result[3]=5-3=2
+          72 &lt; 75, stop
+          push 5 -&gt; stack=[2, 5]
+i=6 (76): 76 &gt; 72, pop 5, result[5]=6-5=1
+          76 &gt; 75, pop 2, result[2]=6-2=4
+          stack=[6]
+i=7 (73): 73 &lt; 76, push 7
+          stack=[6, 7]
+
+Result: [1, 1, 4, 2, 1, 1, 0, 0]</code></pre></p>
+<p>Input: <code>temperatures = [30, 40, 50, 60]</code>
+<pre class="highlight"><code>Expected Output: [1, 1, 1, 0]
+
+i=0 (30): stack=[0]
+i=1 (40): 40&gt;30, pop 0, result[0]=1, push 1
+i=2 (50): 50&gt;40, pop 1, result[1]=1, push 2
+i=3 (60): 60&gt;50, pop 2, result[2]=1, push 3
+End: result[3]=0 (no warmer day)
+Result: [1, 1, 1, 0]</code></pre></p>
+<p>Input: <code>temperatures = [30, 60, 90]</code>
+<pre class="highlight"><code>Expected Output: [1, 1, 0]</code></pre></p>
+<p><strong>Key Insight - Monotonic Decreasing Stack:</strong>
+Maintain a stack of indices with decreasing temperatures. When a new warmer temperature arrives, it resolves all waiting days on the stack. Pop them and record the distance.</p>
+<p><strong>Why It Works:</strong>
+- Stack holds indices of days waiting for a warmer day
+- Temperatures in stack are decreasing (from bottom to top)
+- When a warmer temp arrives, it's the answer for all days on stack with lower temp
+- Pop them, compute distance, continue
+- Remaining indices at end have no warmer day (result 0)
+- O(n) because each index pushed/popped once</p>
+<p><strong>Visualization - Daily Temperatures:</strong>
+<pre class="mermaid"><code>graph LR
+    A["[73,74,75,...]"] --&gt; B["i=1: 74 resolves 73"]
+    B --&gt; C["i=2: 75 resolves 74"]
+    C --&gt; D["i=5: 72 resolves 69,71"]
+    D --&gt; E["i=6: 76 resolves 72,75"]
+    E --&gt; F["Result: [1,1,4,2,1,1,0,0]"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int[] dailyTemperatures(int[] temperatures) {
     int n = temperatures.length;
     int[] result = new int[n];
-    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;(); // Store indices
-
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
     for (int i = 0; i &lt; n; i++) {
         while (!stack.isEmpty() &amp;&amp; temperatures[i] &gt; temperatures[stack.peek()]) {
             int prevIndex = stack.pop();
@@ -310,53 +648,179 @@
         }
         stack.push(i);
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Next Greater Element, Trapping Rain Water</p>
+<p><strong>Edge Cases:</strong>
+- All increasing: each day resolves the previous
+- All decreasing: all zeros
+- All same: all zeros
+- Single day: returns [0]</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Next Greater Element
+- Trapping Rain Water
+- Stock Span Problem</p>
 <hr />
 <h4 id="5-asteroid-collision">5. <strong>Asteroid Collision</strong></h4>
-<p><strong>Explanation</strong>: Use stack to track surviving asteroids. For each asteroid, check collision logic: if moving right, push to stack. If moving left, check with rightward asteroids in stack. Handle collisions by sizes. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given an array of asteroids (positive = moving right, negative = moving left), simulate collisions. When two asteroids collide, the smaller explodes. If equal, both explode. Return the final state.</p>
+<p><strong>Simple Analogy:</strong>
+Like a game where asteroids move in a line and collide. Bigger one destroys smaller.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>asteroids = [5, 10, -5]</code>
+<pre class="highlight"><code>Expected Output: [5, 10]
+
+5 (right), 10 (right), -5 (left)
+5 and 10 moving right, -5 moving left
+-5 collides with 10: 10 &gt; 5, -5 explodes
+Result: [5, 10]</code></pre></p>
+<p>Input: <code>asteroids = [8, -8]</code>
+<pre class="highlight"><code>Expected Output: []
+
+8 (right), -8 (left)
+They collide: equal sizes, both explode
+Result: []</code></pre></p>
+<p>Input: <code>asteroids = [10, 2, -5]</code>
+<pre class="highlight"><code>Expected Output: [10]
+
+10 (right), 2 (right), -5 (left)
+-5 collides with 2: 5 &gt; 2, 2 explodes
+-5 collides with 10: 10 &gt; 5, -5 explodes
+Result: [10]</code></pre></p>
+<p>Input: <code>asteroids = [-2, -1, 1, 2]</code>
+<pre class="highlight"><code>Expected Output: [-2, -1, 1, 2]
+
+-2 (left), -1 (left), 1 (right), 2 (right)
+No collisions (left ones moving away, right ones moving away)
+Result: [-2, -1, 1, 2]</code></pre></p>
+<p><strong>Key Insight - Stack for Survivors:</strong>
+Use a stack to track surviving asteroids. For each asteroid:
+- If moving right (positive): push to stack
+- If moving left (negative): collide with rightward asteroids on stack</p>
+<p>Collision rules:
+- If stack top &lt; |asteroid|: top explodes, continue
+- If stack top == |asteroid|: both explode
+- If stack top &gt; |asteroid|: asteroid explodes</p>
+<p><strong>Why It Works:</strong>
+- Only rightward asteroids followed by leftward ones can collide
+- Stack naturally holds rightward asteroids waiting for collision
+- When a leftward asteroid comes, it collides with the most recent rightward one
+- This is LIFO order — correct for collisions
+- If leftward asteroid survives all, it's added to stack</p>
+<p><strong>Visualization - Asteroid Collision:</strong>
+<pre class="mermaid"><code>graph LR
+    A["[5, 10, -5]"] --&gt; B["push 5, push 10"]
+    B --&gt; C["-5 collides with 10: -5 explodes"]
+    C --&gt; D["Result: [5, 10]"]
+    E["[8, -8]"] --&gt; F["push 8"]
+    F --&gt; G["-8 collides with 8: both explode"]
+    G --&gt; H["Result: []"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int[] asteroidCollision(int[] asteroids) {
     Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
-
     for (int asteroid : asteroids) {
         boolean alive = true;
-
         while (alive &amp;&amp; asteroid &lt; 0 &amp;&amp; !stack.isEmpty() &amp;&amp; stack.peek() &gt; 0) {
             int top = stack.pop();
-
             if (top &lt; -asteroid) {
-                continue; // Current survives
+                continue;
             } else if (top == -asteroid) {
-                alive = false; // Both explode
+                alive = false;
             } else {
                 alive = false;
-                stack.push(top); // Top survives
+                stack.push(top);
             }
         }
-
         if (alive) {
             stack.push(asteroid);
         }
     }
-
     int[] result = new int[stack.size()];
     for (int i = result.length - 1; i &gt;= 0; i--) {
         result[i] = stack.pop();
     }
-
     return result;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Robot Collisions, Track Collisions</p>
+<p><strong>Edge Cases:</strong>
+- All moving same direction: no collisions
+- Single asteroid: returns it
+- Equal sizes: both explode
+- Leftward asteroid survives: pushed to stack</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Robot Collisions
+- Track Collisions
+- Car Fleet</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="6-largest-rectangle-in-histogram">6. <strong>Largest Rectangle in Histogram</strong></h4>
-<p><strong>Explanation</strong>: Monotonic stack of indices maintaining increasing heights. When height decreases, pop indices and calculate area with popped bar as shortest. Time: O(n), Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given an array of bar heights in a histogram, find the area of the largest rectangle that can be formed.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding the biggest rectangular poster that fits under a skyline.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>heights = [2, 1, 5, 6, 2, 3]</code>
+<pre class="highlight"><code>Expected Output: 10
+
+Histogram:
+    _
+   | |
+   | |   _
+   | |  | |
+ _ | |  | |
+| || |  | |
+| || |  | |
+2 1 5 6 2 3
+
+Largest rectangle: height 5, width 2 (bars at indices 2,3) = 10
+
+Step-by-step (monotonic stack of indices):
+i=0 (2): stack=[0]
+i=1 (1): 1 &lt; 2, pop 0. h=2, w=1 (stack empty), area=2. push 1. stack=[1]
+i=2 (5): 5 &gt; 1, push 2. stack=[1, 2]
+i=3 (6): 6 &gt; 5, push 3. stack=[1, 2, 3]
+i=4 (2): 2 &lt; 6, pop 3. h=6, w=4-2-1=1, area=6
+         2 &lt; 5, pop 2. h=5, w=4-1-1=2, area=10
+         2 &gt; 1, stop. push 4. stack=[1, 4]
+i=5 (3): 3 &gt; 2, push 5. stack=[1, 4, 5]
+End of array:
+pop 5: h=3, w=6-4-1=1, area=3
+pop 4: h=2, w=6-1-1=4, area=8
+pop 1: h=1, w=6, area=6
+
+Max area = 10</code></pre></p>
+<p>Input: <code>heights = [2, 4]</code>
+<pre class="highlight"><code>Expected Output: 4
+
+Bars: 2, 4
+Rectangle 1: height 2, width 2 = 4
+Rectangle 2: height 4, width 1 = 4
+Max = 4</code></pre></p>
+<p>Input: <code>heights = [2, 1, 2]</code>
+<pre class="highlight"><code>Expected Output: 3
+
+Bars: 2, 1, 2
+Largest: height 1, width 3 = 3
+Or height 2, width 1 = 2
+Max = 3</code></pre></p>
+<p><strong>Key Insight - Monotonic Increasing Stack:</strong>
+Maintain a stack of indices with increasing heights. When a shorter bar appears, it's the right boundary for taller bars on the stack. Pop them, compute area with popped bar as height, and (current index - new top - 1) as width.</p>
+<p><strong>Why It Works:</strong>
+- For each bar, we want the largest rectangle with that bar as the shortest
+- Left boundary: previous smaller bar (in stack)
+- Right boundary: next smaller bar (current when popping)
+- Stack maintains increasing heights so we can find boundaries efficiently
+- Adding 0 at end forces all bars to pop (handles remaining)
+- Each bar pushed/popped once -&gt; O(n)</p>
+<p><strong>Visualization - Largest Rectangle:</strong>
+<pre class="mermaid"><code>graph LR
+    A["heights=[2,1,5,6,2,3]"] --&gt; B["i=4: pop 6 (w=1), pop 5 (w=2)"]
+    B --&gt; C["Area = 5*2 = 10"]
+    C --&gt; D["Max = 10"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public int largestRectangleArea(int[] heights) {
     Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
     int maxArea = 0;
-
     for (int i = 0; i &lt; heights.length; i++) {
         while (!stack.isEmpty() &amp;&amp; heights[i] &lt; heights[stack.peek()]) {
             int h = heights[stack.pop()];
@@ -365,23 +829,90 @@
         }
         stack.push(i);
     }
-
     while (!stack.isEmpty()) {
         int h = heights[stack.pop()];
         int w = stack.isEmpty() ? heights.length : heights.length - stack.peek() - 1;
         maxArea = Math.max(maxArea, h * w);
     }
-
     return maxArea;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Maximal Rectangle, Largest Rectangle with Rotations</p>
+<p><strong>Edge Cases:</strong>
+- Empty array: returns 0
+- Single bar: returns its height
+- All same height: returns height * n
+- Strictly increasing: each popped at end
+- Strictly decreasing: each popped immediately</p>
+<p><strong>Time Complexity</strong>: O(n)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Maximal Rectangle (2D version)
+- Largest Rectangle with Rotations
+- Trapping Rain Water</p>
 <hr />
 <h4 id="7-decode-string">7. <strong>Decode String</strong></h4>
-<p><strong>Explanation</strong>: Stack stores characters. When ']' encountered, pop until '[', multiply by number before '['. Push result back. Handle nested patterns. Time: O(n*m) where m = multiplication factor, Space: O(n).</p>
+<p><strong>Problem Description:</strong>
+Given an encoded string like "3[a]2[bc]", decode it to "aaabcbc". Numbers followed by brackets mean repeat the content inside that many times. Can be nested.</p>
+<p><strong>Simple Analogy:</strong>
+Like expanding compressed text. "3[a]" means "aaa".</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>s = "3[a]2[bc]"</code>
+<pre class="highlight"><code>Expected Output: "aaabcbc"
+
+Step-by-step:
+'3': num=3
+'[': push 3, push "[", num=0
+'a': push "a"
+']': pop until "[": sb="a", pop "[", pop 3
+     push "aaa"
+'2': num=2
+'[': push 2, push "[", num=0
+'b': push "b"
+'c': push "c"
+']': pop until "[": sb="bc", pop "[", pop 2
+     push "bcbc"
+End: stack=["aaa", "bcbc"], join -&gt; "aaabcbc"
+
+Return "aaabcbc"</code></pre></p>
+<p>Input: <code>s = "3[a2[c]]"</code>
+<pre class="highlight"><code>Expected Output: "accaccacc"
+
+Step-by-step:
+'3': num=3
+'[': push 3, push "[", num=0
+'a': push "a"
+'2': num=2
+'[': push 2, push "[", num=0
+'c': push "c"
+']': pop until "[": sb="c", pop "[", pop 2
+     push "cc"
+']': pop until "[": sb="acc", pop "[", pop 3
+     push "accaccacc"
+
+Return "accaccacc"</code></pre></p>
+<p>Input: <code>s = "2[abc]3[cd]ef"</code>
+<pre class="highlight"><code>Expected Output: "abcabccdcdcdef"
+
+2[abc] = abcabc
+3[cd] = cdcdcd
++ ef
+= abcabccdcdcdef</code></pre></p>
+<p><strong>Key Insight - Stack for Nested Structures:</strong>
+Use a stack to handle nesting. Push numbers and strings as encountered. When ']' is found, pop until '[' to get the substring, then pop the number, repeat the substring, and push back.</p>
+<p><strong>Why It Works:</strong>
+- Nesting naturally maps to stack LIFO order
+- Numbers are pushed before their '[' so we can retrieve them
+- '[' acts as a marker for "start of group"
+- When ']' found, the content is between the last '[' and now
+- Repeat and push back for outer levels
+- O(n * maxRepeat) time due to string building</p>
+<p><strong>Visualization - Decode String:</strong>
+<pre class="mermaid"><code>graph LR
+    A["'3[a]2[bc]'"] --&gt; B["3 [ a -&gt; pop -&gt; 'aaa'"]
+    B --&gt; C["2 [ b c -&gt; pop -&gt; 'bcbc'"]
+    C --&gt; D["Join: 'aaabcbc'"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public String decodeString(String s) {
     Stack&lt;Object&gt; stack = new Stack&lt;&gt;();
     int num = 0;
-
     for (char c : s.toCharArray()) {
         if (Character.isDigit(c)) {
             num = num * 10 + (c - '0');
@@ -394,7 +925,7 @@
             while (!stack.peek().equals("[")) {
                 sb.insert(0, stack.pop());
             }
-            stack.pop(); // Remove '['
+            stack.pop();
             int count = (Integer) stack.pop();
             String decoded = sb.toString();
             for (int i = 0; i &lt; count; i++) {
@@ -404,15 +935,24 @@
             stack.push(String.valueOf(c));
         }
     }
-
     StringBuilder result = new StringBuilder();
     while (!stack.isEmpty()) {
         result.insert(0, stack.pop());
     }
-
     return result.toString();
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Nested List Weight Sum, Decode Ways</p>
+<p><strong>Edge Cases:</strong>
+- Single group: works
+- Nested groups: works
+- Multiple groups: works
+- No brackets: returns original
+- Large repeat count: may cause memory issues</p>
+<p><strong>Time Complexity</strong>: O(n * maxRepeat)
+<strong>Space Complexity</strong>: O(n)</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Nested List Weight Sum
+- Decode Ways
+- String Compression</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-monotonic-stack">1. <strong>Monotonic Stack</strong></h3>
@@ -420,26 +960,50 @@
 <li>Maintain stack in increasing or decreasing order</li>
 <li>Used for: Next Greater Element, Largest Rectangle</li>
 <li>Efficiently find nearest element with specific property</li>
+<li>Pop when current element "resolves" stack elements</li>
+<li>Examples: Daily Temperatures, Largest Rectangle in Histogram</li>
 </ul>
 <h3 id="2-stack-with-auxiliary-data">2. <strong>Stack with Auxiliary Data</strong></h3>
 <ul>
 <li>Pair stack with additional tracking (min/max)</li>
 <li>Used for: Min Stack, Max Stack</li>
 <li>O(1) operations for auxiliary queries</li>
+<li>Examples: Min Stack</li>
 </ul>
-<h3 id="3-recursion-to-iteration">3. <strong>Recursion to Iteration</strong></h3>
+<h3 id="3-stack-for-matching">3. <strong>Stack for Matching</strong></h3>
 <ul>
-<li>Convert recursive algorithms to iterative using stack</li>
-<li>Used for: DFS, backtracking simulation</li>
+<li>Push opening, pop on closing</li>
+<li>Used for: Valid Parentheses, HTML tags</li>
+<li>LIFO order matches nested structure</li>
+<li>Examples: Valid Parentheses, Decode String</li>
+</ul>
+<h3 id="4-stack-for-expression-evaluation">4. <strong>Stack for Expression Evaluation</strong></h3>
+<ul>
+<li>Operands pushed, operators consume from stack</li>
+<li>Used for: RPN, infix, postfix</li>
+<li>Order matters for - and /</li>
+<li>Examples: Evaluate RPN</li>
+</ul>
+<h3 id="5-stack-for-collision-simulation">5. <strong>Stack for Collision Simulation</strong></h3>
+<ul>
+<li>Push one direction, collide with opposite</li>
+<li>Used for: Asteroid Collision, Car Fleet</li>
+<li>LIFO order matches collision sequence</li>
+<li>Examples: Asteroid Collision</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Forgetting to check if stack is empty before peek/pop</li>
-<li>❌ Confusing stack index for multiple stacks</li>
-<li>❌ Not handling order correctly in monotonic stack</li>
-<li>❌ Integer overflow in calculations</li>
-<li>❌ Not clearing stack between test cases</li>
+<li>Forgetting to check if stack is empty before peek/pop</li>
+<li>Confusing stack index for multiple stacks (use separate stacks)</li>
+<li>Not handling order correctly in monotonic stack (increasing vs decreasing)</li>
+<li>Integer overflow in calculations (use long if needed)</li>
+<li>Not clearing stack between test cases (in class design)</li>
+<li>Popping in wrong order for non-commutative operations (- and /)</li>
+<li>Using <code>==</code> instead of <code>.equals()</code> for String comparison</li>
+<li>Not handling nested structures properly (Decode String)</li>
+<li>Forgetting that stack stores indices (not values) in some patterns</li>
+<li>Mixing up push/pop order when reconstructing results</li>
 </ul>
               
             </div>

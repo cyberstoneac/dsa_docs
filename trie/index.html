@@ -102,11 +102,29 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Trie</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts">Key Concepts</a>
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-trie-simple-explanation">What is a Trie? (Simple Explanation)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#trie-vs-hashmap-vs-bst">Trie vs HashMap vs BST</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#complexity">Complexity</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#trienode-definition">TrieNode Definition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#basic-trie-implementation">Basic Trie Implementation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#trie-with-hashmap-for-general-characters">Trie with HashMap (for general characters)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#trie-decision-flow">Trie Decision Flow</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
         <ul>
@@ -135,6 +153,8 @@
     <li class="toctree-l3"><a class="reference internal" href="#2-trie-traversal">2. Trie Traversal</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#3-optimizations">3. Optimizations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-common-applications">4. Common Applications</a>
     </li>
         </ul>
     </li>
@@ -179,46 +199,129 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="trie-prefix-tree">Trie (Prefix Tree)</h1>
-<h2 id="key-concepts">Key Concepts</h2>
+<h2 id="what-is-a-trie-simple-explanation">What is a Trie? (Simple Explanation)</h2>
+<p>Imagine a dictionary organized by prefixes. To look up "cat", you'd go to the "c" section, then "ca", then "cat". That's a <strong>trie</strong> (pronounced "try")!</p>
+<p>A trie is a tree-like data structure where:
+- Each node represents a single character
+- The path from root to a node spells out a prefix
+- Words share common prefixes (like "car", "cart", "care" all share "car")
+- Each node can have up to 26 children (for lowercase English letters)</p>
+<p><strong>Real-life analogies:</strong>
+- A dictionary organized by first letters, then second letters, etc.
+- Autocomplete on your phone (prefix matching)
+- T9 predictive text on old phones
+- IP routing tables (longest prefix match)</p>
+<p><strong>Why use a trie?</strong>
+- Fast prefix searches: O(m) where m = word length
+- Shared prefixes save memory
+- Perfect for autocomplete and spell-check</p>
+<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
 <ul>
-<li>Prefix tree structure for efficient string search</li>
-<li>Each node represents a character</li>
-<li>Root node is empty</li>
-<li><strong>Time Complexity</strong>: O(m) for insert/search/delete where m = word length</li>
-<li><strong>Space Complexity</strong>: O(ALPHABET_SIZE * N) where N = number of words</li>
+<li><strong>TrieNode</strong>: A node with an array of children and a boolean <code>isEnd</code></li>
+<li><strong>Root</strong>: Empty node at the top (represents empty prefix)</li>
+<li><strong>Children Array</strong>: 26 slots (one per lowercase letter)</li>
+<li><strong>isEnd</strong>: Marks the end of a complete word</li>
+<li><strong>Path</strong>: The sequence of characters from root to a node</li>
+<li><strong>Prefix</strong>: Any path from root to a node (not necessarily a word)</li>
 </ul>
+<h2 id="trie-vs-hashmap-vs-bst">Trie vs HashMap vs BST</h2>
+<table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Prefix Search</th>
+<th>Exact Search</th>
+<th>Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trie</td>
+<td>O(m) fast</td>
+<td>O(m) fast</td>
+<td>O(ALPHABET * N)</td>
+</tr>
+<tr>
+<td>HashMap</td>
+<td>O(m) but no prefix</td>
+<td>O(1) average</td>
+<td>O(N * m)</td>
+</tr>
+<tr>
+<td>BST</td>
+<td>O(m log n)</td>
+<td>O(m log n)</td>
+<td>O(N * m)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="common-problems">Common Problems</h2>
 <ul>
 <li>Implement Trie (Insert, Search, StartsWith)</li>
-<li>Word Search II</li>
 <li>Replace Words</li>
-<li>Autocomplete/Prefix Matching</li>
+<li>Word Search II (Boggle)</li>
+<li>Palindrome Pairs</li>
+<li>Autocomplete / Prefix Matching</li>
 <li>Longest Word in Dictionary</li>
 </ul>
 <h2 id="patterns-techniques">Patterns / Techniques</h2>
 <ul>
-<li>TrieNode with children array</li>
-<li>DFS for word search</li>
-<li>Suffix tree variants</li>
-<li>Trie with deletion support</li>
+<li>TrieNode with children array (or HashMap for Unicode)</li>
+<li>DFS for word search with backtracking</li>
+<li>Marking words during traversal to avoid duplicates</li>
+<li>Pruning invalid branches early</li>
 </ul>
+<h2 id="complexity">Complexity</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time</th>
+<th>Space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insert</td>
+<td>O(m)</td>
+<td>O(m) new nodes</td>
+</tr>
+<tr>
+<td>Search</td>
+<td>O(m)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>StartsWith</td>
+<td>O(m)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>O(m)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Total Space</td>
+<td>O(ALPHABET * N * m)</td>
+<td>N = number of words</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
-<h3 id="medium">Medium</h3>
-<h4 id="1-implement-trie-prefix-tree">1. <strong>Implement Trie (Prefix Tree)</strong></h4>
-<p><strong>Explanation</strong>: Create TrieNode with 26 children (lowercase letters). Insert: traverse/create nodes for each character, mark end of word. Search: traverse if possible, return if word found. StartsWith: similar to search but doesn't need end marker. Time: O(m), Space: O(1) amortized per insertion.</p>
+<h2 id="basic-templates">🔹 Basic Templates</h2>
+<h3 id="trienode-definition">TrieNode Definition</h3>
 <pre class="highlight"><code class="language-java">class TrieNode {
     TrieNode[] children = new TrieNode[26];
     boolean isEnd = false;
-}
-
-class Trie {
+    // Optional: String word; (for storing the complete word)
+}</code></pre>
+<h3 id="basic-trie-implementation">Basic Trie Implementation</h3>
+<pre class="highlight"><code class="language-java">class Trie {
     private TrieNode root;
-
     public Trie() {
         root = new TrieNode();
     }
-
     public void insert(String word) {
         TrieNode node = root;
         for (char c : word.toCharArray()) {
@@ -230,7 +333,6 @@ class Trie {
         }
         node.isEnd = true;
     }
-
     public boolean search(String word) {
         TrieNode node = root;
         for (char c : word.toCharArray()) {
@@ -240,7 +342,6 @@ class Trie {
         }
         return node.isEnd;
     }
-
     public boolean startsWith(String prefix) {
         TrieNode node = root;
         for (char c : prefix.toCharArray()) {
@@ -251,13 +352,166 @@ class Trie {
         return true;
     }
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Autocomplete, Type-ahead Search</p>
+<h3 id="trie-with-hashmap-for-general-characters">Trie with HashMap (for general characters)</h3>
+<pre class="highlight"><code class="language-java">class TrieNode {
+    Map&lt;Character, TrieNode&gt; children = new HashMap&lt;&gt;();
+    boolean isEnd = false;
+}</code></pre>
+<h3 id="trie-decision-flow">Trie Decision Flow</h3>
+<pre class="mermaid"><code>graph TD
+    A["String Problem"] --&gt; B{"Need prefix matching?"}
+    B --&gt;|Yes| C["Use Trie"]
+    B --&gt;|No| D{"Need exact word lookup only?"}
+    D --&gt;|Yes| E["Use HashSet"]
+    D --&gt;|No| F{"Need both prefix and word?"}
+    F --&gt;|Yes| C
+    F --&gt;|No| G["Consider HashMap or BST"]
+    C --&gt; H{"Multiple words?"}
+    H --&gt;|Yes| I["Insert all, then search"]
+    H --&gt;|No| J["Insert one, search as needed"]</code></pre>
+<hr />
+<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
+<h3 id="medium">Medium</h3>
+<h4 id="1-implement-trie-prefix-tree">1. <strong>Implement Trie (Prefix Tree)</strong></h4>
+<p><strong>Problem Description:</strong>
+Implement a trie with insert, search, and startsWith methods.</p>
+<p><strong>Simple Analogy:</strong>
+Like building a dictionary where words share prefixes. "apple" and "app" share "app".</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>Trie trie = new Trie();
+trie.insert("apple");
+trie.search("apple");   // returns true
+trie.search("app");     // returns false
+trie.startsWith("app"); // returns true
+trie.insert("app");
+trie.search("app");     // returns true</code></pre></p>
+<p><strong>Step-by-step:</strong>
+<pre class="highlight"><code>insert("apple"):
+  root -&gt; 'a' -&gt; 'p' -&gt; 'p' -&gt; 'l' -&gt; 'e' [isEnd=true]
+
+search("apple"):
+  root -&gt; 'a' -&gt; 'p' -&gt; 'p' -&gt; 'l' -&gt; 'e'
+  isEnd? true -&gt; return true
+
+search("app"):
+  root -&gt; 'a' -&gt; 'p' -&gt; 'p'
+  isEnd? false -&gt; return false
+
+startsWith("app"):
+  root -&gt; 'a' -&gt; 'p' -&gt; 'p'
+  Path exists -&gt; return true
+
+insert("app"):
+  root -&gt; 'a' -&gt; 'p' -&gt; 'p' [isEnd=true]
+
+search("app"):
+  root -&gt; 'a' -&gt; 'p' -&gt; 'p'
+  isEnd? true -&gt; return true</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>insert("cat"), insert("car"), insert("card")
+search("cat") -&gt; true
+search("ca") -&gt; false
+startsWith("ca") -&gt; true
+startsWith("car") -&gt; true
+search("card") -&gt; true
+search("cards") -&gt; false</code></pre></p>
+<p><strong>Visualization - Trie Structure:</strong>
+<pre class="mermaid"><code>graph TD
+    A["root"] --&gt; B["a"]
+    B --&gt; C["p"]
+    C --&gt; D["p"]
+    D --&gt; E["l"]
+    E --&gt; F["e (isEnd)"]
+    D --&gt; G["(isEnd after insert app)"]</code></pre></p>
+<pre class="highlight"><code class="language-java">class Trie {
+    private TrieNode root;
+    public Trie() {
+        root = new TrieNode();
+    }
+    public void insert(String word) {
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            int idx = c - 'a';
+            if (node.children[idx] == null) {
+                node.children[idx] = new TrieNode();
+            }
+            node = node.children[idx];
+        }
+        node.isEnd = true;
+    }
+    public boolean search(String word) {
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            int idx = c - 'a';
+            if (node.children[idx] == null) return false;
+            node = node.children[idx];
+        }
+        return node.isEnd;
+    }
+    public boolean startsWith(String prefix) {
+        TrieNode node = root;
+        for (char c : prefix.toCharArray()) {
+            int idx = c - 'a';
+            if (node.children[idx] == null) return false;
+            node = node.children[idx];
+        }
+        return true;
+    }
+}</code></pre>
+<p><strong>Edge Cases:</strong>
+- Empty word: inserts root as end (or ignore)
+- Duplicate insert: sets isEnd again (idempotent)
+- Search empty: returns isEnd of root
+- Prefix longer than any word: returns false</p>
+<p><strong>Time Complexity</strong>: O(m) per operation (m = word length)
+<strong>Space Complexity</strong>: O(ALPHABET * N * m) for N words</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Autocomplete
+- Type-ahead Search
+- Word Dictionary with Wildcards</p>
 <hr />
 <h4 id="2-replace-words">2. <strong>Replace Words</strong></h4>
-<p><strong>Explanation</strong>: Build trie from dictionary words. For each word in sentence, find shortest matching prefix in trie. Replace if found. Time: O(S*L) where S = total sentence length, L = max word length.</p>
+<p><strong>Problem Description:</strong>
+Given a dictionary of root words and a sentence, replace each word in the sentence with its shortest matching root from the dictionary. If no root matches, keep the original word.</p>
+<p><strong>Simple Analogy:</strong>
+Like replacing "automobile" with "auto" if "auto" is in the dictionary.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>dictionary = ["cat","bat","rat"]</code>, <code>sentence = "the cattle was rattled by the battery"</code>
+<pre class="highlight"><code>Expected Output: "the cat was rat by the bat"
+
+Words: the, cattle, was, rattled, by, the, battery
+
+"cattle" -&gt; "cat" (prefix match)
+"rattled" -&gt; "rat"
+"battery" -&gt; "bat"
+"the", "was", "by" -&gt; no match, keep as is
+
+Result: "the cat was rat by the bat"</code></pre></p>
+<p>Input: <code>dictionary = ["a","b","c"]</code>, <code>sentence = "aadsfasf absbs bbab cadsfafs"</code>
+<pre class="highlight"><code>Expected Output: "a a b c"
+
+"aadsfasf" -&gt; "a"
+"absbs" -&gt; "a"
+"bbab" -&gt; "b"
+"cadsfafs" -&gt; "c"</code></pre></p>
+<p>Input: <code>dictionary = ["cat","bat"]</code>, <code>sentence = "dog"</code>
+<pre class="highlight"><code>Expected Output: "dog" (no match)</code></pre></p>
+<p><strong>Key Insight - Shortest Prefix Match:</strong>
+Build a trie from dictionary roots. For each word in the sentence, traverse the trie character by character. If we hit an <code>isEnd</code> node, we've found the shortest root — replace the word with that prefix. If traversal fails, keep the original word.</p>
+<p><strong>Why It Works:</strong>
+- Trie naturally shares prefixes across dictionary words
+- <code>isEnd</code> marks complete roots
+- Stopping at first <code>isEnd</code> gives the shortest matching root
+- O(total characters) time overall</p>
+<p><strong>Visualization - Replace Words:</strong>
+<pre class="mermaid"><code>graph TD
+    A["dictionary = [cat, bat, rat]"] --&gt; B["Trie with roots"]
+    B --&gt; C["cattle -&gt; cat (isEnd at 'cat')"]
+    B --&gt; D["battery -&gt; bat (isEnd at 'bat')"]
+    B --&gt; E["rattled -&gt; rat (isEnd at 'rat')"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public String replaceWords(List&lt;String&gt; dictionary, String sentence) {
     TrieNode root = new TrieNode();
-
     for (String word : dictionary) {
         TrieNode node = root;
         for (char c : word.toCharArray()) {
@@ -269,31 +523,102 @@ class Trie {
         }
         node.isEnd = true;
     }
-
     String[] words = sentence.split(" ");
     StringBuilder result = new StringBuilder();
-
     for (String word : words) {
         TrieNode node = root;
         StringBuilder prefix = new StringBuilder();
-
         for (char c : word.toCharArray()) {
             int idx = c - 'a';
             if (node.children[idx] == null || node.isEnd) break;
             prefix.append(c);
             node = node.children[idx];
         }
-
         result.append(node.isEnd ? prefix.toString() : word).append(" ");
     }
-
     return result.toString().trim();
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Prefix Matching, Word Replacement</p>
+<p><strong>Edge Cases:</strong>
+- Empty dictionary: returns original sentence
+- Word equals root: replaced with same word
+- No matching root: word unchanged
+- Multiple roots match: shortest one wins (first <code>isEnd</code>)</p>
+<p><strong>Time Complexity</strong>: O(S * L) where S = sentence length, L = max word length
+<strong>Space Complexity</strong>: O(D * L) for trie</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Prefix Matching
+- Word Replacement
+- Shortest Root Match</p>
 <hr />
 <h3 id="hard">Hard</h3>
 <h4 id="3-word-search-ii">3. <strong>Word Search II</strong></h4>
-<p><strong>Explanation</strong>: Build trie from word list. Use DFS on board, backtracking with trie traversal. When reaching trie end node, word found. Time: O(M<em>N</em>4^L) worst case where M*N = board size, L = word length.</p>
+<p><strong>Problem Description:</strong>
+Given an m x n board of characters and a list of words, find all words that can be formed by traversing adjacent cells (up, down, left, right). Same cell can't be used twice in a word.</p>
+<p><strong>Simple Analogy:</strong>
+Like Boggle or word searches in a puzzle. Find all dictionary words hidden in the grid.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input:
+<pre class="highlight"><code>board = [
+  ['o','a','a','n'],
+  ['e','t','a','e'],
+  ['i','h','k','r'],
+  ['i','f','l','v']
+]
+words = ["oath","pea","eat","rain"]</code></pre>
+<pre class="highlight"><code>Expected Output: ["eat","oath"]
+
+"eat": (1,0)='e' -&gt; (0,0)='o'? No. Let me find 'e' paths.
+Actually: (1,0)='e', (0,1)='a', (0,2)='a'? No.
+Path for "eat": (1,0)='e' -&gt; (1,1)='t'? No, 'e' then 'a'.
+Let me redo: board[1][0]='e', board[0][1]='a', board[0,2]='a'? No.
+Actually: "eat" = e(1,0) -&gt; a(1,2)? Not adjacent.
+Let me just trust the algorithm.
+
+"oath": (0,0)='o' -&gt; (0,1)='a' -&gt; (1,1)='t' -&gt; (2,1)='h'
+Yes! Valid path.
+
+"eat": (1,0)='e' -&gt; (1,2)='a'? Not adjacent. 
+Actually (1,0)='e', (0,0)='o'? No.
+Let me find: (1,0)='e', (1,1)='t'? No.
+Hmm, "eat" path: (1,0)='e' -&gt; (0,1)='a'? Not adjacent.
+(1,0) is adjacent to (0,0)='o', (1,1)='t', (2,0)='i'.
+So from 'e' we can go to 'o', 't', or 'i'. None are 'a'.
+Maybe "eat" starts elsewhere: (1,3)='e', (0,3)='n', (1,2)='a'? 
+(1,3)='e' -&gt; (1,2)='a' -&gt; (1,1)='t'? Yes! 
+Path: (1,3)='e' -&gt; (1,2)='a' -&gt; (1,1)='t'
+Valid "eat"!
+
+"pea": (1,2)='a'? No, 'p' not on board. "pea" can't be formed.
+"rain": (2,3)='r' -&gt; (1,3)='e'? No. 
+(2,3)='r' -&gt; (3,3)='v'? No.
+Actually 'r' at (2,3), adjacent: (1,3)='e', (2,2)='k', (3,3)='v'.
+None is 'a'. So "rain" can't start with 'r' here.
+Wait, 'r' is only at (2,3). So "rain" impossible.
+
+Result: ["eat", "oath"]</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>board = [["a","b"],["c","d"]]
+words = ["abcb"]</code></pre>
+<pre class="highlight"><code>Expected Output: [] (no valid path)</code></pre></p>
+<p>Input:
+<pre class="highlight"><code>board = [["a"]]
+words = ["a"]</code></pre>
+<pre class="highlight"><code>Expected Output: ["a"]</code></pre></p>
+<p><strong>Key Insight - Trie + DFS Backtracking:</strong>
+Build a trie from all words. Then DFS from each cell, traversing the trie simultaneously. When we reach a trie <code>isEnd</code> node, we found a word. Mark visited cells, restore on backtrack. Store the word in the trie node to avoid string building.</p>
+<p><strong>Why It Works:</strong>
+- Trie shares prefixes across words, pruning many paths
+- If no word starts with a prefix, DFS stops immediately
+- DFS explores all 4 directions with backtracking
+- Marking cells prevents reuse within one word
+- Setting <code>node.word = null</code> after finding avoids duplicates</p>
+<p><strong>Visualization - Word Search II:</strong>
+<pre class="mermaid"><code>graph TD
+    A["Build trie from words"] --&gt; B["DFS from each cell"]
+    B --&gt; C["Traverse trie and board together"]
+    C --&gt; D["Reach isEnd -&gt; add word"]
+    D --&gt; E["Mark visited, explore 4 directions"]
+    E --&gt; F["Backtrack and restore"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;String&gt; findWords(char[][] board, String[] words) {
     TrieNode root = new TrieNode();
     for (String word : words) {
@@ -308,7 +633,6 @@ class Trie {
         node.isEnd = true;
         node.word = word;
     }
-
     Set&lt;String&gt; result = new HashSet&lt;&gt;();
     for (int i = 0; i &lt; board.length; i++) {
         for (int j = 0; j &lt; board[i].length; j++) {
@@ -320,56 +644,103 @@ class Trie {
 
 private void dfs(char[][] board, int i, int j, TrieNode node, Set&lt;String&gt; result) {
     if (i &lt; 0 || i &gt;= board.length || j &lt; 0 || j &gt;= board[0].length) return;
-
     char c = board[i][j];
-    if (c == '#') return; // Visited
-
+    if (c == '#') return;
     int idx = c - 'a';
     if (node.children[idx] == null) return;
-
     node = node.children[idx];
     if (node.isEnd &amp;&amp; node.word != null) {
         result.add(node.word);
-        node.word = null; // Avoid duplicates
+        node.word = null;
     }
-
-    board[i][j] = '#'; // Mark visited
-
+    board[i][j] = '#';
     dfs(board, i+1, j, node, result);
     dfs(board, i-1, j, node, result);
     dfs(board, i, j+1, node, result);
     dfs(board, i, j-1, node, result);
-
-    board[i][j] = c; // Restore
+    board[i][j] = c;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Word Search, Boggle, Word Break</p>
+<p><strong>TrieNode for Word Search II:</strong>
+<pre class="highlight"><code class="language-java">class TrieNode {
+    TrieNode[] children = new TrieNode[26];
+    boolean isEnd = false;
+    String word = null;
+}</code></pre></p>
+<p><strong>Edge Cases:</strong>
+- Empty board: returns empty list
+- Empty words: returns empty list
+- Single cell matching word: returns it
+- Word longer than cells: pruned by trie</p>
+<p><strong>Time Complexity</strong>: O(M * N * 4^L) worst case, but trie pruning makes it much faster in practice
+<strong>Space Complexity</strong>: O(W * L) for trie where W = number of words</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Word Search (single word)
+- Boggle
+- Word Break</p>
 <hr />
 <h4 id="4-palindrome-pairs">4. <strong>Palindrome Pairs</strong></h4>
-<p><strong>Explanation</strong>: For each word, check if pairing with another word forms palindrome. Use trie to find matching words efficiently. Approach: for word A, find word B such that A+B is palindrome. This means B's reverse must have specific structure. Time: O(N*K²) where N = words, K = max word length.</p>
+<p><strong>Problem Description:</strong>
+Given a list of unique words, find all pairs (i, j) such that words[i] + words[j] is a palindrome.</p>
+<p><strong>Simple Analogy:</strong>
+Like finding word pairs where combining them forms a mirror word.</p>
+<p><strong>Example Walkthrough:</strong></p>
+<p>Input: <code>words = ["abcd","dcba","lls","s","sssll"]</code>
+<pre class="highlight"><code>Expected Output: [[0,1],[1,0],[3,2],[2,4]]
+
+[0,1]: "abcd" + "dcba" = "abcddcba" (palindrome)
+[1,0]: "dcba" + "abcd" = "dcbaabcd" (palindrome)
+[3,2]: "s" + "lls" = "slls" (palindrome)
+[2,4]: "lls" + "sssll" = "llssssll" (palindrome)</code></pre></p>
+<p>Input: <code>words = ["bat","tab","cat"]</code>
+<pre class="highlight"><code>Expected Output: [[0,1],[1,0]]
+
+"bat" + "tab" = "battab" (palindrome)
+"tab" + "bat" = "tabbat" (palindrome)
+"cat" cannot pair with anything.</code></pre></p>
+<p>Input: <code>words = ["a",""]</code>
+<pre class="highlight"><code>Expected Output: [[0,1],[1,0]]
+
+"a" + "" = "a" (palindrome)
+"" + "a" = "a" (palindrome)</code></pre></p>
+<p><strong>Key Insight - Split at Each Position:</strong>
+For word A, we want word B such that A + B is palindrome. Split A at each position j into left and right. Check:
+1. If right is palindrome, then we need reverse(left) as B
+2. If left is palindrome, then we need reverse(right) as B (with j != word.length())</p>
+<p><strong>Why It Works:</strong>
+- A + B palindrome means B's reverse must match A's parts
+- Split A into left and right at each position
+- If right is palindrome, B = reverse(left) makes A+B palindrome
+- If left is palindrome, B = reverse(right) makes B+A palindrome
+- HashMap gives O(1) lookup of B
+- O(N * K²) time where K = max word length</p>
+<p><strong>Visualization - Palindrome Pairs:</strong>
+<pre class="mermaid"><code>graph LR
+    A["'abcd' split at 0: left='', right='abcd'"] --&gt; B["right not palindrome"]
+    B --&gt; C["split at 4: left='abcd', right=''"]
+    C --&gt; D["left not palindrome, but check reverse(right)"]
+    E["'lls' split at 0: left='', right='lls'"] --&gt; F["right not palindrome"]
+    F --&gt; G["split at 3: left='lls', right=''"]
+    G --&gt; H["left not palindrome"]
+    I["'lls' split at 1: left='l', right='ls'"] --&gt; J["right not palindrome"]
+    J --&gt; K["split at 2: left='ll', right='s'"]
+    K --&gt; L["right='s' palindrome, need reverse('ll')='ll' -&gt; not in map"]</code></pre></p>
 <pre class="highlight"><code class="language-java">public List&lt;List&lt;Integer&gt;&gt; palindromePairs(String[] words) {
     List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
     HashMap&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
-
     for (int i = 0; i &lt; words.length; i++) {
         map.put(words[i], i);
     }
-
     for (int i = 0; i &lt; words.length; i++) {
         String word = words[i];
-
         for (int j = 0; j &lt;= word.length(); j++) {
             String left = word.substring(0, j);
             String right = word.substring(j);
-
-            // Check if right is palindrome
             if (isPalindrome(right)) {
                 String reverse = new StringBuilder(left).reverse().toString();
                 if (map.containsKey(reverse) &amp;&amp; map.get(reverse) != i) {
                     result.add(Arrays.asList(i, map.get(reverse)));
                 }
             }
-
-            // Check if left is palindrome
             if (isPalindrome(left)) {
                 String reverse = new StringBuilder(right).reverse().toString();
                 if (map.containsKey(reverse) &amp;&amp; map.get(reverse) != i &amp;&amp; j != word.length()) {
@@ -378,7 +749,6 @@ private void dfs(char[][] board, int i, int j, TrieNode node, Set&lt;String&gt; 
             }
         }
     }
-
     return result;
 }
 
@@ -389,7 +759,17 @@ private boolean isPalindrome(String s) {
     }
     return true;
 }</code></pre>
-<p><strong>Similar Pattern Problems</strong>: Longest Palindrome Pairs, Palindrome Words</p>
+<p><strong>Edge Cases:</strong>
+- Empty string in words: pairs with palindromes
+- Single character words: work correctly
+- No valid pairs: returns empty list
+- All same words: problem says unique words</p>
+<p><strong>Time Complexity</strong>: O(N * K²) where N = number of words, K = max word length
+<strong>Space Complexity</strong>: O(N * K) for HashMap</p>
+<p><strong>Similar Pattern Problems:</strong>
+- Longest Palindrome Pairs
+- Palindrome Words
+- Word Squares</p>
 <hr />
 <h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
 <h3 id="1-trie-construction">1. <strong>Trie Construction</strong></h3>
@@ -397,27 +777,43 @@ private boolean isPalindrome(String s) {
 <li>Insert: traverse/create nodes per character</li>
 <li>Mark end nodes for word boundary</li>
 <li>Can extend with frequency/metadata</li>
+<li>Use array for fixed alphabet, HashMap for general</li>
 </ul>
 <h3 id="2-trie-traversal">2. <strong>Trie Traversal</strong></h3>
 <ul>
 <li>DFS for word search/prefix matching</li>
 <li>Backtracking with restoration</li>
 <li>Early termination when path invalid</li>
+<li>Share traversal across multiple words</li>
 </ul>
 <h3 id="3-optimizations">3. <strong>Optimizations</strong></h3>
 <ul>
-<li>Prune invalid branches early</li>
-<li>Mark words during traversal to avoid duplicates</li>
-<li>Use hashmap for lookups within trie</li>
+<li>Prune invalid branches early (if no child, stop)</li>
+<li>Mark words during traversal to avoid duplicates (<code>node.word = null</code>)</li>
+<li>Store complete word in node to avoid string building</li>
+<li>Use HashSet for deduplication when needed</li>
+</ul>
+<h3 id="4-common-applications">4. <strong>Common Applications</strong></h3>
+<ul>
+<li>Autocomplete / type-ahead</li>
+<li>Spell check</li>
+<li>IP routing (longest prefix match)</li>
+<li>Word games (Boggle, Word Search)</li>
+<li>Replace words with roots</li>
 </ul>
 <hr />
 <h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
 <ul>
-<li>❌ Not marking end of words (only root matters)</li>
-<li>❌ Off-by-one errors in character indices (char - 'a' for lowercase)</li>
-<li>❌ Not restoring board in backtracking</li>
-<li>❌ Forgetting to handle null children</li>
-<li>❌ Not checking for existing word conditions</li>
+<li>Not marking end of words (only root matters) — always set <code>isEnd = true</code></li>
+<li>Off-by-one errors in character indices (use <code>c - 'a'</code> for lowercase)</li>
+<li>Not restoring board in backtracking (<code>board[i][j] = c</code>)</li>
+<li>Forgetting to handle null children (<code>node.children[idx] == null</code>)</li>
+<li>Not checking for existing word conditions (duplicates, self-pairs)</li>
+<li>Using HashMap instead of array for fixed alphabet (slower)</li>
+<li>Not using <code>node.word</code> to store the full word (rebuilding strings is slow)</li>
+<li>Forgetting to set <code>node.word = null</code> after adding (causes duplicates)</li>
+<li>Not handling empty string edge cases in palindrome pairs</li>
+<li>Recursion depth issues with very long words</li>
 </ul>
               
             </div>
