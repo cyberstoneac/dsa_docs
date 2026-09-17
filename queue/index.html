@@ -1,337 +1,38 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Queue - DSA Notes</title>
-    <link rel="stylesheet" href="../css/theme.css" />
-    <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
-    
-      <script>
-        // Current page data
-        var mkdocs_page_name = "Queue";
-        var mkdocs_page_input_path = "queue.md";
-        var mkdocs_page_url = null;
-      </script>
-    
-    <!--[if lt IE 9]>
-      <script src="../js/html5shiv.min.js"></script>
-    <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-      <script>hljs.highlightAll();</script> 
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> DSA Notes
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../array/">Array</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../two-pointers/">Two Pointers</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../sliding-window/">Sliding Window</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../binary-search/">Binary Search</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../string/">String</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../stack/">Stack</a>
-                </li>
-              </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Queue</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-queue-simple-explanation">What is a Queue? (Simple Explanation)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#queue-vs-stack-quick-comparison">Queue vs Stack (Quick Comparison)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#variants-different-types">Variants (Different Types)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#common-problems">Common Problems</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#patterns-techniques">Patterns / Techniques</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#basic-templates">🔹 Basic Templates</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#queue-using-javas-linkedlist">Queue Using Java's LinkedList</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#queue-using-arraydeque-faster">Queue Using ArrayDeque (Faster)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#deque-double-ended-queue">Deque (Double-Ended Queue)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#bfs-template">BFS Template</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#queue-decision-flow">Queue Decision Flow</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#practice-problems-by-topic">🔹 Practice Problems by Topic</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#easy">Easy</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#1-implement-queue-using-stacks">1. Implement Queue using Stacks</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#2-number-of-recent-calls">2. Number of Recent Calls</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#medium">Medium</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#3-sliding-window-maximum">3. Sliding Window Maximum</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#4-perfect-squares">4. Perfect Squares</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#5-reconstruct-queue-by-height">5. Reconstruct Queue by Height</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#hard">Hard</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#6-dota2-senate">6. Dota2 Senate</a>
-    </li>
-        </ul>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#key-patterns-techniques">📌 Key Patterns &amp; Techniques</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#1-two-stack-queue">1. Two Stack Queue</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#2-deque-double-ended-queue">2. Deque (Double-Ended Queue)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#3-bfs-breadth-first-search">3. BFS (Breadth-First Search)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#4-monotonic-queue">4. Monotonic Queue</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#5-queue-with-re-entry">5. Queue with Re-entry</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</a>
-    </li>
-    </ul>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../linked-list/">Linked List</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../tree/">Tree</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../heap/">Heap / Priority Queue</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../backtracking/">Backtracking</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../graph/">Graph</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../intervals/">Intervals</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../dynamic-programming/">Dynamic Programming</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../trie/">Trie</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../maths/">Maths</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../bit-manipulation/">Bit Manipulation</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../greedy/">Greedy Algorithm</a>
-                </li>
-              </ul>
-      </div>
-    </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">DSA Notes</a>
-        
-      </nav>
-      <div class="wy-nav-content">
-        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Queue</li>
-    <li class="wy-breadcrumbs-aside">
-    </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-            <div class="section" itemprop="articleBody">
-              
-                <h1 id="queue">Queue</h1>
-<h2 id="what-is-a-queue-simple-explanation">What is a Queue? (Simple Explanation)</h2>
-<p>Imagine a line at a coffee shop. The first person in line gets served first, and new people join at the back. That's a <strong>queue</strong>!</p>
-<p>A queue is a "First In, First Out" (FIFO) data structure:
-- <strong>Enqueue</strong>: Add to the back (join the line)
-- <strong>Dequeue</strong>: Remove from the front (get served)
-- <strong>Peek</strong>: Look at the front without removing</p>
-<p><strong>Real-life analogies:</strong>
-- Line at a ticket counter
-- Printer queue (documents print in order)
-- Customer service call queue
-- BFS in graphs (explore level by level)</p>
-<h2 id="key-concepts-in-simple-terms">Key Concepts (In Simple Terms)</h2>
-<ul>
-<li><strong>FIFO</strong>: First In, First Out — the first element added is the first removed</li>
-<li><strong>Front</strong>: The exit point (where we remove)</li>
-<li><strong>Rear/Back</strong>: The entry point (where we add)</li>
-<li><strong>Enqueue</strong>: Add an element to the rear — O(1)</li>
-<li><strong>Dequeue</strong>: Remove an element from the front — O(1)</li>
-<li><strong>Peek</strong>: Look at the front element without removing — O(1)</li>
-<li><strong>Time Complexity</strong>: O(1) for enqueue/dequeue/peek</li>
-<li><strong>Space Complexity</strong>: O(n) for n elements</li>
-</ul>
-<h2 id="queue-vs-stack-quick-comparison">Queue vs Stack (Quick Comparison)</h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Queue</th>
-<th>Stack</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Order</td>
-<td>FIFO (First In First Out)</td>
-<td>LIFO (Last In First Out)</td>
-</tr>
-<tr>
-<td>Add</td>
-<td>At rear</td>
-<td>At top</td>
-</tr>
-<tr>
-<td>Remove</td>
-<td>From front</td>
-<td>From top</td>
-</tr>
-<tr>
-<td>Analogy</td>
-<td>Line at store</td>
-<td>Stack of plates</td>
-</tr>
-</tbody>
-</table>
-<h2 id="variants-different-types">Variants (Different Types)</h2>
-<ul>
-<li><strong>Simple Queue</strong>: Basic FIFO, no size limit (or fixed)</li>
-<li><strong>Circular Queue</strong>: Uses fixed array efficiently by wrapping around</li>
-<li><strong>Deque (Double-Ended Queue)</strong>: Can add/remove from BOTH ends</li>
-<li><strong>Priority Queue</strong>: Elements have priorities; highest priority served first</li>
-</ul>
-<h2 id="common-problems">Common Problems</h2>
-<ul>
-<li>Implement Queue using Stacks</li>
-<li>Number of Recent Calls</li>
-<li>Sliding Window Maximum</li>
-<li>Perfect Squares (BFS)</li>
-<li>Reconstruct Queue by Height</li>
-<li>Dota2 Senate</li>
-<li>Design Circular Queue</li>
-<li>BFS in Graphs/Trees</li>
-</ul>
-<h2 id="patterns-techniques">Patterns / Techniques</h2>
-<ul>
-<li><strong>Two Stacks for Queue</strong>: Simulate queue behavior with two stacks</li>
-<li><strong>Deque (Double-Ended Queue)</strong>: Flexibility to add/remove from both ends</li>
-<li><strong>Level-order Traversal (BFS)</strong>: Queue stores nodes to visit</li>
-<li><strong>Monotonic Queue</strong>: Maintain increasing/decreasing order for sliding window</li>
-</ul>
-<hr />
-<h2 id="basic-templates">🔹 Basic Templates</h2>
-<h3 id="queue-using-javas-linkedlist">Queue Using Java's LinkedList</h3>
-<pre class="highlight"><code class="language-java">Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
-queue.offer(1);        // Enqueue (add to rear)
-queue.offer(2);
-int front = queue.peek();  // Peek front (returns 1)
-int removed = queue.poll(); // Dequeue (removes 1)
-boolean empty = queue.isEmpty();</code></pre>
-<h3 id="queue-using-arraydeque-faster">Queue Using ArrayDeque (Faster)</h3>
-<pre class="highlight"><code class="language-java">Queue&lt;Integer&gt; queue = new ArrayDeque&lt;&gt;();
-queue.offer(1);
-queue.offer(2);
-int front = queue.peek();
-int removed = queue.poll();</code></pre>
-<h3 id="deque-double-ended-queue">Deque (Double-Ended Queue)</h3>
-<pre class="highlight"><code class="language-java">Deque&lt;Integer&gt; deque = new ArrayDeque&lt;&gt;();
-deque.offerFirst(1);  // Add to front
-deque.offerLast(2);   // Add to rear
-deque.peekFirst();    // Look at front
-deque.peekLast();     // Look at rear
-deque.pollFirst();    // Remove from front
-deque.pollLast();     // Remove from rear</code></pre>
-<h3 id="bfs-template">BFS Template</h3>
-<pre class="highlight"><code class="language-java">public void bfs(Node start) {
-    Queue&lt;Node&gt; queue = new LinkedList&lt;&gt;();
-    Set&lt;Node&gt; visited = new HashSet&lt;&gt;();
-    queue.offer(start);
-    visited.add(start);
-    while (!queue.isEmpty()) {
-        Node curr = queue.poll();
-        // Process curr
-        for (Node neighbor : curr.neighbors) {
-            if (!visited.contains(neighbor)) {
-                visited.add(neighbor);
-                queue.offer(neighbor);
-            }
-        }
-    }
-}</code></pre>
-<h3 id="queue-decision-flow">Queue Decision Flow</h3>
-<pre class="mermaid"><code>graph TD
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Comprehensive Data Structures & Algorithms notes with 150+ Java solutions, aligned with NeetCode 150"><meta name=author content="Your Name"><link href=https://cyberstoneac.github.io/dsa_docs/queue/ rel=canonical><link href=../stack/ rel=prev><link href=../two-pointers/ rel=next><link rel=icon href=../assets/images/favicon.png><meta name=generator content="mkdocs-1.6.1, mkdocs-material-9.7.7"><title>Queue - DSA Notes (Java)</title><link rel=stylesheet href=../assets/stylesheets/main.ec1eaa64.min.css><link rel=stylesheet href=../assets/stylesheets/palette.ab4e12ef.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><link rel=stylesheet href=../stylesheets/extra.css><script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#queue class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class="md-header md-header--shadow md-header--lifted" data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=.. title="DSA Notes (Java)" class="md-header__button md-logo" aria-label="DSA Notes (Java)" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m19 2-5 4.5v11l5-4.5zM6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5"/></svg> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> DSA Notes (Java) </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> Queue </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to dark mode" type=radio name=__palette id=__palette_0> <label class="md-header__button md-icon" title="Switch to dark mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to light mode" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_0 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg> </label> </form> <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg> </label> <nav class=md-search__options aria-label=Search> <a href=javascript:void(0) class="md-search__icon md-icon" title=Share aria-label=Share data-clipboard data-clipboard-text data-md-component=search-share tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg> </a> <button type=reset class="md-search__icon md-icon" title=Clear aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg> </button> </nav> <div class=md-search__suggest data-md-component=search-suggest></div> </form> <div class=md-search__output> <div class=md-search__scrollwrap tabindex=0 data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list role=presentation></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/cyberstoneac/dsa_docs title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg> </div> <div class=md-source__repository> cyberstoneac/dsa_docs </div> </a> </div> </nav> <nav class=md-tabs aria-label=Tabs data-md-component=tabs> <div class=md-grid> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=.. class=md-tabs__link> Home </a> </li> <li class=md-tabs__item> <a href=../cheatsheet/ class=md-tabs__link> 📋 Cheat Sheet </a> </li> <li class=md-tabs__item> <a href=../tags/ class=md-tabs__link> 🏷️ Tags </a> </li> <li class="md-tabs__item md-tabs__item--active"> <a href=../array/ class=md-tabs__link> Linear Data Structures </a> </li> <li class=md-tabs__item> <a href=../two-pointers/ class=md-tabs__link> Problem-Solving Techniques </a> </li> <li class=md-tabs__item> <a href=../tree/ class=md-tabs__link> Non-Linear Data Structures </a> </li> <li class=md-tabs__item> <a href=../dynamic-programming/ class=md-tabs__link> Algorithms & Patterns </a> </li> <li class=md-tabs__item> <a href=../maths/ class=md-tabs__link> Techniques & Math </a> </li> </ul> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary md-nav--lifted" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=.. title="DSA Notes (Java)" class="md-nav__button md-logo" aria-label="DSA Notes (Java)" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m19 2-5 4.5v11l5-4.5zM6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5"/></svg> </a> DSA Notes (Java) </label> <div class=md-nav__source> <a href=https://github.com/cyberstoneac/dsa_docs title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg> </div> <div class=md-source__repository> cyberstoneac/dsa_docs </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=.. class=md-nav__link> <span class=md-ellipsis> Home </span> </a> </li> <li class=md-nav__item> <a href=../cheatsheet/ class=md-nav__link> <span class=md-ellipsis> 📋 Cheat Sheet </span> </a> </li> <li class=md-nav__item> <a href=../tags/ class=md-nav__link> <span class=md-ellipsis> 🏷️ Tags </span> </a> </li> <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_4 checked> <label class=md-nav__link for=__nav_4 id=__nav_4_label tabindex> <span class=md-ellipsis> Linear Data Structures </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_4_label aria-expanded=true> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> Linear Data Structures </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../array/ class=md-nav__link> <span class=md-ellipsis> Array </span> </a> </li> <li class=md-nav__item> <a href=../string/ class=md-nav__link> <span class=md-ellipsis> String </span> </a> </li> <li class=md-nav__item> <a href=../linked-list/ class=md-nav__link> <span class=md-ellipsis> Linked List </span> </a> </li> <li class=md-nav__item> <a href=../stack/ class=md-nav__link> <span class=md-ellipsis> Stack </span> </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> <span class=md-ellipsis> Queue </span> <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> <span class=md-ellipsis> Queue </span> </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#what-is-a-queue-simple-explanation class=md-nav__link> <span class=md-ellipsis> What is a Queue? (Simple Explanation) </span> </a> </li> <li class=md-nav__item> <a href=#key-concepts-in-simple-terms class=md-nav__link> <span class=md-ellipsis> Key Concepts (In Simple Terms) </span> </a> </li> <li class=md-nav__item> <a href=#queue-vs-stack-quick-comparison class=md-nav__link> <span class=md-ellipsis> Queue vs Stack (Quick Comparison) </span> </a> </li> <li class=md-nav__item> <a href=#variants-different-types class=md-nav__link> <span class=md-ellipsis> Variants (Different Types) </span> </a> </li> <li class=md-nav__item> <a href=#common-problems class=md-nav__link> <span class=md-ellipsis> Common Problems </span> </a> </li> <li class=md-nav__item> <a href=#patterns-techniques class=md-nav__link> <span class=md-ellipsis> Patterns / Techniques </span> </a> </li> <li class=md-nav__item> <a href=#basic-templates class=md-nav__link> <span class=md-ellipsis> 🔹 Basic Templates </span> </a> <nav class=md-nav aria-label="🔹 Basic Templates"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#queue-using-javas-linkedlist class=md-nav__link> <span class=md-ellipsis> Queue Using Java's LinkedList </span> </a> </li> <li class=md-nav__item> <a href=#queue-using-arraydeque-faster class=md-nav__link> <span class=md-ellipsis> Queue Using ArrayDeque (Faster) </span> </a> </li> <li class=md-nav__item> <a href=#deque-double-ended-queue class=md-nav__link> <span class=md-ellipsis> Deque (Double-Ended Queue) </span> </a> </li> <li class=md-nav__item> <a href=#bfs-template class=md-nav__link> <span class=md-ellipsis> BFS Template </span> </a> </li> <li class=md-nav__item> <a href=#queue-decision-flow class=md-nav__link> <span class=md-ellipsis> Queue Decision Flow </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#practice-problems-by-topic class=md-nav__link> <span class=md-ellipsis> 🔹 Practice Problems by Topic </span> </a> <nav class=md-nav aria-label="🔹 Practice Problems by Topic"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#easy class=md-nav__link> <span class=md-ellipsis> Easy </span> </a> </li> <li class=md-nav__item> <a href=#medium class=md-nav__link> <span class=md-ellipsis> Medium </span> </a> </li> <li class=md-nav__item> <a href=#hard class=md-nav__link> <span class=md-ellipsis> Hard </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#key-patterns-techniques class=md-nav__link> <span class=md-ellipsis> 📌 Key Patterns &amp; Techniques </span> </a> <nav class=md-nav aria-label="📌 Key Patterns & Techniques"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-two-stack-queue class=md-nav__link> <span class=md-ellipsis> 1. Two Stack Queue </span> </a> </li> <li class=md-nav__item> <a href=#2-deque-double-ended-queue class=md-nav__link> <span class=md-ellipsis> 2. Deque (Double-Ended Queue) </span> </a> </li> <li class=md-nav__item> <a href=#3-bfs-breadth-first-search class=md-nav__link> <span class=md-ellipsis> 3. BFS (Breadth-First Search) </span> </a> </li> <li class=md-nav__item> <a href=#4-monotonic-queue class=md-nav__link> <span class=md-ellipsis> 4. Monotonic Queue </span> </a> </li> <li class=md-nav__item> <a href=#5-queue-with-re-entry class=md-nav__link> <span class=md-ellipsis> 5. Queue with Re-entry </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#common-pitfalls-to-avoid class=md-nav__link> <span class=md-ellipsis> 🎯 Common Pitfalls to Avoid </span> </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type=checkbox id=__nav_5> <label class=md-nav__link for=__nav_5 id=__nav_5_label tabindex=0> <span class=md-ellipsis> Problem-Solving Techniques </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_5_label aria-expanded=false> <label class=md-nav__title for=__nav_5> <span class="md-nav__icon md-icon"></span> Problem-Solving Techniques </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../two-pointers/ class=md-nav__link> <span class=md-ellipsis> Two Pointers </span> </a> </li> <li class=md-nav__item> <a href=../sliding-window/ class=md-nav__link> <span class=md-ellipsis> Sliding Window </span> </a> </li> <li class=md-nav__item> <a href=../binary-search/ class=md-nav__link> <span class=md-ellipsis> Binary Search </span> </a> </li> <li class=md-nav__item> <a href=../backtracking/ class=md-nav__link> <span class=md-ellipsis> Backtracking </span> </a> </li> <li class=md-nav__item> <a href=../intervals/ class=md-nav__link> <span class=md-ellipsis> Intervals </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type=checkbox id=__nav_6> <label class=md-nav__link for=__nav_6 id=__nav_6_label tabindex=0> <span class=md-ellipsis> Non-Linear Data Structures </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_6_label aria-expanded=false> <label class=md-nav__title for=__nav_6> <span class="md-nav__icon md-icon"></span> Non-Linear Data Structures </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../tree/ class=md-nav__link> <span class=md-ellipsis> Tree </span> </a> </li> <li class=md-nav__item> <a href=../graph/ class=md-nav__link> <span class=md-ellipsis> Graph </span> </a> </li> <li class=md-nav__item> <a href=../trie/ class=md-nav__link> <span class=md-ellipsis> Trie </span> </a> </li> <li class=md-nav__item> <a href=../heap/ class=md-nav__link> <span class=md-ellipsis> Heap / Priority Queue </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type=checkbox id=__nav_7> <label class=md-nav__link for=__nav_7 id=__nav_7_label tabindex=0> <span class=md-ellipsis> Algorithms & Patterns </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_7_label aria-expanded=false> <label class=md-nav__title for=__nav_7> <span class="md-nav__icon md-icon"></span> Algorithms & Patterns </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../dynamic-programming/ class=md-nav__link> <span class=md-ellipsis> Dynamic Programming </span> </a> </li> <li class=md-nav__item> <a href=../greedy/ class=md-nav__link> <span class=md-ellipsis> Greedy Algorithm </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type=checkbox id=__nav_8> <label class=md-nav__link for=__nav_8 id=__nav_8_label tabindex=0> <span class=md-ellipsis> Techniques & Math </span> <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_8_label aria-expanded=false> <label class=md-nav__title for=__nav_8> <span class="md-nav__icon md-icon"></span> Techniques & Math </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../maths/ class=md-nav__link> <span class=md-ellipsis> Maths </span> </a> </li> <li class=md-nav__item> <a href=../bit-manipulation/ class=md-nav__link> <span class=md-ellipsis> Bit Manipulation </span> </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#what-is-a-queue-simple-explanation class=md-nav__link> <span class=md-ellipsis> What is a Queue? (Simple Explanation) </span> </a> </li> <li class=md-nav__item> <a href=#key-concepts-in-simple-terms class=md-nav__link> <span class=md-ellipsis> Key Concepts (In Simple Terms) </span> </a> </li> <li class=md-nav__item> <a href=#queue-vs-stack-quick-comparison class=md-nav__link> <span class=md-ellipsis> Queue vs Stack (Quick Comparison) </span> </a> </li> <li class=md-nav__item> <a href=#variants-different-types class=md-nav__link> <span class=md-ellipsis> Variants (Different Types) </span> </a> </li> <li class=md-nav__item> <a href=#common-problems class=md-nav__link> <span class=md-ellipsis> Common Problems </span> </a> </li> <li class=md-nav__item> <a href=#patterns-techniques class=md-nav__link> <span class=md-ellipsis> Patterns / Techniques </span> </a> </li> <li class=md-nav__item> <a href=#basic-templates class=md-nav__link> <span class=md-ellipsis> 🔹 Basic Templates </span> </a> <nav class=md-nav aria-label="🔹 Basic Templates"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#queue-using-javas-linkedlist class=md-nav__link> <span class=md-ellipsis> Queue Using Java's LinkedList </span> </a> </li> <li class=md-nav__item> <a href=#queue-using-arraydeque-faster class=md-nav__link> <span class=md-ellipsis> Queue Using ArrayDeque (Faster) </span> </a> </li> <li class=md-nav__item> <a href=#deque-double-ended-queue class=md-nav__link> <span class=md-ellipsis> Deque (Double-Ended Queue) </span> </a> </li> <li class=md-nav__item> <a href=#bfs-template class=md-nav__link> <span class=md-ellipsis> BFS Template </span> </a> </li> <li class=md-nav__item> <a href=#queue-decision-flow class=md-nav__link> <span class=md-ellipsis> Queue Decision Flow </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#practice-problems-by-topic class=md-nav__link> <span class=md-ellipsis> 🔹 Practice Problems by Topic </span> </a> <nav class=md-nav aria-label="🔹 Practice Problems by Topic"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#easy class=md-nav__link> <span class=md-ellipsis> Easy </span> </a> </li> <li class=md-nav__item> <a href=#medium class=md-nav__link> <span class=md-ellipsis> Medium </span> </a> </li> <li class=md-nav__item> <a href=#hard class=md-nav__link> <span class=md-ellipsis> Hard </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#key-patterns-techniques class=md-nav__link> <span class=md-ellipsis> 📌 Key Patterns &amp; Techniques </span> </a> <nav class=md-nav aria-label="📌 Key Patterns & Techniques"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-two-stack-queue class=md-nav__link> <span class=md-ellipsis> 1. Two Stack Queue </span> </a> </li> <li class=md-nav__item> <a href=#2-deque-double-ended-queue class=md-nav__link> <span class=md-ellipsis> 2. Deque (Double-Ended Queue) </span> </a> </li> <li class=md-nav__item> <a href=#3-bfs-breadth-first-search class=md-nav__link> <span class=md-ellipsis> 3. BFS (Breadth-First Search) </span> </a> </li> <li class=md-nav__item> <a href=#4-monotonic-queue class=md-nav__link> <span class=md-ellipsis> 4. Monotonic Queue </span> </a> </li> <li class=md-nav__item> <a href=#5-queue-with-re-entry class=md-nav__link> <span class=md-ellipsis> 5. Queue with Re-entry </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#common-pitfalls-to-avoid class=md-nav__link> <span class=md-ellipsis> 🎯 Common Pitfalls to Avoid </span> </a> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <nav class=md-path aria-label=Navigation> <ol class=md-path__list> <li class=md-path__item> <a href=.. class=md-path__link> <span class=md-ellipsis> Home </span> </a> </li> <li class=md-path__item> <a href=../array/ class=md-path__link> <span class=md-ellipsis> Linear Data Structures </span> </a> </li> </ol> </nav> <article class="md-content__inner md-typeset"> <nav class=md-tags> <a href=../tags/#tag:bfs class=md-tag>bfs</a> <a href=../tags/#tag:deque class=md-tag>deque</a> <a href=../tags/#tag:monotonic-queue class=md-tag>monotonic-queue</a> <a href=../tags/#tag:neetcode-150 class=md-tag>neetcode-150</a> <a href=../tags/#tag:queue class=md-tag>queue</a> </nav> <h1 id=queue>Queue<a class=headerlink href=#queue title="Permanent link">&para;</a></h1> <h2 id=what-is-a-queue-simple-explanation>What is a Queue? (Simple Explanation)<a class=headerlink href=#what-is-a-queue-simple-explanation title="Permanent link">&para;</a></h2> <p>Imagine a line at a coffee shop. The first person in line gets served first, and new people join at the back. That's a <strong>queue</strong>!</p> <p>A queue is a "First In, First Out" (FIFO) data structure: - <strong>Enqueue</strong>: Add to the back (join the line) - <strong>Dequeue</strong>: Remove from the front (get served) - <strong>Peek</strong>: Look at the front without removing</p> <p><strong>Real-life analogies:</strong> - Line at a ticket counter - Printer queue (documents print in order) - Customer service call queue - BFS in graphs (explore level by level)</p> <h2 id=key-concepts-in-simple-terms>Key Concepts (In Simple Terms)<a class=headerlink href=#key-concepts-in-simple-terms title="Permanent link">&para;</a></h2> <ul> <li><strong>FIFO</strong>: First In, First Out — the first element added is the first removed</li> <li><strong>Front</strong>: The exit point (where we remove)</li> <li><strong>Rear/Back</strong>: The entry point (where we add)</li> <li><strong>Enqueue</strong>: Add an element to the rear — O(1)</li> <li><strong>Dequeue</strong>: Remove an element from the front — O(1)</li> <li><strong>Peek</strong>: Look at the front element without removing — O(1)</li> <li><strong>Time Complexity</strong>: O(1) for enqueue/dequeue/peek</li> <li><strong>Space Complexity</strong>: O(n) for n elements</li> </ul> <h2 id=queue-vs-stack-quick-comparison>Queue vs Stack (Quick Comparison)<a class=headerlink href=#queue-vs-stack-quick-comparison title="Permanent link">&para;</a></h2> <table> <thead> <tr> <th>Feature</th> <th>Queue</th> <th>Stack</th> </tr> </thead> <tbody> <tr> <td>Order</td> <td>FIFO (First In First Out)</td> <td>LIFO (Last In First Out)</td> </tr> <tr> <td>Add</td> <td>At rear</td> <td>At top</td> </tr> <tr> <td>Remove</td> <td>From front</td> <td>From top</td> </tr> <tr> <td>Analogy</td> <td>Line at store</td> <td>Stack of plates</td> </tr> </tbody> </table> <h2 id=variants-different-types>Variants (Different Types)<a class=headerlink href=#variants-different-types title="Permanent link">&para;</a></h2> <ul> <li><strong>Simple Queue</strong>: Basic FIFO, no size limit (or fixed)</li> <li><strong>Circular Queue</strong>: Uses fixed array efficiently by wrapping around</li> <li><strong>Deque (Double-Ended Queue)</strong>: Can add/remove from BOTH ends</li> <li><strong>Priority Queue</strong>: Elements have priorities; highest priority served first</li> </ul> <h2 id=common-problems>Common Problems<a class=headerlink href=#common-problems title="Permanent link">&para;</a></h2> <ul> <li>Implement Queue using Stacks</li> <li>Number of Recent Calls</li> <li>Sliding Window Maximum</li> <li>Perfect Squares (BFS)</li> <li>Reconstruct Queue by Height</li> <li>Dota2 Senate</li> <li>Design Circular Queue</li> <li>BFS in Graphs/Trees</li> </ul> <h2 id=patterns-techniques>Patterns / Techniques<a class=headerlink href=#patterns-techniques title="Permanent link">&para;</a></h2> <ul> <li><strong>Two Stacks for Queue</strong>: Simulate queue behavior with two stacks</li> <li><strong>Deque (Double-Ended Queue)</strong>: Flexibility to add/remove from both ends</li> <li><strong>Level-order Traversal (BFS)</strong>: Queue stores nodes to visit</li> <li><strong>Monotonic Queue</strong>: Maintain increasing/decreasing order for sliding window</li> </ul> <hr> <h2 id=basic-templates>🔹 Basic Templates<a class=headerlink href=#basic-templates title="Permanent link">&para;</a></h2> <h3 id=queue-using-javas-linkedlist>Queue Using Java's LinkedList<a class=headerlink href=#queue-using-javas-linkedlist title="Permanent link">&para;</a></h3> <div class="language-java highlight"><pre><span></span><code><span id=__span-0-1><a id=__codelineno-0-1 name=__codelineno-0-1 href=#__codelineno-0-1></a><span class=n>Queue</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>queue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LinkedList</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-0-2><a id=__codelineno-0-2 name=__codelineno-0-2 href=#__codelineno-0-2></a><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span><span class=w>        </span><span class=c1>// Enqueue (add to rear)</span>
+</span><span id=__span-0-3><a id=__codelineno-0-3 name=__codelineno-0-3 href=#__codelineno-0-3></a><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=mi>2</span><span class=p>);</span>
+</span><span id=__span-0-4><a id=__codelineno-0-4 name=__codelineno-0-4 href=#__codelineno-0-4></a><span class=kt>int</span><span class=w> </span><span class=n>front</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>peek</span><span class=p>();</span><span class=w>  </span><span class=c1>// Peek front (returns 1)</span>
+</span><span id=__span-0-5><a id=__codelineno-0-5 name=__codelineno-0-5 href=#__codelineno-0-5></a><span class=kt>int</span><span class=w> </span><span class=n>removed</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>poll</span><span class=p>();</span><span class=w> </span><span class=c1>// Dequeue (removes 1)</span>
+</span><span id=__span-0-6><a id=__codelineno-0-6 name=__codelineno-0-6 href=#__codelineno-0-6></a><span class=kt>boolean</span><span class=w> </span><span class=n>empty</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>();</span>
+</span></code></pre></div> <h3 id=queue-using-arraydeque-faster>Queue Using ArrayDeque (Faster)<a class=headerlink href=#queue-using-arraydeque-faster title="Permanent link">&para;</a></h3> <div class="language-java highlight"><pre><span></span><code><span id=__span-1-1><a id=__codelineno-1-1 name=__codelineno-1-1 href=#__codelineno-1-1></a><span class=n>Queue</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>queue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>ArrayDeque</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-1-2><a id=__codelineno-1-2 name=__codelineno-1-2 href=#__codelineno-1-2></a><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span><span id=__span-1-3><a id=__codelineno-1-3 name=__codelineno-1-3 href=#__codelineno-1-3></a><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=mi>2</span><span class=p>);</span>
+</span><span id=__span-1-4><a id=__codelineno-1-4 name=__codelineno-1-4 href=#__codelineno-1-4></a><span class=kt>int</span><span class=w> </span><span class=n>front</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>peek</span><span class=p>();</span>
+</span><span id=__span-1-5><a id=__codelineno-1-5 name=__codelineno-1-5 href=#__codelineno-1-5></a><span class=kt>int</span><span class=w> </span><span class=n>removed</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>poll</span><span class=p>();</span>
+</span></code></pre></div> <h3 id=deque-double-ended-queue>Deque (Double-Ended Queue)<a class=headerlink href=#deque-double-ended-queue title="Permanent link">&para;</a></h3> <div class="language-java highlight"><pre><span></span><code><span id=__span-2-1><a id=__codelineno-2-1 name=__codelineno-2-1 href=#__codelineno-2-1></a><span class=n>Deque</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>deque</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>ArrayDeque</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-2-2><a id=__codelineno-2-2 name=__codelineno-2-2 href=#__codelineno-2-2></a><span class=n>deque</span><span class=p>.</span><span class=na>offerFirst</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span><span class=w>  </span><span class=c1>// Add to front</span>
+</span><span id=__span-2-3><a id=__codelineno-2-3 name=__codelineno-2-3 href=#__codelineno-2-3></a><span class=n>deque</span><span class=p>.</span><span class=na>offerLast</span><span class=p>(</span><span class=mi>2</span><span class=p>);</span><span class=w>   </span><span class=c1>// Add to rear</span>
+</span><span id=__span-2-4><a id=__codelineno-2-4 name=__codelineno-2-4 href=#__codelineno-2-4></a><span class=n>deque</span><span class=p>.</span><span class=na>peekFirst</span><span class=p>();</span><span class=w>    </span><span class=c1>// Look at front</span>
+</span><span id=__span-2-5><a id=__codelineno-2-5 name=__codelineno-2-5 href=#__codelineno-2-5></a><span class=n>deque</span><span class=p>.</span><span class=na>peekLast</span><span class=p>();</span><span class=w>     </span><span class=c1>// Look at rear</span>
+</span><span id=__span-2-6><a id=__codelineno-2-6 name=__codelineno-2-6 href=#__codelineno-2-6></a><span class=n>deque</span><span class=p>.</span><span class=na>pollFirst</span><span class=p>();</span><span class=w>    </span><span class=c1>// Remove from front</span>
+</span><span id=__span-2-7><a id=__codelineno-2-7 name=__codelineno-2-7 href=#__codelineno-2-7></a><span class=n>deque</span><span class=p>.</span><span class=na>pollLast</span><span class=p>();</span><span class=w>     </span><span class=c1>// Remove from rear</span>
+</span></code></pre></div> <h3 id=bfs-template>BFS Template<a class=headerlink href=#bfs-template title="Permanent link">&para;</a></h3> <div class="language-java highlight"><pre><span></span><code><span id=__span-3-1><a id=__codelineno-3-1 name=__codelineno-3-1 href=#__codelineno-3-1></a><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>bfs</span><span class=p>(</span><span class=n>Node</span><span class=w> </span><span class=n>start</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-2><a id=__codelineno-3-2 name=__codelineno-3-2 href=#__codelineno-3-2></a><span class=w>    </span><span class=n>Queue</span><span class=o>&lt;</span><span class=n>Node</span><span class=o>&gt;</span><span class=w> </span><span class=n>queue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LinkedList</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-3-3><a id=__codelineno-3-3 name=__codelineno-3-3 href=#__codelineno-3-3></a><span class=w>    </span><span class=n>Set</span><span class=o>&lt;</span><span class=n>Node</span><span class=o>&gt;</span><span class=w> </span><span class=n>visited</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>HashSet</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-3-4><a id=__codelineno-3-4 name=__codelineno-3-4 href=#__codelineno-3-4></a><span class=w>    </span><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=n>start</span><span class=p>);</span>
+</span><span id=__span-3-5><a id=__codelineno-3-5 name=__codelineno-3-5 href=#__codelineno-3-5></a><span class=w>    </span><span class=n>visited</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>start</span><span class=p>);</span>
+</span><span id=__span-3-6><a id=__codelineno-3-6 name=__codelineno-3-6 href=#__codelineno-3-6></a><span class=w>    </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>queue</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-7><a id=__codelineno-3-7 name=__codelineno-3-7 href=#__codelineno-3-7></a><span class=w>        </span><span class=n>Node</span><span class=w> </span><span class=n>curr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>poll</span><span class=p>();</span>
+</span><span id=__span-3-8><a id=__codelineno-3-8 name=__codelineno-3-8 href=#__codelineno-3-8></a><span class=w>        </span><span class=c1>// Process curr</span>
+</span><span id=__span-3-9><a id=__codelineno-3-9 name=__codelineno-3-9 href=#__codelineno-3-9></a><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=n>Node</span><span class=w> </span><span class=n>neighbor</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=n>curr</span><span class=p>.</span><span class=na>neighbors</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-10><a id=__codelineno-3-10 name=__codelineno-3-10 href=#__codelineno-3-10></a><span class=w>            </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>visited</span><span class=p>.</span><span class=na>contains</span><span class=p>(</span><span class=n>neighbor</span><span class=p>))</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-11><a id=__codelineno-3-11 name=__codelineno-3-11 href=#__codelineno-3-11></a><span class=w>                </span><span class=n>visited</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>neighbor</span><span class=p>);</span>
+</span><span id=__span-3-12><a id=__codelineno-3-12 name=__codelineno-3-12 href=#__codelineno-3-12></a><span class=w>                </span><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=n>neighbor</span><span class=p>);</span>
+</span><span id=__span-3-13><a id=__codelineno-3-13 name=__codelineno-3-13 href=#__codelineno-3-13></a><span class=w>            </span><span class=p>}</span>
+</span><span id=__span-3-14><a id=__codelineno-3-14 name=__codelineno-3-14 href=#__codelineno-3-14></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-3-15><a id=__codelineno-3-15 name=__codelineno-3-15 href=#__codelineno-3-15></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-3-16><a id=__codelineno-3-16 name=__codelineno-3-16 href=#__codelineno-3-16></a><span class=p>}</span>
+</span></code></pre></div> <h3 id=queue-decision-flow>Queue Decision Flow<a class=headerlink href=#queue-decision-flow title="Permanent link">&para;</a></h3> <pre class=mermaid><code>graph TD
     A["Queue Problem"] --&gt; B{"Need FIFO order?"}
     B --&gt;|Yes| C{"Need both ends?"}
     C --&gt;|Yes| D["Use Deque (ArrayDeque)"]
@@ -340,587 +41,295 @@ deque.pollLast();     // Remove from rear</code></pre>
     F --&gt;|Yes| G["Queue for level-order"]
     F --&gt;|No| H{"Need sliding window max?"}
     H --&gt;|Yes| I["Monotonic Deque"]
-    H --&gt;|No| J["Consider other structures"]</code></pre>
-<hr />
-<h2 id="practice-problems-by-topic">🔹 Practice Problems by Topic</h2>
-<h3 id="easy">Easy</h3>
-<h4 id="1-implement-queue-using-stacks">1. <strong>Implement Queue using Stacks</strong></h4>
-<p><strong>Problem Description:</strong>
-Implement a FIFO queue using only two stacks. Support push, pop, peek, and empty.</p>
-<p><strong>Simple Analogy:</strong>
-Like moving items between two piles. When you need to serve, flip the pile so the oldest item is on top.</p>
-<p><strong>Example Walkthrough:</strong></p>
-<p>Input:
-<pre class="highlight"><code>MyQueue queue = new MyQueue();
-queue.push(1);
-queue.push(2);
-queue.peek();  // returns 1
-queue.pop();   // returns 1
-queue.empty(); // returns false</code></pre></p>
-<p><strong>Step-by-step:</strong>
-<pre class="highlight"><code>Initial: pushStack=[], popStack=[]
-
-push(1): pushStack=[1]
-push(2): pushStack=[1, 2]
-
-peek():
-  popStack is empty -&gt; transfer all from pushStack
-  pushStack=[], popStack=[2, 1]  (1 is now on top)
-  peek -&gt; 1
-
-pop():
-  popStack=[2, 1] -&gt; pop -&gt; returns 1
-  popStack=[2]
-
-empty(): false (popStack has 2)</code></pre></p>
-<p>Input: <code>push(1), push(2), pop(), peek(), push(3), pop()</code>
-<pre class="highlight"><code>push(1): pushStack=[1]
-push(2): pushStack=[1,2]
-pop():   transfer -&gt; popStack=[2,1], pop -&gt; 1, popStack=[2]
-peek():  popStack=[2], peek -&gt; 2
-push(3): pushStack=[3]
-pop():   popStack=[2], pop -&gt; 2</code></pre></p>
-<p><strong>Key Insight - Two Stacks, Reversed:</strong>
-Stack1 (pushStack) is for adding new elements. Stack2 (popStack) is for removing. When popStack is empty, transfer all from pushStack to popStack — this reverses the order, so the oldest element ends up on top.</p>
-<p><strong>Why It Works:</strong>
-- Stack reverses order (LIFO)
-- Transferring from one stack to another reverses again
-- Double reversal gives FIFO behavior
-- Amortized O(1): each element transferred at most once
-- If popStack has elements, just pop directly</p>
-<p><strong>Visualization - Queue Using Stacks:</strong>
-<pre class="mermaid"><code>graph LR
+    H --&gt;|No| J["Consider other structures"]</code></pre> <hr> <h2 id=practice-problems-by-topic>🔹 Practice Problems by Topic<a class=headerlink href=#practice-problems-by-topic title="Permanent link">&para;</a></h2> <h3 id=easy>Easy<a class=headerlink href=#easy title="Permanent link">&para;</a></h3> <h4 id=1-implement-queue-using-stacks>1. <strong>Implement Queue using Stacks</strong><a class=headerlink href=#1-implement-queue-using-stacks title="Permanent link">&para;</a></h4> <p><strong>Problem Description:</strong> Implement a FIFO queue using only two stacks. Support push, pop, peek, and empty.</p> <p><strong>Simple Analogy:</strong> Like moving items between two piles. When you need to serve, flip the pile so the oldest item is on top.</p> <p><strong>Example Walkthrough:</strong></p> <p>Input: <div class="language-text highlight"><pre><span></span><code><span id=__span-4-1><a id=__codelineno-4-1 name=__codelineno-4-1 href=#__codelineno-4-1></a>MyQueue queue = new MyQueue();
+</span><span id=__span-4-2><a id=__codelineno-4-2 name=__codelineno-4-2 href=#__codelineno-4-2></a>queue.push(1);
+</span><span id=__span-4-3><a id=__codelineno-4-3 name=__codelineno-4-3 href=#__codelineno-4-3></a>queue.push(2);
+</span><span id=__span-4-4><a id=__codelineno-4-4 name=__codelineno-4-4 href=#__codelineno-4-4></a>queue.peek();  // returns 1
+</span><span id=__span-4-5><a id=__codelineno-4-5 name=__codelineno-4-5 href=#__codelineno-4-5></a>queue.pop();   // returns 1
+</span><span id=__span-4-6><a id=__codelineno-4-6 name=__codelineno-4-6 href=#__codelineno-4-6></a>queue.empty(); // returns false
+</span></code></pre></div></p> <p><strong>Step-by-step:</strong> <div class="language-text highlight"><pre><span></span><code><span id=__span-5-1><a id=__codelineno-5-1 name=__codelineno-5-1 href=#__codelineno-5-1></a>Initial: pushStack=[], popStack=[]
+</span><span id=__span-5-2><a id=__codelineno-5-2 name=__codelineno-5-2 href=#__codelineno-5-2></a>
+</span><span id=__span-5-3><a id=__codelineno-5-3 name=__codelineno-5-3 href=#__codelineno-5-3></a>push(1): pushStack=[1]
+</span><span id=__span-5-4><a id=__codelineno-5-4 name=__codelineno-5-4 href=#__codelineno-5-4></a>push(2): pushStack=[1, 2]
+</span><span id=__span-5-5><a id=__codelineno-5-5 name=__codelineno-5-5 href=#__codelineno-5-5></a>
+</span><span id=__span-5-6><a id=__codelineno-5-6 name=__codelineno-5-6 href=#__codelineno-5-6></a>peek():
+</span><span id=__span-5-7><a id=__codelineno-5-7 name=__codelineno-5-7 href=#__codelineno-5-7></a>  popStack is empty -&gt; transfer all from pushStack
+</span><span id=__span-5-8><a id=__codelineno-5-8 name=__codelineno-5-8 href=#__codelineno-5-8></a>  pushStack=[], popStack=[2, 1]  (1 is now on top)
+</span><span id=__span-5-9><a id=__codelineno-5-9 name=__codelineno-5-9 href=#__codelineno-5-9></a>  peek -&gt; 1
+</span><span id=__span-5-10><a id=__codelineno-5-10 name=__codelineno-5-10 href=#__codelineno-5-10></a>
+</span><span id=__span-5-11><a id=__codelineno-5-11 name=__codelineno-5-11 href=#__codelineno-5-11></a>pop():
+</span><span id=__span-5-12><a id=__codelineno-5-12 name=__codelineno-5-12 href=#__codelineno-5-12></a>  popStack=[2, 1] -&gt; pop -&gt; returns 1
+</span><span id=__span-5-13><a id=__codelineno-5-13 name=__codelineno-5-13 href=#__codelineno-5-13></a>  popStack=[2]
+</span><span id=__span-5-14><a id=__codelineno-5-14 name=__codelineno-5-14 href=#__codelineno-5-14></a>
+</span><span id=__span-5-15><a id=__codelineno-5-15 name=__codelineno-5-15 href=#__codelineno-5-15></a>empty(): false (popStack has 2)
+</span></code></pre></div></p> <p>Input: <code>push(1), push(2), pop(), peek(), push(3), pop()</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-6-1><a id=__codelineno-6-1 name=__codelineno-6-1 href=#__codelineno-6-1></a>push(1): pushStack=[1]
+</span><span id=__span-6-2><a id=__codelineno-6-2 name=__codelineno-6-2 href=#__codelineno-6-2></a>push(2): pushStack=[1,2]
+</span><span id=__span-6-3><a id=__codelineno-6-3 name=__codelineno-6-3 href=#__codelineno-6-3></a>pop():   transfer -&gt; popStack=[2,1], pop -&gt; 1, popStack=[2]
+</span><span id=__span-6-4><a id=__codelineno-6-4 name=__codelineno-6-4 href=#__codelineno-6-4></a>peek():  popStack=[2], peek -&gt; 2
+</span><span id=__span-6-5><a id=__codelineno-6-5 name=__codelineno-6-5 href=#__codelineno-6-5></a>push(3): pushStack=[3]
+</span><span id=__span-6-6><a id=__codelineno-6-6 name=__codelineno-6-6 href=#__codelineno-6-6></a>pop():   popStack=[2], pop -&gt; 2
+</span></code></pre></div></p> <p><strong>Key Insight - Two Stacks, Reversed:</strong> Stack1 (pushStack) is for adding new elements. Stack2 (popStack) is for removing. When popStack is empty, transfer all from pushStack to popStack — this reverses the order, so the oldest element ends up on top.</p> <p><strong>Why It Works:</strong> - Stack reverses order (LIFO) - Transferring from one stack to another reverses again - Double reversal gives FIFO behavior - Amortized O(1): each element transferred at most once - If popStack has elements, just pop directly</p> <p><strong>Visualization - Queue Using Stacks:</strong> <pre class=mermaid><code>graph LR
     A["push(1), push(2)"] --&gt; B["pushStack=[1,2]"]
     B --&gt; C["pop(): transfer to popStack"]
     C --&gt; D["popStack=[2,1] (1 on top)"]
-    D --&gt; E["pop() returns 1"]</code></pre></p>
-<pre class="highlight"><code class="language-java">class MyQueue {
-    private Stack&lt;Integer&gt; pushStack;
-    private Stack&lt;Integer&gt; popStack;
-    public MyQueue() {
-        pushStack = new Stack&lt;&gt;();
-        popStack = new Stack&lt;&gt;();
-    }
-    public void push(int x) {
-        pushStack.push(x);
-    }
-    public int pop() {
-        if (popStack.isEmpty()) {
-            while (!pushStack.isEmpty()) {
-                popStack.push(pushStack.pop());
-            }
-        }
-        return popStack.pop();
-    }
-    public int peek() {
-        if (popStack.isEmpty()) {
-            while (!pushStack.isEmpty()) {
-                popStack.push(pushStack.pop());
-            }
-        }
-        return popStack.peek();
-    }
-    public boolean empty() {
-        return pushStack.isEmpty() &amp;&amp; popStack.isEmpty();
-    }
-}</code></pre>
-<p><strong>Edge Cases:</strong>
-- Pop from empty: problem guarantees valid calls
-- Multiple pops in a row: works (popStack stays populated)
-- Push after pop: new elements go to pushStack
-- Peek after pop: same transfer logic</p>
-<p><strong>Time Complexity</strong>: O(1) amortized per operation
-<strong>Space Complexity</strong>: O(n)</p>
-<p><strong>Similar Pattern Problems:</strong>
-- Implement Deque using Arrays
-- Stack using Queues
-- Min Stack</p>
-<hr />
-<h4 id="2-number-of-recent-calls">2. <strong>Number of Recent Calls</strong></h4>
-<p><strong>Problem Description:</strong>
-Design a class that counts how many calls were made in the last 3000 milliseconds (including current). Each call comes with a timestamp t.</p>
-<p><strong>Simple Analogy:</strong>
-Like a "recent activity" counter. When a new request arrives, count how many requests are within the last 3 seconds.</p>
-<p><strong>Example Walkthrough:</strong></p>
-<p>Input:
-<pre class="highlight"><code>RecentCounter counter = new RecentCounter();
-counter.ping(1);     // returns 1 (only [1])
-counter.ping(100);   // returns 2 ([1, 100])
-counter.ping(3001);  // returns 3 ([1, 100, 3001])
-counter.ping(3002);  // returns 3 ([100, 3001, 3002] — 1 is too old)</code></pre></p>
-<p><strong>Step-by-step:</strong>
-<pre class="highlight"><code>ping(1): queue=[1], oldest=1, 1 &gt;= 1-3000? Yes -&gt; size=1
-ping(100): queue=[1,100], oldest=1 &gt;= -2900? Yes -&gt; size=2
-ping(3001): queue=[1,100,3001], oldest=1 &gt;= 1? Yes -&gt; size=3
-            Wait, 1 &gt;= 3001-3000=1? Yes -&gt; keep
-            Actually 1 is exactly at the boundary, keep
-ping(3002): queue=[1,100,3001,3002], remove 1 (1 &lt; 2) -&gt; queue=[100,3001,3002]
-            Return 3</code></pre></p>
-<p>Input: <code>ping(1), ping(2), ping(3), ping(3001)</code>
-<pre class="highlight"><code>ping(1): [1] -&gt; 1
-ping(2): [1,2] -&gt; 2
-ping(3): [1,2,3] -&gt; 3
-ping(3001): add 3001, remove 1 (1 &lt; 1)? No, 1 &gt;= 1, keep
-            queue=[1,2,3,3001] -&gt; size=4</code></pre></p>
-<p><strong>Key Insight - Sliding Window with Queue:</strong>
-Maintain a queue of timestamps. When a new ping arrives, add it to the rear. Remove timestamps from the front that are older than t - 3000. The queue size is the answer.</p>
-<p><strong>Why It Works:</strong>
-- Timestamps are increasing (guaranteed by problem)
-- So the oldest timestamp is always at the front
-- We only need to remove from the front (FIFO)
-- All timestamps in the queue are within [t-3000, t]
-- Queue size = number of recent calls</p>
-<p><strong>Visualization - Recent Calls:</strong>
-<pre class="mermaid"><code>graph LR
+    D --&gt; E["pop() returns 1"]</code></pre></p> <div class="language-java highlight"><pre><span></span><code><span id=__span-7-1><a id=__codelineno-7-1 name=__codelineno-7-1 href=#__codelineno-7-1></a><span class=kd>class</span> <span class=nc>MyQueue</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-2><a id=__codelineno-7-2 name=__codelineno-7-2 href=#__codelineno-7-2></a><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>Stack</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>pushStack</span><span class=p>;</span>
+</span><span id=__span-7-3><a id=__codelineno-7-3 name=__codelineno-7-3 href=#__codelineno-7-3></a><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>Stack</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>popStack</span><span class=p>;</span>
+</span><span id=__span-7-4><a id=__codelineno-7-4 name=__codelineno-7-4 href=#__codelineno-7-4></a><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>MyQueue</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-5><a id=__codelineno-7-5 name=__codelineno-7-5 href=#__codelineno-7-5></a><span class=w>        </span><span class=n>pushStack</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Stack</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-7-6><a id=__codelineno-7-6 name=__codelineno-7-6 href=#__codelineno-7-6></a><span class=w>        </span><span class=n>popStack</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Stack</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-7-7><a id=__codelineno-7-7 name=__codelineno-7-7 href=#__codelineno-7-7></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-7-8><a id=__codelineno-7-8 name=__codelineno-7-8 href=#__codelineno-7-8></a><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>push</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>x</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-9><a id=__codelineno-7-9 name=__codelineno-7-9 href=#__codelineno-7-9></a><span class=w>        </span><span class=n>pushStack</span><span class=p>.</span><span class=na>push</span><span class=p>(</span><span class=n>x</span><span class=p>);</span>
+</span><span id=__span-7-10><a id=__codelineno-7-10 name=__codelineno-7-10 href=#__codelineno-7-10></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-7-11><a id=__codelineno-7-11 name=__codelineno-7-11 href=#__codelineno-7-11></a><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=nf>pop</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-12><a id=__codelineno-7-12 name=__codelineno-7-12 href=#__codelineno-7-12></a><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>popStack</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-13><a id=__codelineno-7-13 name=__codelineno-7-13 href=#__codelineno-7-13></a><span class=w>            </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>pushStack</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-14><a id=__codelineno-7-14 name=__codelineno-7-14 href=#__codelineno-7-14></a><span class=w>                </span><span class=n>popStack</span><span class=p>.</span><span class=na>push</span><span class=p>(</span><span class=n>pushStack</span><span class=p>.</span><span class=na>pop</span><span class=p>());</span>
+</span><span id=__span-7-15><a id=__codelineno-7-15 name=__codelineno-7-15 href=#__codelineno-7-15></a><span class=w>            </span><span class=p>}</span>
+</span><span id=__span-7-16><a id=__codelineno-7-16 name=__codelineno-7-16 href=#__codelineno-7-16></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-7-17><a id=__codelineno-7-17 name=__codelineno-7-17 href=#__codelineno-7-17></a><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>popStack</span><span class=p>.</span><span class=na>pop</span><span class=p>();</span>
+</span><span id=__span-7-18><a id=__codelineno-7-18 name=__codelineno-7-18 href=#__codelineno-7-18></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-7-19><a id=__codelineno-7-19 name=__codelineno-7-19 href=#__codelineno-7-19></a><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=nf>peek</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-20><a id=__codelineno-7-20 name=__codelineno-7-20 href=#__codelineno-7-20></a><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>popStack</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-21><a id=__codelineno-7-21 name=__codelineno-7-21 href=#__codelineno-7-21></a><span class=w>            </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>pushStack</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-22><a id=__codelineno-7-22 name=__codelineno-7-22 href=#__codelineno-7-22></a><span class=w>                </span><span class=n>popStack</span><span class=p>.</span><span class=na>push</span><span class=p>(</span><span class=n>pushStack</span><span class=p>.</span><span class=na>pop</span><span class=p>());</span>
+</span><span id=__span-7-23><a id=__codelineno-7-23 name=__codelineno-7-23 href=#__codelineno-7-23></a><span class=w>            </span><span class=p>}</span>
+</span><span id=__span-7-24><a id=__codelineno-7-24 name=__codelineno-7-24 href=#__codelineno-7-24></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-7-25><a id=__codelineno-7-25 name=__codelineno-7-25 href=#__codelineno-7-25></a><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>popStack</span><span class=p>.</span><span class=na>peek</span><span class=p>();</span>
+</span><span id=__span-7-26><a id=__codelineno-7-26 name=__codelineno-7-26 href=#__codelineno-7-26></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-7-27><a id=__codelineno-7-27 name=__codelineno-7-27 href=#__codelineno-7-27></a><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>boolean</span><span class=w> </span><span class=nf>empty</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-28><a id=__codelineno-7-28 name=__codelineno-7-28 href=#__codelineno-7-28></a><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>pushStack</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>()</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>popStack</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>();</span>
+</span><span id=__span-7-29><a id=__codelineno-7-29 name=__codelineno-7-29 href=#__codelineno-7-29></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-7-30><a id=__codelineno-7-30 name=__codelineno-7-30 href=#__codelineno-7-30></a><span class=p>}</span>
+</span></code></pre></div> <p><strong>Edge Cases:</strong> - Pop from empty: problem guarantees valid calls - Multiple pops in a row: works (popStack stays populated) - Push after pop: new elements go to pushStack - Peek after pop: same transfer logic</p> <p><strong>Time Complexity</strong>: O(1) amortized per operation <strong>Space Complexity</strong>: O(n)</p> <p><strong>Similar Pattern Problems:</strong> - Implement Deque using Arrays - Stack using Queues - Min Stack</p> <hr> <h4 id=2-number-of-recent-calls>2. <strong>Number of Recent Calls</strong><a class=headerlink href=#2-number-of-recent-calls title="Permanent link">&para;</a></h4> <p><strong>Problem Description:</strong> Design a class that counts how many calls were made in the last 3000 milliseconds (including current). Each call comes with a timestamp t.</p> <p><strong>Simple Analogy:</strong> Like a "recent activity" counter. When a new request arrives, count how many requests are within the last 3 seconds.</p> <p><strong>Example Walkthrough:</strong></p> <p>Input: <div class="language-text highlight"><pre><span></span><code><span id=__span-8-1><a id=__codelineno-8-1 name=__codelineno-8-1 href=#__codelineno-8-1></a>RecentCounter counter = new RecentCounter();
+</span><span id=__span-8-2><a id=__codelineno-8-2 name=__codelineno-8-2 href=#__codelineno-8-2></a>counter.ping(1);     // returns 1 (only [1])
+</span><span id=__span-8-3><a id=__codelineno-8-3 name=__codelineno-8-3 href=#__codelineno-8-3></a>counter.ping(100);   // returns 2 ([1, 100])
+</span><span id=__span-8-4><a id=__codelineno-8-4 name=__codelineno-8-4 href=#__codelineno-8-4></a>counter.ping(3001);  // returns 3 ([1, 100, 3001])
+</span><span id=__span-8-5><a id=__codelineno-8-5 name=__codelineno-8-5 href=#__codelineno-8-5></a>counter.ping(3002);  // returns 3 ([100, 3001, 3002] — 1 is too old)
+</span></code></pre></div></p> <p><strong>Step-by-step:</strong> <div class="language-text highlight"><pre><span></span><code><span id=__span-9-1><a id=__codelineno-9-1 name=__codelineno-9-1 href=#__codelineno-9-1></a>ping(1): queue=[1], oldest=1, 1 &gt;= 1-3000? Yes -&gt; size=1
+</span><span id=__span-9-2><a id=__codelineno-9-2 name=__codelineno-9-2 href=#__codelineno-9-2></a>ping(100): queue=[1,100], oldest=1 &gt;= -2900? Yes -&gt; size=2
+</span><span id=__span-9-3><a id=__codelineno-9-3 name=__codelineno-9-3 href=#__codelineno-9-3></a>ping(3001): queue=[1,100,3001], oldest=1 &gt;= 1? Yes -&gt; size=3
+</span><span id=__span-9-4><a id=__codelineno-9-4 name=__codelineno-9-4 href=#__codelineno-9-4></a>            Wait, 1 &gt;= 3001-3000=1? Yes -&gt; keep
+</span><span id=__span-9-5><a id=__codelineno-9-5 name=__codelineno-9-5 href=#__codelineno-9-5></a>            Actually 1 is exactly at the boundary, keep
+</span><span id=__span-9-6><a id=__codelineno-9-6 name=__codelineno-9-6 href=#__codelineno-9-6></a>ping(3002): queue=[1,100,3001,3002], remove 1 (1 &lt; 2) -&gt; queue=[100,3001,3002]
+</span><span id=__span-9-7><a id=__codelineno-9-7 name=__codelineno-9-7 href=#__codelineno-9-7></a>            Return 3
+</span></code></pre></div></p> <p>Input: <code>ping(1), ping(2), ping(3), ping(3001)</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-10-1><a id=__codelineno-10-1 name=__codelineno-10-1 href=#__codelineno-10-1></a>ping(1): [1] -&gt; 1
+</span><span id=__span-10-2><a id=__codelineno-10-2 name=__codelineno-10-2 href=#__codelineno-10-2></a>ping(2): [1,2] -&gt; 2
+</span><span id=__span-10-3><a id=__codelineno-10-3 name=__codelineno-10-3 href=#__codelineno-10-3></a>ping(3): [1,2,3] -&gt; 3
+</span><span id=__span-10-4><a id=__codelineno-10-4 name=__codelineno-10-4 href=#__codelineno-10-4></a>ping(3001): add 3001, remove 1 (1 &lt; 1)? No, 1 &gt;= 1, keep
+</span><span id=__span-10-5><a id=__codelineno-10-5 name=__codelineno-10-5 href=#__codelineno-10-5></a>            queue=[1,2,3,3001] -&gt; size=4
+</span></code></pre></div></p> <p><strong>Key Insight - Sliding Window with Queue:</strong> Maintain a queue of timestamps. When a new ping arrives, add it to the rear. Remove timestamps from the front that are older than t - 3000. The queue size is the answer.</p> <p><strong>Why It Works:</strong> - Timestamps are increasing (guaranteed by problem) - So the oldest timestamp is always at the front - We only need to remove from the front (FIFO) - All timestamps in the queue are within [t-3000, t] - Queue size = number of recent calls</p> <p><strong>Visualization - Recent Calls:</strong> <pre class=mermaid><code>graph LR
     A["ping(1): queue=[1]"] --&gt; B["ping(100): queue=[1,100]"]
     B --&gt; C["ping(3001): queue=[1,100,3001]"]
-    C --&gt; D["ping(3002): remove 1, queue=[100,3001,3002] -&gt; 3"]</code></pre></p>
-<pre class="highlight"><code class="language-java">class RecentCounter {
-    private Queue&lt;Integer&gt; queue;
-    public RecentCounter() {
-        queue = new LinkedList&lt;&gt;();
-    }
-    public int ping(int t) {
-        queue.offer(t);
-        while (!queue.isEmpty() &amp;&amp; queue.peek() &lt; t - 3000) {
-            queue.poll();
-        }
-        return queue.size();
-    }
-}</code></pre>
-<p><strong>Edge Cases:</strong>
-- First ping: queue size 1
-- Multiple pings at same timestamp: all counted
-- Exactly 3000 ms apart: counted (boundary inclusive)
-- Very large gap: old pings removed</p>
-<p><strong>Time Complexity</strong>: O(1) amortized per ping
-<strong>Space Complexity</strong>: O(n) where n = number of pings in window</p>
-<p><strong>Similar Pattern Problems:</strong>
-- Last N Orders
-- Expiring Map
-- Sliding Window Count</p>
-<hr />
-<h3 id="medium">Medium</h3>
-<h4 id="3-sliding-window-maximum">3. <strong>Sliding Window Maximum</strong></h4>
-<p><strong>Problem Description:</strong>
-Given an array and a window size k, find the maximum value in each window as it slides from left to right.</p>
-<p><strong>Simple Analogy:</strong>
-Like a security camera with a fixed-width view that slides across a scene. At each position, what's the tallest thing visible?</p>
-<p><strong>Example Walkthrough:</strong></p>
-<p>Input: <code>nums = [1,3,-1,-3,5,3,6,7]</code>, <code>k = 3</code>
-<pre class="highlight"><code>Expected Output: [3,3,5,5,6,7]
-
-Windows:
-[1,3,-1] -&gt; max=3
-[3,-1,-3] -&gt; max=3
-[-1,-3,5] -&gt; max=5
-[-3,5,3] -&gt; max=5
-[5,3,6] -&gt; max=6
-[3,6,7] -&gt; max=7
-
-Deque (stores indices, decreasing by value):
-i=0 (1): deque=[0]
-i=1 (3): pop 0 (1&lt;3), deque=[1]
-i=2 (-1): deque=[1,2], window complete -&gt; max=nums[1]=3
-i=3 (-3): deque=[1,2,3], window complete -&gt; max=nums[1]=3
-         Wait, index 1 is at 1, window starts at 3-3+1=1, so keep
-         Actually i=3, window=[1,2,3], start=1, index 1 is valid
-i=4 (5): pop 3(-3), 2(-1), 1(3) -&gt; deque=[4], window start=2
-         max=nums[4]=5
-i=5 (3): deque=[4,5], window start=3, max=nums[4]=5
-i=6 (6): pop 5(3), 4(5) -&gt; deque=[6], window start=4
-         max=nums[6]=6
-i=7 (7): pop 6(6) -&gt; deque=[7], window start=5
-         max=nums[7]=7
-
-Result: [3,3,5,5,6,7]</code></pre></p>
-<p>Input: <code>nums = [1]</code>, <code>k = 1</code>
-<pre class="highlight"><code>Expected Output: [1]</code></pre></p>
-<p>Input: <code>nums = [1,-1]</code>, <code>k = 1</code>
-<pre class="highlight"><code>Expected Output: [1,-1]</code></pre></p>
-<p><strong>Key Insight - Monotonic Deque:</strong>
-Maintain a deque of indices where values are in decreasing order. The front of the deque is always the maximum of the current window. Before adding a new element, remove from the back any smaller elements (they can never be the max). Remove from the front any indices outside the window.</p>
-<p><strong>Why It Works:</strong>
-- A smaller element behind a larger element can never be the max
-- So we can safely discard smaller elements
-- The deque maintains decreasing order of values
-- Front is always the maximum of current window
-- Each element added/removed at most once → O(n) total</p>
-<p><strong>Visualization - Sliding Window Maximum:</strong>
-<pre class="mermaid"><code>graph LR
+    C --&gt; D["ping(3002): remove 1, queue=[100,3001,3002] -&gt; 3"]</code></pre></p> <div class="language-java highlight"><pre><span></span><code><span id=__span-11-1><a id=__codelineno-11-1 name=__codelineno-11-1 href=#__codelineno-11-1></a><span class=kd>class</span> <span class=nc>RecentCounter</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-11-2><a id=__codelineno-11-2 name=__codelineno-11-2 href=#__codelineno-11-2></a><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>Queue</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>queue</span><span class=p>;</span>
+</span><span id=__span-11-3><a id=__codelineno-11-3 name=__codelineno-11-3 href=#__codelineno-11-3></a><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>RecentCounter</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-11-4><a id=__codelineno-11-4 name=__codelineno-11-4 href=#__codelineno-11-4></a><span class=w>        </span><span class=n>queue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LinkedList</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-11-5><a id=__codelineno-11-5 name=__codelineno-11-5 href=#__codelineno-11-5></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-11-6><a id=__codelineno-11-6 name=__codelineno-11-6 href=#__codelineno-11-6></a><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=nf>ping</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>t</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-11-7><a id=__codelineno-11-7 name=__codelineno-11-7 href=#__codelineno-11-7></a><span class=w>        </span><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=n>t</span><span class=p>);</span>
+</span><span id=__span-11-8><a id=__codelineno-11-8 name=__codelineno-11-8 href=#__codelineno-11-8></a><span class=w>        </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>queue</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>()</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>peek</span><span class=p>()</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>t</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>3000</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-11-9><a id=__codelineno-11-9 name=__codelineno-11-9 href=#__codelineno-11-9></a><span class=w>            </span><span class=n>queue</span><span class=p>.</span><span class=na>poll</span><span class=p>();</span>
+</span><span id=__span-11-10><a id=__codelineno-11-10 name=__codelineno-11-10 href=#__codelineno-11-10></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-11-11><a id=__codelineno-11-11 name=__codelineno-11-11 href=#__codelineno-11-11></a><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>size</span><span class=p>();</span>
+</span><span id=__span-11-12><a id=__codelineno-11-12 name=__codelineno-11-12 href=#__codelineno-11-12></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-11-13><a id=__codelineno-11-13 name=__codelineno-11-13 href=#__codelineno-11-13></a><span class=p>}</span>
+</span></code></pre></div> <p><strong>Edge Cases:</strong> - First ping: queue size 1 - Multiple pings at same timestamp: all counted - Exactly 3000 ms apart: counted (boundary inclusive) - Very large gap: old pings removed</p> <p><strong>Time Complexity</strong>: O(1) amortized per ping <strong>Space Complexity</strong>: O(n) where n = number of pings in window</p> <p><strong>Similar Pattern Problems:</strong> - Last N Orders - Expiring Map - Sliding Window Count</p> <hr> <h3 id=medium>Medium<a class=headerlink href=#medium title="Permanent link">&para;</a></h3> <h4 id=3-sliding-window-maximum>3. <strong>Sliding Window Maximum</strong><a class=headerlink href=#3-sliding-window-maximum title="Permanent link">&para;</a></h4> <p><strong>Problem Description:</strong> Given an array and a window size k, find the maximum value in each window as it slides from left to right.</p> <p><strong>Simple Analogy:</strong> Like a security camera with a fixed-width view that slides across a scene. At each position, what's the tallest thing visible?</p> <p><strong>Example Walkthrough:</strong></p> <p>Input: <code>nums = [1,3,-1,-3,5,3,6,7]</code>, <code>k = 3</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-12-1><a id=__codelineno-12-1 name=__codelineno-12-1 href=#__codelineno-12-1></a>Expected Output: [3,3,5,5,6,7]
+</span><span id=__span-12-2><a id=__codelineno-12-2 name=__codelineno-12-2 href=#__codelineno-12-2></a>
+</span><span id=__span-12-3><a id=__codelineno-12-3 name=__codelineno-12-3 href=#__codelineno-12-3></a>Windows:
+</span><span id=__span-12-4><a id=__codelineno-12-4 name=__codelineno-12-4 href=#__codelineno-12-4></a>[1,3,-1] -&gt; max=3
+</span><span id=__span-12-5><a id=__codelineno-12-5 name=__codelineno-12-5 href=#__codelineno-12-5></a>[3,-1,-3] -&gt; max=3
+</span><span id=__span-12-6><a id=__codelineno-12-6 name=__codelineno-12-6 href=#__codelineno-12-6></a>[-1,-3,5] -&gt; max=5
+</span><span id=__span-12-7><a id=__codelineno-12-7 name=__codelineno-12-7 href=#__codelineno-12-7></a>[-3,5,3] -&gt; max=5
+</span><span id=__span-12-8><a id=__codelineno-12-8 name=__codelineno-12-8 href=#__codelineno-12-8></a>[5,3,6] -&gt; max=6
+</span><span id=__span-12-9><a id=__codelineno-12-9 name=__codelineno-12-9 href=#__codelineno-12-9></a>[3,6,7] -&gt; max=7
+</span><span id=__span-12-10><a id=__codelineno-12-10 name=__codelineno-12-10 href=#__codelineno-12-10></a>
+</span><span id=__span-12-11><a id=__codelineno-12-11 name=__codelineno-12-11 href=#__codelineno-12-11></a>Deque (stores indices, decreasing by value):
+</span><span id=__span-12-12><a id=__codelineno-12-12 name=__codelineno-12-12 href=#__codelineno-12-12></a>i=0 (1): deque=[0]
+</span><span id=__span-12-13><a id=__codelineno-12-13 name=__codelineno-12-13 href=#__codelineno-12-13></a>i=1 (3): pop 0 (1&lt;3), deque=[1]
+</span><span id=__span-12-14><a id=__codelineno-12-14 name=__codelineno-12-14 href=#__codelineno-12-14></a>i=2 (-1): deque=[1,2], window complete -&gt; max=nums[1]=3
+</span><span id=__span-12-15><a id=__codelineno-12-15 name=__codelineno-12-15 href=#__codelineno-12-15></a>i=3 (-3): deque=[1,2,3], window complete -&gt; max=nums[1]=3
+</span><span id=__span-12-16><a id=__codelineno-12-16 name=__codelineno-12-16 href=#__codelineno-12-16></a>         Wait, index 1 is at 1, window starts at 3-3+1=1, so keep
+</span><span id=__span-12-17><a id=__codelineno-12-17 name=__codelineno-12-17 href=#__codelineno-12-17></a>         Actually i=3, window=[1,2,3], start=1, index 1 is valid
+</span><span id=__span-12-18><a id=__codelineno-12-18 name=__codelineno-12-18 href=#__codelineno-12-18></a>i=4 (5): pop 3(-3), 2(-1), 1(3) -&gt; deque=[4], window start=2
+</span><span id=__span-12-19><a id=__codelineno-12-19 name=__codelineno-12-19 href=#__codelineno-12-19></a>         max=nums[4]=5
+</span><span id=__span-12-20><a id=__codelineno-12-20 name=__codelineno-12-20 href=#__codelineno-12-20></a>i=5 (3): deque=[4,5], window start=3, max=nums[4]=5
+</span><span id=__span-12-21><a id=__codelineno-12-21 name=__codelineno-12-21 href=#__codelineno-12-21></a>i=6 (6): pop 5(3), 4(5) -&gt; deque=[6], window start=4
+</span><span id=__span-12-22><a id=__codelineno-12-22 name=__codelineno-12-22 href=#__codelineno-12-22></a>         max=nums[6]=6
+</span><span id=__span-12-23><a id=__codelineno-12-23 name=__codelineno-12-23 href=#__codelineno-12-23></a>i=7 (7): pop 6(6) -&gt; deque=[7], window start=5
+</span><span id=__span-12-24><a id=__codelineno-12-24 name=__codelineno-12-24 href=#__codelineno-12-24></a>         max=nums[7]=7
+</span><span id=__span-12-25><a id=__codelineno-12-25 name=__codelineno-12-25 href=#__codelineno-12-25></a>
+</span><span id=__span-12-26><a id=__codelineno-12-26 name=__codelineno-12-26 href=#__codelineno-12-26></a>Result: [3,3,5,5,6,7]
+</span></code></pre></div></p> <p>Input: <code>nums = [1]</code>, <code>k = 1</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-13-1><a id=__codelineno-13-1 name=__codelineno-13-1 href=#__codelineno-13-1></a>Expected Output: [1]
+</span></code></pre></div></p> <p>Input: <code>nums = [1,-1]</code>, <code>k = 1</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-14-1><a id=__codelineno-14-1 name=__codelineno-14-1 href=#__codelineno-14-1></a>Expected Output: [1,-1]
+</span></code></pre></div></p> <p><strong>Key Insight - Monotonic Deque:</strong> Maintain a deque of indices where values are in decreasing order. The front of the deque is always the maximum of the current window. Before adding a new element, remove from the back any smaller elements (they can never be the max). Remove from the front any indices outside the window.</p> <p><strong>Why It Works:</strong> - A smaller element behind a larger element can never be the max - So we can safely discard smaller elements - The deque maintains decreasing order of values - Front is always the maximum of current window - Each element added/removed at most once → O(n) total</p> <p><strong>Visualization - Sliding Window Maximum:</strong> <pre class=mermaid><code>graph LR
     A["nums=[1,3,-1,-3,5,3,6,7], k=3"] --&gt; B["Window 1: [1,3,-1] max=3"]
     B --&gt; C["Window 2: [3,-1,-3] max=3"]
     C --&gt; D["Window 3: [-1,-3,5] max=5"]
     D --&gt; E["Window 4: [-3,5,3] max=5"]
     E --&gt; F["Window 5: [5,3,6] max=6"]
-    F --&gt; G["Window 6: [3,6,7] max=7"]</code></pre></p>
-<pre class="highlight"><code class="language-java">public int[] maxSlidingWindow(int[] nums, int k) {
-    int n = nums.length;
-    int[] result = new int[n - k + 1];
-    Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;();
-    for (int i = 0; i &lt; n; i++) {
-        while (!deque.isEmpty() &amp;&amp; deque.peekFirst() &lt; i - k + 1) {
-            deque.pollFirst();
-        }
-        while (!deque.isEmpty() &amp;&amp; nums[deque.peekLast()] &lt; nums[i]) {
-            deque.pollLast();
-        }
-        deque.offerLast(i);
-        if (i &gt;= k - 1) {
-            result[i - k + 1] = nums[deque.peekFirst()];
-        }
-    }
-    return result;
-}</code></pre>
-<p><strong>Edge Cases:</strong>
-- k = 1: every element is its own max
-- k = n: single window, max of whole array
-- All decreasing: deque grows to size k
-- All increasing: deque size stays 1</p>
-<p><strong>Time Complexity</strong>: O(n) — each element added/removed once
-<strong>Space Complexity</strong>: O(k) — deque size</p>
-<p><strong>Similar Pattern Problems:</strong>
-- Maximum of Minimum Subarrays
-- Max Consecutive Ones
-- Shortest Subarray with Sum at Least K</p>
-<hr />
-<h4 id="4-perfect-squares">4. <strong>Perfect Squares</strong></h4>
-<p><strong>Problem Description:</strong>
-Given a positive integer n, find the minimum number of perfect squares (1, 4, 9, 16, ...) that sum to n.</p>
-<p><strong>Simple Analogy:</strong>
-Like making change for n using only square-number coins. What's the minimum number of coins?</p>
-<p><strong>Example Walkthrough:</strong></p>
-<p>Input: <code>n = 12</code>
-<pre class="highlight"><code>Expected Output: 3 (12 = 4 + 4 + 4)
-
-BFS approach:
-Level 0: 12
-Level 1: 12-1=11, 12-4=8, 12-9=3
-Level 2: from 11: 10, 7, 2; from 8: 7, 4; from 3: 2
-Level 3: from 2: 1; from 4: 3, 0 &lt;- found!
-
-12 -&gt; 8 -&gt; 4 -&gt; 0 (3 steps)
-Return 3</code></pre></p>
-<p>Input: <code>n = 13</code>
-<pre class="highlight"><code>Expected Output: 2 (13 = 4 + 9)
-
-BFS:
-Level 0: 13
-Level 1: 12, 9, 4
-Level 2: from 9: 8, 5, 0 &lt;- found!
-
-13 -&gt; 9 -&gt; 0 (2 steps)
-Return 2</code></pre></p>
-<p>Input: <code>n = 1</code>
-<pre class="highlight"><code>Expected Output: 1 (1 = 1)</code></pre></p>
-<p>Input: <code>n = 4</code>
-<pre class="highlight"><code>Expected Output: 1 (4 = 4)</code></pre></p>
-<p><strong>Key Insight - BFS on Numbers:</strong>
-Think of each number as a node. From number x, you can go to x - 1, x - 4, x - 9, ... (subtracting a perfect square). BFS finds the shortest path from n to 0.</p>
-<p><strong>Why It Works:</strong>
-- Each edge represents subtracting a perfect square
-- BFS explores all numbers reachable in k steps before k+1
-- So first time we reach 0, we've used the minimum steps
-- Visited set prevents revisiting (infinite loops)
-- This is shortest path in an unweighted graph</p>
-<p><strong>Visualization - Perfect Squares BFS:</strong>
-<pre class="mermaid"><code>graph TD
+    F --&gt; G["Window 6: [3,6,7] max=7"]</code></pre></p> <div class="language-java highlight"><pre><span></span><code><span id=__span-15-1><a id=__codelineno-15-1 name=__codelineno-15-1 href=#__codelineno-15-1></a><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=w> </span><span class=nf>maxSlidingWindow</span><span class=p>(</span><span class=kt>int</span><span class=o>[]</span><span class=w> </span><span class=n>nums</span><span class=p>,</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>k</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-15-2><a id=__codelineno-15-2 name=__codelineno-15-2 href=#__codelineno-15-2></a><span class=w>    </span><span class=kt>int</span><span class=w> </span><span class=n>n</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>nums</span><span class=p>.</span><span class=na>length</span><span class=p>;</span>
+</span><span id=__span-15-3><a id=__codelineno-15-3 name=__codelineno-15-3 href=#__codelineno-15-3></a><span class=w>    </span><span class=kt>int</span><span class=o>[]</span><span class=w> </span><span class=n>result</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[</span><span class=n>n</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>k</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>1</span><span class=o>]</span><span class=p>;</span>
+</span><span id=__span-15-4><a id=__codelineno-15-4 name=__codelineno-15-4 href=#__codelineno-15-4></a><span class=w>    </span><span class=n>Deque</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>deque</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LinkedList</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-15-5><a id=__codelineno-15-5 name=__codelineno-15-5 href=#__codelineno-15-5></a><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>0</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>n</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-15-6><a id=__codelineno-15-6 name=__codelineno-15-6 href=#__codelineno-15-6></a><span class=w>        </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>deque</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>()</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>deque</span><span class=p>.</span><span class=na>peekFirst</span><span class=p>()</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>k</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-15-7><a id=__codelineno-15-7 name=__codelineno-15-7 href=#__codelineno-15-7></a><span class=w>            </span><span class=n>deque</span><span class=p>.</span><span class=na>pollFirst</span><span class=p>();</span>
+</span><span id=__span-15-8><a id=__codelineno-15-8 name=__codelineno-15-8 href=#__codelineno-15-8></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-15-9><a id=__codelineno-15-9 name=__codelineno-15-9 href=#__codelineno-15-9></a><span class=w>        </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>deque</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>()</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=n>nums</span><span class=o>[</span><span class=n>deque</span><span class=p>.</span><span class=na>peekLast</span><span class=p>()</span><span class=o>]</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>nums</span><span class=o>[</span><span class=n>i</span><span class=o>]</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-15-10><a id=__codelineno-15-10 name=__codelineno-15-10 href=#__codelineno-15-10></a><span class=w>            </span><span class=n>deque</span><span class=p>.</span><span class=na>pollLast</span><span class=p>();</span>
+</span><span id=__span-15-11><a id=__codelineno-15-11 name=__codelineno-15-11 href=#__codelineno-15-11></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-15-12><a id=__codelineno-15-12 name=__codelineno-15-12 href=#__codelineno-15-12></a><span class=w>        </span><span class=n>deque</span><span class=p>.</span><span class=na>offerLast</span><span class=p>(</span><span class=n>i</span><span class=p>);</span>
+</span><span id=__span-15-13><a id=__codelineno-15-13 name=__codelineno-15-13 href=#__codelineno-15-13></a><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>i</span><span class=w> </span><span class=o>&gt;=</span><span class=w> </span><span class=n>k</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=mi>1</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-15-14><a id=__codelineno-15-14 name=__codelineno-15-14 href=#__codelineno-15-14></a><span class=w>            </span><span class=n>result</span><span class=o>[</span><span class=n>i</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>k</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>1</span><span class=o>]</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>nums</span><span class=o>[</span><span class=n>deque</span><span class=p>.</span><span class=na>peekFirst</span><span class=p>()</span><span class=o>]</span><span class=p>;</span>
+</span><span id=__span-15-15><a id=__codelineno-15-15 name=__codelineno-15-15 href=#__codelineno-15-15></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-15-16><a id=__codelineno-15-16 name=__codelineno-15-16 href=#__codelineno-15-16></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-15-17><a id=__codelineno-15-17 name=__codelineno-15-17 href=#__codelineno-15-17></a><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>result</span><span class=p>;</span>
+</span><span id=__span-15-18><a id=__codelineno-15-18 name=__codelineno-15-18 href=#__codelineno-15-18></a><span class=p>}</span>
+</span></code></pre></div> <p><strong>Edge Cases:</strong> - k = 1: every element is its own max - k = n: single window, max of whole array - All decreasing: deque grows to size k - All increasing: deque size stays 1</p> <p><strong>Time Complexity</strong>: O(n) — each element added/removed once <strong>Space Complexity</strong>: O(k) — deque size</p> <p><strong>Similar Pattern Problems:</strong> - Maximum of Minimum Subarrays - Max Consecutive Ones - Shortest Subarray with Sum at Least K</p> <hr> <h4 id=4-perfect-squares>4. <strong>Perfect Squares</strong><a class=headerlink href=#4-perfect-squares title="Permanent link">&para;</a></h4> <p><strong>Problem Description:</strong> Given a positive integer n, find the minimum number of perfect squares (1, 4, 9, 16, ...) that sum to n.</p> <p><strong>Simple Analogy:</strong> Like making change for n using only square-number coins. What's the minimum number of coins?</p> <p><strong>Example Walkthrough:</strong></p> <p>Input: <code>n = 12</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-16-1><a id=__codelineno-16-1 name=__codelineno-16-1 href=#__codelineno-16-1></a>Expected Output: 3 (12 = 4 + 4 + 4)
+</span><span id=__span-16-2><a id=__codelineno-16-2 name=__codelineno-16-2 href=#__codelineno-16-2></a>
+</span><span id=__span-16-3><a id=__codelineno-16-3 name=__codelineno-16-3 href=#__codelineno-16-3></a>BFS approach:
+</span><span id=__span-16-4><a id=__codelineno-16-4 name=__codelineno-16-4 href=#__codelineno-16-4></a>Level 0: 12
+</span><span id=__span-16-5><a id=__codelineno-16-5 name=__codelineno-16-5 href=#__codelineno-16-5></a>Level 1: 12-1=11, 12-4=8, 12-9=3
+</span><span id=__span-16-6><a id=__codelineno-16-6 name=__codelineno-16-6 href=#__codelineno-16-6></a>Level 2: from 11: 10, 7, 2; from 8: 7, 4; from 3: 2
+</span><span id=__span-16-7><a id=__codelineno-16-7 name=__codelineno-16-7 href=#__codelineno-16-7></a>Level 3: from 2: 1; from 4: 3, 0 &lt;- found!
+</span><span id=__span-16-8><a id=__codelineno-16-8 name=__codelineno-16-8 href=#__codelineno-16-8></a>
+</span><span id=__span-16-9><a id=__codelineno-16-9 name=__codelineno-16-9 href=#__codelineno-16-9></a>12 -&gt; 8 -&gt; 4 -&gt; 0 (3 steps)
+</span><span id=__span-16-10><a id=__codelineno-16-10 name=__codelineno-16-10 href=#__codelineno-16-10></a>Return 3
+</span></code></pre></div></p> <p>Input: <code>n = 13</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-17-1><a id=__codelineno-17-1 name=__codelineno-17-1 href=#__codelineno-17-1></a>Expected Output: 2 (13 = 4 + 9)
+</span><span id=__span-17-2><a id=__codelineno-17-2 name=__codelineno-17-2 href=#__codelineno-17-2></a>
+</span><span id=__span-17-3><a id=__codelineno-17-3 name=__codelineno-17-3 href=#__codelineno-17-3></a>BFS:
+</span><span id=__span-17-4><a id=__codelineno-17-4 name=__codelineno-17-4 href=#__codelineno-17-4></a>Level 0: 13
+</span><span id=__span-17-5><a id=__codelineno-17-5 name=__codelineno-17-5 href=#__codelineno-17-5></a>Level 1: 12, 9, 4
+</span><span id=__span-17-6><a id=__codelineno-17-6 name=__codelineno-17-6 href=#__codelineno-17-6></a>Level 2: from 9: 8, 5, 0 &lt;- found!
+</span><span id=__span-17-7><a id=__codelineno-17-7 name=__codelineno-17-7 href=#__codelineno-17-7></a>
+</span><span id=__span-17-8><a id=__codelineno-17-8 name=__codelineno-17-8 href=#__codelineno-17-8></a>13 -&gt; 9 -&gt; 0 (2 steps)
+</span><span id=__span-17-9><a id=__codelineno-17-9 name=__codelineno-17-9 href=#__codelineno-17-9></a>Return 2
+</span></code></pre></div></p> <p>Input: <code>n = 1</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-18-1><a id=__codelineno-18-1 name=__codelineno-18-1 href=#__codelineno-18-1></a>Expected Output: 1 (1 = 1)
+</span></code></pre></div></p> <p>Input: <code>n = 4</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-19-1><a id=__codelineno-19-1 name=__codelineno-19-1 href=#__codelineno-19-1></a>Expected Output: 1 (4 = 4)
+</span></code></pre></div></p> <p><strong>Key Insight - BFS on Numbers:</strong> Think of each number as a node. From number x, you can go to x - 1, x - 4, x - 9, ... (subtracting a perfect square). BFS finds the shortest path from n to 0.</p> <p><strong>Why It Works:</strong> - Each edge represents subtracting a perfect square - BFS explores all numbers reachable in k steps before k+1 - So first time we reach 0, we've used the minimum steps - Visited set prevents revisiting (infinite loops) - This is shortest path in an unweighted graph</p> <p><strong>Visualization - Perfect Squares BFS:</strong> <pre class=mermaid><code>graph TD
     A["n=12"] --&gt; B["11, 8, 3"]
     B --&gt; C["10, 7, 2, 4"]
-    C --&gt; D["9, 6, 1, 3, 0 (FOUND at level 3)"]</code></pre></p>
-<pre class="highlight"><code class="language-java">public int numSquares(int n) {
-    Queue&lt;int[]&gt; queue = new LinkedList&lt;&gt;();
-    HashSet&lt;Integer&gt; visited = new HashSet&lt;&gt;();
-    queue.offer(new int[]{n, 0});
-    visited.add(n);
-    while (!queue.isEmpty()) {
-        int[] curr = queue.poll();
-        int num = curr[0], steps = curr[1];
-        if (num == 0) return steps;
-        for (int i = 1; i * i &lt;= num; i++) {
-            int next = num - i * i;
-            if (!visited.contains(next)) {
-                visited.add(next);
-                queue.offer(new int[]{next, steps + 1});
-            }
-        }
-    }
-    return -1;
-}</code></pre>
-<p><strong>Edge Cases:</strong>
-- n = 0: returns 0 (no squares needed)
-- n = 1: returns 1
-- n perfect square: returns 1
-- Large n: BFS still efficient with visited set</p>
-<p><strong>Time Complexity</strong>: O(n * √n)
-<strong>Space Complexity</strong>: O(n)</p>
-<p><strong>Similar Pattern Problems:</strong>
-- Minimum Path Sum
-- Word Ladder
-- Coin Change</p>
-<hr />
-<h4 id="5-reconstruct-queue-by-height">5. <strong>Reconstruct Queue by Height</strong></h4>
-<p><strong>Problem Description:</strong>
-Given people with heights and k values (number of people in front with height &gt;= current), reconstruct the queue.</p>
-<p><strong>Simple Analogy:</strong>
-Like arranging people in a line based on "how many taller people are in front of me."</p>
-<p><strong>Example Walkthrough:</strong></p>
-<p>Input: <code>people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]</code>
-<pre class="highlight"><code>Expected Output: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
-
-Step 1: Sort by height descending, then k ascending
-[[7,0],[7,1],[6,1],[5,0],[5,2],[4,4]]
-
-Step 2: Insert each person at index k
-Insert [7,0] at 0: [[7,0]]
-Insert [7,1] at 1: [[7,0],[7,1]]
-Insert [6,1] at 1: [[7,0],[6,1],[7,1]]
-Insert [5,0] at 0: [[5,0],[7,0],[6,1],[7,1]]
-Insert [5,2] at 2: [[5,0],[7,0],[5,2],[6,1],[7,1]]
-Insert [4,4] at 4: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
-
-Result: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]</code></pre></p>
-<p>Input: <code>people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]</code>
-<pre class="highlight"><code>Expected Output: [[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
-
-Sorted: [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
-Insert:
-[6,0] at 0: [[6,0]]
-[5,0] at 0: [[5,0],[6,0]]
-[4,0] at 0: [[4,0],[5,0],[6,0]]
-[3,2] at 2: [[4,0],[5,0],[3,2],[6,0]]
-[2,2] at 2: [[4,0],[5,0],[2,2],[3,2],[6,0]]
-[1,4] at 4: [[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]</code></pre></p>
-<p><strong>Key Insight - Process Tallest First:</strong>
-Sort by height descending, then k ascending. Insert each person at position k. Since taller people are already placed, the k value correctly represents how many taller people should be in front.</p>
-<p><strong>Why It Works:</strong>
-- Tallest people are placed first; they don't care about shorter people
-- When inserting a shorter person, all currently placed people are taller or equal
-- So inserting at index k guarantees exactly k taller people in front
-- This is greedy: process in order of decreasing height
-- LinkedList gives O(1) insertion at position</p>
-<p><strong>Visualization - Reconstruct Queue:</strong>
-<pre class="mermaid"><code>graph LR
+    C --&gt; D["9, 6, 1, 3, 0 (FOUND at level 3)"]</code></pre></p> <div class="language-java highlight"><pre><span></span><code><span id=__span-20-1><a id=__codelineno-20-1 name=__codelineno-20-1 href=#__codelineno-20-1></a><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=nf>numSquares</span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>n</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-20-2><a id=__codelineno-20-2 name=__codelineno-20-2 href=#__codelineno-20-2></a><span class=w>    </span><span class=n>Queue</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>[]&gt;</span><span class=w> </span><span class=n>queue</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LinkedList</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-20-3><a id=__codelineno-20-3 name=__codelineno-20-3 href=#__codelineno-20-3></a><span class=w>    </span><span class=n>HashSet</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>visited</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>HashSet</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-20-4><a id=__codelineno-20-4 name=__codelineno-20-4 href=#__codelineno-20-4></a><span class=w>    </span><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>n</span><span class=p>,</span><span class=w> </span><span class=mi>0</span><span class=p>});</span>
+</span><span id=__span-20-5><a id=__codelineno-20-5 name=__codelineno-20-5 href=#__codelineno-20-5></a><span class=w>    </span><span class=n>visited</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>n</span><span class=p>);</span>
+</span><span id=__span-20-6><a id=__codelineno-20-6 name=__codelineno-20-6 href=#__codelineno-20-6></a><span class=w>    </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>queue</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-20-7><a id=__codelineno-20-7 name=__codelineno-20-7 href=#__codelineno-20-7></a><span class=w>        </span><span class=kt>int</span><span class=o>[]</span><span class=w> </span><span class=n>curr</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>queue</span><span class=p>.</span><span class=na>poll</span><span class=p>();</span>
+</span><span id=__span-20-8><a id=__codelineno-20-8 name=__codelineno-20-8 href=#__codelineno-20-8></a><span class=w>        </span><span class=kt>int</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>curr</span><span class=o>[</span><span class=mi>0</span><span class=o>]</span><span class=p>,</span><span class=w> </span><span class=n>steps</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>curr</span><span class=o>[</span><span class=mi>1</span><span class=o>]</span><span class=p>;</span>
+</span><span id=__span-20-9><a id=__codelineno-20-9 name=__codelineno-20-9 href=#__codelineno-20-9></a><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>num</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=mi>0</span><span class=p>)</span><span class=w> </span><span class=k>return</span><span class=w> </span><span class=n>steps</span><span class=p>;</span>
+</span><span id=__span-20-10><a id=__codelineno-20-10 name=__codelineno-20-10 href=#__codelineno-20-10></a><span class=w>        </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>1</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;=</span><span class=w> </span><span class=n>num</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-20-11><a id=__codelineno-20-11 name=__codelineno-20-11 href=#__codelineno-20-11></a><span class=w>            </span><span class=kt>int</span><span class=w> </span><span class=n>next</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=n>i</span><span class=p>;</span>
+</span><span id=__span-20-12><a id=__codelineno-20-12 name=__codelineno-20-12 href=#__codelineno-20-12></a><span class=w>            </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>visited</span><span class=p>.</span><span class=na>contains</span><span class=p>(</span><span class=n>next</span><span class=p>))</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-20-13><a id=__codelineno-20-13 name=__codelineno-20-13 href=#__codelineno-20-13></a><span class=w>                </span><span class=n>visited</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>next</span><span class=p>);</span>
+</span><span id=__span-20-14><a id=__codelineno-20-14 name=__codelineno-20-14 href=#__codelineno-20-14></a><span class=w>                </span><span class=n>queue</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[]</span><span class=p>{</span><span class=n>next</span><span class=p>,</span><span class=w> </span><span class=n>steps</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=mi>1</span><span class=p>});</span>
+</span><span id=__span-20-15><a id=__codelineno-20-15 name=__codelineno-20-15 href=#__codelineno-20-15></a><span class=w>            </span><span class=p>}</span>
+</span><span id=__span-20-16><a id=__codelineno-20-16 name=__codelineno-20-16 href=#__codelineno-20-16></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-20-17><a id=__codelineno-20-17 name=__codelineno-20-17 href=#__codelineno-20-17></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-20-18><a id=__codelineno-20-18 name=__codelineno-20-18 href=#__codelineno-20-18></a><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span><span id=__span-20-19><a id=__codelineno-20-19 name=__codelineno-20-19 href=#__codelineno-20-19></a><span class=p>}</span>
+</span></code></pre></div> <p><strong>Edge Cases:</strong> - n = 0: returns 0 (no squares needed) - n = 1: returns 1 - n perfect square: returns 1 - Large n: BFS still efficient with visited set</p> <p><strong>Time Complexity</strong>: O(n * √n) <strong>Space Complexity</strong>: O(n)</p> <p><strong>Similar Pattern Problems:</strong> - Minimum Path Sum - Word Ladder - Coin Change</p> <hr> <h4 id=5-reconstruct-queue-by-height>5. <strong>Reconstruct Queue by Height</strong><a class=headerlink href=#5-reconstruct-queue-by-height title="Permanent link">&para;</a></h4> <p><strong>Problem Description:</strong> Given people with heights and k values (number of people in front with height &gt;= current), reconstruct the queue.</p> <p><strong>Simple Analogy:</strong> Like arranging people in a line based on "how many taller people are in front of me."</p> <p><strong>Example Walkthrough:</strong></p> <p>Input: <code>people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-21-1><a id=__codelineno-21-1 name=__codelineno-21-1 href=#__codelineno-21-1></a>Expected Output: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+</span><span id=__span-21-2><a id=__codelineno-21-2 name=__codelineno-21-2 href=#__codelineno-21-2></a>
+</span><span id=__span-21-3><a id=__codelineno-21-3 name=__codelineno-21-3 href=#__codelineno-21-3></a>Step 1: Sort by height descending, then k ascending
+</span><span id=__span-21-4><a id=__codelineno-21-4 name=__codelineno-21-4 href=#__codelineno-21-4></a>[[7,0],[7,1],[6,1],[5,0],[5,2],[4,4]]
+</span><span id=__span-21-5><a id=__codelineno-21-5 name=__codelineno-21-5 href=#__codelineno-21-5></a>
+</span><span id=__span-21-6><a id=__codelineno-21-6 name=__codelineno-21-6 href=#__codelineno-21-6></a>Step 2: Insert each person at index k
+</span><span id=__span-21-7><a id=__codelineno-21-7 name=__codelineno-21-7 href=#__codelineno-21-7></a>Insert [7,0] at 0: [[7,0]]
+</span><span id=__span-21-8><a id=__codelineno-21-8 name=__codelineno-21-8 href=#__codelineno-21-8></a>Insert [7,1] at 1: [[7,0],[7,1]]
+</span><span id=__span-21-9><a id=__codelineno-21-9 name=__codelineno-21-9 href=#__codelineno-21-9></a>Insert [6,1] at 1: [[7,0],[6,1],[7,1]]
+</span><span id=__span-21-10><a id=__codelineno-21-10 name=__codelineno-21-10 href=#__codelineno-21-10></a>Insert [5,0] at 0: [[5,0],[7,0],[6,1],[7,1]]
+</span><span id=__span-21-11><a id=__codelineno-21-11 name=__codelineno-21-11 href=#__codelineno-21-11></a>Insert [5,2] at 2: [[5,0],[7,0],[5,2],[6,1],[7,1]]
+</span><span id=__span-21-12><a id=__codelineno-21-12 name=__codelineno-21-12 href=#__codelineno-21-12></a>Insert [4,4] at 4: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+</span><span id=__span-21-13><a id=__codelineno-21-13 name=__codelineno-21-13 href=#__codelineno-21-13></a>
+</span><span id=__span-21-14><a id=__codelineno-21-14 name=__codelineno-21-14 href=#__codelineno-21-14></a>Result: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+</span></code></pre></div></p> <p>Input: <code>people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-22-1><a id=__codelineno-22-1 name=__codelineno-22-1 href=#__codelineno-22-1></a>Expected Output: [[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
+</span><span id=__span-22-2><a id=__codelineno-22-2 name=__codelineno-22-2 href=#__codelineno-22-2></a>
+</span><span id=__span-22-3><a id=__codelineno-22-3 name=__codelineno-22-3 href=#__codelineno-22-3></a>Sorted: [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
+</span><span id=__span-22-4><a id=__codelineno-22-4 name=__codelineno-22-4 href=#__codelineno-22-4></a>Insert:
+</span><span id=__span-22-5><a id=__codelineno-22-5 name=__codelineno-22-5 href=#__codelineno-22-5></a>[6,0] at 0: [[6,0]]
+</span><span id=__span-22-6><a id=__codelineno-22-6 name=__codelineno-22-6 href=#__codelineno-22-6></a>[5,0] at 0: [[5,0],[6,0]]
+</span><span id=__span-22-7><a id=__codelineno-22-7 name=__codelineno-22-7 href=#__codelineno-22-7></a>[4,0] at 0: [[4,0],[5,0],[6,0]]
+</span><span id=__span-22-8><a id=__codelineno-22-8 name=__codelineno-22-8 href=#__codelineno-22-8></a>[3,2] at 2: [[4,0],[5,0],[3,2],[6,0]]
+</span><span id=__span-22-9><a id=__codelineno-22-9 name=__codelineno-22-9 href=#__codelineno-22-9></a>[2,2] at 2: [[4,0],[5,0],[2,2],[3,2],[6,0]]
+</span><span id=__span-22-10><a id=__codelineno-22-10 name=__codelineno-22-10 href=#__codelineno-22-10></a>[1,4] at 4: [[4,0],[5,0],[2,2],[3,2],[1,4],[6,0]]
+</span></code></pre></div></p> <p><strong>Key Insight - Process Tallest First:</strong> Sort by height descending, then k ascending. Insert each person at position k. Since taller people are already placed, the k value correctly represents how many taller people should be in front.</p> <p><strong>Why It Works:</strong> - Tallest people are placed first; they don't care about shorter people - When inserting a shorter person, all currently placed people are taller or equal - So inserting at index k guarantees exactly k taller people in front - This is greedy: process in order of decreasing height - LinkedList gives O(1) insertion at position</p> <p><strong>Visualization - Reconstruct Queue:</strong> <pre class=mermaid><code>graph LR
     A["Sort by height desc, k asc"] --&gt; B["[7,0],[7,1],[6,1],[5,0],[5,2],[4,4]"]
     B --&gt; C["Insert [7,0] at 0"]
     C --&gt; D["Insert [7,1] at 1"]
     D --&gt; E["Insert [6,1] at 1"]
     E --&gt; F["... continue for all"]
-    F --&gt; G["Result: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]"]</code></pre></p>
-<pre class="highlight"><code class="language-java">public int[][] reconstructQueue(int[][] people) {
-    Arrays.sort(people, (a, b) -&gt;
-        a[0] == b[0] ? a[1] - b[1] : b[0] - a[0]
-    );
-    List&lt;int[]&gt; result = new LinkedList&lt;&gt;();
-    for (int[] person : people) {
-        result.add(person[1], person);
-    }
-    return result.toArray(new int[result.size()][]);
-}</code></pre>
-<p><strong>Edge Cases:</strong>
-- Single person: returns as-is
-- All same height: sort by k, insert in order
-- All different heights: works correctly
-- k = 0 for all: tallest first</p>
-<p><strong>Time Complexity</strong>: O(n²) — LinkedList insertion
-<strong>Space Complexity</strong>: O(n)</p>
-<p><strong>Similar Pattern Problems:</strong>
-- Create Sorted Array
-- Process Queue by Conditions
-- Height Sorting</p>
-<hr />
-<h3 id="hard">Hard</h3>
-<h4 id="6-dota2-senate">6. <strong>Dota2 Senate</strong></h4>
-<p><strong>Problem Description:</strong>
-In a senate, each senator belongs to Radiant (R) or Dire (D). They vote in rounds. Each senator can ban one opponent from voting. The party with the last remaining senator wins. Predict the winner.</p>
-<p><strong>Simple Analogy:</strong>
-Like a political game where each senator can eliminate one opponent. Last party standing wins.</p>
-<p><strong>Example Walkthrough:</strong></p>
-<p>Input: <code>senate = "RD"</code>
-<pre class="highlight"><code>Expected Output: "Radiant"
-
-Queue: R=[0], D=[1]
-
-Round 1: R at 0 vs D at 1
-0 &lt; 1, so R bans D (D's index 1 &gt; R's index 0)
-R stays in queue with index 0+2=2
-D is removed
-
-D is empty -&gt; Radiant wins</code></pre></p>
-<p>Input: <code>senate = "RDD"</code>
-<pre class="highlight"><code>Expected Output: "Dire"
-
-Queue: R=[0], D=[1,2]
-
-Round 1: R at 0 vs D at 1
-0 &lt; 1, R bans D (index 1)
-R goes to back with index 0+3=3
-D=[2]
-
-Now R at 3 vs D at 2
-2 &lt; 3, D bans R (index 3)
-D goes to back with index 2+3=5
-R is removed
-
-R empty -&gt; Dire wins</code></pre></p>
-<p>Input: <code>senate = "RRDDD"</code>
-<pre class="highlight"><code>Expected Output: "Radiant"
-
-Queue: R=[0,1], D=[2,3,4]
-
-Round 1:
-R=0 bans D=2, R=0+5=5
-R=1 bans D=3, R=1+5=6
-D=4 bans R=5, D=4+5=9
-R=6 vs D=9: R bans D
-
-R remaining -&gt; Radiant wins</code></pre></p>
-<p><strong>Key Insight - Queue with Re-entry:</strong>
-Use two queues: one for Radiant, one for Dire, storing indices. At each step, compare the front indices. The smaller index senator bans the other (since they vote first). The winner goes to the back of their queue with index + n (to represent next round).</p>
-<p><strong>Why It Works:</strong>
-- Senators vote in order of their original indices
-- A senator with a smaller index votes before a larger one
-- So they can ban the opponent before being banned
-- Adding n to the index represents going to the next round
-- Compare indices to determine who votes first
-- Loop until one party has no senators</p>
-<p><strong>Visualization - Dota2 Senate:</strong>
-<pre class="mermaid"><code>graph LR
+    F --&gt; G["Result: [[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]"]</code></pre></p> <div class="language-java highlight"><pre><span></span><code><span id=__span-23-1><a id=__codelineno-23-1 name=__codelineno-23-1 href=#__codelineno-23-1></a><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=o>[][]</span><span class=w> </span><span class=nf>reconstructQueue</span><span class=p>(</span><span class=kt>int</span><span class=o>[][]</span><span class=w> </span><span class=n>people</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-23-2><a id=__codelineno-23-2 name=__codelineno-23-2 href=#__codelineno-23-2></a><span class=w>    </span><span class=n>Arrays</span><span class=p>.</span><span class=na>sort</span><span class=p>(</span><span class=n>people</span><span class=p>,</span><span class=w> </span><span class=p>(</span><span class=n>a</span><span class=p>,</span><span class=w> </span><span class=n>b</span><span class=p>)</span><span class=w> </span><span class=o>-&gt;</span>
+</span><span id=__span-23-3><a id=__codelineno-23-3 name=__codelineno-23-3 href=#__codelineno-23-3></a><span class=w>        </span><span class=n>a</span><span class=o>[</span><span class=mi>0</span><span class=o>]</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=n>b</span><span class=o>[</span><span class=mi>0</span><span class=o>]</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=n>a</span><span class=o>[</span><span class=mi>1</span><span class=o>]</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>b</span><span class=o>[</span><span class=mi>1</span><span class=o>]</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=n>b</span><span class=o>[</span><span class=mi>0</span><span class=o>]</span><span class=w> </span><span class=o>-</span><span class=w> </span><span class=n>a</span><span class=o>[</span><span class=mi>0</span><span class=o>]</span>
+</span><span id=__span-23-4><a id=__codelineno-23-4 name=__codelineno-23-4 href=#__codelineno-23-4></a><span class=w>    </span><span class=p>);</span>
+</span><span id=__span-23-5><a id=__codelineno-23-5 name=__codelineno-23-5 href=#__codelineno-23-5></a><span class=w>    </span><span class=n>List</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>[]&gt;</span><span class=w> </span><span class=n>result</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LinkedList</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-23-6><a id=__codelineno-23-6 name=__codelineno-23-6 href=#__codelineno-23-6></a><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=o>[]</span><span class=w> </span><span class=n>person</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=n>people</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-23-7><a id=__codelineno-23-7 name=__codelineno-23-7 href=#__codelineno-23-7></a><span class=w>        </span><span class=n>result</span><span class=p>.</span><span class=na>add</span><span class=p>(</span><span class=n>person</span><span class=o>[</span><span class=mi>1</span><span class=o>]</span><span class=p>,</span><span class=w> </span><span class=n>person</span><span class=p>);</span>
+</span><span id=__span-23-8><a id=__codelineno-23-8 name=__codelineno-23-8 href=#__codelineno-23-8></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-23-9><a id=__codelineno-23-9 name=__codelineno-23-9 href=#__codelineno-23-9></a><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>result</span><span class=p>.</span><span class=na>toArray</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=kt>int</span><span class=o>[</span><span class=n>result</span><span class=p>.</span><span class=na>size</span><span class=p>()</span><span class=o>][]</span><span class=p>);</span>
+</span><span id=__span-23-10><a id=__codelineno-23-10 name=__codelineno-23-10 href=#__codelineno-23-10></a><span class=p>}</span>
+</span></code></pre></div> <p><strong>Edge Cases:</strong> - Single person: returns as-is - All same height: sort by k, insert in order - All different heights: works correctly - k = 0 for all: tallest first</p> <p><strong>Time Complexity</strong>: O(n²) — LinkedList insertion <strong>Space Complexity</strong>: O(n)</p> <p><strong>Similar Pattern Problems:</strong> - Create Sorted Array - Process Queue by Conditions - Height Sorting</p> <hr> <h3 id=hard>Hard<a class=headerlink href=#hard title="Permanent link">&para;</a></h3> <h4 id=6-dota2-senate>6. <strong>Dota2 Senate</strong><a class=headerlink href=#6-dota2-senate title="Permanent link">&para;</a></h4> <p><strong>Problem Description:</strong> In a senate, each senator belongs to Radiant (R) or Dire (D). They vote in rounds. Each senator can ban one opponent from voting. The party with the last remaining senator wins. Predict the winner.</p> <p><strong>Simple Analogy:</strong> Like a political game where each senator can eliminate one opponent. Last party standing wins.</p> <p><strong>Example Walkthrough:</strong></p> <p>Input: <code>senate = "RD"</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-24-1><a id=__codelineno-24-1 name=__codelineno-24-1 href=#__codelineno-24-1></a>Expected Output: "Radiant"
+</span><span id=__span-24-2><a id=__codelineno-24-2 name=__codelineno-24-2 href=#__codelineno-24-2></a>
+</span><span id=__span-24-3><a id=__codelineno-24-3 name=__codelineno-24-3 href=#__codelineno-24-3></a>Queue: R=[0], D=[1]
+</span><span id=__span-24-4><a id=__codelineno-24-4 name=__codelineno-24-4 href=#__codelineno-24-4></a>
+</span><span id=__span-24-5><a id=__codelineno-24-5 name=__codelineno-24-5 href=#__codelineno-24-5></a>Round 1: R at 0 vs D at 1
+</span><span id=__span-24-6><a id=__codelineno-24-6 name=__codelineno-24-6 href=#__codelineno-24-6></a>0 &lt; 1, so R bans D (D's index 1 &gt; R's index 0)
+</span><span id=__span-24-7><a id=__codelineno-24-7 name=__codelineno-24-7 href=#__codelineno-24-7></a>R stays in queue with index 0+2=2
+</span><span id=__span-24-8><a id=__codelineno-24-8 name=__codelineno-24-8 href=#__codelineno-24-8></a>D is removed
+</span><span id=__span-24-9><a id=__codelineno-24-9 name=__codelineno-24-9 href=#__codelineno-24-9></a>
+</span><span id=__span-24-10><a id=__codelineno-24-10 name=__codelineno-24-10 href=#__codelineno-24-10></a>D is empty -&gt; Radiant wins
+</span></code></pre></div></p> <p>Input: <code>senate = "RDD"</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-25-1><a id=__codelineno-25-1 name=__codelineno-25-1 href=#__codelineno-25-1></a>Expected Output: "Dire"
+</span><span id=__span-25-2><a id=__codelineno-25-2 name=__codelineno-25-2 href=#__codelineno-25-2></a>
+</span><span id=__span-25-3><a id=__codelineno-25-3 name=__codelineno-25-3 href=#__codelineno-25-3></a>Queue: R=[0], D=[1,2]
+</span><span id=__span-25-4><a id=__codelineno-25-4 name=__codelineno-25-4 href=#__codelineno-25-4></a>
+</span><span id=__span-25-5><a id=__codelineno-25-5 name=__codelineno-25-5 href=#__codelineno-25-5></a>Round 1: R at 0 vs D at 1
+</span><span id=__span-25-6><a id=__codelineno-25-6 name=__codelineno-25-6 href=#__codelineno-25-6></a>0 &lt; 1, R bans D (index 1)
+</span><span id=__span-25-7><a id=__codelineno-25-7 name=__codelineno-25-7 href=#__codelineno-25-7></a>R goes to back with index 0+3=3
+</span><span id=__span-25-8><a id=__codelineno-25-8 name=__codelineno-25-8 href=#__codelineno-25-8></a>D=[2]
+</span><span id=__span-25-9><a id=__codelineno-25-9 name=__codelineno-25-9 href=#__codelineno-25-9></a>
+</span><span id=__span-25-10><a id=__codelineno-25-10 name=__codelineno-25-10 href=#__codelineno-25-10></a>Now R at 3 vs D at 2
+</span><span id=__span-25-11><a id=__codelineno-25-11 name=__codelineno-25-11 href=#__codelineno-25-11></a>2 &lt; 3, D bans R (index 3)
+</span><span id=__span-25-12><a id=__codelineno-25-12 name=__codelineno-25-12 href=#__codelineno-25-12></a>D goes to back with index 2+3=5
+</span><span id=__span-25-13><a id=__codelineno-25-13 name=__codelineno-25-13 href=#__codelineno-25-13></a>R is removed
+</span><span id=__span-25-14><a id=__codelineno-25-14 name=__codelineno-25-14 href=#__codelineno-25-14></a>
+</span><span id=__span-25-15><a id=__codelineno-25-15 name=__codelineno-25-15 href=#__codelineno-25-15></a>R empty -&gt; Dire wins
+</span></code></pre></div></p> <p>Input: <code>senate = "RRDDD"</code> <div class="language-text highlight"><pre><span></span><code><span id=__span-26-1><a id=__codelineno-26-1 name=__codelineno-26-1 href=#__codelineno-26-1></a>Expected Output: "Radiant"
+</span><span id=__span-26-2><a id=__codelineno-26-2 name=__codelineno-26-2 href=#__codelineno-26-2></a>
+</span><span id=__span-26-3><a id=__codelineno-26-3 name=__codelineno-26-3 href=#__codelineno-26-3></a>Queue: R=[0,1], D=[2,3,4]
+</span><span id=__span-26-4><a id=__codelineno-26-4 name=__codelineno-26-4 href=#__codelineno-26-4></a>
+</span><span id=__span-26-5><a id=__codelineno-26-5 name=__codelineno-26-5 href=#__codelineno-26-5></a>Round 1:
+</span><span id=__span-26-6><a id=__codelineno-26-6 name=__codelineno-26-6 href=#__codelineno-26-6></a>R=0 bans D=2, R=0+5=5
+</span><span id=__span-26-7><a id=__codelineno-26-7 name=__codelineno-26-7 href=#__codelineno-26-7></a>R=1 bans D=3, R=1+5=6
+</span><span id=__span-26-8><a id=__codelineno-26-8 name=__codelineno-26-8 href=#__codelineno-26-8></a>D=4 bans R=5, D=4+5=9
+</span><span id=__span-26-9><a id=__codelineno-26-9 name=__codelineno-26-9 href=#__codelineno-26-9></a>R=6 vs D=9: R bans D
+</span><span id=__span-26-10><a id=__codelineno-26-10 name=__codelineno-26-10 href=#__codelineno-26-10></a>
+</span><span id=__span-26-11><a id=__codelineno-26-11 name=__codelineno-26-11 href=#__codelineno-26-11></a>R remaining -&gt; Radiant wins
+</span></code></pre></div></p> <p><strong>Key Insight - Queue with Re-entry:</strong> Use two queues: one for Radiant, one for Dire, storing indices. At each step, compare the front indices. The smaller index senator bans the other (since they vote first). The winner goes to the back of their queue with index + n (to represent next round).</p> <p><strong>Why It Works:</strong> - Senators vote in order of their original indices - A senator with a smaller index votes before a larger one - So they can ban the opponent before being banned - Adding n to the index represents going to the next round - Compare indices to determine who votes first - Loop until one party has no senators</p> <p><strong>Visualization - Dota2 Senate:</strong> <pre class=mermaid><code>graph LR
     A["senate='RDD'"] --&gt; B["R=[0], D=[1,2]"]
     B --&gt; C["R(0) bans D(1), R re-enters as 3"]
     C --&gt; D["R=[3], D=[2]"]
     D --&gt; E["D(2) bans R(3), D re-enters as 5"]
-    E --&gt; F["R=[], D=[5] -&gt; Dire wins"]</code></pre></p>
-<pre class="highlight"><code class="language-java">public String predictPartyVictory(String senate) {
-    Queue&lt;Integer&gt; radiant = new LinkedList&lt;&gt;();
-    Queue&lt;Integer&gt; dire = new LinkedList&lt;&gt;();
-    for (int i = 0; i &lt; senate.length(); i++) {
-        if (senate.charAt(i) == 'R') {
-            radiant.offer(i);
-        } else {
-            dire.offer(i);
-        }
-    }
-    while (!radiant.isEmpty() &amp;&amp; !dire.isEmpty()) {
-        int rIndex = radiant.poll();
-        int dIndex = dire.poll();
-        if (rIndex &gt; dIndex) {
-            radiant.offer(rIndex + senate.length());
-        } else {
-            dire.offer(dIndex + senate.length());
-        }
-    }
-    return radiant.isEmpty() ? "Dire" : "Radiant";
-}</code></pre>
-<p><strong>Edge Cases:</strong>
-- All same party: that party wins immediately
-- Alternating R and D: depends on order
-- Single senator: that party wins
-- Equal numbers: first senator's party likely wins</p>
-<p><strong>Time Complexity</strong>: O(n) — each senator processed at most once per round
-<strong>Space Complexity</strong>: O(n)</p>
-<p><strong>Similar Pattern Problems:</strong>
-- Robot Returning to Origin
-- Process Requests
-- Task Scheduler</p>
-<hr />
-<h2 id="key-patterns-techniques">📌 Key Patterns &amp; Techniques</h2>
-<h3 id="1-two-stack-queue">1. <strong>Two Stack Queue</strong></h3>
-<ul>
-<li>Use two stacks to simulate queue behavior</li>
-<li>Enqueue pushes to stack1</li>
-<li>Dequeue transfers to stack2 if needed</li>
-<li>Amortized O(1) per operation</li>
-<li>Examples: Implement Queue using Stacks</li>
-</ul>
-<h3 id="2-deque-double-ended-queue">2. <strong>Deque (Double-Ended Queue)</strong></h3>
-<ul>
-<li>Add/remove from both ends</li>
-<li>Used for: Sliding window, monotonic queue</li>
-<li>Java: <code>ArrayDeque</code> is faster than <code>LinkedList</code></li>
-<li>Examples: Sliding Window Maximum</li>
-</ul>
-<h3 id="3-bfs-breadth-first-search">3. <strong>BFS (Breadth-First Search)</strong></h3>
-<ul>
-<li>Queue stores nodes to visit</li>
-<li>Explores level by level</li>
-<li>Used for: Shortest path, level-order traversal</li>
-<li>Examples: Perfect Squares, Word Ladder</li>
-</ul>
-<h3 id="4-monotonic-queue">4. <strong>Monotonic Queue</strong></h3>
-<ul>
-<li>Maintain specific order in deque</li>
-<li>Front is always max/min of window</li>
-<li>Used for: Sliding window max/min</li>
-<li>Examples: Sliding Window Maximum</li>
-</ul>
-<h3 id="5-queue-with-re-entry">5. <strong>Queue with Re-entry</strong></h3>
-<ul>
-<li>Elements can re-enter the queue</li>
-<li>Use index manipulation to track rounds</li>
-<li>Examples: Dota2 Senate</li>
-</ul>
-<hr />
-<h2 id="common-pitfalls-to-avoid">🎯 Common Pitfalls to Avoid</h2>
-<ul>
-<li>Forgetting to check if queue is empty before peek/poll</li>
-<li>Confusing queue implementation (array vs linked list)</li>
-<li>Not maintaining proper deque invariants (monotonic order)</li>
-<li>Off-by-one errors in window tracking (<code>i - k + 1</code> vs <code>i - k</code>)</li>
-<li>Inefficient operations (avoid removals from middle)</li>
-<li>Using Stack instead of Queue for BFS (wrong order)</li>
-<li>Not using <code>ArrayDeque</code> for better performance</li>
-<li>Forgetting to mark visited in BFS (infinite loop)</li>
-<li>Modifying queue while iterating without using iterator</li>
-<li>Assuming FIFO when the problem needs priority order</li>
-</ul>
-              
-            </div>
-          </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../stack/" class="btn btn-neutral float-left" title="Stack"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../linked-list/" class="btn btn-neutral float-right" title="Linked List">Next <span class="icon icon-circle-arrow-right"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-  </div>
-
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-          
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="Versions">
-  <span class="rst-current-version" data-toggle="rst-current-version">
-    
-    
-      <span><a href="../stack/" style="color: #fcfcfc">&laquo; Previous</a></span>
-    
-    
-      <span><a href="../linked-list/" style="color: #fcfcfc">Next &raquo;</a></span>
-    
-  </span>
-</div>
-    <script src="../js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "..";</script>
-    <script src="../js/theme_extra.js"></script>
-    <script src="../js/theme.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-      <script src="../javascripts/mermaid.js"></script>
-      <script src="../search/main.js"></script>
-    <script>
-        jQuery(function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        });
-    </script>
-
-</body>
-</html>
+    E --&gt; F["R=[], D=[5] -&gt; Dire wins"]</code></pre></p> <div class="language-java highlight"><pre><span></span><code><span id=__span-27-1><a id=__codelineno-27-1 name=__codelineno-27-1 href=#__codelineno-27-1></a><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>predictPartyVictory</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>senate</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-27-2><a id=__codelineno-27-2 name=__codelineno-27-2 href=#__codelineno-27-2></a><span class=w>    </span><span class=n>Queue</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>radiant</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LinkedList</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-27-3><a id=__codelineno-27-3 name=__codelineno-27-3 href=#__codelineno-27-3></a><span class=w>    </span><span class=n>Queue</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>dire</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>LinkedList</span><span class=o>&lt;&gt;</span><span class=p>();</span>
+</span><span id=__span-27-4><a id=__codelineno-27-4 name=__codelineno-27-4 href=#__codelineno-27-4></a><span class=w>    </span><span class=k>for</span><span class=w> </span><span class=p>(</span><span class=kt>int</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>0</span><span class=p>;</span><span class=w> </span><span class=n>i</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=n>senate</span><span class=p>.</span><span class=na>length</span><span class=p>();</span><span class=w> </span><span class=n>i</span><span class=o>++</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-27-5><a id=__codelineno-27-5 name=__codelineno-27-5 href=#__codelineno-27-5></a><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>senate</span><span class=p>.</span><span class=na>charAt</span><span class=p>(</span><span class=n>i</span><span class=p>)</span><span class=w> </span><span class=o>==</span><span class=w> </span><span class=sc>'R'</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-27-6><a id=__codelineno-27-6 name=__codelineno-27-6 href=#__codelineno-27-6></a><span class=w>            </span><span class=n>radiant</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=n>i</span><span class=p>);</span>
+</span><span id=__span-27-7><a id=__codelineno-27-7 name=__codelineno-27-7 href=#__codelineno-27-7></a><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-27-8><a id=__codelineno-27-8 name=__codelineno-27-8 href=#__codelineno-27-8></a><span class=w>            </span><span class=n>dire</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=n>i</span><span class=p>);</span>
+</span><span id=__span-27-9><a id=__codelineno-27-9 name=__codelineno-27-9 href=#__codelineno-27-9></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-27-10><a id=__codelineno-27-10 name=__codelineno-27-10 href=#__codelineno-27-10></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-27-11><a id=__codelineno-27-11 name=__codelineno-27-11 href=#__codelineno-27-11></a><span class=w>    </span><span class=k>while</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>radiant</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>()</span><span class=w> </span><span class=o>&amp;&amp;</span><span class=w> </span><span class=o>!</span><span class=n>dire</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>())</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-27-12><a id=__codelineno-27-12 name=__codelineno-27-12 href=#__codelineno-27-12></a><span class=w>        </span><span class=kt>int</span><span class=w> </span><span class=n>rIndex</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>radiant</span><span class=p>.</span><span class=na>poll</span><span class=p>();</span>
+</span><span id=__span-27-13><a id=__codelineno-27-13 name=__codelineno-27-13 href=#__codelineno-27-13></a><span class=w>        </span><span class=kt>int</span><span class=w> </span><span class=n>dIndex</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>dire</span><span class=p>.</span><span class=na>poll</span><span class=p>();</span>
+</span><span id=__span-27-14><a id=__codelineno-27-14 name=__codelineno-27-14 href=#__codelineno-27-14></a><span class=w>        </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>rIndex</span><span class=w> </span><span class=o>&gt;</span><span class=w> </span><span class=n>dIndex</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-27-15><a id=__codelineno-27-15 name=__codelineno-27-15 href=#__codelineno-27-15></a><span class=w>            </span><span class=n>radiant</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=n>rIndex</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>senate</span><span class=p>.</span><span class=na>length</span><span class=p>());</span>
+</span><span id=__span-27-16><a id=__codelineno-27-16 name=__codelineno-27-16 href=#__codelineno-27-16></a><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-27-17><a id=__codelineno-27-17 name=__codelineno-27-17 href=#__codelineno-27-17></a><span class=w>            </span><span class=n>dire</span><span class=p>.</span><span class=na>offer</span><span class=p>(</span><span class=n>dIndex</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>senate</span><span class=p>.</span><span class=na>length</span><span class=p>());</span>
+</span><span id=__span-27-18><a id=__codelineno-27-18 name=__codelineno-27-18 href=#__codelineno-27-18></a><span class=w>        </span><span class=p>}</span>
+</span><span id=__span-27-19><a id=__codelineno-27-19 name=__codelineno-27-19 href=#__codelineno-27-19></a><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-27-20><a id=__codelineno-27-20 name=__codelineno-27-20 href=#__codelineno-27-20></a><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>radiant</span><span class=p>.</span><span class=na>isEmpty</span><span class=p>()</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=s>"Dire"</span><span class=w> </span><span class=p>:</span><span class=w> </span><span class=s>"Radiant"</span><span class=p>;</span>
+</span><span id=__span-27-21><a id=__codelineno-27-21 name=__codelineno-27-21 href=#__codelineno-27-21></a><span class=p>}</span>
+</span></code></pre></div> <p><strong>Edge Cases:</strong> - All same party: that party wins immediately - Alternating R and D: depends on order - Single senator: that party wins - Equal numbers: first senator's party likely wins</p> <p><strong>Time Complexity</strong>: O(n) — each senator processed at most once per round <strong>Space Complexity</strong>: O(n)</p> <p><strong>Similar Pattern Problems:</strong> - Robot Returning to Origin - Process Requests - Task Scheduler</p> <hr> <h2 id=key-patterns-techniques>📌 Key Patterns &amp; Techniques<a class=headerlink href=#key-patterns-techniques title="Permanent link">&para;</a></h2> <h3 id=1-two-stack-queue>1. <strong>Two Stack Queue</strong><a class=headerlink href=#1-two-stack-queue title="Permanent link">&para;</a></h3> <ul> <li>Use two stacks to simulate queue behavior</li> <li>Enqueue pushes to stack1</li> <li>Dequeue transfers to stack2 if needed</li> <li>Amortized O(1) per operation</li> <li>Examples: Implement Queue using Stacks</li> </ul> <h3 id=2-deque-double-ended-queue>2. <strong>Deque (Double-Ended Queue)</strong><a class=headerlink href=#2-deque-double-ended-queue title="Permanent link">&para;</a></h3> <ul> <li>Add/remove from both ends</li> <li>Used for: Sliding window, monotonic queue</li> <li>Java: <code>ArrayDeque</code> is faster than <code>LinkedList</code></li> <li>Examples: Sliding Window Maximum</li> </ul> <h3 id=3-bfs-breadth-first-search>3. <strong>BFS (Breadth-First Search)</strong><a class=headerlink href=#3-bfs-breadth-first-search title="Permanent link">&para;</a></h3> <ul> <li>Queue stores nodes to visit</li> <li>Explores level by level</li> <li>Used for: Shortest path, level-order traversal</li> <li>Examples: Perfect Squares, Word Ladder</li> </ul> <h3 id=4-monotonic-queue>4. <strong>Monotonic Queue</strong><a class=headerlink href=#4-monotonic-queue title="Permanent link">&para;</a></h3> <ul> <li>Maintain specific order in deque</li> <li>Front is always max/min of window</li> <li>Used for: Sliding window max/min</li> <li>Examples: Sliding Window Maximum</li> </ul> <h3 id=5-queue-with-re-entry>5. <strong>Queue with Re-entry</strong><a class=headerlink href=#5-queue-with-re-entry title="Permanent link">&para;</a></h3> <ul> <li>Elements can re-enter the queue</li> <li>Use index manipulation to track rounds</li> <li>Examples: Dota2 Senate</li> </ul> <hr> <h2 id=common-pitfalls-to-avoid>🎯 Common Pitfalls to Avoid<a class=headerlink href=#common-pitfalls-to-avoid title="Permanent link">&para;</a></h2> <ul> <li>Forgetting to check if queue is empty before peek/poll</li> <li>Confusing queue implementation (array vs linked list)</li> <li>Not maintaining proper deque invariants (monotonic order)</li> <li>Off-by-one errors in window tracking (<code>i - k + 1</code> vs <code>i - k</code>)</li> <li>Inefficient operations (avoid removals from middle)</li> <li>Using Stack instead of Queue for BFS (wrong order)</li> <li>Not using <code>ArrayDeque</code> for better performance</li> <li>Forgetting to mark visited in BFS (infinite loop)</li> <li>Modifying queue while iterating without using iterator</li> <li>Assuming FIFO when the problem needs priority order</li> </ul> </article> </div> <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg> Back to top </button> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=Footer> <a href=../stack/ class="md-footer__link md-footer__link--prev" aria-label="Previous: Stack"> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg> </div> <div class=md-footer__title> <span class=md-footer__direction> Previous </span> <div class=md-ellipsis> Stack </div> </div> </a> <a href=../two-pointers/ class="md-footer__link md-footer__link--next" aria-label="Next: Two Pointers"> <div class=md-footer__title> <span class=md-footer__direction> Next </span> <div class=md-ellipsis> Two Pointers </div> </div> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-copyright__highlight> Copyright &copy; 2025 DSA Notes — Built with ❤️ for learners </div> </div> <div class=md-social> <a href=https://github.com/cyberstoneac target=_blank rel=noopener title=GitHub class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg> </a> <a href=https://linkedin.com/in/your-profile target=_blank rel=noopener title=LinkedIn class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <div class=md-progress data-md-component=progress role=progressbar></div> <script id=__config type=application/json>{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "toc.follow", "content.code.copy", "content.code.select", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script> <script src=../assets/javascripts/bundle.d7400e89.min.js></script> <script src=https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js></script> <script src=../javascripts/mermaid.js></script> </body> </html>
