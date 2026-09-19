@@ -74,7 +74,6 @@ plugins:
   - panzoom:
       full_screen: True   # optional — enable fullscreen button
 
-
 markdown_extensions:
   # Python Markdown
   - abbr
@@ -214,7 +213,7 @@ nav:
           - 38. Food Delivery: system-design/problems/38-food-delivery.md
           - 39. Dating App: system-design/problems/39-dating-app.md
           - 40. Proximity Matchmaking: system-design/problems/40-proximity-matchmaking.md
-          - 57. Maps & Routing: system-design/problems/57-maps-routing.md   
+          - 57. Maps & Routing: system-design/problems/57-maps-routing.md
       - Phase 6 - Fintech:
           - 41. Payment System: system-design/problems/41-payment-system.md
           - 42. Digital Wallet: system-design/problems/42-digital-wallet.md
@@ -229,8 +228,56 @@ nav:
           - 50. Metrics / Monitoring: system-design/problems/50-metrics-monitoring.md
           - 51. Distributed Tracing: system-design/problems/51-distributed-tracing.md
           - 52. Online Judge: system-design/problems/52-online-judge.md
-          - 56. Code Deployment / CI-CD: system-design/problems/56-code-deployment-cicd.md    
-          
+          - 56. Code Deployment / CI-CD: system-design/problems/56-code-deployment-cicd.md
+  - Low-Level Design (LLD):
+    - Overview: lld/index.md
+    - Fundamentals:
+        - How to Approach LLD: lld/how-to-approach-lld.md
+        - SOLID Principles: lld/solid-principles.md
+        - UML Basics: lld/uml-basics.md
+        - Concurrency Basics: lld/concurrency-basics.md
+    - Design Patterns:
+        - Overview: lld/design-patterns/index.md
+        - Creational: lld/design-patterns/creational.md
+        - Structural: lld/design-patterns/structural.md
+        - Behavioral: lld/design-patterns/behavioral.md
+    - Problems:
+        - Category A - Classic OOP:
+            - 01. Parking Lot: lld/problems/01-parking-lot.md
+            - 02. Vending Machine: lld/problems/02-vending-machine.md
+            - 03. ATM: lld/problems/03-atm.md
+            - 04. Elevator System: lld/problems/04-elevator-system.md
+            - 05. Library Management: lld/problems/05-library-management.md
+            - 06. Hotel Management: lld/problems/06-hotel-management.md
+        - Category B - Games:
+            - 07. Snake and Ladder: lld/problems/07-snake-and-ladder.md
+            - 08. Tic-Tac-Toe: lld/problems/08-tic-tac-toe.md
+            - 09. Chess: lld/problems/09-chess.md
+            - 10. Splitwise: lld/problems/10-splitwise.md
+        - Category C - Booking & Scheduling:
+            - 11. Movie Ticket Booking: lld/problems/11-movie-ticket-booking.md
+            - 12. Cab Booking: lld/problems/12-cab-booking.md
+            - 13. Food Delivery Order: lld/problems/13-food-delivery-order.md
+            - 14. Meeting Scheduler: lld/problems/14-meeting-scheduler.md
+            - 15. Airline Reservation: lld/problems/15-airline-reservation.md
+        - Category D - Real-World Services:
+            - 16. Coffee Machine: lld/problems/16-coffee-machine.md
+            - 17. Car Rental: lld/problems/17-car-rental.md
+            - 18. Shopping Cart: lld/problems/18-shopping-cart.md
+            - 19. Restaurant Ordering: lld/problems/19-restaurant-ordering.md
+            - 20. Logging Framework: lld/problems/20-logging-framework.md
+            - 21. Rate Limiter (LLD): lld/problems/21-rate-limiter-lld.md
+        - Category E - Concurrency:
+            - 22. Producer-Consumer: lld/problems/22-producer-consumer.md
+            - 23. Thread-Safe LRU Cache: lld/problems/23-lru-cache.md
+            - 24. Thread Pool Executor: lld/problems/24-thread-pool.md
+            - 25. Reader-Writer Lock: lld/problems/25-reader-writer-lock.md
+            - 26. Dining Philosophers: lld/problems/26-dining-philosophers.md
+        - Category F - Framework / Infra:
+            - 27. Cache with Eviction: lld/problems/27-cache-eviction.md
+            - 28. Message Queue (LLD): lld/problems/28-message-queue-lld.md
+            - 29. URL Shortener (LLD): lld/problems/29-url-shortener-lld.md
+            - 30. Pub-Sub System (LLD): lld/problems/30-pub-sub-lld.md
 extra:
   social:
     - icon: fontawesome/brands/github
