@@ -129,30 +129,28 @@ With watch (cached locally): ~0.1 ms
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Service Instance" as SI
-actor "Client Service" as CS
-component "Service Registry API" as API
-database "Registry Store (etcd/Consul)" as Store
-component "Health Checker" as HC
-component "Change Notifier" as Notif
-database "Metadata DB (Postgres)" as Meta
-database "Metrics" as Mon
+si: "Service Instance" {shape: person}
+cs: "Client Service" {shape: person}
+api: "Service Registry API" {shape: hexagon}
+store: "Registry Store (etcd/Consul)" {shape: cylinder}
+hc: "Health Checker" {shape: rectangle}
+notif: "Change Notifier" {shape: rectangle}
+meta: "Metadata DB (Postgres)" {shape: cylinder}
+mon: "Metrics" {shape: cylinder}
 
-SI --> API : register + heartbeat
-CS --> API : discover(name)
-CS --> API : watch(name)
-API --> Store : write
-API --> Meta : audit log
-HC --> SI : active health check
-HC --> Store : mark unhealthy
-Store --> Notif : change event
-Notif --> CS : push notification
-API --> Mon : metrics
-@enduml
+si -> api: register + heartbeat
+cs -> api: discover(name)
+cs -> api: watch(name)
+api -> store: write
+api -> meta: audit log
+hc -> si: active health check
+hc -> store: mark unhealthy
+store -> notif: change event
+notif -> cs: push notification
+api -> mon: metrics
 ```
 
 ### Component Responsibilities
@@ -355,24 +353,22 @@ Used for audit, debugging, and analytics.
 
 ### Cross-Region Replication
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
-database "US Registry" as UR
-database "EU Registry" as ER
-database "APAC Registry" as AR
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
+ur: "US Registry" {shape: cylinder}
+er: "EU Registry" {shape: cylinder}
+ar: "APAC Registry" {shape: cylinder}
 
-US --> UR
-EU --> ER
-APAC --> AR
-UR <--> ER : bidirectional sync
-ER <--> AR : bidirectional sync
-AR <--> US : bidirectional sync
-@enduml
+us -> ur
+eu -> er
+apac -> ar
+ur <-> er: bidirectional sync
+er <-> ar: bidirectional sync
+ar <-> us: bidirectional sync
 ```
 
 **Approach:**
@@ -388,19 +384,17 @@ AR <--> US : bidirectional sync
 
 ### 6.1 Self-Registration (Client-Side)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Service Instance" as SI
-component "Registry" as R
-component "Health Checker" as HC
+si: "Service Instance" {shape: person}
+r: Registry {shape: hexagon}
+hc: "Health Checker" {shape: rectangle}
 
-SI --> R : register (startup)
-SI --> R : heartbeat (every 10s)
-SI --> R : deregister (shutdown)
-HC --> SI : health check
-@enduml
+si -> r: register (startup)
+si -> r: heartbeat (every 10s)
+si -> r: deregister (shutdown)
+hc -> si: health check
 ```
 
 **Pros:** Simple, instance controls its own lifecycle.
@@ -408,19 +402,17 @@ HC --> SI : health check
 
 ### 6.2 Third-Party Registration (Sidecar/Platform)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Service Instance" as SI
-component "Registrar (K8s, Nomad)" as Reg
-component "Registry" as R
+si: "Service Instance" {shape: person}
+reg: "Registrar (K8s, Nomad)" {shape: rectangle}
+r: Registry {shape: hexagon}
 
-SI --> Reg : instance starts
-Reg --> R : register on behalf
-Reg --> R : heartbeat
-Reg --> R : deregister on shutdown
-@enduml
+si -> reg: instance starts
+reg -> r: register on behalf
+reg -> r: heartbeat
+reg -> r: deregister on shutdown
 ```
 
 **Pros:** Language-agnostic; platform handles registration.
@@ -505,20 +497,18 @@ The instance periodically sends a heartbeat to the registry. Missing heartbeats 
 
 ### 8.1 Client-Side Discovery
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Client" as C
-component "Service Registry" as R
-actor "Instance 1" as I1
-actor "Instance 2" as I2
+c: Client {shape: person}
+r: "Service Registry" {shape: hexagon}
+i1: "Instance 1" {shape: rectangle}
+i2: "Instance 2" {shape: rectangle}
 
-C --> R : discover("payment-service")
-R --> C : [I1, I2]
-C --> C : pick one (load balance)
-C --> I1 : request
-@enduml
+c -> r: discover("payment-service")
+r -> c: [I1, I2]
+c -> c: pick one (load balance)
+c -> i1: request
 ```
 
 **Pros:** Client chooses load-balancing strategy; no extra hop.
@@ -526,21 +516,19 @@ C --> I1 : request
 
 ### 8.2 Server-Side Discovery
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Client" as C
-component "Load Balancer / Router" as LB
-component "Service Registry" as R
-actor "Instance 1" as I1
-actor "Instance 2" as I2
+c: Client {shape: person}
+lb: "Load Balancer / Router" {shape: hexagon}
+r: "Service Registry" {shape: hexagon}
+i1: "Instance 1" {shape: rectangle}
+i2: "Instance 2" {shape: rectangle}
 
-C --> LB : request
-LB --> R : discover("payment-service")
-R --> LB : [I1, I2]
-LB --> I1 : route
-@enduml
+c -> lb: request
+lb -> r: discover("payment-service")
+r -> lb: [I1, I2]
+lb -> i1: route
 ```
 
 **Pros:** Client is simple; routing centralized.
@@ -548,22 +536,20 @@ LB --> I1 : route
 
 ### 8.3 Service Mesh (Sidecar)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Client App" as C
-component "Client Sidecar" as CS
-component "Service Registry" as R
-actor "Server App" as S
-component "Server Sidecar" as SS
+c: "Client App" {shape: person}
+cs: "Client Sidecar" {shape: rectangle}
+r: "Service Registry" {shape: hexagon}
+s: "Server App" {shape: rectangle}
+ss: "Server Sidecar" {shape: rectangle}
 
-C --> CS : local call
-CS --> R : discover
-R --> CS : instances
-CS --> SS : proxy (mTLS, retry)
-SS --> S : forward
-@enduml
+c -> cs: local call
+cs -> r: discover
+r -> cs: instances
+cs -> ss: proxy (mTLS, retry)
+ss -> s: forward
 ```
 
 **Pros:** Language-agnostic; advanced traffic management (retries, timeouts, circuit breakers).
@@ -715,19 +701,17 @@ Fall back to other zones if none available.
 
 ### Sharding Registry
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Router" as R
-database "Registry Shard A (services A-H)" as A
-database "Registry Shard B (services I-P)" as B
-database "Registry Shard C (services Q-Z)" as C
+r: Router {shape: hexagon}
+a: "Registry Shard A (services A-H)" {shape: cylinder}
+b: "Registry Shard B (services I-P)" {shape: cylinder}
+c: "Registry Shard C (services Q-Z)" {shape: cylinder}
 
-R --> A
-R --> B
-R --> C
-@enduml
+r -> a
+r -> b
+r -> c
 ```
 
 Shard by **service name prefix**. Each shard is its own etcd cluster.
@@ -736,25 +720,23 @@ Shard by **service name prefix**. Each shard is its own etcd cluster.
 
 ### Multi-Region
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
-database "US Registry" as UR
-database "EU Registry" as ER
-database "APAC Registry" as AR
-component "Cross-region Replicator" as CR
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
+ur: "US Registry" {shape: cylinder}
+er: "EU Registry" {shape: cylinder}
+ar: "APAC Registry" {shape: cylinder}
+cr: "Cross-region Replicator" {shape: rectangle}
 
-US --> UR
-EU --> ER
-APAC --> AR
-UR --> CR : change events
-CR --> ER
-CR --> AR
-@enduml
+us -> ur
+eu -> er
+apac -> ar
+ur -> cr: change events
+cr -> er
+cr -> ar
 ```
 
 **Approach:**

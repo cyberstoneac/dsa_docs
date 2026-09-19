@@ -142,45 +142,43 @@ Headroom for retries, backend connection setup.
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-cloud "CDN / Edge" as CDN
-component "API Gateway Fleet" as GW
-component "Router" as Router
-component "Auth" as Auth
-component "Rate Limiter" as RL
-component "Transformer" as Trans
-database "Cache (Redis)" as Cache
-component "Circuit Breaker" as CB
-component "Logger" as Log
-database "Config Store (etcd)" as Config
-database "Redis (rate limit + cache)" as Redis
-database "User Service" as US
-database "Order Service" as OS
-database "Payment Service" as PS
-queue "Kafka (logs, traces)" as Kafka
-database "Metrics (Prometheus)" as Mon
-database "Auth Service" as AuthSvc
+client: Client {shape: person}
+cdn: "CDN / Edge" {shape: cloud}
+gw: "API Gateway Fleet" {shape: hexagon}
+router: Router {shape: rectangle}
+auth: Auth {shape: rectangle}
+rl: "Rate Limiter" {shape: rectangle}
+trans: Transformer {shape: rectangle}
+cache: "Cache (Redis)" {shape: cylinder}
+cb: "Circuit Breaker" {shape: rectangle}
+log: Logger {shape: rectangle}
+config: "Config Store (etcd)" {shape: cylinder}
+redis: "Redis (rate limit + cache)" {shape: cylinder}
+us: "User Service" {shape: database}
+os: "Order Service" {shape: database}
+ps: "Payment Service" {shape: database}
+kafka: "Kafka (logs, traces)" {shape: queue}
+mon: "Metrics (Prometheus)" {shape: cylinder}
+authsvc: "Auth Service" {shape: database}
 
-Client --> CDN : HTTPS
-CDN --> GW : forward
-GW --> Router : route
-Router --> Auth : verify JWT
-Auth --> AuthSvc : verify (optional)
-Router --> RL : check limit
-RL --> Redis : increment
-Router --> Cache : check
-Router --> CB : call backend
-CB --> US
-CB --> OS
-CB --> PS
-GW --> Kafka : async logs
-GW --> Mon : metrics
-GW --> Config : read routes
-@enduml
+client -> cdn: HTTPS
+cdn -> gw: forward
+gw -> router: route
+router -> auth: verify JWT
+auth -> authsvc: verify (optional)
+router -> rl: check limit
+rl -> redis: increment
+router -> cache: check
+router -> cb: call backend
+cb -> us
+cb -> os
+cb -> ps
+gw -> kafka: async logs
+gw -> mon: metrics
+gw -> config: read routes
 ```
 
 ### Component Responsibilities
@@ -397,25 +395,23 @@ Instant switch; instant rollback. Requires 2x infrastructure.
 
 ### Multi-Region Routing
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "Global DNS (GeoDNS)" as DNS
-cloud "US Gateway" as US
-cloud "EU Gateway" as EU
-cloud "APAC Gateway" as APAC
-database "US Services" as USS
-database "EU Services" as EUS
-database "APAC Services" as APS
+dns: "Global DNS (GeoDNS)" {shape: cloud}
+us: "US Gateway" {shape: cloud}
+eu: "EU Gateway" {shape: cloud}
+apac: "APAC Gateway" {shape: cloud}
+uss: "US Services" {shape: cylinder}
+eus: "EU Services" {shape: cylinder}
+aps: "APAC Services" {shape: cylinder}
 
-DNS --> US : US users
-DNS --> EU : EU users
-DNS --> APAC : APAC users
-US --> USS
-EU --> EUS
-APAC --> APS
-@enduml
+dns -> us: US users
+dns -> eu: EU users
+dns -> apac: APAC users
+us -> uss
+eu -> eus
+apac -> aps
 ```
 
 GeoDNS routes to nearest region. Each region has its own gateway fleet.
@@ -436,24 +432,22 @@ GeoDNS routes to nearest region. Each region has its own gateway fleet.
 
 ### JWT Validation Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "Gateway" as GW
-database "JWKS Cache" as Cache
-component "Auth Service" as Auth
-database "User Service" as US
+client: Client {shape: person}
+gw: "Gateway" {shape: hexagon}
+cache: "JWKS Cache" {shape: cylinder}
+auth: "Auth Service" {shape: rectangle}
+us: "User Service" {shape: database}
 
-Client --> GW : request + JWT
-GW --> Cache : get public keys
-Cache --> GW : keys (or fetch from Auth)
-GW --> GW : verify signature
-GW --> GW : check exp, iss, aud
-GW --> US : forward with X-User-ID
-US --> Client : response
-@enduml
+client -> gw: request + JWT
+gw -> cache: get public keys
+cache -> gw: keys (or fetch from Auth)
+gw -> gw: verify signature
+gw -> gw: check exp, iss, aud
+gw -> us: forward with X-User-ID
+us -> client: response
 ```
 
 **Steps:**
@@ -554,21 +548,19 @@ max_response_size_bytes: 104857600 # 100 MB
 
 ### Protocol Translation
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "Gateway" as GW
-actor "gRPC Backend" as BE
+client: Client {shape: person}
+gw: "Gateway" {shape: hexagon}
+be: "gRPC Backend" {shape: person}
 
-Client --> GW : REST (HTTP/1.1 JSON)
-GW --> GW : translate to gRPC
-GW --> BE : gRPC (HTTP/2 protobuf)
-BE --> GW : gRPC response
-GW --> GW : translate to JSON
-GW --> Client : REST response
-@enduml
+client -> gw: REST (HTTP/1.1 JSON)
+gw -> gw: translate to gRPC
+gw -> be: gRPC (HTTP/2 protobuf)
+be -> gw: gRPC response
+gw -> gw: translate to JSON
+gw -> client: REST response
 ```
 
 **Use case:** Expose gRPC services via REST for browser clients.
@@ -577,23 +569,21 @@ GW --> Client : REST response
 
 ### Response Aggregation (BFF Pattern)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "BFF Gateway" as BFF
-database "User Service" as US
-database "Order Service" as OS
-database "Payment Service" as PS
+client: Client {shape: person}
+bff: "BFF Gateway" {shape: hexagon}
+us: "User Service" {shape: database}
+os: "Order Service" {shape: database}
+ps: "Payment Service" {shape: database}
 
-Client --> BFF : GET /me/dashboard
-BFF --> US : get profile
-BFF --> OS : get recent orders
-BFF --> PS : get payment methods
-BFF --> BFF : merge responses
-BFF --> Client : combined JSON
-@enduml
+client -> bff: GET /me/dashboard
+bff -> us: get profile
+bff -> os: get recent orders
+bff -> ps: get payment methods
+bff -> bff: merge responses
+bff -> client: combined JSON
 ```
 
 **Pros:** Fewer round-trips; optimized payloads per client.
@@ -603,21 +593,19 @@ BFF --> Client : combined JSON
 
 ### WebSocket Support
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "Gateway (WebSocket)" as GW
-component "Notification Service" as NS
+client: Client {shape: person}
+gw: "Gateway (WebSocket)" {shape: hexagon}
+ns: "Notification Service" {shape: rectangle}
 
-Client --> GW : WS upgrade
-GW --> Client : 101 Switching Protocols
-Client --> GW : message
-GW --> NS : internal pub/sub
-NS --> GW : push event
-GW --> Client : WS message
-@enduml
+client -> gw: WS upgrade
+gw -> client: 101 Switching Protocols
+client -> gw: message
+gw -> ns: internal pub/sub
+ns -> gw: push event
+gw -> client: WS message
 ```
 
 Gateway maintains long-lived connections; backend uses pub/sub internally.
@@ -714,20 +702,19 @@ retries:
 
 ### Circuit Breaker
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-state "Closed" as Closed
-state "Open" as Open
-state "Half-Open" as HalfOpen
+closed: "Closed" {shape: rectangle}
+open: "Open" {shape: rectangle}
+half: "Half-Open" {shape: rectangle}
+start: Start {shape: circle}
 
-[*] --> Closed
-Closed --> Open : failure threshold exceeded
-Open --> HalfOpen : timeout elapsed
-HalfOpen --> Closed : test succeeds
-HalfOpen --> Open : test fails
-@enduml
+start -> closed
+closed -> open: failure threshold exceeded
+open -> half: timeout elapsed
+half -> closed: test succeeds
+half -> open: test fails
 ```
 
 **Configuration:**
@@ -803,23 +790,21 @@ Async: publish to Kafka, don't block the request.
 
 ### Distributed Tracing
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "Gateway" as GW
-component "Service A" as SA
-component "Service B" as SB
-database "Jaeger" as J
+client: Client {shape: person}
+gw: "Gateway" {shape: hexagon}
+sa: "Service A" {shape: rectangle}
+sb: "Service B" {shape: rectangle}
+j: Jaeger {shape: cylinder}
 
-Client --> GW : trace_id=abc
-GW --> SA : trace_id=abc, span_id=def
-SA --> SB : trace_id=abc, span_id=ghi
-GW --> J : span (gateway)
-SA --> J : span (service A)
-SB --> J : span (service B)
-@enduml
+client -> gw: trace_id=abc
+gw -> sa: trace_id=abc, span_id=def
+sa -> sb: trace_id=abc, span_id=ghi
+gw -> j: span (gateway)
+sa -> j: span (service A)
+sb -> j: span (service B)
 ```
 
 Gateway propagates `trace_id` (and `span_id`) to backends. Backends continue the trace.
@@ -859,19 +844,17 @@ Gateway propagates `trace_id` (and `span_id`) to backends. Backends continue the
 
 ### Load Balancing the Gateway
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "GeoDNS / Anycast" as DNS
-component "Gateway 1" as G1
-component "Gateway 2" as G2
-component "Gateway 3" as G3
+dns: "GeoDNS / Anycast" {shape: cloud}
+g1: "Gateway 1" {shape: hexagon}
+g2: "Gateway 2" {shape: hexagon}
+g3: "Gateway 3" {shape: hexagon}
 
-DNS --> G1
-DNS --> G2
-DNS --> G3
-@enduml
+dns -> g1
+dns -> g2
+dns -> g3
 ```
 
 - **Anycast**: Same IP advertised from multiple PoPs; BGP routes to nearest
@@ -880,50 +863,46 @@ DNS --> G3
 
 ### Config Propagation at Scale
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Admin API" as Admin
-database "etcd" as etcd
-component "Gateway 1" as G1
-component "Gateway 2" as G2
-component "Gateway 3" as G3
+admin: "Admin API" {shape: rectangle}
+etcd: etcd {shape: cylinder}
+g1: "Gateway 1" {shape: hexagon}
+g2: "Gateway 2" {shape: hexagon}
+g3: "Gateway 3" {shape: hexagon}
 
-Admin --> etcd : publish config
-etcd --> G1 : watch
-etcd --> G2 : watch
-etcd --> G3 : watch
-@enduml
+admin -> etcd: publish config
+etcd -> g1: watch
+etcd -> g2: watch
+etcd -> g3: watch
 ```
 
 etcd watch delivers updates to all nodes in < 100 ms.
 
 ### Multi-Region Deployment
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "Global DNS" as DNS
-cloud "US Gateway Fleet" as US
-cloud "EU Gateway Fleet" as EU
-cloud "APAC Gateway Fleet" as APAC
-database "US Services" as USS
-database "EU Services" as EUS
-database "APAC Services" as APS
-database "Global Config" as Config
+dns: "Global DNS" {shape: cloud}
+us: "US Gateway Fleet" {shape: cloud}
+eu: "EU Gateway Fleet" {shape: cloud}
+apac: "APAC Gateway Fleet" {shape: cloud}
+uss: "US Services" {shape: cylinder}
+eus: "EU Services" {shape: cylinder}
+aps: "APAC Services" {shape: cylinder}
+config: "Global Config" {shape: cylinder}
 
-DNS --> US
-DNS --> EU
-DNS --> APAC
-US --> USS
-EU --> EUS
-APAC --> APS
-US --> Config
-EU --> Config
-APAC --> Config
-@enduml
+dns -> us
+dns -> eu
+dns -> apac
+us -> uss
+eu -> eus
+apac -> aps
+us -> config
+eu -> config
+apac -> config
 ```
 
 **Each region is independent** for data plane. Config is global (replicated).
@@ -1216,7 +1195,8 @@ For LLM APIs:
 Multiple teams own different route groups:
 - Team A owns `/v1/users/*`
 - Team B owns `/v1/orders/*`
-- Central gateway federates configs- Each team manages their own routes
+- Central gateway federates configs
+- Each team manages their own routes
 
 **Tools:** Kong Mesh, Envoy xDS federation.
 

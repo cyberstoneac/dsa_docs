@@ -146,34 +146,32 @@ CDN cost:
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "End User" as User
-cloud "Edge PoP (200 global)" as Edge
-cloud "Regional Cache (10 global)" as Regional
-cloud "Origin Shield" as Shield
-database "Origin Server" as Origin
-component "Control Plane" as CP
-database "Config Store (etcd)" as Config
-database "Metrics / Logs" as Mon
-component "Purge API" as Purge
+user: "End User" {shape: person}
+edge: "Edge PoP (200 global)" {shape: cloud}
+regional: "Regional Cache (10 global)" {shape: cloud}
+shield: "Origin Shield" {shape: cloud}
+origin: "Origin Server" {shape: database}
+cp: "Control Plane" {shape: rectangle}
+config: "Config Store (etcd)" {shape: cylinder}
+mon: "Metrics / Logs" {shape: cylinder}
+purge: "Purge API" {shape: rectangle}
 
-User --> Edge : HTTPS request
-Edge --> User : cached response
-Edge --> Regional : cache miss
-Regional --> Shield : cache miss
-Shield --> Origin : cache miss
-Origin --> Shield : response
-Shield --> Regional : cache
-Regional --> Edge : cache
-Edge --> User : response
-CP --> Config : route config, TLS certs
-Purge --> CP : invalidate
-CP --> Edge : invalidate
-Edge --> Mon : metrics
-@enduml
+user -> edge: HTTPS request
+edge -> user: cached response
+edge -> regional: cache miss
+regional -> shield: cache miss
+shield -> origin: cache miss
+origin -> shield: response
+shield -> regional: cache
+regional -> edge: cache
+edge -> user: response
+cp -> config: route config, TLS certs
+purge -> cp: invalidate
+cp -> edge: invalidate
+edge -> mon: metrics
 ```
 
 ### Component Responsibilities
@@ -191,27 +189,25 @@ Edge --> Mon : metrics
 
 ### PoP Architecture (Inside One Edge PoP)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "Internet" as Net
-component "Edge LB (Anycast BGP)" as LB
-component "TLS Terminator" as TLS
-component "HTTP/2, HTTP/3 Server" as HTTP
-component "Cache Layer (RAM + SSD)" as Cache
-component "Edge Compute (Workers)" as Compute
-component "Origin Fetcher" as Fetch
-component "Log Shipper" as Log
+net: Internet {shape: cloud}
+lb: "Edge LB (Anycast BGP)" {shape: hexagon}
+tls: "TLS Terminator" {shape: rectangle}
+http: "HTTP/2, HTTP/3 Server" {shape: rectangle}
+cache: "Cache Layer (RAM + SSD)" {shape: cylinder}
+compute: "Edge Compute (Workers)" {shape: rectangle}
+fetch: "Origin Fetcher" {shape: rectangle}
+log: "Log Shipper" {shape: rectangle}
 
-Net --> LB
-LB --> TLS
-TLS --> HTTP
-HTTP --> Cache
-HTTP --> Compute
-Cache --> Fetch : miss
-Fetch --> Log : log
-@enduml
+net -> lb
+lb -> tls
+tls -> http
+http -> cache
+http -> compute
+cache -> fetch: miss
+fetch -> log: log
 ```
 
 **Inside each PoP:**
@@ -346,25 +342,19 @@ POST /api/v1/zones/{zone_id}/config
 
 ### Cache Storage Architecture
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Edge PoP Cache" as EPC {
-  database "L1: RAM Cache (256 GB)" as RAM
-  database "L2: SSD Cache (10 TB)" as SSD
-  database "Metadata (in-memory index)" as Meta
-}
+epc: "Edge PoP Cache" {shape: rectangle}
+ram: "L1: RAM Cache (256 GB)" {shape: cylinder}
+ssd: "L2: SSD Cache (10 TB)" {shape: cylinder}
+meta: "Metadata (in-memory index)" {shape: cylinder}
+note: "RAM: Hot objects (top 1%), ~30 us lookup | SSD: Warm objects (top 10%), ~200 us lookup" {shape: rectangle}
 
-note right of RAM
-  Hot objects (top 1%)
-  ~30 us lookup
-end note
-note right of SSD
-  Warm objects (top 10%)
-  ~200 us lookup
-end note
-@enduml
+epc -> ram
+epc -> ssd
+epc -> meta
+ram -> note
 ```
 
 **Two-tier cache:**
@@ -450,29 +440,27 @@ With origin shield:
 
 ### Request Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-cloud "Edge PoP" as Edge
-cloud "Regional Cache" as Regional
-cloud "Origin Shield" as Shield
-database "Origin" as Origin
+user: User {shape: person}
+edge: "Edge PoP" {shape: cloud}
+regional: "Regional Cache" {shape: cloud}
+shield: "Origin Shield" {shape: cloud}
+origin: Origin {shape: database}
 
-User --> Edge : request
-Edge --> User : HIT (1 ms)
-Edge --> Regional : MISS -> fetch
-Regional --> Edge : HIT (40 ms)
-Edge --> User : response
-Regional --> Shield : MISS -> fetch
-Shield --> Regional : HIT (80 ms)
-Shield --> Origin : MISS -> fetch
-Origin --> Shield : response (200 ms)
-Shield --> Regional : cache
-Regional --> Edge : cache
-Edge --> User : response
-@enduml
+user -> edge: request
+edge -> user: HIT (1 ms)
+edge -> regional: MISS -> fetch
+regional -> edge: HIT (40 ms)
+edge -> user: response
+regional -> shield: MISS -> fetch
+shield -> regional: HIT (80 ms)
+shield -> origin: MISS -> fetch
+origin -> shield: response (200 ms)
+shield -> regional: cache
+regional -> edge: cache
+edge -> user: response
 ```
 
 ### Cache Tier Hit Ratios (Typical)
@@ -588,24 +576,19 @@ After:  https://cdn.example.com/app.a1b2c3.js
 
 ### Anycast BGP
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "Internet (BGP)" as Net
-component "Edge PoP - Mumbai" as MUM
-component "Edge PoP - Frankfurt" as FRA
-component "Edge PoP - Virginia" as VIR
+net: "Internet (BGP)" {shape: cloud}
+mum: "Edge PoP - Mumbai" {shape: cloud}
+fra: "Edge PoP - Frankfurt" {shape: cloud}
+vir: "Edge PoP - Virginia" {shape: cloud}
+note: "All PoPs advertise the same IP: 1.2.3.4 | BGP routes user to nearest PoP" {shape: rectangle}
 
-note right of Net
-  All PoPs advertise the same IP: 1.2.3.4
-  BGP routes user to nearest PoP
-end note
-
-Net --> MUM
-Net --> FRA
-Net --> VIR
-@enduml
+net -> mum
+net -> fra
+net -> vir
+net -> note
 ```
 
 **How it works:**
@@ -625,20 +608,18 @@ Net --> VIR
 
 ### DNS-Based Routing
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-cloud "GeoDNS" as DNS
-component "US PoP" as US
-component "EU PoP" as EU
+user: User {shape: person}
+dns: GeoDNS {shape: cloud}
+us: "US PoP" {shape: cloud}
+eu: "EU PoP" {shape: cloud}
 
-User --> DNS : resolve cdn.example.com
-DNS --> User : 1.2.3.4 (US) or 5.6.7.8 (EU)
-User --> US : US users
-User --> EU : EU users
-@enduml
+user -> dns: resolve cdn.example.com
+dns -> user: 1.2.3.4 (US) or 5.6.7.8 (EU)
+user -> us: US users
+user -> eu: EU users
 ```
 
 **GeoDNS** returns different IPs based on client location.
@@ -676,24 +657,22 @@ Run code at the edge, closer to users:
 
 ### Edge Worker Lifecycle
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-component "Edge Worker" as W
-database "Cache" as C
-component "Origin" as O
+user: User {shape: person}
+w: "Edge Worker" {shape: rectangle}
+c: Cache {shape: database}
+o: Origin {shape: rectangle}
 
-User --> W : request
-W --> W : run JavaScript/WASM
-W --> C : check cache (KV store)
-C --> W : data
-W --> O : origin fetch (if needed)
-O --> W : response
-W --> W : transform
-W --> User : response
-@enduml
+user -> w: request
+w -> w: run JavaScript/WASM
+w -> c: check cache (KV store)
+c -> w: data
+w -> o: origin fetch (if needed)
+o -> w: response
+w -> w: transform
+w -> user: response
 ```
 
 **Runtime:** V8 isolates (Cloudflare) or WASM (Fastly).
@@ -816,17 +795,15 @@ CDN → origin must be authenticated:
 
 ### Global PoP Expansion
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "North America (30 PoPs)" as NA
-cloud "Europe (40 PoPs)" as EU
-cloud "Asia (50 PoPs)" as AS
-cloud "South America (20 PoPs)" as SA
-cloud "Africa (20 PoPs)" as AF
-cloud "Oceania (10 PoPs)" as OC
-@enduml
+na: "North America (30 PoPs)" {shape: cloud}
+eu: "Europe (40 PoPs)" {shape: cloud}
+as: "Asia (50 PoPs)" {shape: cloud}
+sa: "South America (20 PoPs)" {shape: cloud}
+af: "Africa (20 PoPs)" {shape: cloud}
+oc: "Oceania (10 PoPs)" {shape: cloud}
 ```
 
 - **~200 PoPs** globally for good coverage

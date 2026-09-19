@@ -189,53 +189,56 @@ Payment dominates.
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Patient
-actor Doctor
-actor Hospital
-cloud "CDN" as CDN
-component "API Gateway" as GW
-component "Search Service" as Search
-component "Schedule Service" as Sched
-component "Booking Service" as Booking
-component "Slot Lock Service" as Lock
-component "Payment Service" as Pay
-component "Notification Service" as Notif
-component "Video Consult Service" as Video
-component "Records Service" as Records
-component "Insurance Service" as Ins
-database "PostgreSQL (bookings)" as PG
-database "Elasticsearch (search)" as ES
-database "Redis (slot locks)" as Redis
-database "S3 (records)" as S3
-queue "Kafka (events)" as Kafka
-component "External APIs" as Ext
+patient: Patient {shape: person}
+doctor: Doctor {shape: person}
+hospital: Hospital {shape: person}
 
-Patient --> CDN
-Doctor --> CDN
-Hospital --> CDN
-CDN --> GW
-GW --> Search
-GW --> Sched
-GW --> Booking
-GW --> Records
-GW --> Ins
-Search --> ES
-Sched --> PG
-Booking --> Lock
-Booking --> PG
-Booking --> Pay
-Booking --> Kafka
-Lock --> Redis
-Pay --> Ext
-Kafka --> Notif
-Kafka --> Video
-Records --> S3
-Ins --> Ext
-@enduml
+cdn: CDN {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+
+search: "Search Service" {shape: rectangle}
+sched: "Schedule Service" {shape: rectangle}
+booking: "Booking Service" {shape: rectangle}
+lock: "Slot Lock Service" {shape: rectangle}
+pay: "Payment Service" {shape: rectangle}
+notif: "Notification Service" {shape: rectangle}
+video: "Video Consult Service" {shape: rectangle}
+records: "Records Service" {shape: rectangle}
+ins: "Insurance Service" {shape: rectangle}
+
+pg: "PostgreSQL (bookings)" {shape: cylinder}
+es: "Elasticsearch (search)" {shape: cylinder}
+redis: "Redis (slot locks)" {shape: cylinder}
+s3: "S3 (records)" {shape: cylinder}
+kafka: "Kafka (events)" {shape: queue}
+ext: "External APIs" {shape: rectangle}
+
+patient -> cdn
+doctor -> cdn
+hospital -> cdn
+cdn -> gw
+
+gw -> search
+gw -> sched
+gw -> booking
+gw -> records
+gw -> ins
+
+search -> es
+sched -> pg
+booking -> lock
+booking -> pg
+booking -> pay
+booking -> kafka
+lock -> redis
+pay -> ext
+kafka -> notif
+kafka -> video
+records -> s3
+ins -> ext
 ```
 
 ### Component Responsibilities
@@ -922,24 +925,33 @@ Popular doctors have demand > supply:
 
 ```plantuml
 @startuml
-skinparam componentStyle rectangle
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor Patient
-component "API" as API
+participant "API" as API
 database "Redis (lock)" as Redis
 database "PostgreSQL" as PG
-component "Payment Gateway" as PSP
+participant "Payment Gateway" as PSP
 
-Patient --> API : select slot
-API --> Redis : SET NX (lock slot, 10 min)
+Patient -> API : select slot
+API -> Redis : SET NX (lock slot, 10 min)
 Redis --> API : acquired
-API --> PG : update slot status = held
+API -> PG : update slot status = held
 API --> Patient : hold_id (10 min to pay)
-Patient --> API : confirm + pay
-API --> PSP : charge
+Patient -> API : confirm + pay
+API -> PSP : charge
 PSP --> API : success
-API --> PG : update slot = booked + create booking
-API --> Redis : release lock
+API -> PG : update slot = booked + create booking
+API -> Redis : release lock
 API --> Patient : booking confirmed
 
 note right of Redis
@@ -1122,25 +1134,34 @@ Fast response using geo index.
 
 ```plantuml
 @startuml
-skinparam componentStyle rectangle
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor Patient
 actor Doctor
-component "Booking Service" as BS
-component "Video Service" as VS
-component "TURN Server" as TURN
-component "Chat" as Chat
+participant "Booking Service" as BS
+participant "Video Service" as VS
+participant "TURN Server" as TURN
+participant "Chat" as Chat
 database "S3 (recording)" as S3
 
-Patient --> BS : booking confirmed
-Doctor --> BS : booking confirmed
-BS --> VS : create room (at scheduled time)
-VS --> Patient : join URL + token
-VS --> Doctor : join URL + token
+Patient -> BS : booking confirmed
+Doctor -> BS : booking confirmed
+BS -> VS : create room (at scheduled time)
+VS -> Patient : join URL + token
+VS -> Doctor : join URL + token
 Patient <--> Doctor : WebRTC (video+audio)
 Patient <--> Chat : text chat
-Doctor --> Chat : prescription
-Chat --> S3 : store prescription
+Doctor -> Chat : prescription
+Chat -> S3 : store prescription
 @enduml
 ```
 
@@ -1333,23 +1354,32 @@ For HIPAA (US): Data in US, BAA with cloud provider.
 
 ```plantuml
 @startuml
-skinparam componentStyle rectangle
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor Patient
-component "Booking Service" as BS
-component "Insurance Service" as Ins
-component "TPA (Third-Party Admin)" as TPA
-component "Hospital" as Hosp
+participant "Booking Service" as BS
+participant "Insurance Service" as Ins
+participant "TPA (Third-Party Admin)" as TPA
+participant "Hospital" as Hosp
 
-Patient --> BS : book with insurance
-BS --> Ins : verify policy
-Ins --> TPA : pre-auth request
+Patient -> BS : book with insurance
+BS -> Ins : verify policy
+Ins -> TPA : pre-auth request
 TPA --> Ins : pre-auth number
 Ins --> BS : approved
 BS --> Patient : appointment with insurance
 
-Patient --> Hosp : visit
-Hosp --> TPA : claim submission
+Patient -> Hosp : visit
+Hosp -> TPA : claim submission
 TPA --> Hosp : settlement
 @enduml
 ```

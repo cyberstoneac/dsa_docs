@@ -8,6 +8,8 @@ repo_url: https://github.com/cyberstoneac/dsa_docs
 edit_uri: edit/main/docs/
 
 theme:
+  favicon: assets/icon.svg
+  logo: assets/icon.svg
   name: material
   language: en
   palette:
@@ -175,6 +177,8 @@ nav:
           - 08. Service Discovery: system-design/problems/08-service-discovery.md
           - 09. API Gateway: system-design/problems/09-api-gateway.md
           - 10. CDN: system-design/problems/10-cdn.md
+          - 53. Distributed Key-Value Store: system-design/problems/53-distributed-key-value-store.md
+          - 55. Authentication & Authorization: system-design/problems/55-authentication-authorization.md
       - Phase 2 - Simple Products:
           - 11. Cash Split: system-design/problems/11-cash-split.md
           - 12. Calendar / Scheduling: system-design/problems/12-calendar-scheduling.md
@@ -203,12 +207,14 @@ nav:
           - 33. Recommendation Engine: system-design/problems/33-recommendation-engine.md
           - 34. File Storage Service: system-design/problems/34-file-storage-service.md
           - 35. Collaborative Document Editor: system-design/problems/35-collaborative-document-editor.md
+          - 54. Distributed Cloud Storage: system-design/problems/54-distributed-cloud-storage.md
       - Phase 5 - Location & Mobility:
           - 36. Proximity Service: system-design/problems/36-proximity-service.md
           - 37. Ride Booking: system-design/problems/37-ride-booking.md
           - 38. Food Delivery: system-design/problems/38-food-delivery.md
           - 39. Dating App: system-design/problems/39-dating-app.md
           - 40. Proximity Matchmaking: system-design/problems/40-proximity-matchmaking.md
+          - 57. Maps & Routing: system-design/problems/57-maps-routing.md   
       - Phase 6 - Fintech:
           - 41. Payment System: system-design/problems/41-payment-system.md
           - 42. Digital Wallet: system-design/problems/42-digital-wallet.md
@@ -223,6 +229,7 @@ nav:
           - 50. Metrics / Monitoring: system-design/problems/50-metrics-monitoring.md
           - 51. Distributed Tracing: system-design/problems/51-distributed-tracing.md
           - 52. Online Judge: system-design/problems/52-online-judge.md
+          - 56. Code Deployment / CI-CD: system-design/problems/56-code-deployment-cicd.md    
           
 extra:
   social:

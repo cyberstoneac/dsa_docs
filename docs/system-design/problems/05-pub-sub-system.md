@@ -137,38 +137,36 @@ Total partitions (rough estimate):
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Publisher" as Pub
-actor "Subscriber 1" as Sub1
-actor "Subscriber 2" as Sub2
-component "API Gateway" as GW
-component "Publisher Service" as PS
-component "Subscriber Service" as SS
-queue "Topic Logs (per partition)" as Topics
-database "Metadata Store (etcd)" as Meta
-database "Offset Store" as Offsets
-database "Message Store (S3/cold)" as Cold
-component "Delivery Workers" as DW
-database "Subscription Registry" as Reg
+pub: Publisher {shape: person}
+sub1: "Subscriber 1" {shape: person}
+sub2: "Subscriber 2" {shape: person}
+gw: "API Gateway" {shape: hexagon}
+ps: "Publisher Service" {shape: rectangle}
+ss: "Subscriber Service" {shape: rectangle}
+topics: "Topic Logs (per partition)" {shape: queue}
+meta: "Metadata Store (etcd)" {shape: cylinder}
+offsets: "Offset Store" {shape: cylinder}
+cold: "Message Store (S3/cold)" {shape: cylinder}
+dw: "Delivery Workers" {shape: rectangle}
+reg: "Subscription Registry" {shape: cylinder}
 
-Pub --> GW : publish(topic, msg)
-Sub1 --> GW : subscribe(topic)
-Sub2 --> GW : subscribe(topic)
-GW --> PS : write path
-GW --> SS : read path
-PS --> Meta : topic lookup
-PS --> Topics : append message
-Topics --> DW : consume
-DW --> Sub1 : deliver
-DW --> Sub2 : deliver
-Sub1 --> Offsets : commit offset
-Sub2 --> Offsets : commit offset
-SS --> Reg : register subscription
-Topics --> Cold : archive old messages
-@enduml
+pub -> gw: publish(topic, msg)
+sub1 -> gw: subscribe(topic)
+sub2 -> gw: subscribe(topic)
+gw -> ps: write path
+gw -> ss: read path
+ps -> meta: topic lookup
+ps -> topics: append message
+topics -> dw: consume
+dw -> sub1: deliver
+dw -> sub2: deliver
+sub1 -> offsets: commit offset
+sub2 -> offsets: commit offset
+ss -> reg: register subscription
+topics -> cold: archive old messages
 ```
 
 ### Component Responsibilities
@@ -321,25 +319,19 @@ service PubSub {
 
 ### Topic Log Structure
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Topic orders" as T {
-  database "Partition 0" as P0
-  database "Partition 1" as P1
-  database "Partition 2" as P2
-}
+topic: "Topic orders" {shape: queue}
+p0: "Partition 0" {shape: cylinder}
+p1: "Partition 1" {shape: cylinder}
+p2: "Partition 2" {shape: cylinder}
+note: "Append-only segments: seg-0000000000000.log | seg-0000000000001.log | seg-0000000000002.log | Each segment ~1 GB | Index file maps offset -> file position" {shape: rectangle}
 
-note right of P0
-  Append-only segments:
-    seg-0000000000000.log
-    seg-0000000000001.log
-    seg-0000000000002.log
-  Each segment ~1 GB
-  Index file maps offset -> file position
-end note
-@enduml
+topic -> p0
+topic -> p1
+topic -> p2
+p0 -> note
 ```
 
 **Partition**:
@@ -471,38 +463,34 @@ The `processedSet` must be durable (DB table with unique constraint on message_i
 
 ### 7.1 Fan-Out to Multiple Consumer Groups
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-database "Topic: orders (Partitions 0-9)" as T
-component "Email Service (group: email)" as E
-component "Analytics Service (group: analytics)" as A
-component "Fraud Service (group: fraud)" as F
+t: "Topic: orders (Partitions 0-9)" {shape: queue}
+e: "Email Service (group: email)" {shape: rectangle}
+a: "Analytics Service (group: analytics)" {shape: rectangle}
+f: "Fraud Service (group: fraud)" {shape: rectangle}
 
-T --> E : all messages
-T --> A : all messages
-T --> F : all messages
-@enduml
+t -> e: all messages
+t -> a: all messages
+t -> f: all messages
 ```
 
 Each consumer **group** maintains its own offset. All groups receive all messages.
 
 ### 7.2 Load Balancing Within a Group
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-database "Topic: orders (Partitions 0-9)" as T
-component "Email Worker 1" as W1
-component "Email Worker 2" as W2
-component "Email Worker 3" as W3
+t: "Topic: orders (Partitions 0-9)" {shape: queue}
+w1: "Email Worker 1" {shape: rectangle}
+w2: "Email Worker 2" {shape: rectangle}
+w3: "Email Worker 3" {shape: rectangle}
 
-T --> W1 : partitions 0-2
-T --> W2 : partitions 3-5
-T --> W3 : partitions 6-9
-@enduml
+t -> w1: partitions 0-2
+t -> w2: partitions 3-5
+t -> w3: partitions 6-9
 ```
 
 Within a group, partitions are split across workers. Adding a worker rebalances partitions.
@@ -523,19 +511,17 @@ Within a group, partitions are split across workers. Adding a worker rebalances 
 
 ### 7.4 Competing Consumers
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-queue "Queue" as Q
-component "Worker 1" as W1
-component "Worker 2" as W2
-component "Worker 3" as W3
+q: Queue {shape: queue}
+w1: "Worker 1" {shape: rectangle}
+w2: "Worker 2" {shape: rectangle}
+w3: "Worker 3" {shape: rectangle}
 
-Q --> W1 : msg 1, 3, 5
-Q --> W2 : msg 2, 4, 6
-Q --> W3 : msg 7, 8, 9
-@enduml
+q -> w1: msg 1, 3, 5
+q -> w2: msg 2, 4, 6
+q -> w3: msg 7, 8, 9
 ```
 
 Multiple workers in the same **queue** compete for messages — each message goes to one worker.
@@ -619,24 +605,15 @@ After exceeding:
 
 Special mode for "latest value per key":
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "Before compaction" as Before {
-  rectangle "k1=v1" as A1
-  rectangle "k2=v2" as A2
-  rectangle "k1=v3" as A3
-  rectangle "k3=v4" as A4
-  rectangle "k1=v5" as A5
-}
+before: "Before compaction" {shape: rectangle}
+after: "After compaction" {shape: rectangle}
+note: "Before: k1=v1, k2=v2, k1=v3, k3=v4, k1=v5 | After: k2=v2, k3=v4, k1=v5" {shape: rectangle}
 
-rectangle "After compaction" as After {
-  rectangle "k2=v2" as B2
-  rectangle "k3=v4" as B4
-  rectangle "k1=v5" as B5
-}
-@enduml
+before -> after
+after -> note
 ```
 
 **Use case:** Change Data Capture (CDC), config stores, user profiles.
@@ -651,21 +628,19 @@ Every key has exactly one (latest) value. Historical versions are removed.
 
 ### Leader-Follower Replication
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-database "Partition Leader (Broker 1)" as L
-database "Follower (Broker 2)" as F1
-database "Follower (Broker 3)" as F2
-component "Producer" as P
-component "Consumer" as C
+l: "Partition Leader (Broker 1)" {shape: cylinder}
+f1: "Follower (Broker 2)" {shape: cylinder}
+f2: "Follower (Broker 3)" {shape: cylinder}
+p: Producer {shape: rectangle}
+c: Consumer {shape: rectangle}
 
-P --> L : write
-L --> F1 : replicate
-L --> F2 : replicate
-C --> L : read
-@enduml
+p -> l: write
+l -> f1: replicate
+l -> f2: replicate
+c -> l: read
 ```
 
 **How it works:**
@@ -680,7 +655,7 @@ C --> L : read
 {
   "partition": 3,
   "leader": "broker-1",
-  "isr": ["broker-1", "broker-2"],  // broker-3 is lagging
+  "isr": ["broker-1", "broker-2"],
   "replicas": ["broker-1", "broker-2", "broker-3"]
 }
 ```
@@ -719,23 +694,21 @@ C --> L : read
 
 ### Horizontal Scaling (Brokers)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Broker 1" as B1
-component "Broker 2" as B2
-component "Broker 3" as B3
-component "Broker 4" as B4
-component "Broker 5" as B5
-database "Metadata (etcd/KRaft)" as Meta
+b1: "Broker 1" {shape: cylinder}
+b2: "Broker 2" {shape: cylinder}
+b3: "Broker 3" {shape: cylinder}
+b4: "Broker 4" {shape: cylinder}
+b5: "Broker 5" {shape: cylinder}
+meta: "Metadata (etcd/KRaft)" {shape: cylinder}
 
-B1 --> Meta
-B2 --> Meta
-B3 --> Meta
-B4 --> Meta
-B5 --> Meta
-@enduml
+b1 -> meta
+b2 -> meta
+b3 -> meta
+b4 -> meta
+b5 -> meta
 ```
 
 Add brokers -> partitions can be reassigned -> throughput scales linearly.
@@ -780,19 +753,16 @@ Cost: network + disk I/O during move
 
 ### Multi-Region Replication
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "US Cluster" as US
-cloud "EU Cluster" as EU
-cloud "APAC Cluster" as APAC
-component "MirrorMaker" as MM
+us: "US Cluster" {shape: cloud}
+eu: "EU Cluster" {shape: cloud}
+apac: "APAC Cluster" {shape: cloud}
 
-US <--> EU : replicate
-EU <--> APAC : replicate
-APAC <--> US : replicate
-@enduml
+us <-> eu: replicate
+eu <-> apac: replicate
+apac <-> us: replicate
 ```
 
 **Tools:** Kafka MirrorMaker 2, Confluent Replicator, cluster linking.

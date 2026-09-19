@@ -191,56 +191,60 @@ Product detail:
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Customer
-actor Seller
-cloud "CDN" as CDN
-component "API Gateway" as GW
-component "Search Service" as SS
-component "Product Service" as PS
-component "Inventory Service" as IS
-component "Pricing Service" as PrS
-component "Recommendation Service" as RS
-component "Review Service" as RvS
-component "Seller Portal" as SP
-component "Indexing Pipeline" as IP
-database "Elasticsearch" as ES
-database "PostgreSQL (products)" as PG
-database "Redis (cache)" as Redis
-database "Cassandra (inventory/price)" as Cass
-queue "Kafka" as Kafka
-database "S3 (images)" as S3
-database "ClickHouse (analytics)" as CH
+customer: Customer {shape: person}
+seller: Seller {shape: person}
 
-Customer --> CDN
-Seller --> CDN
-CDN --> GW
-GW --> SS
-GW --> PS
-GW --> IS
-GW --> RS
-GW --> RvS
-GW --> SP
-SS --> ES
-SS --> Redis
-SS --> IS
-PS --> PG
-PS --> Redis
-IS --> Cass
-IS --> Redis
-PrS --> Cass
-PrS --> Redis
-IP --> Kafka
-Kafka --> ES
-Kafka --> CH
-Kafka --> RvS
-SP --> PG
-SP --> Kafka
-PS --> S3
-@enduml
+cdn: CDN {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+
+ss: "Search Service" {shape: rectangle}
+ps: "Product Service" {shape: rectangle}
+is: "Inventory Service" {shape: rectangle}
+prs: "Pricing Service" {shape: rectangle}
+rs: "Recommendation Service" {shape: rectangle}
+rvs: "Review Service" {shape: rectangle}
+sp: "Seller Portal" {shape: rectangle}
+ip: "Indexing Pipeline" {shape: rectangle}
+
+es: "Elasticsearch" {shape: cylinder}
+pg: "PostgreSQL (products)" {shape: cylinder}
+redis: "Redis (cache)" {shape: cylinder}
+cass: "Cassandra (inventory/price)" {shape: cylinder}
+kafka: "Kafka" {shape: queue}
+s3: "S3 (images)" {shape: cylinder}
+ch: "ClickHouse (analytics)" {shape: cylinder}
+
+customer -> cdn
+seller -> cdn
+cdn -> gw
+
+gw -> ss
+gw -> ps
+gw -> is
+gw -> rs
+gw -> rvs
+gw -> sp
+
+ss -> es
+ss -> redis
+ss -> is
+ps -> pg
+ps -> redis
+is -> cass
+is -> redis
+prs -> cass
+prs -> redis
+
+ip -> kafka
+kafka -> es
+kafka -> ch
+kafka -> rvs
+sp -> pg
+sp -> kafka
+ps -> s3
 ```
 
 ### Component Responsibilities
@@ -661,7 +665,16 @@ CREATE TABLE product_ratings (
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor Customer
 participant "API Gateway" as GW
@@ -878,6 +891,16 @@ Search index (Elasticsearch) must stay in sync with product master (PostgreSQL).
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 skinparam componentStyle rectangle
 
 database "PostgreSQL" as PG
@@ -1213,6 +1236,16 @@ shard_id = hash(seller_id) % N
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 skinparam componentStyle rectangle
 
 cloud "US Region" as US

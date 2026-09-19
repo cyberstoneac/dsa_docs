@@ -12,7 +12,7 @@ User Alice creates a board: "Q4 Marketing"
     - "Design new landing page" (assigned to Bob)
     - "Write blog post on AI" (assigned to Carol, due Sept 25)
 
-Bob moves "Design new landing page" from Backlog → In Progress.
+Bob moves "Design new landing page" from Backlog -> In Progress.
 Carol comments on it: "Wireframes ready, let's review tomorrow."
 
 All changes sync in real-time to Alice, Bob, Carol (and 5 other collaborators).
@@ -23,7 +23,7 @@ All changes sync in real-time to Alice, Bob, Carol (and 5 other collaborators).
 **Why it's interesting:**
 
 - **Real-time collaboration** — multiple users editing same board
-- **Hierarchical data model** (board → list → card → subtask)
+- **Hierarchical data model** (board -> list -> card -> subtask)
 - **Ordering** — cards have a position; drag-and-drop must be fast
 - **Permissions** — board members, guests, public boards
 - **Notifications** — @mentions, assignments, due dates
@@ -178,53 +178,51 @@ Real-time propagation:
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Web Client" as Web
-actor "Mobile Client" as Mobile
-cloud "CDN (static)" as CDN
-component "API Gateway" as GW
-component "Board Service" as BS
-component "Card Service" as CS
-component "Comment Service" as CmS
-component "Permission Service" as PS
-component "Search Service" as SS
-component "Notification Service" as NS
-component "WebSocket Gateway" as WS
-component "Activity Service" as AS
-database "PostgreSQL (boards, cards)" as PG
-database "Redis (cache, presence)" as Redis
-queue "Kafka (events)" as Kafka
-database "Elasticsearch (search)" as ES
-database "S3 (attachments)" as S3
+web: "Web Client" {shape: person}
+mobile: "Mobile Client" {shape: person}
+cdn: "CDN (static)" {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+bs: "Board Service" {shape: rectangle}
+cs: "Card Service" {shape: rectangle}
+cms: "Comment Service" {shape: rectangle}
+ps: "Permission Service" {shape: rectangle}
+ss: "Search Service" {shape: rectangle}
+ns: "Notification Service" {shape: rectangle}
+ws: "WebSocket Gateway" {shape: rectangle}
+as: "Activity Service" {shape: rectangle}
+pg: "PostgreSQL (boards, cards)" {shape: cylinder}
+redis: "Redis (cache, presence)" {shape: cylinder}
+kafka: "Kafka (events)" {shape: queue}
+es: "Elasticsearch (search)" {shape: cylinder}
+s3: "S3 (attachments)" {shape: cylinder}
 
-Web --> CDN
-Mobile --> CDN
-CDN --> GW
-GW --> BS
-GW --> CS
-GW --> CmS
-GW --> PS
-GW --> SS
-Web -.-> WS : WebSocket
-Mobile -.-> WS : WebSocket
-BS --> PG
-CS --> PG
-CmS --> PG
-PS --> PG
-SS --> ES
-BS --> Redis
-CS --> Redis
-BS --> Kafka
-CS --> Kafka
-CmS --> Kafka
-Kafka --> NS
-Kafka --> AS
-Kafka --> WS
-CS --> S3
-@enduml
+web -> cdn
+mobile -> cdn
+cdn -> gw
+gw -> bs
+gw -> cs
+gw -> cms
+gw -> ps
+gw -> ss
+web <-> ws: WebSocket
+mobile <-> ws: WebSocket
+bs -> pg
+cs -> pg
+cms -> pg
+ps -> pg
+ss -> es
+bs -> redis
+cs -> redis
+bs -> kafka
+cs -> kafka
+cms -> kafka
+kafka -> ns
+kafka -> as
+kafka -> ws
+cs -> s3
 ```
 
 ### Component Responsibilities
@@ -407,10 +405,10 @@ CREATE TABLE boards (
     board_id BIGINT PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     description TEXT,
-    visibility VARCHAR(20) DEFAULT 'private',   -- private, public, org
+    visibility VARCHAR(20) DEFAULT 'private',
     created_by BIGINT REFERENCES users(user_id),
     is_archived BOOLEAN DEFAULT FALSE,
-    version BIGINT DEFAULT 0,                    -- for sync
+    version BIGINT DEFAULT 0,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
@@ -421,7 +419,7 @@ CREATE INDEX idx_boards_visibility ON boards(visibility) WHERE visibility = 'pub
 CREATE TABLE board_members (
     board_id BIGINT REFERENCES boards(board_id),
     user_id BIGINT REFERENCES users(user_id),
-    role VARCHAR(20) NOT NULL,                   -- owner, admin, member, guest
+    role VARCHAR(20) NOT NULL,
     added_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (board_id, user_id)
 );
@@ -432,7 +430,7 @@ CREATE TABLE lists (
     list_id BIGINT PRIMARY KEY,
     board_id BIGINT REFERENCES boards(board_id) ON DELETE CASCADE,
     name VARCHAR(200) NOT NULL,
-    position DOUBLE PRECISION NOT NULL,          -- fractional indexing
+    position DOUBLE PRECISION NOT NULL,
     is_archived BOOLEAN DEFAULT FALSE,
     version BIGINT DEFAULT 0,
     created_at TIMESTAMP DEFAULT NOW()
@@ -443,7 +441,7 @@ CREATE INDEX idx_lists_board_position ON lists(board_id, position);
 CREATE TABLE cards (
     card_id BIGINT PRIMARY KEY,
     list_id BIGINT REFERENCES lists(list_id) ON DELETE CASCADE,
-    board_id BIGINT NOT NULL,                    -- denormalized for fast queries
+    board_id BIGINT NOT NULL,
     title VARCHAR(500) NOT NULL,
     description TEXT,
     position DOUBLE PRECISION NOT NULL,
@@ -529,7 +527,7 @@ CREATE TABLE activity_log (
     board_id BIGINT NOT NULL,
     card_id BIGINT,
     user_id BIGINT NOT NULL,
-    action VARCHAR(50) NOT NULL,                 -- card.created, card.moved, etc.
+    action VARCHAR(50) NOT NULL,
     payload JSONB,
     version BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
@@ -559,13 +557,12 @@ CREATE INDEX idx_mentions_user ON mentions(mentioned_user_id, created_at DESC);
 - Cards have position values like 1.0, 2.0, 3.0
 - To insert between 1.0 and 2.0, use 1.5
 - To insert between 1.5 and 2.0, use 1.75
-- Position values become increasingly precise
 
 **Problem:** Floating-point precision limits (~52 bits).
 
 **Better solution: String-based fractional indexing (LexoRank)**
 
-Positions are strings: "a", "b", "c". Insert between "a" and "b" → "am".
+Positions are strings: "a", "b", "c". Insert between "a" and "b" -> "am".
 
 ```
 Initial: ["a", "b", "c"]
@@ -583,9 +580,6 @@ Insert between a and am: "ad"
 
 **Formula for cards:**
 ```sql
--- Move card to position between prev and next
--- Client computes new position (or server does)
--- Only 1 row updated per move
 UPDATE cards SET position = ?, version = version + 1 WHERE card_id = ?;
 ```
 
@@ -601,7 +595,6 @@ BEGIN;
   UPDATE boards SET version = version + 1, updated_at = NOW()
   WHERE board_id = ? RETURNING version;
   
-  -- Record in activity log
   INSERT INTO activity_log (board_id, card_id, user_id, action, payload, version)
   VALUES (?, ?, ?, ?, ?, ?);
 COMMIT;
@@ -647,28 +640,26 @@ Key: ratelimit:{user_id}:{endpoint}
 
 ### WebSocket Architecture
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-component "WebSocket Gateway 1" as WS1
-component "WebSocket Gateway 2" as WS2
-component "WebSocket Gateway 3" as WS3
-queue "Kafka (board events)" as K
-component "Board Service" as BS
-database "Redis (pub/sub)" as Redis
+user: User {shape: person}
+ws1: "WebSocket Gateway 1" {shape: rectangle}
+ws2: "WebSocket Gateway 2" {shape: rectangle}
+ws3: "WebSocket Gateway 3" {shape: rectangle}
+k: "Kafka (board events)" {shape: queue}
+bs: "Board Service" {shape: rectangle}
+redis: "Redis (pub/sub)" {shape: cylinder}
 
-User --> WS1 : connect
-BS --> K : publish board.updated
-K --> WS1 : fan-out
-K --> WS2 : fan-out
-K --> WS3 : fan-out
-WS1 --> User : push update
-WS1 <--> Redis : cross-node pub/sub
-WS2 <--> Redis : cross-node pub/sub
-WS3 <--> Redis : cross-node pub/sub
-@enduml
+user -> ws1: connect
+bs -> k: publish board.updated
+k -> ws1: fan-out
+k -> ws2: fan-out
+k -> ws3: fan-out
+ws1 -> user: push update
+ws1 <-> redis: cross-node pub/sub
+ws2 <-> redis: cross-node pub/sub
+ws3 <-> redis: cross-node pub/sub
 ```
 
 **Flow:**
@@ -689,7 +680,7 @@ WS3 <--> Redis : cross-node pub/sub
 **Show who's online on a board:**
 
 ```
-1. User opens board → WebSocket connects → sends "subscribe b-1"
+1. User opens board -> WebSocket connects -> sends "subscribe b-1"
 2. Gateway records presence in Redis:
    HSET board:b-1:presence user-123 '{"name": "Alice", "joined_at": ...}'
    EXPIRE board:b-1:presence 30
@@ -780,12 +771,12 @@ To make drag-and-drop feel instant:
 ```
 1. Extract user_id from JWT
 2. Extract board_id from URL or card's parent
-3. Look up board_members(user_id, board_id) → role
+3. Look up board_members(user_id, board_id) -> role
 4. Check if role has permission for action
 ```
 
 **Caching:**
-- Cache permissions in Redis: `perms:{user_id}:{board_id}` → role
+- Cache permissions in Redis: `perms:{user_id}:{board_id}` -> role
 - TTL: 5 minutes
 - Invalidate on membership change
 
@@ -857,7 +848,7 @@ Users can "watch" cards and boards:
 
 ```sql
 CREATE TABLE watchers (
-    watchable_type VARCHAR(20),        -- card, board
+    watchable_type VARCHAR(20),
     watchable_id BIGINT,
     user_id BIGINT,
     created_at TIMESTAMP DEFAULT NOW(),
@@ -868,24 +859,22 @@ CREATE INDEX idx_watchers_user ON watchers(user_id);
 
 ### Notification Pipeline
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-queue "Kafka (board events)" as K
-component "Notification Worker" as NW
-database "User Preferences" as Prefs
-component "Push Service" as Push
-component "Email Service" as Email
-database "Notification Log" as Log
+k: "Kafka (board events)" {shape: queue}
+nw: "Notification Worker" {shape: rectangle}
+prefs: "User Preferences" {shape: cylinder}
+push: "Push Service" {shape: rectangle}
+email: "Email Service" {shape: rectangle}
+log: "Notification Log" {shape: cylinder}
 
-K --> NW : consume event
-NW --> NW : find watchers
-NW --> Prefs : check preferences
-NW --> Push : if push enabled
-NW --> Email : if email enabled
-NW --> Log : record
-@enduml
+k -> nw: consume event
+nw -> nw: find watchers
+nw -> prefs: check preferences
+nw -> push: if push enabled
+nw -> email: if email enabled
+nw -> log: record
 ```
 
 ### Digest Notifications
@@ -957,7 +946,7 @@ Comment: `"@alice can you review this @bob?"`
 ### Indexing Pipeline
 
 - **CDC (Change Data Capture)** from PostgreSQL
-- Debezium → Kafka → Elasticsearch consumer
+- Debezium -> Kafka -> Elasticsearch consumer
 - Near-real-time (~1 sec lag)
 
 **Alternative:** Application writes to both PostgreSQL and Elasticsearch (dual write). Faster but more code.
@@ -1025,23 +1014,21 @@ Users on subways, planes, or poor connections still want to see and edit their b
 
 ### Local-First Architecture
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Mobile App UI" as UI
-database "Local DB (SQLite)" as Local
-component "Sync Engine" as Sync
-component "WebSocket Client" as WS
-component "Cloud API" as API
+ui: "Mobile App UI" {shape: rectangle}
+local: "Local DB (SQLite)" {shape: cylinder}
+sync: "Sync Engine" {shape: rectangle}
+ws: "WebSocket Client" {shape: rectangle}
+api: "Cloud API" {shape: rectangle}
 
-UI --> Local : read/write
-Local --> Sync : pending changes
-Sync --> API : push changes
-API --> Sync : pull changes
-WS --> Sync : real-time events
-Sync --> Local : apply
-@enduml
+ui -> local: read/write
+local -> sync: pending changes
+sync -> api: push changes
+api -> sync: pull changes
+ws -> sync: real-time events
+sync -> local: apply
 ```
 
 **Approach:**
@@ -1068,9 +1055,9 @@ Sync --> Local : apply
 **Scenario:** Alice edits a card offline; Bob edits same card online.
 
 **On sync:**
-- If Alice edited title, Bob edited description → merge both
-- If both edited title → last-write-wins (by edit timestamp)
-- If Alice moved card, Bob moved it → last-write-wins
+- If Alice edited title, Bob edited description -> merge both
+- If both edited title -> last-write-wins (by edit timestamp)
+- If Alice moved card, Bob moved it -> last-write-wins
 
 **Notification:** Show "Some of your offline changes conflicted and were resolved" banner.
 
@@ -1129,7 +1116,7 @@ shard_id = hash(board_id) % N
 - Enables local consistency (no cross-shard transactions)
 
 **Cross-board operations:**
-- "My cards across all boards" → query all shards (fan-out)
+- "My cards across all boards" -> query all shards (fan-out)
 - Cache result in Redis
 
 ### Hot Board Problem
@@ -1145,8 +1132,8 @@ shard_id = hash(board_id) % N
 ### WebSocket Scaling
 
 - **Connection limit**: ~10K per node (memory-bound)
-- **100K concurrent users** → 10+ WebSocket nodes
-- **1M concurrent users** → 100 nodes
+- **100K concurrent users** -> 10+ WebSocket nodes
+- **1M concurrent users** -> 100 nodes
 - Use consistent hashing to route users to nodes
 
 **Session persistence:** Store WebSocket state in Redis; if node fails, user reconnects to another node.

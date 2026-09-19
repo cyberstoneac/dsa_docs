@@ -160,44 +160,42 @@ Headroom for retries, network jitter.
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Mobile App" as Mobile
-actor "Web App" as Web
-cloud "CDN" as CDN
-component "API Gateway" as GW
-component "User Service" as US
-component "Group Service" as GS
-component "Expense Service" as ES
-component "Balance Service" as BS
-component "Notification Service" as NS
-database "PostgreSQL (users, groups, expenses)" as PG
-database "Redis (sessions, cache)" as Redis
-queue "Kafka (events)" as Kafka
-database "Cassandra (activity feed)" as Cass
-database "Elasticsearch (search)" as ES_Search
-database "S3 (receipts)" as S3
+mobile: "Mobile App" {shape: person}
+web: "Web App" {shape: person}
+cdn: CDN {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+us: "User Service" {shape: rectangle}
+gs: "Group Service" {shape: rectangle}
+es: "Expense Service" {shape: rectangle}
+bs: "Balance Service" {shape: rectangle}
+ns: "Notification Service" {shape: rectangle}
+pg: "PostgreSQL (users, groups, expenses)" {shape: cylinder}
+redis: "Redis (sessions, cache)" {shape: cylinder}
+kafka: "Kafka (events)" {shape: queue}
+cass: "Cassandra (activity feed)" {shape: cylinder}
+es_search: "Elasticsearch (search)" {shape: cylinder}
+s3: "S3 (receipts)" {shape: cylinder}
 
-Mobile --> CDN
-Web --> CDN
-CDN --> GW
-GW --> US
-GW --> GS
-GW --> ES
-GW --> BS
-US --> PG
-GS --> PG
-ES --> PG
-BS --> Redis
-BS --> PG
-ES --> Kafka
-Kafka --> NS
-Kafka --> Cass
-Kafka --> ES_Search
-ES --> S3 : receipts
-@enduml
+mobile -> cdn
+web -> cdn
+cdn -> gw
+gw -> us
+gw -> gs
+gw -> es
+gw -> bs
+us -> pg
+gs -> pg
+es -> pg
+bs -> redis
+bs -> pg
+es -> kafka
+kafka -> ns
+kafka -> cass
+kafka -> es_search
+es -> s3
 ```
 
 ### Component Responsibilities
@@ -408,7 +406,7 @@ CREATE INDEX idx_groups_created_by ON groups(created_by);
 CREATE TABLE group_members (
     group_id BIGINT REFERENCES groups(group_id),
     user_id BIGINT REFERENCES users(user_id),
-    role VARCHAR(20) DEFAULT 'member',  -- owner, admin, member
+    role VARCHAR(20) DEFAULT 'member',
     joined_at TIMESTAMP DEFAULT NOW(),
     left_at TIMESTAMP,
     PRIMARY KEY (group_id, user_id)
@@ -420,7 +418,7 @@ CREATE TABLE expenses (
     expense_id BIGINT PRIMARY KEY,
     group_id BIGINT REFERENCES groups(group_id),
     description TEXT NOT NULL,
-    amount_cents BIGINT NOT NULL,        -- store as smallest unit
+    amount_cents BIGINT NOT NULL,
     currency VARCHAR(3) NOT NULL,
     paid_by BIGINT REFERENCES users(user_id),
     split_type VARCHAR(20) NOT NULL,
@@ -475,7 +473,7 @@ CREATE TABLE activity_events (
     event_id BIGINT PRIMARY KEY,
     group_id BIGINT,
     user_id BIGINT,
-    event_type VARCHAR(50),             -- expense_added, settled, member_joined, comment_added
+    event_type VARCHAR(50),
     payload JSONB,
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -531,13 +529,13 @@ BEGIN;
   UPDATE group_balances
   SET net_balance_cents = net_balance_cents + ?,
       updated_at = NOW()
-  WHERE group_id = ? AND user_id = ?;   -- payer
+  WHERE group_id = ? AND user_id = ?;
   
   -- Update each participant balance (- amount they owe)
   UPDATE group_balances
   SET net_balance_cents = net_balance_cents - ?,
       updated_at = NOW()
-  WHERE group_id = ? AND user_id = ?;   -- each participant
+  WHERE group_id = ? AND user_id = ?;
 COMMIT;
 ```
 
@@ -606,7 +604,7 @@ Result: 2 transactions
 
 ### Algorithm 2: Optimal (NP-Hard in General)
 
-Finding the truly minimal number of transactions is **NP-hard** (equivalent to finding minimum number of edges to make a graph balanced).
+Finding the truly minimal number of transactions is **NP-hard**.
 
 **Approaches for exact optimum:**
 - Backtracking (feasible for N ≤ 10)
@@ -626,7 +624,6 @@ Finding the truly minimal number of transactions is **NP-hard** (equivalent to f
 
 ```java
 public List<Transaction> simplifyDebts(Map<Long, Long> balances) {
-    // Separate into creditors (positive) and debtors (negative)
     PriorityQueue<Map.Entry<Long, Long>> creditors = 
         new PriorityQueue<>((a, b) -> Long.compare(b.getValue(), a.getValue()));
     PriorityQueue<Map.Entry<Long, Long>> debtors = 
@@ -801,32 +798,30 @@ Balances are **region-local** (like a user's data is in their home region).
 
 ### Notification Pipeline
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Expense Service" as ES
-queue "Kafka: expense-events" as K
-component "Notification Worker" as NW
-database "User Preferences" as UP
-component "Push Service (FCM/APNS)" as Push
-component "Email Service (SES)" as Email
-database "Notification Log" as Log
+es: "Expense Service" {shape: rectangle}
+k: "Kafka: expense-events" {shape: queue}
+nw: "Notification Worker" {shape: rectangle}
+up: "User Preferences" {shape: cylinder}
+push: "Push Service (FCM/APNS)" {shape: rectangle}
+email: "Email Service (SES)" {shape: rectangle}
+log: "Notification Log" {shape: cylinder}
 
-ES --> K : publish event
-K --> NW : consume
-NW --> UP : check preferences
-NW --> Push : if push enabled
-NW --> Email : if email enabled
-NW --> Log : record
-@enduml
+es -> k: publish event
+k -> nw: consume
+nw -> up: check preferences
+nw -> push: if push enabled
+nw -> email: if email enabled
+nw -> log: record
 ```
 
 ### Batching Notifications
 
 Avoid spamming users:
 - **Immediate**: 1 notification per event (if rate < 3/hour)
-- **Digest**: Batch if > 3 events in 5 min → send one summary
+- **Digest**: Batch if > 3 events in 5 min -> send one summary
 - **Daily digest**: If user prefers
 
 ### User Preferences
@@ -865,21 +860,19 @@ Users travel, have spotty connectivity, or open the app in a metro. The app must
 
 ### Local-First Architecture
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Mobile App" as App
-database "Local DB (SQLite)" as Local
-component "Sync Engine" as Sync
-component "Cloud API" as API
+app: "Mobile App" {shape: person}
+local: "Local DB (SQLite)" {shape: cylinder}
+sync: "Sync Engine" {shape: rectangle}
+api: "Cloud API" {shape: rectangle}
 
-App --> Local : read/write
-Local --> Sync : detect changes
-Sync --> API : push changes
-API --> Sync : pull changes
-Sync --> Local : merge
-@enduml
+app -> local: read/write
+local -> sync: detect changes
+sync -> api: push changes
+api -> sync: pull changes
+sync -> local: merge
 ```
 
 **Approach:**
@@ -955,23 +948,21 @@ If scale demands:
 
 ### Multi-Region
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
-database "US PostgreSQL" as USP
-database "EU PostgreSQL" as EUP
-database "APAC PostgreSQL" as APAP
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
+usp: "US PostgreSQL" {shape: cylinder}
+eup: "EU PostgreSQL" {shape: cylinder}
+apap: "APAC PostgreSQL" {shape: cylinder}
 
-US --> USP
-EU --> EUP
-APAC --> APAP
-USP <--> EUP : async replication
-EUP <--> APAP : async replication
-@enduml
+us -> usp
+eu -> eup
+apac -> apap
+usp <-> eup: async replication
+eup <-> apap: async replication
 ```
 
 **Approach:**
@@ -1068,7 +1059,7 @@ EUP <--> APAP : async replication
 **Impact:** Two users edited same expense; one loses changes.
 
 **Mitigation:**
-- Field-level merge (different fields → both preserved)
+- Field-level merge (different fields -> both preserved)
 - Last-Write-Wins for same field
 - User notification of conflict
 

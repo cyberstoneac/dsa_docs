@@ -171,45 +171,43 @@ Solution: Shard counters or use CRDT-like approach.
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-cloud "CDN" as CDN
-component "API Gateway" as GW
-component "Vote Service" as VS
-component "Poll Service" as PS
-component "Aggregation Service" as AS
-component "Results Service" as RS
-component "Anti-Fraud Service" as AF
-database "PostgreSQL (votes, polls)" as PG
-database "Redis (idempotency, counters)" as Redis
-queue "Kafka (vote events)" as Kafka
-database "Cassandra (vote log)" as Cass
-database "ClickHouse (analytics)" as CH
-component "WebSocket" as WS
+user: User {shape: person}
+cdn: CDN {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+vs: "Vote Service" {shape: rectangle}
+ps: "Poll Service" {shape: rectangle}
+as: "Aggregation Service" {shape: rectangle}
+rs: "Results Service" {shape: rectangle}
+af: "Anti-Fraud Service" {shape: rectangle}
+pg: "PostgreSQL (votes, polls)" {shape: cylinder}
+redis: "Redis (idempotency, counters)" {shape: cylinder}
+kafka: "Kafka (vote events)" {shape: queue}
+cass: "Cassandra (vote log)" {shape: cylinder}
+ch: "ClickHouse (analytics)" {shape: cylinder}
+ws: WebSocket {shape: rectangle}
 
-User --> CDN
-CDN --> GW
-GW --> VS
-GW --> PS
-GW --> RS
-VS --> AF
-VS --> Redis
-VS --> PG
-VS --> Kafka
-PS --> PG
-PS --> Redis
-RS --> Redis
-RS --> CH
-Kafka --> AS
-AS --> Redis
-AS --> Cass
-AS --> CH
-Kafka --> WS
-WS --> User
-@enduml
+user -> cdn
+cdn -> gw
+gw -> vs
+gw -> ps
+gw -> rs
+vs -> af
+vs -> redis
+vs -> pg
+vs -> kafka
+ps -> pg
+ps -> redis
+rs -> redis
+rs -> ch
+kafka -> as
+as -> redis
+as -> cass
+as -> ch
+kafka -> ws
+ws -> user
 ```
 
 ### Component Responsibilities
@@ -251,7 +249,7 @@ Idempotency-Key: 550e8400-e29b-41d4-a716-446655440000
 
 {
   "option_id": "opt-2",
-  "vote_type": "single"      // or "upvote"/"downvote" for Reddit-style
+  "vote_type": "single"
 }
 ```
 
@@ -575,7 +573,16 @@ TTL event_time + INTERVAL 5 YEAR;
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor User
 participant "Vote Service" as VS
@@ -606,7 +613,6 @@ end
 **Client generates:**
 ```javascript
 const idempotencyKey = crypto.randomUUID();
-// Or use a hash of (user_id, poll_id, option_id, timestamp)
 ```
 
 **Server fallback:**
@@ -751,25 +757,23 @@ Viral polls need near-real-time results (e.g., election night, product launches)
 
 ### Architecture
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Vote Service" as VS
-queue "Kafka (vote events)" as K
-component "Aggregation Service" as AS
-database "Redis (counters)" as Redis
-database "ClickHouse (analytics)" as CH
-component "WebSocket Gateway" as WS
-actor Viewer
+vs: "Vote Service" {shape: rectangle}
+k: "Kafka (vote events)" {shape: queue}
+as: "Aggregation Service" {shape: rectangle}
+redis: "Redis (counters)" {shape: cylinder}
+ch: "ClickHouse (analytics)" {shape: cylinder}
+ws: "WebSocket Gateway" {shape: rectangle}
+viewer: Viewer {shape: person}
 
-VS --> K : publish vote.cast
-K --> AS : consume
-AS --> Redis : HINCRBY
-AS --> CH : insert
-AS --> WS : broadcast every 2 sec
-WS --> Viewer : results
-@enduml
+vs -> k: publish vote.cast
+k -> as: consume
+as -> redis: HINCRBY
+as -> ch: insert
+as -> ws: broadcast every 2 sec
+ws -> viewer: results
 ```
 
 ### Aggregation Worker
@@ -798,7 +802,7 @@ Kafka topic "poll-results-{poll_id}":
   Each gateway broadcasts to its connected clients
 ```
 
-**Scale:** 1M viewers / 100 WS gateways = 10K viewers per gateway.
+**Scale:** 1M viewers / 100 WS gateways = 10K viewers per gateway. Each gateway receives 1 msg per 2 sec and broadcasts 10K messages. Manageable.
 
 ### Throttling
 
@@ -810,6 +814,11 @@ Every 2 seconds:
   Publish aggregated snapshot to Kafka
   WebSocket broadcasts
 ```
+
+**Benefits:**
+- Consistent update frequency
+- Predictable load
+- Smooth UX (no flicker)
 
 ### Results Cache
 
@@ -1177,8 +1186,7 @@ shard_id = hash(poll_id) % 16
 
 **Mitigation:**
 - Immutable audit log (append-only)
-- Cryptographic hashing of vote records
-- Independent observers
+- Cryptographic hashing of vote records- Independent observers
 - Paper trail for recount
 
 ### DDoS on Poll
@@ -1206,7 +1214,7 @@ shard_id = hash(poll_id) % 16
 **Mitigation:**
 - Anonymize votes (replace user_id with hash)
 - Or delete votes (per privacy policy)
-- Keep aggregate counts
+- Keep aggregate counts (they represent real votes)
 
 ---
 
@@ -1287,19 +1295,47 @@ Rough monthly cost (AWS, us-east-1) for 500M users:
 
 ### Ranked Choice Voting
 
-Users rank options instead of picking one. Tallying via instant runoff or Borda count. Complex but increasingly common.
+Users rank options instead of picking one:
+```
+1st: React
+2nd: Vue
+3rd: Svelte
+```
+
+**Tallying:** Instant runoff or Borda count. Complex but increasingly common.
+
+**Implementation:** Store full ranking per user; compute tally at end.
 
 ### Weighted Voting
 
-Different users have different vote weights (reputation, tokens, stake). Can be gamed; use with care.
+Different users have different vote weights:
+- **Reputation-based**: High-rep users' votes count more
+- **Token-weighted**: Crypto-style (1 token = 1 vote)
+- **Stake-weighted**: Based on contribution
+
+**Trade-offs:** Can be gamed; use with care.
 
 ### Quadratic Voting
 
-Users allocate credits; cost is quadratic (1 vote = 1 credit, 2 votes = 4 credits, 3 votes = 9 credits). Encourages moderate preferences.
+Users allocate credits; cost is quadratic:
+```
+1 vote  costs 1 credit
+2 votes costs 4 credits
+3 votes costs 9 credits
+```
+
+**Encourages moderate preferences.**
+
+**Use cases:** Governance, budgeting, controversial decisions.
 
 ### Delegated Voting
 
-Users delegate their vote to a trusted representative. Representative votes on their behalf. Can override by voting directly.
+Users delegate their vote to a trusted representative:
+- Representative votes on their behalf
+- Can override by voting directly
+- Similar to proxy voting
+
+**Use cases:** DAOs, cooperatives.
 
 ### Anonymous Voting
 
@@ -1308,45 +1344,84 @@ Hide voter identity from everyone:
 - **Mixnets**: Route votes through anonymizing network
 - **Homomorphic encryption**: Tally encrypted votes
 
+**Use cases:** Sensitive polls, whistleblower protection.
+
 ### Poll Comments and Discussion
 
-Reddit-style threaded comments on polls. Upvote/downvote comments; sort by score.
+Reddit-style threaded comments on polls:
+- Upvote/downvote comments
+- Sort by score
+- Nested replies
+
+**Implementation:** Same as Reddit's comment system.
 
 ### Cross-Poll Analytics
 
-Insights across polls: user's voting patterns, correlation between polls, trending topics.
+Insights across polls:
+- User's voting patterns
+- Correlation between polls
+- Trending topics
+
+**Use case:** Product research, sentiment analysis.
 
 ### Scheduled Polls
 
-Auto-start and end polls at scheduled times.
+Auto-start and end polls:
+- Cron job starts polls at scheduled time
+- Ends polls at deadline
+- Publishes results automatically
+
+**Use case:** Elections, contests, scheduled feedback.
 
 ### Conditional Polls
 
-Poll logic based on previous answers (DAG of questions).
+Poll logic based on previous answers:
+```
+Q1: "Do you use React?" -> Yes/No
+If Yes -> Q2: "Which version?"
+If No -> Q2: "Which framework do you use?"
+```
+
+**Implementation:** Directed acyclic graph of questions.
 
 ### Vote Verification (Receipts)
 
-Users receive a receipt; can verify their vote was counted. Useful for high-trust scenarios.
+Users receive a receipt:
+```
+Receipt: d3a5f8b2c1e4
+Vote: [encrypted]
+Verify at: https://verify.example.com
+```
+
+**Benefits:** User confidence; audit trail.
+**Cost:** Complexity; potential privacy issues.
 
 ### Election-Specific Features
 
-- Voter roll management
-- Polling stations
-- Provisional ballots
-- Recounts
-- Certification
-- Third-party observation
+- **Voter roll management**: Who is eligible
+- **Polling stations**: Physical locations
+- **Provisional ballots**: For unregistered voters
+- **Recounts**: Repeat tallying
+- **Certification**: Official sign-off
+- **Observation**: Third-party monitoring
+
+**These are beyond a typical "system design" scope but essential for real elections.**
 
 ### Live Events Integration
 
-Integrate with live events (sports, TV): real-time polls during events, voting by SMS or app.
+Integrate with live events (sports, TV):
+- Real-time polls during events
+- Voting by SMS or app
+- Instant results on screen
+
+**Use case:** "American Idol", sports predictions.
 
 ### Poll Monetization
 
-- Sponsored polls
-- Premium analytics
-- API access
-- White-label
+- **Sponsored polls**: Brands pay to sponsor
+- **Premium analytics**: Detailed insights for poll creators
+- **API access**: Third-party integrations
+- **White-label**: Enterprise polls
 
 ---
 
@@ -1365,9 +1440,14 @@ Integrate with live events (sports, TV): real-time polls during events, voting b
 | Cost | Low | High |
 | Technology | Modern stack | Often legacy (paper) |
 
-**Key insight:** Elections are NOT just "social polls at scale." They require legal compliance, physical infrastructure, independent oversight, and cryptographic guarantees.
+**Key insight:** Elections are NOT just "social polls at scale." They require:
+- Legal compliance
+- Physical infrastructure
+- Independent oversight
+- Cryptographic guarantees
+- Very different threat models
 
-**For interviews:** If asked "design a voting system," clarify whether it's social polls, corporate governance, or public elections.
+**For interviews:** If asked "design a voting system," clarify whether it's social polls, corporate governance, or public elections. Each has different requirements.
 
 ---
 

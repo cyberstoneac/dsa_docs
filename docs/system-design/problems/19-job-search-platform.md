@@ -204,60 +204,63 @@ Recruiter search:
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Job Seeker" as JS
-actor Recruiter
-actor "Admin/Moderator" as Admin
-cloud "CDN" as CDN
-component "API Gateway" as GW
-component "User Service" as US
-component "Job Service" as JobS
-component "Search Service" as SS
-component "Application Service" as AppS
-component "Resume Service" as ResS
-component "Recommendation Service" as RecS
-component "Notification Service" as NS
-component "Messaging Service" as Msg
-component "Verification Service" as VS
-component "Fraud Service" as FS
-database "PostgreSQL (core data)" as PG
-database "Elasticsearch (search)" as ES
-database "Redis (cache, sessions)" as Redis
-database "S3 (resumes, logos)" as S3
-queue "Kafka (events)" as Kafka
-database "ClickHouse (analytics)" as CH
-component "ML Models" as ML
+js: "Job Seeker" {shape: person}
+recruiter: Recruiter {shape: person}
+admin: "Admin/Moderator" {shape: person}
 
-JS --> CDN
-Recruiter --> CDN
-Admin --> CDN
-CDN --> GW
-GW --> US
-GW --> JobS
-GW --> SS
-GW --> AppS
-GW --> ResS
-GW --> RecS
-GW --> Msg
-GW --> VS
-JobS --> PG
-JobS --> Kafka
-SS --> ES
-SS --> Redis
-AppS --> PG
-AppS --> Kafka
-ResS --> S3
-RecS --> ML
-RecS --> ES
-RecS --> Redis
-Kafka --> NS
-Kafka --> CH
-Kafka --> FS
-FS --> Kafka
-@enduml
+cdn: CDN {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+
+us: "User Service" {shape: rectangle}
+jobs: "Job Service" {shape: rectangle}
+ss: "Search Service" {shape: rectangle}
+apps: "Application Service" {shape: rectangle}
+res: "Resume Service" {shape: rectangle}
+recs: "Recommendation Service" {shape: rectangle}
+ns: "Notification Service" {shape: rectangle}
+msg: "Messaging Service" {shape: rectangle}
+vs: "Verification Service" {shape: rectangle}
+fs: "Fraud Service" {shape: rectangle}
+
+pg: "PostgreSQL (core data)" {shape: cylinder}
+es: "Elasticsearch (search)" {shape: cylinder}
+redis: "Redis (cache, sessions)" {shape: cylinder}
+s3: "S3 (resumes, logos)" {shape: cylinder}
+kafka: "Kafka (events)" {shape: queue}
+ch: "ClickHouse (analytics)" {shape: cylinder}
+ml: "ML Models" {shape: rectangle}
+
+js -> cdn
+recruiter -> cdn
+admin -> cdn
+cdn -> gw
+
+gw -> us
+gw -> jobs
+gw -> ss
+gw -> apps
+gw -> res
+gw -> recs
+gw -> msg
+gw -> vs
+
+jobs -> pg
+jobs -> kafka
+ss -> es
+ss -> redis
+apps -> pg
+apps -> kafka
+res -> s3
+recs -> ml
+recs -> es
+recs -> redis
+kafka -> ns
+kafka -> ch
+kafka -> fs
+fs -> kafka
 ```
 
 ### Component Responsibilities
@@ -913,7 +916,16 @@ TTL: 24 hours
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor "Job Seeker" as JS
 participant "API Gateway" as GW
@@ -1057,31 +1069,29 @@ Resumes are unstructured PDFs/DOCs. Need to extract:
 
 ### Parsing Pipeline
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor Candidate
-component "Upload API" as UP
-database "S3" as S3
-queue "Kafka" as K
-component "Resume Parser" as RP
-component "ML Extractor" as ML
-database "PostgreSQL" as PG
-database "Elasticsearch" as ES
-component "Notification" as NS
+candidate: Candidate {shape: person}
+up: "Upload API" {shape: rectangle}
+s3: "S3" {shape: cylinder}
+k: "Kafka" {shape: queue}
+rp: "Resume Parser" {shape: rectangle}
+ml: "ML Extractor" {shape: rectangle}
+pg: "PostgreSQL" {shape: cylinder}
+es: "Elasticsearch" {shape: cylinder}
+ns: "Notification" {shape: rectangle}
 
-Candidate --> UP : upload PDF
-UP --> S3 : store raw file
-UP --> K : enqueue event
-K --> RP : consume
-RP --> RP : extract text (PDFBox, Tika)
-RP --> ML : parse structure (NER)
-ML --> RP : structured data
-RP --> PG : save
-RP --> ES : index
-RP --> NS : notify candidate
-@enduml
+candidate -> up: upload PDF
+up -> s3: store raw file
+up -> k: enqueue event
+k -> rp: consume
+rp -> rp: extract text (PDFBox, Tika)
+rp -> ml: parse structure (NER)
+ml -> rp: structured data
+rp -> pg: save
+rp -> es: index
+rp -> ns: notify candidate
 ```
 
 ### Text Extraction
@@ -1182,6 +1192,16 @@ RP --> NS : notify candidate
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 skinparam componentStyle rectangle
 
 state "Applied" as A
@@ -1217,7 +1237,16 @@ SL --> W
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor Candidate
 participant "Application Service" as AS
@@ -1532,23 +1561,22 @@ Most queries are per-candidate (my applications).
 
 ### Multi-Region
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
-database "US Data" as USD
-database "EU Data" as EUD
-database "APAC Data" as APACD
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
 
-US --> USD
-EU --> EUD
-APAC --> APACD
-USD <--> EUD : async replication
-EUD <--> APACD : async replication
-@enduml
+usd: "US Data" {shape: cylinder}
+eud: "EU Data" {shape: cylinder}
+apd: "APAC Data" {shape: cylinder}
+
+us -> usd
+eu -> eud
+apac -> apd
+usd <-> eud: async replication
+eud <-> apd: async replication
 ```
 
 **Approach:**

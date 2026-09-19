@@ -107,26 +107,24 @@ Headroom for retries and clock skew.
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Client Process A" as A
-actor "Client Process B" as B
-component "Lock Service (API)" as API
-database "etcd Cluster (Raft)" as etcd
-database "Redis (optional fast path)" as Redis
-database "Monitoring" as Mon
+a: "Client Process A" {shape: person}
+b: "Client Process B" {shape: person}
+api: "Lock Service (API)" {shape: hexagon}
+etcd: "etcd Cluster (Raft)" {shape: cylinder}
+redis: "Redis (optional fast path)" {shape: cylinder}
+mon: "Monitoring" {shape: cylinder}
 
-A --> API : acquire("order:12345", ttl=30s)
-B --> API : acquire("order:12345", ttl=30s)
-API --> etcd : CAS / lease grant
-etcd --> API : success / conflict
-API --> A : lock token
-API --> B : lock held
-API --> Mon : metrics
-API --> Redis : cache hot locks
-@enduml
+a -> api: acquire("order:12345", ttl=30s)
+b -> api: acquire("order:12345", ttl=30s)
+api -> etcd: CAS / lease grant
+etcd -> api: success / conflict
+api -> a: lock token
+api -> b: lock held
+api -> mon: metrics
+api -> redis: cache hot locks
 ```
 
 ### Component Responsibilities
@@ -253,19 +251,17 @@ Content-Type: application/json
 
 ### 5.1 Redis SET NX EX (Simple)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-database "Redis" as R
-component "Resource" as Res
+client: Client {shape: person}
+redis: "Redis" {shape: cylinder}
+res: "Resource" {shape: rectangle}
 
-Client --> R : SET lock:order:12345 owner_xyz NX EX 30
-R --> Client : OK (acquired) or nil (held)
-Client --> Res : access resource
-Client --> R : DEL lock:order:12345 (release)
-@enduml
+client -> redis: SET lock:order:12345 owner_xyz NX EX 30
+redis -> client: OK (acquired) or nil (held)
+client -> res: access resource
+client -> redis: DEL lock:order:12345 (release)
 ```
 
 **Implementation:**
@@ -315,22 +311,20 @@ end
 
 ### 5.3 etcd Lease + Compare-and-Swap (Recommended)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "Lock Service" as API
-database "etcd (Raft)" as etcd
+client: Client {shape: person}
+api: "Lock Service" {shape: hexagon}
+etcd: "etcd (Raft)" {shape: cylinder}
 
-Client --> API : acquire
-API --> etcd : Lease Grant (TTL=30s)
-etcd --> API : lease_id
-API --> etcd : Put lock:name value=owner, lease=lease_id, prevExist=false
-etcd --> API : success or conflict
-API --> Client : lock_token
-API --> etcd : KeepAlive (background)
-@enduml
+client -> api: acquire
+api -> etcd: Lease Grant (TTL=30s)
+etcd -> api: lease_id
+api -> etcd: Put lock:name value=owner, lease=lease_id, prevExist=false
+etcd -> api: success or conflict
+api -> client: lock_token
+api -> etcd: KeepAlive (background)
 ```
 
 **Implementation:**
@@ -410,24 +404,22 @@ T=13:  Client B writes to shared resource
 
 Every lock acquisition returns a **monotonically increasing token** (etcd revision, ZK zxid). The client includes this token in every write to the shared resource. The resource **rejects writes with stale tokens**.
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Client A" as A
-actor "Client B" as B
-component "Lock Service" as Lock
-database "Storage (with fencing check)" as DB
+a: "Client A" {shape: person}
+b: "Client B" {shape: person}
+lock: "Lock Service" {shape: hexagon}
+db: "Storage (with fencing check)" {shape: cylinder}
 
-A --> Lock : acquire
-Lock --> A : token=7
-B --> Lock : acquire (after A's TTL)
-Lock --> B : token=8
-A --> DB : write with token=7
-DB --> A : REJECTED (stale)
-B --> DB : write with token=8
-DB --> B : ACCEPTED
-@enduml
+a -> lock: acquire
+lock -> a: token=7
+b -> lock: acquire (after A's TTL)
+lock -> b: token=8
+a -> db: write with token=7
+db -> a: REJECTED (stale)
+b -> db: write with token=8
+db -> b: ACCEPTED
 ```
 
 **Implementation on storage side:**
@@ -463,24 +455,21 @@ while not acquired:
 
 ### Better Approach: Watch API (etcd/ZK)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "Lock Service" as API
-database "etcd" as etcd
+client: Client {shape: person}
+api: "Lock Service" {shape: hexagon}
+etcd: "etcd" {shape: cylinder}
 
-Client --> API : acquire (wait=5s)
-API --> etcd : try acquire
-etcd --> API : conflict
-API --> etcd : watch lock:name
-note right of etcd : Blocked until lock released
-etcd --> API : lock released event
-API --> etcd : try acquire again
-etcd --> API : success
-API --> Client : acquired
-@enduml
+client -> api: acquire (wait=5s)
+api -> etcd: try acquire
+etcd -> api: conflict
+api -> etcd: watch lock:name
+etcd -> api: lock released event
+api -> etcd: try acquire again
+etcd -> api: success
+api -> client: acquired
 ```
 
 **Pros:**
@@ -571,23 +560,19 @@ A long-running operation may need more time than the initial TTL. If the operati
 
 ### The Solution: Background Keepalive
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "Lock Service" as API
-database "etcd" as etcd
+client: Client {shape: person}
+api: "Lock Service" {shape: hexagon}
+etcd: "etcd" {shape: cylinder}
 
-Client --> API : acquire (TTL=30s)
-API --> etcd : lease grant
-API --> Client : acquired
-note right of Client : Operation running
-Client --> API : renew (every 10s)  # 3x safety margin
-API --> etcd : lease keepalive
-note right of Client : Operation done
-Client --> API : release
-@enduml
+client -> api: acquire (TTL=30s)
+api -> etcd: lease grant
+api -> client: acquired
+client -> api: renew (every 10s)
+api -> etcd: lease keepalive
+client -> api: release
 ```
 
 **Best practice:**
@@ -662,19 +647,17 @@ Thread A acquires lock "order:12345"
 
 ### Sharding
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Lock Router" as Router
-database "etcd Cluster 1 (orders)" as E1
-database "etcd Cluster 2 (users)" as E2
-database "etcd Cluster 3 (payments)" as E3
+router: "Lock Router" {shape: hexagon}
+e1: "etcd Cluster 1 (orders)" {shape: cylinder}
+e2: "etcd Cluster 2 (users)" {shape: cylinder}
+e3: "etcd Cluster 3 (payments)" {shape: cylinder}
 
-Router --> E1 : lock:order:*
-Router --> E2 : lock:user:*
-Router --> E3 : lock:payment:*
-@enduml
+router -> e1: lock:order:*
+router -> e2: lock:user:*
+router -> e3: lock:payment:*
 ```
 
 **Shard by lock name prefix** (e.g., all `order:*` locks go to one cluster).
@@ -686,25 +669,23 @@ Router --> E3 : lock:payment:*
 
 ### Multi-Region
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
-database "US etcd" as E1
-database "EU etcd" as E2
-database "APAC etcd" as E3
-component "Regional Router" as Router
+router: "Regional Router" {shape: hexagon}
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
+e1: "US etcd" {shape: cylinder}
+e2: "EU etcd" {shape: cylinder}
+e3: "APAC etcd" {shape: cylinder}
 
-Router --> US
-Router --> EU
-Router --> APAC
-US --> E1
-EU --> E2
-APAC --> E3
-@enduml
+router -> us
+router -> eu
+router -> apac
+us -> e1
+eu -> e2
+apac -> e3
 ```
 
 **Options:**

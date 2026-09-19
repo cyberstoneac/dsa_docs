@@ -13,7 +13,7 @@ Each message goes to exactly ONE worker.
 **Real-world uses:**
 - Background job processing (send email, resize image)
 - Task distribution (order fulfillment, invoice generation)
-- Workflow orchestration (step 1 → step 2 → step 3)
+- Workflow orchestration (step 1 -> step 2 -> step 3)
 - Rate-limited external API calls
 - Retry queues with exponential backoff
 
@@ -45,7 +45,7 @@ Each message goes to exactly ONE worker.
 
 ### Non-Functional Requirements
 - **Scale**: 1M messages/sec across all queues
-- **Latency**: Enqueue → dequeue under 10 ms at p99 (hot path)
+- **Latency**: Enqueue -> dequeue under 10 ms at p99 (hot path)
 - **Durability**: Messages survive broker restarts (replicated 3x, persisted)
 - **Availability**: 99.99% — must not lose messages
 - **Ordering**: FIFO within a queue (single-partition queues) or per-key (partitioned)
@@ -142,31 +142,29 @@ Tracking state:
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Producer
-actor Consumer
-component "API Gateway" as GW
-component "Queue Coordinator" as Coord
-component "Queue Worker (data plane)" as QW
-database "Metadata Store (etcd)" as Meta
-database "Message Store (RocksDB/S3)" as Msg
-database "In-Flight Tracker (Redis)" as InFlight
-queue "Dead Letter Queue" as DLQ
-database "Monitoring" as Mon
+producer: Producer {shape: person}
+consumer: Consumer {shape: person}
+gw: "API Gateway" {shape: hexagon}
+coord: "Queue Coordinator" {shape: rectangle}
+qw: "Queue Worker (data plane)" {shape: rectangle}
+meta: "Metadata Store (etcd)" {shape: cylinder}
+msg: "Message Store (RocksDB/S3)" {shape: cylinder}
+inflight: "In-Flight Tracker (Redis)" {shape: cylinder}
+dlq: "Dead Letter Queue" {shape: queue}
+mon: "Monitoring" {shape: cylinder}
 
-Producer --> GW : enqueue
-Consumer --> GW : dequeue / ack
-GW --> Coord : route to queue partition
-Coord --> Meta : queue config
-Coord --> QW : write/read message
-QW --> Msg : persist
-QW --> InFlight : track visibility
-QW --> DLQ : move failed
-QW --> Mon : metrics
-@enduml
+producer -> gw: enqueue
+consumer -> gw: dequeue / ack
+gw -> coord: route to queue partition
+coord -> meta: queue config
+coord -> qw: write/read message
+qw -> msg: persist
+qw -> inflight: track visibility
+qw -> dlq: move failed
+qw -> mon: metrics
 ```
 
 ### Component Responsibilities
@@ -301,25 +299,19 @@ For high throughput, batch up to 10 messages per API call. Reduces HTTP overhead
 
 ### Queue Structure
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Queue: email-sends" as Q {
-  database "Partition 0" as P0
-  database "Partition 1" as P1
-  database "Partition 2" as P2
-}
+q: "Queue: email-sends" {shape: queue}
+p0: "Partition 0" {shape: cylinder}
+p1: "Partition 1" {shape: cylinder}
+p2: "Partition 2" {shape: cylinder}
+note: "Per-partition storage: seg-0000000000000.log | seg-0000000000001.log | index file (id -> position) | metadata (head_offset, tail_offset) | Each segment ~256 MB" {shape: rectangle}
 
-note right of P0
-  Per-partition storage:
-    seg-0000000000000.log
-    seg-0000000000001.log
-    index file (id -> position)
-    metadata (head_offset, tail_offset)
-  Each segment ~256 MB
-end note
-@enduml
+q -> p0
+q -> p1
+q -> p2
+p0 -> note
 ```
 
 ### Message Format
@@ -337,7 +329,7 @@ end note
 - Good for: order-sensitive workloads
 
 **Option B: Hash by message key**
-- Same key → same partition (per-key ordering)
+- Same key -> same partition (per-key ordering)
 - Parallel consumption across partitions
 - Good for: user-scoped tasks (all tasks for user X in order)
 
@@ -403,24 +395,22 @@ When a consumer dequeues a message, the queue must ensure the message isn't lost
 
 ### State Machine
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-state "Ready" as Ready
-state "In-Flight" as InFlight
-state "Acked" as Acked
-state "Dead Letter" as DLQ
+ready: "Ready" {shape: rectangle}
+inflight: "In-Flight" {shape: rectangle}
+acked: "Acked" {shape: rectangle}
+dlq: "Dead Letter" {shape: rectangle}
+start: Start {shape: circle}
 
-[*] --> Ready : enqueue
-Ready --> InFlight : dequeue
-InFlight --> Acked : ack
-InFlight --> Ready : visibility timeout expires
-InFlight --> Ready : nack (requeue)
-InFlight --> DLQ : max receives exceeded
-Acked --> [*]
-DLQ --> [*]
-@enduml
+start -> ready: enqueue
+ready -> inflight: dequeue
+inflight -> acked: ack
+inflight -> ready: visibility timeout expires
+inflight -> ready: nack (requeue)
+inflight -> dlq: max receives exceeded
+acked -> acked
 ```
 
 ### Visibility Timeout Best Practices
@@ -526,27 +516,25 @@ No ordering:
 
 ### Queue-Level Scaling
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Producer" as P
-component "Queue Router" as Router
-database "Partition 0 (broker 1)" as P0
-database "Partition 1 (broker 2)" as P1
-database "Partition 2 (broker 3)" as P2
-component "Consumer 1" as C1
-component "Consumer 2" as C2
-component "Consumer 3" as C3
+p: Producer {shape: person}
+router: "Queue Router" {shape: hexagon}
+p0: "Partition 0 (broker 1)" {shape: cylinder}
+p1: "Partition 1 (broker 2)" {shape: cylinder}
+p2: "Partition 2 (broker 3)" {shape: cylinder}
+c1: "Consumer 1" {shape: rectangle}
+c2: "Consumer 2" {shape: rectangle}
+c3: "Consumer 3" {shape: rectangle}
 
-P --> Router
-Router --> P0
-Router --> P1
-Router --> P2
-P0 --> C1
-P1 --> C2
-P2 --> C3
-@enduml
+p -> router
+router -> p0
+router -> p1
+router -> p2
+p0 -> c1
+p1 -> c2
+p2 -> c3
 ```
 
 **Each partition is independent.** Add partitions to scale producers/consumers.
@@ -579,18 +567,16 @@ P2 --> C3
 
 ### Multi-Region
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
 
-US <--> EU : async replication
-EU <--> APAC : async replication
-APAC <--> US : async replication
-@enduml
+us <-> eu: async replication
+eu <-> apac: async replication
+apac <-> us: async replication
 ```
 
 **Options:**
@@ -640,23 +626,21 @@ Prevents synchronized retries.
 
 ### Dead Letter Queue Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-queue "Main Queue" as Q
-component "Consumer" as C
-queue "Retry Queue (delayed)" as R
-queue "Dead Letter Queue" as DLQ
-component "Ops Dashboard" as Ops
+q: "Main Queue" {shape: queue}
+c: Consumer {shape: rectangle}
+r: "Retry Queue (delayed)" {shape: queue}
+dlq: "Dead Letter Queue" {shape: queue}
+ops: "Ops Dashboard" {shape: rectangle}
 
-Q --> C : dequeue
-C --> Q : ack (success)
-C --> R : nack with delay (fail, retry_count < 5)
-R --> Q : requeue after delay
-C --> DLQ : fail after 5 retries
-DLQ --> Ops : alert / manual review
-@enduml
+q -> c: dequeue
+c -> q: ack (success)
+c -> r: nack with delay (fail, retry_count < 5)
+r -> q: requeue after delay
+c -> dlq: fail after 5 retries
+dlq -> ops: alert / manual review
 ```
 
 ### Retry Budget
@@ -687,19 +671,17 @@ Retries may cause duplicate processing. Consumers must be idempotent:
 
 ### Priority Queues
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-queue "High Priority Queue" as H
-queue "Normal Priority Queue" as N
-queue "Low Priority Queue" as L
-component "Consumer" as C
+h: "High Priority Queue" {shape: queue}
+n: "Normal Priority Queue" {shape: queue}
+l: "Low Priority Queue" {shape: queue}
+c: Consumer {shape: rectangle}
 
-C --> H : poll first
-C --> N : poll second
-C --> L : poll last
-@enduml
+c -> h: poll first
+c -> n: poll second
+c -> l: poll last
 ```
 
 **Implementation:**
@@ -714,20 +696,18 @@ C --> L : poll last
 
 ### Delayed Messages
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Producer" as P
-queue "Main Queue" as Q
-database "Delay Index (Redis ZSET)" as D
-component "Scheduler" as S
+p: Producer {shape: person}
+q: "Main Queue" {shape: queue}
+d: "Delay Index (Redis ZSET)" {shape: cylinder}
+s: Scheduler {shape: rectangle}
 
-P --> Q : enqueue (delay=0)
-P --> D : enqueue with score=deliver_at (delay>0)
-D --> S : scan due messages
-S --> Q : move to main queue
-@enduml
+p -> q: enqueue (delay=0)
+p -> d: enqueue with score=deliver_at (delay>0)
+d -> s: scan due messages
+s -> q: move to main queue
 ```
 
 **Implementation:**
@@ -901,7 +881,7 @@ Rough monthly cost (AWS, us-east-1) for 1M msg/sec:
 | **Total** | | **~$108,000/month** |
 
 **Cost optimization:**
-- Shorter retention (4 days → 1 day: 75% savings)
+- Shorter retention (4 days -> 1 day: 75% savings)
 - Compression (2x savings)
 - Reserved instances (30-40% savings)
 - Serverless (AWS SQS) for variable load

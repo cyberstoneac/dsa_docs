@@ -176,38 +176,39 @@ Typical cost: $0.000001 per query (basically free at scale)
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-cloud "Edge PoP (Anycast)" as Edge
-component "Autocomplete API" as API
-component "Personalization Service" as Pers
-component "Filter Service" as Filter
-database "Trie Store (in-memory)" as Trie
-database "Redis (hot cache, user history)" as Redis
-queue "Kafka (query logs)" as Kafka
-component "Trending Aggregator" as Trend
-component "Trie Builder" as Builder
-database "S3 (trie snapshots)" as S3
-component "Data Sources" as Sources
+user: User {shape: person}
 
-User --> Edge : keystroke
-Edge --> API : lookup prefix
-API --> Redis : check cache
-API --> Trie : lookup prefix
-API --> Pers : personalize
-API --> Filter : filter unsafe
-API --> User : suggestions
-User -.-> Edge : click
-Edge --> Kafka : log click
-Kafka --> Trend : aggregate
-Trend --> Builder : update trie
-Builder --> S3 : snapshot
-Builder --> Trie : reload
-Sources --> Builder : raw queries
-@enduml
+edge: "Edge PoP (Anycast)" {shape: cloud}
+api: "Autocomplete API" {shape: rectangle}
+pers: "Personalization Service" {shape: rectangle}
+filter: "Filter Service" {shape: rectangle}
+
+trie: "Trie Store (in-memory)" {shape: cylinder}
+redis: "Redis (hot cache, user history)" {shape: cylinder}
+kafka: "Kafka (query logs)" {shape: queue}
+trend: "Trending Aggregator" {shape: rectangle}
+builder: "Trie Builder" {shape: rectangle}
+s3: "S3 (trie snapshots)" {shape: cylinder}
+sources: "Data Sources" {shape: rectangle}
+
+user -> edge: keystroke
+edge -> api: lookup prefix
+api -> redis: check cache
+api -> trie: lookup prefix
+api -> pers: personalize
+api -> filter: filter unsafe
+api --> user: suggestions
+
+user -> edge: click
+edge -> kafka: log click
+kafka -> trend: aggregate
+trend -> builder: update trie
+builder -> s3: snapshot
+builder -> trie: reload
+sources -> builder: raw queries
 ```
 
 ### Component Responsibilities
@@ -532,26 +533,24 @@ New trending queries (breaking news, viral moments) must appear within minutes, 
 
 ### Trending Aggregation Pipeline
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-component "Edge API" as API
-queue "Kafka (raw queries)" as RawK
-component "Aggregator (1-min windows)" as Agg
-database "Redis (counters)" as Redis
-queue "Kafka (trending)" as TrendK
-component "Trie Updater" as Updater
-database "Trie Store" as Trie
+api: "Edge API" {shape: rectangle}
+rawk: "Kafka (raw queries)" {shape: queue}
+agg: "Aggregator (1-min windows)" {shape: rectangle}
+redis: "Redis (counters)" {shape: cylinder}
+trendk: "Kafka (trending)" {shape: queue}
+updater: "Trie Updater" {shape: rectangle}
+trie: "Trie Store" {shape: cylinder}
 
-API --> RawK : log query
-RawK --> Agg : consume
-Agg --> Redis : increment counters
-Redis --> Agg : top trending
-Agg --> TrendK : publish top trending
-TrendK --> Updater : consume
-Updater --> Trie : update top-N for prefix
-@enduml
+api -> rawk: log query
+rawk -> agg: consume
+agg -> redis: increment counters
+redis -> agg: top trending
+agg -> trendk: publish top trending
+trendk -> updater: consume
+updater -> trie: update top-N for prefix
 ```
 
 ### Windowing
@@ -683,25 +682,24 @@ For PII detection.
 
 ### Filter Pipeline
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-component "API" as API
-component "Trie Lookup" as Trie
-component "Blocklist Filter" as BL
-component "ML Filter" as ML
-component "Human Review Queue" as HR
-database "Redis (blocklist cache)" as Redis
+user: User {shape: person}
 
-User --> API : query
-API --> Trie : top 20
-Trie --> BL : filter
-BL --> ML : semantic filter
-ML --> API : safe suggestions
-ML --> HR : flagged (if low confidence)
-@enduml
+api: "API" {shape: rectangle}
+trie: "Trie Lookup" {shape: rectangle}
+bl: "Blocklist Filter" {shape: rectangle}
+ml: "ML Filter" {shape: rectangle}
+hr: "Human Review Queue" {shape: rectangle}
+redis: "Redis (blocklist cache)" {shape: cylinder}
+
+user -> api: query
+api -> trie: top 20
+trie -> bl: filter
+bl -> ml: semantic filter
+ml -> api: safe suggestions
+ml -> hr: flagged (if low confidence)
 ```
 
 **Why filter after lookup?** Trie returns top 20, we filter down to top 10 safe suggestions.
@@ -826,28 +824,29 @@ No user_id → no personalization:
 
 ### Global Edge Deployment
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "Anycast IP" as Anycast
-cloud "US-East PoP" as US1
-cloud "US-West PoP" as US2
-cloud "EU PoP" as EU
-cloud "APAC PoP" as APAC
-database "Regional Trie Cache" as Trie
-database "Global Trie (S3)" as Global
+anycast: "Anycast IP" {shape: cloud}
 
-Anycast --> US1
-Anycast --> US2
-Anycast --> EU
-Anycast --> APAC
-US1 --> Trie
-US2 --> Trie
-EU --> Trie
-APAC --> Trie
-Global --> Trie : hourly sync
-@enduml
+us1: "US-East PoP" {shape: cloud}
+us2: "US-West PoP" {shape: cloud}
+eu: "EU PoP" {shape: cloud}
+apac: "APAC PoP" {shape: cloud}
+
+trie: "Regional Trie Cache" {shape: cylinder}
+global: "Global Trie (S3)" {shape: cylinder}
+
+anycast -> us1
+anycast -> us2
+anycast -> eu
+anycast -> apac
+
+us1 -> trie
+us2 -> trie
+eu -> trie
+apac -> trie
+global -> trie: hourly sync
 ```
 
 **Anycast**: Same IP advertised from all PoPs; BGP routes user to nearest.

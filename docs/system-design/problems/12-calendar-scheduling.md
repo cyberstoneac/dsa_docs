@@ -162,46 +162,44 @@ Calendar view (month):
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Mobile App" as Mobile
-actor "Web App" as Web
-cloud "CDN" as CDN
-component "API Gateway" as GW
-component "Event Service" as ES
-component "Recurrence Engine" as RE
-component "Availability Service" as AS
-component "Reminder Service" as RS
-component "Sync Service" as Sync
-component "Notification Service" as NS
-database "PostgreSQL (events, calendars)" as PG
-database "Redis (cache, locks)" as Redis
-queue "Kafka (events bus)" as Kafka
-database "Elasticsearch (search)" as ESSearch
-database "S3 (attachments, ICS)" as S3
-component "External APIs" as Ext
+mobile: "Mobile App" {shape: person}
+web: "Web App" {shape: person}
+cdn: CDN {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+es: "Event Service" {shape: rectangle}
+re: "Recurrence Engine" {shape: rectangle}
+as: "Availability Service" {shape: rectangle}
+rs: "Reminder Service" {shape: rectangle}
+sync: "Sync Service" {shape: rectangle}
+ns: "Notification Service" {shape: rectangle}
+pg: "PostgreSQL (events, calendars)" {shape: cylinder}
+redis: "Redis (cache, locks)" {shape: cylinder}
+kafka: "Kafka (events bus)" {shape: queue}
+es_search: "Elasticsearch (search)" {shape: cylinder}
+s3: "S3 (attachments, ICS)" {shape: cylinder}
+ext: "External APIs" {shape: cloud}
 
-Mobile --> CDN
-Web --> CDN
-CDN --> GW
-GW --> ES
-GW --> AS
-ES --> RE
-ES --> PG
-ES --> Redis
-ES --> Kafka
-ES --> RS
-AS --> PG
-AS --> Redis
-RS --> Kafka
-Kafka --> NS
-Kafka --> Sync
-Sync --> Ext
-ES --> ESSearch
-ES --> S3
-@enduml
+mobile -> cdn
+web -> cdn
+cdn -> gw
+gw -> es
+gw -> as
+es -> re
+es -> pg
+es -> redis
+es -> kafka
+es -> rs
+as -> pg
+as -> redis
+rs -> kafka
+kafka -> ns
+kafka -> sync
+sync -> ext
+es -> es_search
+es -> s3
 ```
 
 ### Component Responsibilities
@@ -349,8 +347,7 @@ GET /v1/calendars/cal-123/events?start=2026-09-01T00:00:00Z&end=2026-09-30T23:59
       "start": "2026-09-18T09:00:00+05:30",
       "end": "2026-09-18T09:30:00+05:30",
       "attendees": [...]
-    },
-    ...
+    }
   ],
   "recurrence_exceptions": {
     "evt-456": ["2026-09-20", "2026-09-21"]
@@ -379,7 +376,7 @@ CREATE TABLE calendars (
     user_id BIGINT NOT NULL,
     name VARCHAR(100) NOT NULL,
     description TEXT,
-    timezone VARCHAR(50) NOT NULL,   -- IANA, e.g., "Asia/Kolkata"
+    timezone VARCHAR(50) NOT NULL,
     color VARCHAR(20),
     is_primary BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT NOW()
@@ -393,11 +390,11 @@ CREATE TABLE events (
     title VARCHAR(500) NOT NULL,
     description TEXT,
     location TEXT,
-    start_time TIMESTAMPTZ NOT NULL,   -- stored in UTC
+    start_time TIMESTAMPTZ NOT NULL,
     end_time TIMESTAMPTZ NOT NULL,
-    start_timezone VARCHAR(50) NOT NULL,  -- original timezone
+    start_timezone VARCHAR(50) NOT NULL,
     is_all_day BOOLEAN DEFAULT FALSE,
-    status VARCHAR(20) DEFAULT 'confirmed',  -- confirmed, tentative, cancelled
+    status VARCHAR(20) DEFAULT 'confirmed',
     created_by BIGINT NOT NULL,
     idempotency_key VARCHAR(255) UNIQUE,
     created_at TIMESTAMP DEFAULT NOW(),
@@ -410,12 +407,12 @@ CREATE INDEX idx_events_created_by ON events(created_by);
 CREATE TABLE recurring_rules (
     recurrence_id BIGINT PRIMARY KEY,
     event_id BIGINT REFERENCES events(event_id) ON DELETE CASCADE,
-    rrule TEXT NOT NULL,                -- RFC 5545 RRULE string
+    rrule TEXT NOT NULL,
     dtstart TIMESTAMPTZ NOT NULL,
     until TIMESTAMPTZ,
     count INTEGER,
-    exdates TIMESTAMPTZ[],              -- exception dates (deleted occurrences)
-    rdates TIMESTAMPTZ[],               -- additional dates
+    exdates TIMESTAMPTZ[],
+    rdates TIMESTAMPTZ[],
     created_at TIMESTAMP DEFAULT NOW()
 );
 CREATE INDEX idx_rrules_event ON recurring_rules(event_id);
@@ -424,10 +421,10 @@ CREATE INDEX idx_rrules_event ON recurring_rules(event_id);
 CREATE TABLE event_occurrences (
     occurrence_id BIGINT PRIMARY KEY,
     event_id BIGINT REFERENCES events(event_id) ON DELETE CASCADE,
-    original_start TIMESTAMPTZ NOT NULL,   -- the RRULE-generated time
-    new_start TIMESTAMPTZ,                  -- if rescheduled
+    original_start TIMESTAMPTZ NOT NULL,
+    new_start TIMESTAMPTZ,
     new_end TIMESTAMPTZ,
-    override_title VARCHAR(500),            -- if title changed
+    override_title VARCHAR(500),
     override_description TEXT,
     override_location TEXT,
     is_cancelled BOOLEAN DEFAULT FALSE,
@@ -441,8 +438,8 @@ CREATE TABLE event_attendees (
     event_id BIGINT REFERENCES events(event_id) ON DELETE CASCADE,
     user_id BIGINT NOT NULL,
     email VARCHAR(255) NOT NULL,
-    status VARCHAR(20) DEFAULT 'pending',  -- pending, accepted, declined, tentative
-    role VARCHAR(20) DEFAULT 'required',   -- required, optional, resource
+    status VARCHAR(20) DEFAULT 'pending',
+    role VARCHAR(20) DEFAULT 'required',
     responded_at TIMESTAMP,
     PRIMARY KEY (event_id, email)
 );
@@ -454,10 +451,10 @@ CREATE TABLE reminders (
     reminder_id BIGINT PRIMARY KEY,
     event_id BIGINT REFERENCES events(event_id) ON DELETE CASCADE,
     user_id BIGINT NOT NULL,
-    type VARCHAR(20) NOT NULL,             -- push, email, sms
+    type VARCHAR(20) NOT NULL,
     minutes_before INTEGER NOT NULL,
     fire_at TIMESTAMPTZ NOT NULL,
-    status VARCHAR(20) DEFAULT 'pending',  -- pending, fired, failed, cancelled
+    status VARCHAR(20) DEFAULT 'pending',
     fired_at TIMESTAMP,
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -469,7 +466,7 @@ CREATE TABLE calendar_shares (
     calendar_id BIGINT REFERENCES calendars(calendar_id),
     shared_with_user BIGINT,
     shared_with_email VARCHAR(255),
-    permission VARCHAR(20) NOT NULL,       -- read, write, admin
+    permission VARCHAR(20) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (calendar_id, shared_with_email)
 );
@@ -478,9 +475,9 @@ CREATE TABLE calendar_shares (
 CREATE TABLE external_sync (
     sync_id BIGINT PRIMARY KEY,
     user_id BIGINT NOT NULL,
-    provider VARCHAR(50) NOT NULL,         -- google, outlook, icloud
+    provider VARCHAR(50) NOT NULL,
     external_calendar_id VARCHAR(255) NOT NULL,
-    sync_token VARCHAR(255),               -- provider's cursor
+    sync_token VARCHAR(255),
     last_synced_at TIMESTAMP,
     status VARCHAR(20) DEFAULT 'active',
     UNIQUE (user_id, provider, external_calendar_id)
@@ -563,12 +560,11 @@ FREQ=WEEKLY;BYDAY=MO,WE,FR;UNTIL=20271231T235959Z
 function expandRecurrence(event, rangeStart, rangeEnd):
     rule = parseRRULE(event.rrule)
     occurrences = []
-    cursor = max(event.dtstart, rangeStart)  # start expanding from here
+    cursor = max(event.dtstart, rangeStart)
     
     while cursor <= min(event.until or rangeEnd, rangeEnd):
         if matchesRule(rule, cursor):
             if cursor not in event.exdates:
-                # Check for override in event_occurrences
                 override = findOverride(event.event_id, cursor)
                 if override:
                     if not override.is_cancelled:
@@ -577,7 +573,6 @@ function expandRecurrence(event, rangeStart, rangeEnd):
                     occurrences.add(event with start=cursor, duration=event.duration)
         cursor = nextCandidate(rule, cursor)
     
-    # Add RDATEs (additional occurrences)
     for rdate in event.rdates:
         if rangeStart <= rdate <= rangeEnd:
             occurrences.add(event with start=rdate)
@@ -597,7 +592,7 @@ For FREQ=DAILY;INTERVAL=1:
 
 For FREQ=WEEKLY;BYDAY=MO,WE,FR:
   Compute the number of matching days between dtstart and rangeStart
-  Jump directly to the first matching day ≥ rangeStart
+  Jump directly to the first matching day >= rangeStart
 ```
 
 **Impact:** Reducing 1825 iterations to 1 is a huge win for long-lived recurrences.
@@ -614,11 +609,6 @@ Event: daily 9:00 AM IST
   Nov 1:  9:00 IST = 3:30 UTC (IST has no DST)
   
 Event: daily 9:00 AM EST
-  Oct 15: 9:00 EST = 14:00 UTC
-  Nov 15: 9:00 EST = 14:00 UTC
-  (Same wall time, different UTC after DST change... wait, EST becomes EDT)
-  
-Correct:
   Oct 15: 9:00 EDT = 13:00 UTC
   Nov 15: 9:00 EST = 14:00 UTC
   Wall clock stays 9:00 AM; UTC shifts by 1 hour at DST transition.
@@ -631,7 +621,7 @@ Correct:
 **EXDATE:** Remove occurrences from the recurrence.
 
 ```
-FREQ=DAILY;EXDATE=20261225T090000Z   # Skip Christmas
+FREQ=DAILY;EXDATE=20261225T090000Z
 ```
 
 **RDATE:** Add extra occurrences not in the rule.
@@ -665,7 +655,7 @@ Given the various rules (FREQ, INTERVAL, BYDAY, BYMONTHDAY, BYSETPOS, WKST), exp
 ### Time Zone Data (IANA)
 
 - **597 time zones** (e.g., `Asia/Kolkata`, `America/New_York`)
-- **Historical changes**: DST rules change over time (India abolished DST in 1945, etc.)
+- **Historical changes**: DST rules change over time
 - **Future changes**: Governments announce changes; libraries updated frequently
 
 **Rule:** Use the **IANA tzdata** database. Update monthly.
@@ -790,7 +780,7 @@ Free slots = working hours - busy slots.
 
 **Step 5: Filter by duration**
 
-Only return slots ≥ requested duration.
+Only return slots >= requested duration.
 
 **Step 6: Return top N slots**
 
@@ -807,7 +797,6 @@ public List<Interval> mergeBusySlots(List<Interval> intervals) {
     for (int i = 1; i < intervals.size(); i++) {
         Interval next = intervals.get(i);
         if (next.start.isBefore(current.end) || next.start.equals(current.end)) {
-            // Overlap: merge
             current = new Interval(current.start, max(current.end, next.end));
         } else {
             merged.add(current);
@@ -921,21 +910,19 @@ Every minute:
 
 Multiple worker nodes, each grabs a time bucket:
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-database "PostgreSQL (reminders)" as PG
-queue "Kafka (time-bucket topics)" as K
-component "Worker 1" as W1
-component "Worker 2" as W2
-component "Worker 3" as W3
+pg: "PostgreSQL (reminders)" {shape: cylinder}
+k: "Kafka (time-bucket topics)" {shape: queue}
+w1: "Worker 1" {shape: rectangle}
+w2: "Worker 2" {shape: rectangle}
+w3: "Worker 3" {shape: rectangle}
 
-PG --> K : publish buckets
-K --> W1 : bucket 10:30
-K --> W2 : bucket 10:31
-K --> W3 : bucket 10:32
-@enduml
+pg -> k: publish buckets
+k -> w1: bucket 10:30
+k -> w2: bucket 10:31
+k -> w3: bucket 10:32
 ```
 
 Each bucket has exactly one worker. If a worker dies, the lease expires and another picks up.
@@ -990,32 +977,30 @@ Users have events across Google Calendar, Outlook, Apple Calendar, and your app.
 
 ### Sync Architecture
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Sync Service" as Sync
-database "External Sync State" as State
-database "Local Events" as Local
-component "Google Calendar API" as Google
-component "Outlook Graph API" as Outlook
-queue "Kafka" as K
+sync: "Sync Service" {shape: rectangle}
+state: "External Sync State" {shape: cylinder}
+local: "Local Events" {shape: cylinder}
+google: "Google Calendar API" {shape: cloud}
+outlook: "Outlook Graph API" {shape: cloud}
+k: Kafka {shape: queue}
 
-Sync --> State : read cursor
-Sync --> Google : incremental sync
-Sync --> Outlook : incremental sync
-Google --> Sync : deltas
-Outlook --> Sync : deltas
-Sync --> Local : apply changes
-Local --> K : publish events
-K --> Sync : trigger outbound
-@enduml
+sync -> state: read cursor
+sync -> google: incremental sync
+sync -> outlook: incremental sync
+google -> sync: deltas
+outlook -> sync: deltas
+sync -> local: apply changes
+local -> k: publish events
+k -> sync: trigger outbound
 ```
 
 ### Two-Way Sync
 
-**Inbound:** External event created → mirror in local DB
-**Outbound:** Local event created → push to external API
+**Inbound:** External event created -> mirror in local DB
+**Outbound:** Local event created -> push to external API
 
 **Conflict:** Same event edited on both sides.
 
@@ -1081,7 +1066,7 @@ On restart, resume from cursor.
 
 - **Local delete:** Mark deleted, push delete to external (soft delete)
 - **External delete:** Sync detects missing event; soft-delete locally
-- **Conflict:** Both deleted → hard delete eventually
+- **Conflict:** Both deleted -> hard delete eventually
 
 ### Sync Priorities
 

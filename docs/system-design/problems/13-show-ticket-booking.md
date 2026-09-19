@@ -85,7 +85,7 @@ Given:
   Total shows/day           = 5,000 x 5 x 6 = 150,000
   Bookings/day              = 5,000,000
   Users browsing/day        = 50,000,000
-  
+
 Read:Write ratio:
   Browsing (search + seat map): 50M/day
   Bookings (write):             5M/day
@@ -202,46 +202,44 @@ Seat locking must handle 500+ lock attempts/sec on hot shows.
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-cloud "CDN" as CDN
-component "API Gateway" as GW
-component "Catalog Service" as Catalog
-component "Search Service" as Search
-component "Show Service" as Show
-component "Seat Service" as Seat
-component "Booking Service" as Booking
-component "Payment Service" as Payment
-component "Notification Service" as NS
-database "PostgreSQL (users, bookings)" as PG
-database "Redis (seat locks, cache)" as Redis
-database "Elasticsearch (search)" as ES
-queue "Kafka" as Kafka
-database "S3 (tickets)" as S3
-component "Payment Gateway (Razorpay/Stripe)" as PSP
+user: User {shape: person}
+cdn: CDN {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+catalog: "Catalog Service" {shape: rectangle}
+search: "Search Service" {shape: rectangle}
+show: "Show Service" {shape: rectangle}
+seat: "Seat Service" {shape: rectangle}
+booking: "Booking Service" {shape: rectangle}
+payment: "Payment Service" {shape: rectangle}
+ns: "Notification Service" {shape: rectangle}
+pg: "PostgreSQL (users, bookings)" {shape: cylinder}
+redis: "Redis (seat locks, cache)" {shape: cylinder}
+es: "Elasticsearch (search)" {shape: cylinder}
+kafka: Kafka {shape: queue}
+s3: "S3 (tickets)" {shape: cylinder}
+psp: "Payment Gateway (Razorpay/Stripe)" {shape: cloud}
 
-User --> CDN
-CDN --> GW
-GW --> Catalog
-GW --> Search
-GW --> Show
-GW --> Seat
-GW --> Booking
-Catalog --> PG
-Search --> ES
-Show --> PG
-Seat --> Redis
-Booking --> PG
-Booking --> Kafka
-Booking --> Payment
-Payment --> PSP
-Kafka --> NS
-Kafka --> S3
-Booking --> Redis
-@enduml
+user -> cdn
+cdn -> gw
+gw -> catalog
+gw -> search
+gw -> show
+gw -> seat
+gw -> booking
+catalog -> pg
+search -> es
+show -> pg
+seat -> redis
+booking -> pg
+booking -> kafka
+booking -> payment
+payment -> psp
+kafka -> ns
+kafka -> s3
+booking -> redis
 ```
 
 ### Component Responsibilities
@@ -453,7 +451,7 @@ CREATE TABLE movies (
     poster_url TEXT,
     trailer_url TEXT,
     rating DECIMAL(3,1),
-    status VARCHAR(20) DEFAULT 'active',  -- active, archived
+    status VARCHAR(20) DEFAULT 'active',
     created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -461,7 +459,7 @@ CREATE TABLE movies (
 CREATE TABLE theaters (
     theater_id BIGINT PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
-    chain VARCHAR(100),                  -- PVR, INOX, Cinepolis
+    chain VARCHAR(100),
     address TEXT,
     city VARCHAR(100) NOT NULL,
     state VARCHAR(100),
@@ -475,10 +473,10 @@ CREATE INDEX idx_theaters_city ON theaters(city);
 CREATE TABLE screens (
     screen_id BIGINT PRIMARY KEY,
     theater_id BIGINT REFERENCES theaters(theater_id),
-    name VARCHAR(50),                    -- "Screen 3", "Audi 2"
+    name VARCHAR(50),
     rows_count INT,
     cols_count INT,
-    seat_layout JSONB,                   -- row-wise seat definitions
+    seat_layout JSONB,
     created_at TIMESTAMP DEFAULT NOW()
 );
 CREATE INDEX idx_screens_theater ON screens(theater_id);
@@ -488,10 +486,10 @@ CREATE TABLE shows (
     show_id BIGINT PRIMARY KEY,
     movie_id BIGINT REFERENCES movies(movie_id),
     screen_id BIGINT REFERENCES screens(screen_id),
-    theater_id BIGINT REFERENCES theaters(theater_id),   -- denormalized
+    theater_id BIGINT REFERENCES theaters(theater_id),
     start_time TIMESTAMPTZ NOT NULL,
     end_time TIMESTAMPTZ NOT NULL,
-    format VARCHAR(50),                  -- 2D, 3D, IMAX
+    format VARCHAR(50),
     language VARCHAR(50),
     base_price_cents INT NOT NULL,
     total_seats INT NOT NULL,
@@ -507,7 +505,7 @@ CREATE INDEX idx_shows_time ON shows(start_time);
 -- Seat categories per show (dynamic pricing)
 CREATE TABLE show_seat_pricing (
     show_id BIGINT REFERENCES shows(show_id),
-    category VARCHAR(50),                -- Premium, Gold, Silver
+    category VARCHAR(50),
     row_prefix VARCHAR(5),
     price_cents INT NOT NULL,
     PRIMARY KEY (show_id, category)
@@ -518,9 +516,9 @@ CREATE TABLE bookings (
     booking_id BIGINT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     show_id BIGINT REFERENCES shows(show_id),
-    seats TEXT[] NOT NULL,               -- seat_ids
+    seats TEXT[] NOT NULL,
     total_amount_cents BIGINT NOT NULL,
-    status VARCHAR(20) NOT NULL,         -- pending, confirmed, cancelled, refunded
+    status VARCHAR(20) NOT NULL,
     payment_id VARCHAR(255),
     idempotency_key VARCHAR(255) UNIQUE,
     created_at TIMESTAMP DEFAULT NOW(),
@@ -536,10 +534,10 @@ CREATE TABLE payments (
     booking_id BIGINT REFERENCES bookings(booking_id),
     amount_cents BIGINT NOT NULL,
     currency VARCHAR(3) DEFAULT 'INR',
-    gateway VARCHAR(50),                 -- razorpay, stripe, payu
+    gateway VARCHAR(50),
     gateway_txn_id VARCHAR(255),
-    method VARCHAR(50),                  -- upi, card, netbanking, wallet
-    status VARCHAR(20) NOT NULL,         -- pending, success, failed, refunded
+    method VARCHAR(50),
+    status VARCHAR(20) NOT NULL,
     idempotency_key VARCHAR(255) UNIQUE,
     error_message TEXT,
     created_at TIMESTAMP DEFAULT NOW(),
@@ -554,7 +552,7 @@ CREATE TABLE refunds (
     payment_id BIGINT REFERENCES payments(payment_id),
     amount_cents BIGINT NOT NULL,
     reason VARCHAR(100),
-    status VARCHAR(20) NOT NULL,         -- pending, processing, completed, failed
+    status VARCHAR(20) NOT NULL,
     gateway_refund_id VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW(),
     completed_at TIMESTAMP
@@ -567,8 +565,8 @@ CREATE TABLE seat_reservations (
     show_id BIGINT REFERENCES shows(show_id),
     seat_id VARCHAR(20) NOT NULL,
     user_id BIGINT NOT NULL,
-    booking_id BIGINT,                   -- null until confirmed
-    status VARCHAR(20) NOT NULL,         -- held, confirmed, released, expired
+    booking_id BIGINT,
+    status VARCHAR(20) NOT NULL,
     held_until TIMESTAMPTZ,
     created_at TIMESTAMP DEFAULT NOW()
 );
@@ -592,15 +590,15 @@ For each lock:
 For each seat_id in requested_seats:
   result = SET seat:{show_id}:{seat_id} {holder} NX EX 600
   If any result == nil:
-    → Conflict (already held/booked)
-    → Rollback: DEL all previously acquired locks
-    → Return 409 to user
+    -> Conflict (already held/booked)
+    -> Rollback: DEL all previously acquired locks
+    -> Return 409 to user
   Else:
-    → Lock acquired
+    -> Lock acquired
 
 After all seats locked:
-  → Create hold record in DB (audit)
-  → Return hold_id + expires_at
+  -> Create hold record in DB (audit)
+  -> Return hold_id + expires_at
 ```
 
 **Atomicity:** Redis SET NX is atomic per key. Multi-seat locks are not atomic across keys — we roll back on partial failure.
@@ -616,14 +614,12 @@ To make multi-seat locks atomic:
 local holder = ARGV[1]
 local ttl = tonumber(ARGV[2])
 
--- First pass: check all are available
 for i, key in ipairs(KEYS) do
     if redis.call('EXISTS', key) == 1 then
         return {err = 'SEAT_TAKEN', seat = key}
     end
 end
 
--- Second pass: acquire all
 for i, key in ipairs(KEYS) do
     redis.call('SET', key, holder, 'EX', ttl)
 end
@@ -655,35 +651,27 @@ Multiple API servers → need a shared source of truth.
 
 ### Solution: Redis-Based Distributed Lock with TTL
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-component "Booking Service" as BS
-database "Redis (locks)" as Redis
-database "PostgreSQL (bookings)" as PG
-queue "Kafka (events)" as K
+user: User {shape: person}
+bs: "Booking Service" {shape: rectangle}
+redis: "Redis (locks)" {shape: cylinder}
+pg: "PostgreSQL (bookings)" {shape: cylinder}
+k: "Kafka (events)" {shape: queue}
 
-User --> BS : hold seats A1, A2
-BS --> Redis : SET NX EX (each seat)
-Redis --> BS : success or conflict
-BS --> PG : insert hold record
-BS --> K : publish seat_held event
-BS --> User : hold_id + expires_at
-
-note right of Redis
-  TTL-based automatic release
-  Atomic SET NX prevents races
-  Sub-ms operations
-end note
-@enduml
+user -> bs: hold seats A1, A2
+bs -> redis: SET NX EX (each seat)
+redis -> bs: success or conflict
+bs -> pg: insert hold record
+bs -> k: publish seat_held event
+bs -> user: hold_id + expires_at
 ```
 
 **Lock lifecycle:**
-1. **Acquire**: User selects seats → Redis SET NX
+1. **Acquire**: User selects seats -> Redis SET NX
 2. **Extend**: Optional; user can extend hold by 5 min
-3. **Confirm**: After payment → migrate lock to booking (permanent)
+3. **Confirm**: After payment -> migrate lock to booking (permanent)
 4. **Release**: On payment failure, user cancel, or TTL expiry
 
 ### TTL Strategy
@@ -771,41 +759,39 @@ On payment success:
 
 ### Payment Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-component "Booking Service" as BS
-component "Payment Service" as PS
-component "Payment Gateway" as PSP
-database "PostgreSQL" as PG
-queue "Kafka" as K
+user: User {shape: person}
+bs: "Booking Service" {shape: rectangle}
+ps: "Payment Service" {shape: rectangle}
+psp: "Payment Gateway" {shape: cloud}
+pg: "PostgreSQL" {shape: cylinder}
+k: Kafka {shape: queue}
 
-User --> BS : confirm booking
-BS --> PS : initiate payment
-PS --> PSP : create payment intent
-PSP --> PS : client_secret
-PS --> BS : payment details
-BS --> User : show payment UI
-User --> PSP : completes payment
-PSP --> PS : webhook (payment.success)
-PS --> BS : verify payment
-BS --> PG : update booking + payment
-BS --> K : publish booking_confirmed
-BS --> User : return ticket
-@enduml
+user -> bs: confirm booking
+bs -> ps: initiate payment
+ps -> psp: create payment intent
+psp -> ps: client_secret
+ps -> bs: payment details
+bs -> user: show payment UI
+user -> psp: completes payment
+psp -> ps: webhook (payment.success)
+ps -> bs: verify payment
+bs -> pg: update booking + payment
+bs -> k: publish booking_confirmed
+bs -> user: return ticket
 ```
 
 ### Payment States
 
 ```
-PENDING      → User initiated, waiting for completion
-PROCESSING   → Gateway received, awaiting confirmation
-SUCCESS      → Payment confirmed, booking confirmed
-FAILED       → Gateway rejected (insufficient funds, etc.)
-CANCELLED    → User cancelled before completion
-REFUNDED     → Money returned after cancellation
+PENDING      -> User initiated, waiting for completion
+PROCESSING   -> Gateway received, awaiting confirmation
+SUCCESS      -> Payment confirmed, booking confirmed
+FAILED       -> Gateway rejected (insufficient funds, etc.)
+CANCELLED    -> User cancelled before completion
+REFUNDED     -> Money returned after cancellation
 ```
 
 ### Idempotency in Payment
@@ -824,8 +810,8 @@ Idempotency-Key: pay-uuid-abc-123
 ```sql
 CREATE TABLE idempotency_keys (
     key VARCHAR(255) PRIMARY KEY,
-    request_hash VARCHAR(64),   -- SHA-256 of request body
-    response TEXT,              -- cached response
+    request_hash VARCHAR(64),
+    response TEXT,
     created_at TIMESTAMP DEFAULT NOW()
 );
 CREATE INDEX idx_idem_created ON idempotency_keys(created_at);
@@ -886,27 +872,25 @@ T=90s: Webhook arrives with success
 
 ### Refunds
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-component "Booking Service" as BS
-component "Refund Service" as RS
-component "Payment Gateway" as PSP
-database "PostgreSQL" as PG
-queue "Kafka" as K
+user: User {shape: person}
+bs: "Booking Service" {shape: rectangle}
+rs: "Refund Service" {shape: rectangle}
+psp: "Payment Gateway" {shape: cloud}
+pg: "PostgreSQL" {shape: cylinder}
+k: Kafka {shape: queue}
 
-User --> BS : cancel booking
-BS --> RS : initiate refund
-RS --> PSP : refund request
-PSP --> RS : refund_id
-RS --> PG : update refund status
-RS --> K : publish refund_initiated
-PSP --> RS : webhook (refund.completed)
-RS --> PG : update to completed
-RS --> K : publish refund_completed
-@enduml
+user -> bs: cancel booking
+bs -> rs: initiate refund
+rs -> psp: refund request
+psp -> rs: refund_id
+rs -> pg: update refund status
+rs -> k: publish refund_initiated
+psp -> rs: webhook (refund.completed)
+rs -> pg: update to completed
+rs -> k: publish refund_completed
 ```
 
 **Refund policy:**
@@ -953,8 +937,8 @@ RS --> K : publish refund_completed
     {"name": "Gold",    "rows": ["C", "D"], "multiplier": 1.6},
     {"name": "Silver",  "rows": ["E", "F"], "multiplier": 1.0}
   ],
-  "time_multiplier": 1.2,       // weekday evening
-  "demand_multiplier": 1.1,     // moderate demand
+  "time_multiplier": 1.2,
+  "demand_multiplier": 1.1,
   "discounts": [
     {"type": "student", "percent": 10},
     {"type": "senior", "percent": 15}
@@ -1125,8 +1109,6 @@ Value: JSON results
 TTL: 5 minutes
 ```
 
-**Why:** Popular searches (same movie, same city) benefit from caching.
-
 ### Indexing Strategy
 
 - **Movies**: Index when added/updated
@@ -1145,7 +1127,9 @@ Total: ~36 GB (fits in a small cluster)
 
 ---
 
-## 10. Deep Dive: Anti-Fraud and Scalping Prevention### The Problem
+## 10. Deep Dive: Anti-Fraud and Scalping Prevention
+
+### The Problem
 
 Scalpers buy up all tickets, resell at 10x. Users can't get seats.
 
@@ -1192,25 +1176,23 @@ Scalpers buy up all tickets, resell at 10x. Users can't get seats.
 
 ### Bot Detection
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-actor Bot
-component "API Gateway" as GW
-component "WAF (Cloudflare/Akamai)" as WAF
-component "Rate Limiter" as RL
-component "CAPTCHA Service" as CAPTCHA
-database "Fraud Score DB" as Fraud
+u: User {shape: person}
+bot: Bot {shape: person}
+waf: "WAF (Cloudflare/Akamai)" {shape: cloud}
+rl: "Rate Limiter" {shape: rectangle}
+captcha: "CAPTCHA Service" {shape: rectangle}
+fraud: "Fraud Score DB" {shape: cylinder}
+gw: "API Gateway" {shape: hexagon}
 
-User --> WAF : request
-Bot --> WAF : request
-WAF --> RL : check rate
-RL --> CAPTCHA : if suspicious
-CAPTCHA --> Fraud : fingerprint
-Fraud --> GW : allow/deny
-@enduml
+u -> waf: request
+bot -> waf: request
+waf -> rl: check rate
+rl -> captcha: if suspicious
+captcha -> fraud: fingerprint
+fraud -> gw: allow/deny
 ```
 
 **Risk score:** Combination of IP reputation, device, behavior, velocity.
@@ -1256,23 +1238,21 @@ If scale demands:
 
 ### Virtual Waiting Room (VWR)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-component "Waiting Room" as VR
-component "Booking Service" as BS
-database "Redis (queue)" as Redis
+u: User {shape: person}
+vr: "Waiting Room" {shape: rectangle}
+bs: "Booking Service" {shape: rectangle}
+redis: "Redis (queue)" {shape: cylinder}
 
-User --> VR : enter
-VR --> Redis : ZADD queue (score=timestamp)
-VR --> User : position in queue
-User --> VR : poll position
-VR --> User : "You're #342 in line"
-User --> VR : keep polling
-VR --> BS : when at front, allow
-@enduml
+u -> vr: enter
+vr -> redis: ZADD queue (score=timestamp)
+vr -> u: position in queue
+u -> vr: poll position
+vr -> u: "You're #342 in line"
+u -> vr: keep polling
+vr -> bs: when at front, allow
 ```
 
 **How it works:**
@@ -1381,7 +1361,7 @@ VR --> BS : when at front, allow
 **Impact:** More bookings than seats (bug or concurrency).
 
 **Mitigation:**
-- DB constraint: bookings per show ≤ total_seats
+- DB constraint: bookings per show <= total_seats
 - Reconciliation job detects overbooking
 - Refund + apology to affected users
 - Post-mortem
@@ -1456,7 +1436,7 @@ VR --> BS : when at front, allow
 
 - **Traffic**: Searches, seat views, holds, bookings
 - **Latency**: p50/p95/p99 per endpoint
-- **Conversion**: View → hold → book funnel
+- **Conversion**: View -> hold -> book funnel
 - **Revenue**: Bookings, cancellations, refunds
 - **Inventory**: Seats available per show, occupancy rate
 - **Payments**: Success rate by gateway, failures by reason
@@ -1536,7 +1516,7 @@ Rough monthly cost (AWS, us-east-1) for 50M DAU:
 ### Loyalty Program
 
 - Points per booking
-- Tier upgrades (Bronze → Platinum)
+- Tier upgrades (Bronze -> Platinum)
 - Free upgrades
 - Priority booking for popular shows
 

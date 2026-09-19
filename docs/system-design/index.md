@@ -1,6 +1,6 @@
 # System Design
 
-A structured collection of system design notes — fundamentals, building blocks, and **52 practice problems** covering everything from URL shorteners to distributed tracing.
+A structured collection of system design notes — fundamentals, building blocks, and **57 practice problems** covering everything from URL shorteners to distributed tracing.
 
 ## 📖 How This Section Is Organized
 
@@ -11,10 +11,10 @@ Core concepts every system design interview expects:
 - [Database Design](fundamentals/database-design.md) — SQL vs NoSQL, sharding, replication, indexing
 - [Building Blocks](fundamentals/building-blocks.md) — Load balancers, caches, queues, rate limiters, CDNs, circuit breakers
 
-### 2. Problems (52 Total)
+### 2. Problems (57 Total)
 Full walkthroughs organized into **7 progressive phases**. Start with Phase 1 (foundations) and work through to Phase 7 (distributed systems).
 
-Every problem follows the same 16-section framework:
+Every problem follows the same 18-section framework:
 
 1. Problem Statement
 2. Requirements Clarification
@@ -32,6 +32,8 @@ Every problem follows the same 16-section framework:
 14. Summary
 15. Key Takeaways
 16. Similar Pattern Problems
+17. Additional Deep Dives
+18. Extra Sections (as needed)
 
 ---
 
@@ -51,6 +53,8 @@ Infrastructure building blocks used everywhere. Complete these first.
 | 08 | [Service Discovery](problems/08-service-discovery.md) | Consul, etcd, Health checks |
 | 09 | [API Gateway](problems/09-api-gateway.md) | JWT, Routing, Circuit breaker |
 | 10 | [CDN](problems/10-cdn.md) | Anycast, Edge caching, Origin shield |
+| 53 | [Distributed Key-Value Store](problems/53-distributed-key-value-store.md) | DynamoDB, Consistent hashing, Quorum |
+| 55 | [Authentication & Authorization (SSO / OAuth2)](problems/55-authentication-authorization.md) | OAuth2, OIDC, SAML, MFA |
 
 ---
 
@@ -103,6 +107,7 @@ High-bandwidth systems. Exabyte-scale storage, CDN-heavy.
 | 33 | [Recommendation Engine](problems/33-recommendation-engine.md) | Two-tower, Feature store, Online learning |
 | 34 | [File Storage Service](problems/34-file-storage-service.md) | Dropbox, Chunked upload, Dedup |
 | 35 | [Collaborative Document Editor](problems/35-collaborative-document-editor.md) | Google Docs, OT/CRDT, Offline |
+| 54 | [Distributed Cloud Storage (S3-like)](problems/54-distributed-cloud-storage.md) | S3, Erasure coding, Multipart upload |
 
 ---
 
@@ -117,6 +122,7 @@ Geospatial systems. Real-time location, matching, routing.
 | 38 | [Food Delivery](problems/38-food-delivery.md) | Swiggy, 3-sided, Partner assignment |
 | 39 | [Dating App](problems/39-dating-app.md) | Tinder, Swipe, Photo verification |
 | 40 | [Proximity Matchmaking](problems/40-proximity-matchmaking.md) | Real-time matching, Distributed locks |
+| 57 | [Maps & Routing / Navigation](problems/57-maps-routing.md) | Google Maps, CH routing, Real-time traffic |
 
 ---
 
@@ -147,6 +153,7 @@ Internal infrastructure. Highest complexity, most abstract.
 | 50 | [Metrics / Monitoring](problems/50-metrics-monitoring.md) | Prometheus, Time-series, Alerting |
 | 51 | [Distributed Tracing](problems/51-distributed-tracing.md) | Jaeger, Spans, Sampling |
 | 52 | [Online Judge](problems/52-online-judge.md) | LeetCode, Sandbox, Real-time leaderboard |
+| 56 | [Code Deployment / CI-CD](problems/56-code-deployment-cicd.md) | GitHub Actions, Sandboxing, GitOps |
 
 ---
 
@@ -179,6 +186,11 @@ Many problems share the same architectural pattern. Once you've studied one, the
 | Log Ingestion | ELK, Splunk, Datadog, Fluentd |
 | Metrics | Prometheus, Datadog, Grafana |
 | Tracing | Jaeger, Zipkin, OpenTelemetry |
+| Object Storage | S3, GCS, Azure Blob, MinIO, R2 |
+| Key-Value Store | DynamoDB, Cassandra, ScyllaDB, Riak |
+| Identity / SSO | Okta, Auth0, Entra ID, Cognito, Keycloak |
+| CI/CD | GitHub Actions, GitLab CI, Jenkins, CircleCI, Argo CD |
+| Maps / Routing | Google Maps, Apple Maps, Waze, HERE, Mapbox |
 
 ---
 
@@ -187,13 +199,13 @@ Many problems share the same architectural pattern. Once you've studied one, the
 If you're preparing for interviews:
 
 1. **Week 1** — Fundamentals (Back of Envelope, Database Design, Building Blocks)
-2. **Week 2** — Phase 1 (Foundations) — all 10 problems
+2. **Week 2** — Phase 1 (Foundations) — 12 problems
 3. **Week 3** — Phase 2 (Simple Products) — 10 problems
 4. **Week 4** — Phase 3 (Communication) — 9 problems
-5. **Week 5** — Phase 4 (Media & Content) — 6 problems
-6. **Week 6** — Phase 5 (Location & Mobility) — 5 problems
+5. **Week 5** — Phase 4 (Media & Content) — 7 problems
+6. **Week 6** — Phase 5 (Location & Mobility) — 6 problems
 7. **Week 7** — Phase 6 (Fintech) — 6 problems
-8. **Week 8** — Phase 7 (Distributed Systems) — 6 problems
+8. **Week 8** — Phase 7 (Distributed Systems) — 7 problems
 
 **Total:** ~8 weeks, 2-4 hours per problem.
 
@@ -228,7 +240,7 @@ If you're preparing for interviews:
 
 ---
 
-**Total problems:** 52
+**Total problems:** 57
 **Total phases:** 7
 **Estimated study time:** 8-12 weeks
 **Interview readiness:** After completing Phase 5, you should be ready for most mid-senior interviews

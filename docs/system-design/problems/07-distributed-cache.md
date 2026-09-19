@@ -110,32 +110,30 @@ With one network hop and no disk I/O.
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "Client Library (hash ring)" as Lib
-component "Cache Proxy (optional)" as Proxy
-database "Cache Node 1" as N1
-database "Cache Node 2" as N2
-database "Cache Node 3" as N3
-database "Cache Node N" as NN
-database "Database (source of truth)" as DB
-database "Metadata (etcd)" as Meta
+client: Client {shape: person}
+lib: "Client Library (hash ring)" {shape: rectangle}
+proxy: "Cache Proxy (optional)" {shape: hexagon}
+n1: "Cache Node 1" {shape: cylinder}
+n2: "Cache Node 2" {shape: cylinder}
+n3: "Cache Node 3" {shape: cylinder}
+nn: "Cache Node N" {shape: cylinder}
+db: "Database (source of truth)" {shape: cylinder}
+meta: "Metadata (etcd)" {shape: cylinder}
 
-Client --> Lib : GET / SET
-Lib --> Proxy : route (or direct)
-Lib --> N1 : hash(key) -> node
-Lib --> N2
-Lib --> N3
-Lib --> NN
-Lib --> DB : miss -> fetch -> populate
-N1 --> N2 : replication
-N2 --> N3 : replication
-N1 --> Meta : register
-N2 --> Meta : register
-@enduml
+client -> lib: GET / SET
+lib -> proxy: route (or direct)
+lib -> n1: hash(key) -> node
+lib -> n2
+lib -> n3
+lib -> nn
+lib -> db: miss -> fetch -> populate
+n1 -> n2: replication
+n2 -> n3: replication
+n1 -> meta: register
+n2 -> meta: register
 ```
 
 ### Component Responsibilities
@@ -255,25 +253,25 @@ Many clients already speak RESP. Supporting it accelerates adoption.
 
 ### Memory Layout
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Cache Node Memory" as Mem {
-  database "Hash table (key -> entry pointer)" as HT
-  folder "Entry pool" as Pool {
-    rectangle "Entry: key, value, TTL, LRU, metadata" as E1
-    rectangle "Entry: key, value, TTL, LRU, metadata" as E2
-    rectangle "Entry: key, value, TTL, LRU, metadata" as E3
-  }
-}
+mem: "Cache Node Memory" {shape: rectangle}
+ht: "Hash table (key -> entry pointer)" {shape: cylinder}
+pool: "Entry pool" {shape: folder}
+e1: "Entry: key, value, TTL, LRU, metadata" {shape: rectangle}
+e2: "Entry: key, value, TTL, LRU, metadata" {shape: rectangle}
+e3: "Entry: key, value, TTL, LRU, metadata" {shape: rectangle}
 
-HT --> Pool
-@enduml
+mem -> ht
+ht -> pool
+pool -> e1
+pool -> e2
+pool -> e3
 ```
 
 **Key design points:**
-- Global hash table maps key → entry
+- Global hash table maps key -> entry
 - Entries stored in memory pool (contiguous, cache-friendly)
 - LRU metadata tracked via intrusive linked list
 - TTL stored with each entry; lazy + active expiry
@@ -298,23 +296,21 @@ When memory is full, new writes must evict old entries. Choosing the right polic
 
 ### LRU Deep Dive
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "Head (most recent)" as H
-rectangle "Entry A" as A
-rectangle "Entry B" as B
-rectangle "Entry C" as C
-rectangle "Entry D" as D
-rectangle "Tail (least recent)" as T
+h: "Head (most recent)" {shape: rectangle}
+a: "Entry A" {shape: rectangle}
+b: "Entry B" {shape: rectangle}
+c: "Entry C" {shape: rectangle}
+d: "Entry D" {shape: rectangle}
+t: "Tail (least recent)" {shape: rectangle}
 
-H --> A
-A --> B
-B --> C
-C --> D
-D --> T
-@enduml
+h -> a
+a -> b
+b -> c
+c -> d
+d -> t
 ```
 
 **On GET:**
@@ -378,22 +374,13 @@ Add a node (N=4 -> N=5):
 
 ### The Solution: Consistent Hashing Ring
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Hash Ring (0 to 2^32 - 1)" as Ring
-note right of Ring
-  Node A at position 100
-  Node B at position 500
-  Node C at position 900
+ring: "Hash Ring (0 to 2^32 - 1)" {shape: cylinder}
+note: "Node A at position 100 | Node B at position 500 | Node C at position 900 | Key at 250 -> Node B | Key at 700 -> Node C | Key at 50 -> Node A | Key at 950 -> Node A (wraps)" {shape: rectangle}
 
-  Key at 250 -> Node B
-  Key at 700 -> Node C
-  Key at 50  -> Node A
-  Key at 950 -> Node A (wraps)
-end note
-@enduml
+ring -> note
 ```
 
 **Adding a node D at position 300:**
@@ -407,20 +394,13 @@ end note
 
 **Solution:** Each physical node gets 100-200 virtual nodes on the ring.
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Hash Ring with Virtual Nodes" as Ring
-note right of Ring
-  Node A: vnodes at 100, 350, 700, 900
-  Node B: vnodes at 200, 450, 800, 950
-  Node C: vnodes at 150, 400, 600, 850
+ring: "Hash Ring with Virtual Nodes" {shape: cylinder}
+note: "Node A: vnodes at 100, 350, 700, 900 | Node B: vnodes at 200, 450, 800, 950 | Node C: vnodes at 150, 400, 600, 850 | Even distribution | Node removal only affects its vnodes" {shape: rectangle}
 
-  Even distribution
-  Node removal only affects its vnodes
-end note
-@enduml
+ring -> note
 ```
 
 **Benefits:**
@@ -449,21 +429,18 @@ Key at 250 -> Primary: Node B (500)
 
 ### 8.1 Cache-Aside (Lazy Loading)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor App
-database "Cache" as C
-database "Database" as DB
+app: App {shape: rectangle}
+c: "Cache" {shape: cylinder}
+db: "Database" {shape: cylinder}
 
-App --> C : GET user:123
-C --> App : MISS
-App --> DB : SELECT user
-DB --> App : user data
-App --> C : SET user:123 (with TTL)
-App --> App : return user
-@enduml
+app -> c: GET user:123
+c -> app: MISS
+app -> db: SELECT user
+db -> app: user data
+app -> c: SET user:123 (with TTL)
 ```
 
 **Pros:** Simple, only caches what's requested.
@@ -678,19 +655,17 @@ Fastest recovery + durability
 
 ### Horizontal Scaling (Sharding)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Client Library" as Lib
-database "Shard 1 (keys A-H)" as S1
-database "Shard 2 (keys I-P)" as S2
-database "Shard 3 (keys Q-Z)" as S3
+lib: "Client Library" {shape: rectangle}
+s1: "Shard 1 (keys A-H)" {shape: cylinder}
+s2: "Shard 2 (keys I-P)" {shape: cylinder}
+s3: "Shard 3 (keys Q-Z)" {shape: cylinder}
 
-Lib --> S1
-Lib --> S2
-Lib --> S3
-@enduml
+lib -> s1
+lib -> s2
+lib -> s3
 ```
 
 **Sharding strategies:**
@@ -700,25 +675,23 @@ Lib --> S3
 
 ### Redis Cluster
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Client" as C
-database "Master 1 (slots 0-5460)" as M1
-database "Master 2 (slots 5461-10922)" as M2
-database "Master 3 (slots 10923-16383)" as M3
-database "Replica 1" as R1
-database "Replica 2" as R2
-database "Replica 3" as R3
+c: Client {shape: person}
+m1: "Master 1 (slots 0-5460)" {shape: cylinder}
+m2: "Master 2 (slots 5461-10922)" {shape: cylinder}
+m3: "Master 3 (slots 10923-16383)" {shape: cylinder}
+r1: "Replica 1" {shape: cylinder}
+r2: "Replica 2" {shape: cylinder}
+r3: "Replica 3" {shape: cylinder}
 
-C --> M1
-C --> M2
-C --> M3
-M1 --> R1 : replicate
-M2 --> R2 : replicate
-M3 --> R3 : replicate
-@enduml
+c -> m1
+c -> m2
+c -> m3
+m1 -> r1: replicate
+m2 -> r2: replicate
+m3 -> r3: replicate
 ```
 
 - 16384 hash slots distributed across masters
@@ -728,24 +701,22 @@ M3 --> R3 : replicate
 
 ### Multi-Region
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
-database "US Redis Cluster" as UR
-database "EU Redis Cluster" as ER
-database "APAC Redis Cluster" as AR
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
+ur: "US Redis Cluster" {shape: cylinder}
+er: "EU Redis Cluster" {shape: cylinder}
+ar: "APAC Redis Cluster" {shape: cylinder}
 
-US --> UR
-EU --> ER
-APAC --> AR
-UR <--> ER : async replication
-ER <--> AR : async replication
-AR <--> US : async replication
-@enduml
+us -> ur
+eu -> er
+apac -> ar
+ur <-> er: async replication
+er <-> ar: async replication
+ar <-> us: async replication
 ```
 
 **Options:**

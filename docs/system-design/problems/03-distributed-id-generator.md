@@ -107,24 +107,22 @@ Network latency (client -> ID service) dominates at ~1 ms.
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "Client Service" as Client
-component "ID Generator SDK (embedded)" as SDK
-component "ID Generator Service (optional)" as Service
-database "ZooKeeper / etcd (worker ID allocation)" as ZK
-database "Monitoring" as Mon
+client: "Client Service" {shape: rectangle}
+sdk: "ID Generator SDK (embedded)" {shape: rectangle}
+service: "ID Generator Service (optional)" {shape: rectangle}
+zk: "ZooKeeper / etcd (worker ID allocation)" {shape: cylinder}
+mon: "Monitoring" {shape: cylinder}
 
-Client --> SDK : nextId()
-SDK --> SDK : snowflake algorithm
-SDK --> ZK : register (startup only)
-SDK --> Mon : metrics
-Client --> Service : HTTP/RPC (alternative)
-Service --> ZK : register
-Service --> Mon : metrics
-@enduml
+client -> sdk: nextId()
+sdk -> sdk: snowflake algorithm
+sdk -> zk: register (startup only)
+sdk -> mon: metrics
+client -> service: HTTP/RPC (alternative)
+service -> zk: register
+service -> mon: metrics
 ```
 
 ### Component Responsibilities
@@ -352,19 +350,17 @@ Cons:
 
 ### Bit Layout
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "1 bit sign (always 0)" as Sign
-rectangle "41 bits timestamp (ms)" as TS
-rectangle "10 bits worker ID" as Worker
-rectangle "12 bits sequence" as Seq
+sign: "1 bit sign (always 0)" {shape: rectangle}
+ts: "41 bits timestamp (ms)" {shape: rectangle}
+worker: "10 bits worker ID" {shape: rectangle}
+seq: "12 bits sequence" {shape: rectangle}
 
-Sign -right-> TS
-TS -right-> Worker
-Worker -right-> Seq
-@enduml
+sign -> ts
+ts -> worker
+worker -> seq
 ```
 
 ```
@@ -456,22 +452,20 @@ public synchronized long nextId() {
 
 ### Multi-Region Layout
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
 
-component "Worker IDs 0-341" as W1
-component "Worker IDs 342-682" as W2
-component "Worker IDs 683-1023" as W3
+w1: "Worker IDs 0-341" {shape: rectangle}
+w2: "Worker IDs 342-682" {shape: rectangle}
+w3: "Worker IDs 683-1023" {shape: rectangle}
 
-US --> W1
-EU --> W2
-APAC --> W3
-@enduml
+us -> w1
+eu -> w2
+apac -> w3
 ```
 
 **Partition the worker ID space** across regions to guarantee global uniqueness:

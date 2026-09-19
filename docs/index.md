@@ -12,7 +12,7 @@ Whether you're preparing for interviews, improving problem-solving skills, or ju
 
 ## 🏛️ System Design Notes
 
-Alongside DSA, this site includes a complete **System Design** curriculum — fundamentals, building blocks, and **52 practice problems** covering everything from URL shorteners to distributed tracing.
+Alongside DSA, this site includes a complete **System Design** curriculum — fundamentals, building blocks, and **57 practice problems** covering everything from URL shorteners to distributed tracing.
 
 [📖 System Design Overview](system-design/index.md){ .md-button .md-button--primary }
 [🧱 Back of Envelope](system-design/fundamentals/back-of-envelope.md){ .md-button }
@@ -27,7 +27,7 @@ Alongside DSA, this site includes a complete **System Design** curriculum — fu
 | [Database Design](system-design/fundamentals/database-design.md) | SQL vs NoSQL, sharding, replication, indexing, CAP |
 | [Building Blocks](system-design/fundamentals/building-blocks.md) | Load balancers, caches, queues, rate limiters, CDNs |
 
-### 🎯 52 Practice Problems (7 Phases)
+### 🎯 57 Practice Problems (7 Phases)
 
 #### Phase 1 — Foundations
 | # | Problem |
@@ -42,6 +42,8 @@ Alongside DSA, this site includes a complete **System Design** curriculum — fu
 | 08 | [Service Discovery](system-design/problems/08-service-discovery.md) |
 | 09 | [API Gateway](system-design/problems/09-api-gateway.md) |
 | 10 | [CDN](system-design/problems/10-cdn.md) |
+| 53 | [Distributed Key-Value Store](system-design/problems/53-distributed-key-value-store.md) |
+| 55 | [Authentication & Authorization (SSO / OAuth2)](system-design/problems/55-authentication-authorization.md) |
 
 #### Phase 2 — Simple Products
 | # | Problem |
@@ -79,6 +81,7 @@ Alongside DSA, this site includes a complete **System Design** curriculum — fu
 | 33 | [Recommendation Engine](system-design/problems/33-recommendation-engine.md) |
 | 34 | [File Storage Service](system-design/problems/34-file-storage-service.md) |
 | 35 | [Collaborative Document Editor](system-design/problems/35-collaborative-document-editor.md) |
+| 54 | [Distributed Cloud Storage (S3-like)](system-design/problems/54-distributed-cloud-storage.md) |
 
 #### Phase 5 — Location & Mobility
 | # | Problem |
@@ -88,6 +91,7 @@ Alongside DSA, this site includes a complete **System Design** curriculum — fu
 | 38 | [Food Delivery](system-design/problems/38-food-delivery.md) |
 | 39 | [Dating App](system-design/problems/39-dating-app.md) |
 | 40 | [Proximity Matchmaking](system-design/problems/40-proximity-matchmaking.md) |
+| 57 | [Maps & Routing / Navigation](system-design/problems/57-maps-routing.md) |
 
 #### Phase 6 — Fintech
 | # | Problem |
@@ -108,15 +112,16 @@ Alongside DSA, this site includes a complete **System Design** curriculum — fu
 | 50 | [Metrics / Monitoring](system-design/problems/50-metrics-monitoring.md) |
 | 51 | [Distributed Tracing](system-design/problems/51-distributed-tracing.md) |
 | 52 | [Online Judge](system-design/problems/52-online-judge.md) |
+| 56 | [Code Deployment / CI-CD](system-design/problems/56-code-deployment-cicd.md) |
 
 ---
 
 ## 🚀 How to Use This Site
 
-- **New to DSA?** Follow the [Recommended Learning Path](#learning-path-recommended-order) below — it's ordered for gradual skill building.
+- **New to DSA?** Follow the [Recommended Learning Path](#dsa-learning-path-recommended-order) below — it's ordered for gradual skill building.
 - **Preparing for interviews?** Jump to any topic — each file is self-contained with working code and explanations.
 - **Quick revision?** Look for the **Key Tips** and **Common Pitfalls** sections at the bottom of each topic.
-- **Looking for a specific problem?** Use the search bar (press `/`) or the [topic list](#topics-covered) below.
+- **Looking for a specific problem?** Use the search bar (press `/`) or the [topic list](#dsa-topics-covered) below.
 - **Want to see everything at a glance?** Check the [Cheat Sheet](cheatsheet.md) for complexity tables and patterns.
 - **Studying System Design?** Start with [Fundamentals](system-design/index.md), then work through problems in phase order.
 
@@ -227,7 +232,7 @@ Track your journey through all 150+ problems. Check them off as you go!
 - ✅ **Key techniques** and **common pitfalls** sections
 - ✅ **Advanced algorithms** (Union-Find, Topological Sort, MST, etc.)
 - ✅ **NeetCode 150 aligned** curriculum
-- ✅ **52 System Design problems** with full 16-section walkthroughs
+- ✅ **57 System Design problems** with full 18-section walkthroughs
 - ✅ **System Design fundamentals** (estimation, databases, building blocks)
 
 ---

@@ -196,58 +196,61 @@ Claim:
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2 
+direction: down
 
-actor Customer
-actor Agent
-actor Insurer
-actor Hospital
-cloud "CDN" as CDN
-component "API Gateway" as GW
-component "User Service" as US
-component "Catalog Service" as CS
-component "Quote Service" as QS
-component "Policy Service" as PS
-component "Claim Service" as ClS
-component "Payment Service" as PayS
-component "KYC Service" as KYC
-component "Underwriting Service" as UW
-component "Notification Service" as NS
-database "PostgreSQL (core data)" as PG
-database "Redis (cache, sessions)" as Redis
-queue "Kafka (events)" as Kafka
-database "S3 (documents)" as S3
-component "Insurer Adapters" as IA
-component "External APIs" as Ext
-database "Elasticsearch (search)" as ES
+customer: Customer {shape: person}
+agent: Agent {shape: person}
+insurer: Insurer {shape: person}
+hospital: Hospital {shape: person}
 
-Customer --> CDN
-Agent --> CDN
-Insurer --> CDN
-Hospital --> CDN
-CDN --> GW
-GW --> US
-GW --> CS
-GW --> QS
-GW --> PS
-GW --> ClS
-GW --> PayS
-QS --> IA
-IA --> Ext
-PS --> KYC
-PS --> UW
-PS --> PayS
-ClS --> IA
-PS --> Kafka
-ClS --> Kafka
-Kafka --> NS
-CS --> ES
-PS --> PG
-QS --> Redis
-PS --> S3
-@enduml
+cdn: CDN {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+
+us: "User Service" {shape: rectangle}
+cs: "Catalog Service" {shape: rectangle}
+qs: "Quote Service" {shape: rectangle}
+ps: "Policy Service" {shape: rectangle}
+cls: "Claim Service" {shape: rectangle}
+pays: "Payment Service" {shape: rectangle}
+kyc: "KYC Service" {shape: rectangle}
+uw: "Underwriting Service" {shape: rectangle}
+ns: "Notification Service" {shape: rectangle}
+
+pg: "PostgreSQL (core data)" {shape: cylinder}
+redis: "Redis (cache, sessions)" {shape: cylinder}
+kafka: "Kafka (events)" {shape: queue}
+s3: "S3 (documents)" {shape: cylinder}
+ia: "Insurer Adapters" {shape: rectangle}
+ext: "External APIs" {shape: rectangle}
+es: "Elasticsearch (search)" {shape: cylinder}
+
+customer -> cdn
+agent -> cdn
+insurer -> cdn
+hospital -> cdn
+cdn -> gw
+
+gw -> us
+gw -> cs
+gw -> qs
+gw -> ps
+gw -> cls
+gw -> pays
+
+qs -> ia
+ia -> ext
+ps -> kyc
+ps -> uw
+ps -> pays
+cls -> ia
+ps -> kafka
+cls -> kafka
+kafka -> ns
+cs -> es
+ps -> pg
+qs -> redis
+ps -> s3
 ```
 
 ### Component Responsibilities
@@ -789,7 +792,16 @@ Users expect instant quotes. Insurers have complex pricing models. We need:
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor Customer
 participant "API Gateway" as GW
@@ -928,7 +940,16 @@ The quote service collects all quotes and returns them sorted/ranked:
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 participant "Policy Service" as PS
 participant "Underwriting Service" as UW
@@ -1043,7 +1064,16 @@ Platform may suggest:
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor Patient
 participant "Hospital" as Hosp
@@ -1171,7 +1201,16 @@ For agent:
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
 skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 
 actor Customer
 participant "Platform" as Platform
@@ -1251,6 +1290,16 @@ IRDAI requires:
 
 ```plantuml
 @startuml
+!theme cerulean-outline
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam sequence {
+  ArrowColor #2E86C1
+  LifeLineBorderColor #85C1E9
+  ParticipantBorderColor #2E86C1
+  ParticipantBackgroundColor #D6EAF8
+}
 skinparam componentStyle rectangle
 
 component "Policy Service" as PS
