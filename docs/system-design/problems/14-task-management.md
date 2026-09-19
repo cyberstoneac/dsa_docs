@@ -21,6 +21,7 @@ All changes sync in real-time to Alice, Bob, Carol (and 5 other collaborators).
 **Real-world apps:** Trello, Asana, Linear, Monday.com, Jira, ClickUp, Notion.
 
 **Why it's interesting:**
+
 - **Real-time collaboration** — multiple users editing same board
 - **Hierarchical data model** (board → list → card → subtask)
 - **Ordering** — cards have a position; drag-and-drop must be fast
@@ -1508,6 +1509,7 @@ REST API for external developers:
 | Cost | ~$192K/month for 50M users |
 
 **Key takeaways:**
+
 - **Fractional indexing** is the key to fast card reordering — no bulk updates
 - **Version-based sync** enables both real-time and offline scenarios
 - **Kafka + WebSocket** scale real-time to millions of users
@@ -1520,6 +1522,7 @@ REST API for external developers:
 - **Board-centric design** matches the mental model and simplifies sharding
 
 **Similar Pattern Problems:**
+
 - Collaborative Document Editor (real-time + offline sync)
 - Social Feed (real-time updates, fan-out)
 - Notification System (watcher model)

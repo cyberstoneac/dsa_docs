@@ -51,22 +51,32 @@
 ```
 
 ### Back-of-Envelope Decision Flow
-```plantuml
-@startuml
-skinparam componentStyle rectangle
 
-start
-:Clarify scale (DAU, actions/user);
-:Compute average QPS;
-:Apply peak factor (2x-10x);
-:Compute storage per day;
-:Extrapolate to 1y / 5y;
-:Compute bandwidth (ingress + egress);
-:Size cache (80/20 rule);
-:Estimate servers needed;
-:Identify bottleneck (read/write/both);
-stop
-@enduml
+```d2
+direction: right
+
+start: Start {shape: circle}
+clarify: "Clarify scale (DAU, actions/user)" {shape: rectangle}
+avg_qps: "Compute average QPS" {shape: rectangle}
+peak: "Apply peak factor (2x-10x)" {shape: rectangle}
+storage: "Compute storage per day" {shape: rectangle}
+extrapolate: "Extrapolate to 1y / 5y" {shape: rectangle}
+bandwidth: "Compute bandwidth (ingress + egress)" {shape: rectangle}
+cache: "Size cache (80/20 rule)" {shape: rectangle}
+servers: "Estimate servers needed" {shape: rectangle}
+bottleneck: "Identify bottleneck (read/write/both)" {shape: rectangle}
+end: End {shape: circle}
+
+start -> clarify
+clarify -> avg_qps
+avg_qps -> peak
+peak -> storage
+storage -> extrapolate
+extrapolate -> bandwidth
+bandwidth -> cache
+cache -> servers
+servers -> bottleneck
+bottleneck -> end
 ```
 
 ---

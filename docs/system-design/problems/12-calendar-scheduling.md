@@ -26,6 +26,7 @@ System must:
 **Real-world apps:** Google Calendar, Outlook Calendar, Apple Calendar, Calendly, Cal.com, Zoom Scheduler.
 
 **Why it's interesting:**
+
 - **Recurring events** are deceptively complex (RFC 5545, RRULE)
 - **Time zones** are tricky (DST transitions, historical zones)
 - **Availability search** requires fast interval overlap queries
@@ -1456,6 +1457,7 @@ Detect user's location; auto-adjust display time zone:
 | Cost | ~$197K/month for 500M users |
 
 **Key takeaways:**
+
 - **Time zones are the hardest part** — always store UTC + original TZ; use IANA tzdata
 - **Recurring events need a proper RRULE engine** — don't roll your own
 - **Fast-forward expansion** is critical for long-lived recurrences
@@ -1468,6 +1470,7 @@ Detect user's location; auto-adjust display time zone:
 - **Cache calendar views aggressively** — the same view is requested many times
 
 **Similar Pattern Problems:**
+
 - Show / Ticket Booking (time-based resource availability)
 - Hospital Appointment Booking (similar scheduling problem)
 - Distributed Task Scheduler (uses time-bucketed triggers)

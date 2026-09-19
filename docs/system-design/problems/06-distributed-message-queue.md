@@ -1024,6 +1024,7 @@ For high-throughput FIFO, self-host or shard across multiple FIFO queues.
 | Scale | 3M msg/sec peak |
 
 **Key takeaways:**
+
 - **Visibility timeout** is the core mechanism — hides messages during processing, auto-recovers on crash
 - **Receipt handles** prevent double-ack from stale consumers
 - **At-least-once + idempotency** is the pragmatic standard; exactly-once is expensive
@@ -1035,6 +1036,7 @@ For high-throughput FIFO, self-host or shard across multiple FIFO queues.
 - **Message queues distribute work**, while pub/sub broadcasts events — pick the right tool
 
 **Similar Pattern Problems:**
+
 - Pub/Sub System (queue vs log — complementary patterns)
 - Distributed Task Scheduler (uses queues for job distribution)
 - Log Ingestion System (uses queues for buffering)

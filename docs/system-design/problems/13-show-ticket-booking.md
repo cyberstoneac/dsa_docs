@@ -29,6 +29,7 @@ Challenges:
 **Real-world apps:** BookMyShow, Ticketmaster, Fandango, Paytm Insider, PVR Cinemas.
 
 **Why it's interesting:**
+
 - **Seat locking** at scale (high concurrency on popular shows)
 - **Payment integration** with retries and idempotency
 - **Search** across movies, cities, dates, languages
@@ -1614,6 +1615,7 @@ Most have been removed but infrastructure may remain.
 | Cost | ~$110K/month for 50M DAU |
 
 **Key takeaways:**
+
 - **Seat locking is the core problem** — Redis SET NX + TTL solves it elegantly
 - **Atomic multi-seat locks via Lua** prevent partial failures
 - **TTL-based auto-release** prevents deadlocks from abandonment
@@ -1626,6 +1628,7 @@ Most have been removed but infrastructure may remain.
 - **Multi-region by show** keeps booking data close to the theater
 
 **Similar Pattern Problems:**
+
 - Hospital Appointment Booking (time-based resource locking)
 - Calendar / Scheduling (time-based availability)
 - Flight / Railway Booking (inventory + seat locking)

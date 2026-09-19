@@ -71,29 +71,27 @@ Distributes incoming requests across a pool of servers to:
 
 ### Load Balancer Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-rectangle "DNS" as DNS
-rectangle "Load Balancer L7" as LB
-rectangle "Server 1" as S1
-rectangle "Server 2" as S2
-rectangle "Server 3" as S3
-database "Session Store Redis" as Redis
+client: Client {shape: person}
+dns: DNS {shape: cloud}
+lb: "Load Balancer L7" {shape: hexagon}
+s1: "Server 1" {shape: rectangle}
+s2: "Server 2" {shape: rectangle}
+s3: "Server 3" {shape: rectangle}
+redis: "Session Store Redis" {shape: cylinder}
 
-Client --> DNS : lookup api.example.com
-DNS --> Client : LB IP
-Client --> LB : HTTPS request
-LB --> Redis : lookup session
-Redis --> LB : session data
-LB --> S1 : route least conn
-LB --> S2
-LB --> S3
-S1 --> LB : response
-LB --> Client : response
-@enduml
+client -> dns: lookup api.example.com
+dns -> client: LB IP
+client -> lb: HTTPS request
+lb -> redis: lookup session
+redis -> lb: session data
+lb -> s1: route least conn
+lb -> s2
+lb -> s3
+s1 -> lb: response
+lb -> client: response
 ```
 
 ### Health Checks
@@ -137,23 +135,21 @@ LB --> Client : response
 
 ### Cache-Aside Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-rectangle "App Server" as App
-database "Redis Cache" as Cache
-database "PostgreSQL" as DB
+client: Client {shape: person}
+app: "App Server" {shape: rectangle}
+cache: "Redis Cache" {shape: cylinder}
+db: "PostgreSQL" {shape: cylinder}
 
-Client --> App : GET user 123
-App --> Cache : GET user:123
-Cache --> App : miss
-App --> DB : SELECT user
-DB --> App : user data
-App --> Cache : SET user:123 TTL 300s
-App --> Client : response
-@enduml
+client -> app: GET /user/123
+app -> cache: GET user:123
+cache -> app: miss
+app -> db: SELECT user
+db -> app: user data
+app -> cache: SET user:123 TTL 300s
+app -> client: response
 ```
 
 ### Cache Eviction Policies
@@ -179,22 +175,20 @@ App --> Client : response
 
 ### Multi-Level Cache
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor Client
-rectangle "L1 In-Process" as L1
-rectangle "L2 Distributed Redis" as L2
-database "L3 Database" as L3
+client: Client {shape: person}
+l1: "L1 In-Process" {shape: rectangle}
+l2: "L2 Distributed Redis" {shape: cylinder}
+l3: "L3 Database" {shape: cylinder}
 
-Client --> L1 : 1. Check L1
-L1 --> L2 : 2. Miss - check L2
-L2 --> L3 : 3. Miss - query DB
-L3 --> L2 : 4. Populate L2
-L2 --> L1 : 5. Populate L1
-L1 --> Client : 6. Response
-@enduml
+client -> l1: 1. Check L1
+l1 -> l2: 2. Miss - check L2
+l2 -> l3: 3. Miss - query DB
+l3 -> l2: 4. Populate L2
+l2 -> l1: 5. Populate L1
+l1 -> client: 6. Response
 ```
 
 **L1 (in-process)**: Nanoseconds, per-server, small (MBs), invalidation hard
@@ -256,33 +250,31 @@ L1 --> Client : 6. Response
 
 ### Kafka Architecture
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Producer 1" as P1
-rectangle "Producer 2" as P2
-rectangle "Kafka Topic Orders" as T
-rectangle "Partition 0" as Part0
-rectangle "Partition 1" as Part1
-rectangle "Partition 2" as Part2
-rectangle "Consumer Group A" as CGA
-rectangle "Consumer Group B" as CGB
+p1: "Producer 1" {shape: rectangle}
+p2: "Producer 2" {shape: rectangle}
+t: "Kafka Topic Orders" {shape: queue}
+part0: "Partition 0" {shape: cylinder}
+part1: "Partition 1" {shape: cylinder}
+part2: "Partition 2" {shape: cylinder}
+cga: "Consumer Group A" {shape: rectangle}
+cgb: "Consumer Group B" {shape: rectangle}
 
-P1 --> Part0
-P1 --> Part1
-P2 --> Part1
-P2 --> Part2
-T --> Part0
-T --> Part1
-T --> Part2
-Part0 --> CGA
-Part1 --> CGA
-Part2 --> CGA
-Part0 --> CGB
-Part1 --> CGB
-Part2 --> CGB
-@enduml
+p1 -> part0
+p1 -> part1
+p2 -> part1
+p2 -> part2
+t -> part0
+t -> part1
+t -> part2
+part0 -> cga
+part1 -> cga
+part2 -> cga
+part0 -> cgb
+part1 -> cgb
+part2 -> cgb
 ```
 
 **Key concepts:**
@@ -365,19 +357,17 @@ On failure: compensating transactions in reverse order
 
 #### 1. Token Bucket
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "Bucket Capacity 10" as Bucket
-rectangle "Refill 1 token per sec" as Refill
-rectangle "Request" as Req
-rectangle "Allow if token available" as Allow
+bucket: "Bucket Capacity 10" {shape: cylinder}
+refill: "Refill 1 token per sec" {shape: rectangle}
+req: "Request" {shape: rectangle}
+allow: "Allow if token available" {shape: rectangle}
 
-Refill --> Bucket : add tokens
-Req --> Bucket : consume token
-Bucket --> Allow : token present
-@enduml
+refill -> bucket: add tokens
+req -> bucket: consume token
+bucket -> allow: token present
 ```
 
 - **Capacity** = max burst size
@@ -387,19 +377,17 @@ Bucket --> Allow : token present
 
 #### 2. Leaky Bucket
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "Queue FIFO" as Q
-rectangle "Leak rate 1 req per sec" as Leak
-rectangle "Request" as Req
-rectangle "Processed" as Out
+q: "Queue FIFO" {shape: queue}
+leak: "Leak rate 1 req per sec" {shape: rectangle}
+req: "Request" {shape: rectangle}
+out: "Processed" {shape: rectangle}
 
-Req --> Q : enqueue
-Q --> Leak : process at fixed rate
-Leak --> Out
-@enduml
+req -> q: enqueue
+q -> leak: process at fixed rate
+leak -> out
 ```
 
 - Queue requests, process at fixed rate
@@ -518,22 +506,13 @@ With `hash(key) % N` (N = number of servers):
 ### The Solution
 Place both servers and keys on a hash ring (0 to 2^32-1). Each key is assigned to the next server clockwise.
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Hash Ring" as Ring
-note right of Ring
-  Server A at position 100
-  Server B at position 500
-  Server C at position 900
+ring: "Hash Ring" {shape: cylinder}
+note: "Server A at position 100 | Server B at position 500 | Server C at position 900 | Key at 250 goes to Server B | Key at 700 goes to Server C | Key at 50 goes to Server A | Key at 950 goes to Server A (wraps)" {shape: rectangle}
 
-  Key at 250 goes to Server B
-  Key at 700 goes to Server C
-  Key at 50 goes to Server A
-  Key at 950 goes to Server A (wraps)
-end note
-@enduml
+ring -> note
 ```
 
 **Adding a server (Server D at position 300):**
@@ -546,19 +525,13 @@ end note
 
 **Solution**: Each server has multiple virtual nodes (100-200 typically) spread across the ring.
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Hash Ring" as Ring
-note right of Ring
-  Server A vnodes at 100, 350, 700, 900
-  Server B vnodes at 200, 450, 800, 950
-  Server C vnodes at 150, 400, 600, 850
+ring: "Hash Ring" {shape: cylinder}
+note: "Server A vnodes at 100, 350, 700, 900 | Server B vnodes at 200, 450, 800, 950 | Server C vnodes at 150, 400, 600, 850 | Distribution is much more even" {shape: rectangle}
 
-  Distribution is much more even
-end note
-@enduml
+ring -> note
 ```
 
 ### Used By
@@ -571,22 +544,20 @@ end note
 
 ### Consistent Hashing Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor Client
-rectangle "Router Consistent Hash" as Router
-rectangle "Server A" as A
-rectangle "Server B" as B
-rectangle "Server C" as C
+client: Client {shape: person}
+router: "Router Consistent Hash" {shape: hexagon}
+a: "Server A" {shape: cylinder}
+b: "Server B" {shape: cylinder}
+c: "Server C" {shape: cylinder}
 
-Client --> Router : request key=user:123
-Router --> Router : hash user:123 = 450
-Router --> B : route to server at 500
-B --> Router : response
-Router --> Client : response
-@enduml
+client -> router: request key=user:123
+router -> router: hash user:123 = 450
+router -> b: route to server at 500
+b -> router: response
+router -> client: response
 ```
 
 ### Key Tips
@@ -612,32 +583,30 @@ Geographically distributed cache that serves content from the edge (closest to u
 
 ### CDN Architecture
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "User India" as U1
-actor "User US" as U2
-actor "User EU" as U3
+u1: "User India" {shape: person}
+u2: "User US" {shape: person}
+u3: "User EU" {shape: person}
 
-rectangle "Edge PoP Mumbai" as E1
-rectangle "Edge PoP Virginia" as E2
-rectangle "Edge PoP Frankfurt" as E3
+e1: "Edge PoP Mumbai" {shape: cloud}
+e2: "Edge PoP Virginia" {shape: cloud}
+e3: "Edge PoP Frankfurt" {shape: cloud}
 
-rectangle "Regional Cache SG" as R1
-rectangle "Regional Cache US-West" as R2
+r1: "Regional Cache SG" {shape: cloud}
+r2: "Regional Cache US-West" {shape: cloud}
 
-database "Origin S3" as Origin
+origin: "Origin S3" {shape: cylinder}
 
-U1 --> E1 : request
-U2 --> E2 : request
-U3 --> E3 : request
-E1 --> R1 : cache miss
-E2 --> R2 : cache miss
-E3 --> R2 : cache miss
-R1 --> Origin : cache miss
-R2 --> Origin : cache miss
-@enduml
+u1 -> e1: request
+u2 -> e2: request
+u3 -> e3: request
+e1 -> r1: cache miss
+e2 -> r2: cache miss
+e3 -> r2: cache miss
+r1 -> origin: cache miss
+r2 -> origin: cache miss
 ```
 
 **Hierarchy:**
@@ -711,32 +680,30 @@ Single entry point for all client requests to backend microservices.
 
 ### API Gateway Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-rectangle "API Gateway" as GW
-rectangle "Auth" as Auth
-rectangle "Rate Limit" as RL
-rectangle "Router" as Router
-rectangle "Cache" as Cache
-rectangle "User Service" as US
-rectangle "Order Service" as OS
-rectangle "Payment Service" as PS
-database "Redis" as Redis
+client: Client {shape: person}
+gw: "API Gateway" {shape: hexagon}
+auth: "Auth" {shape: rectangle}
+rl: "Rate Limit" {shape: rectangle}
+router: "Router" {shape: rectangle}
+cache: "Cache" {shape: rectangle}
+us: "User Service" {shape: rectangle}
+os: "Order Service" {shape: rectangle}
+ps: "Payment Service" {shape: rectangle}
+redis: "Redis" {shape: cylinder}
 
-Client --> GW : HTTPS
-GW --> Auth : validate JWT
-Auth --> Redis : check token
-GW --> RL : check limit
-RL --> Redis : increment counter
-GW --> Cache : check response cache
-GW --> Router : route
-Router --> US : /users/*
-Router --> OS : /orders/*
-Router --> PS : /payments/*
-@enduml
+client -> gw: HTTPS
+gw -> auth: validate JWT
+auth -> redis: check token
+gw -> rl: check limit
+rl -> redis: increment counter
+gw -> cache: check response cache
+gw -> router: route
+router -> us: /users/*
+router -> os: /orders/*
+router -> ps: /payments/*
 ```
 
 ### Popular API Gateways
@@ -783,19 +750,17 @@ In dynamic environments (K8s, autoscaling), service instances come and go. How d
 
 ### Service Discovery Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "Service A" as A
-rectangle "Service B" as B
-rectangle "Service Registry" as Reg
+a: "Service A" {shape: rectangle}
+b: "Service B" {shape: rectangle}
+reg: "Service Registry" {shape: cylinder}
 
-B --> Reg : register heartbeat
-A --> Reg : lookup service-b
-Reg --> A : returns ip1 ip2 ip3
-A --> B : request to ip2
-@enduml
+b -> reg: register heartbeat
+a -> reg: lookup service-b
+reg -> a: returns ip1 ip2 ip3
+a -> b: request to ip2
 ```
 
 ### Health Checks
@@ -819,20 +784,19 @@ If Service B is slow/down, Service A's threads pile up waiting for responses. Ca
 
 ### States
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-state "Closed" as Closed
-state "Open" as Open
-state "Half-Open" as HalfOpen
+closed: "Closed" {shape: rectangle}
+open: "Open" {shape: rectangle}
+half: "Half-Open" {shape: rectangle}
+start: Start {shape: circle}
 
-[*] --> Closed
-Closed --> Open : failure threshold exceeded
-Open --> HalfOpen : timeout elapsed
-HalfOpen --> Closed : test request succeeds
-HalfOpen --> Open : test request fails
-@enduml
+start -> closed
+closed -> open: failure threshold exceeded
+open -> half: timeout elapsed
+half -> closed: test request succeeds
+half -> open: test request fails
 ```
 
 | State | Behavior |
@@ -849,23 +813,21 @@ HalfOpen --> Open : test request fails
 
 ### Circuit Breaker Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor Client
-rectangle "Service A" as A
-rectangle "Circuit Breaker" as CB
-rectangle "Service B" as B
-rectangle "Fallback" as FB
+client: Client {shape: person}
+a: "Service A" {shape: rectangle}
+cb: "Circuit Breaker" {shape: hexagon}
+b: "Service B" {shape: rectangle}
+fb: "Fallback" {shape: rectangle}
 
-Client --> A
-A --> CB
-CB --> B : state closed
-CB --> FB : state open
-B --> CB : response
-CB --> A : response
-@enduml
+client -> a
+a -> cb
+cb -> b: state closed
+cb -> fb: state open
+b -> cb: response
+cb -> a: response
 ```
 
 ### Key Tips
@@ -887,24 +849,22 @@ Every write API accepts an **idempotency key** (UUID). Server stores key -> resu
 
 ### Idempotency Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-rectangle "API Gateway" as GW
-database "Redis Idem Keys" as Redis
-database "PostgreSQL" as DB
+client: Client {shape: person}
+gw: "API Gateway" {shape: hexagon}
+redis: "Redis Idem Keys" {shape: cylinder}
+db: "PostgreSQL" {shape: cylinder}
 
-Client --> GW : POST payments
-GW --> Redis : GET idem key
-Redis --> GW : not found
-GW --> Redis : SET idem key processing
-GW --> DB : process payment
-DB --> GW : result
-GW --> Redis : SET idem key result TTL 24h
-GW --> Client : return result
-@enduml
+client -> gw: POST payments
+gw -> redis: GET idem key
+redis -> gw: not found
+gw -> redis: SET idem key processing
+gw -> db: process payment
+db -> gw: result
+gw -> redis: SET idem key result TTL 24h
+gw -> client: return result
 ```
 
 ### Key Tips
@@ -991,38 +951,36 @@ Managed Kafka, managed Redis, managed Postgres. Unless you have a dedicated infr
 
 ## 🔹 Composition Example: E-Commerce Request Path
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-rectangle "CDN" as CDN
-rectangle "API Gateway" as GW
-rectangle "Rate Limiter Redis" as RL
-rectangle "Load Balancer" as LB
-rectangle "Product Service" as PS
-rectangle "Order Service" as OS
-rectangle "Circuit Breaker" as CB
-rectangle "Cache Redis" as Cache
-rectangle "Queue Kafka" as Q
-database "PostgreSQL" as DB
-rectangle "Payment Service" as Pay
-rectangle "Notification Service" as Notif
+user: User {shape: person}
+cdn: "CDN" {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+rl: "Rate Limiter Redis" {shape: hexagon}
+lb: "Load Balancer" {shape: hexagon}
+ps: "Product Service" {shape: rectangle}
+os: "Order Service" {shape: rectangle}
+cb: "Circuit Breaker" {shape: hexagon}
+cache: "Cache Redis" {shape: cylinder}
+q: "Queue Kafka" {shape: queue}
+db: "PostgreSQL" {shape: cylinder}
+pay: "Payment Service" {shape: rectangle}
+notif: "Notification Service" {shape: rectangle}
 
-User --> CDN : images, JS, CSS
-User --> GW : API requests
-GW --> RL : check limit
-GW --> LB : route
-LB --> PS : /products/*
-LB --> OS : /orders/*
-PS --> Cache : check
-Cache --> DB : miss
-OS --> CB : call payment
-CB --> Pay : if healthy
-OS --> DB : write order
-OS --> Q : publish event
-Q --> Notif : send email
-@enduml
+user -> cdn: images, JS, CSS
+user -> gw: API requests
+gw -> rl: check limit
+gw -> lb: route
+lb -> ps: /products/*
+lb -> os: /orders/*
+ps -> cache: check
+cache -> db: miss
+os -> cb: call payment
+cb -> pay: if healthy
+os -> db: write order
+os -> q: publish event
+q -> notif: send email
 ```
 
 Every block in this diagram is one of the ten building blocks above. That's the power of composing primitives.

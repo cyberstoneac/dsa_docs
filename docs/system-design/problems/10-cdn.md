@@ -1175,6 +1175,7 @@ Machine learning to predict purge patterns:
 | Cost | ~$30M-100M/month egress |
 
 **Key takeaways:**
+
 - **Anycast BGP** routes users to the nearest PoP; instant failover
 - **Multi-tier caching** (edge → regional → shield → origin) balances latency and origin load
 - **Origin shield** reduces origin load by 10x-100x
@@ -1187,6 +1188,7 @@ Machine learning to predict purge patterns:
 - **CDN economics** favor large scale; most companies buy CDN, not build it
 
 **Similar Pattern Problems:**
+
 - Video Streaming Platform (uses CDN for delivery)
 - File Storage Service (CDN for download acceleration)
 - Social Feed (CDN for images, static assets)

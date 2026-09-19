@@ -28,6 +28,7 @@ Election:
 **Real-world systems:** Reddit, Twitter polls, Stack Overflow, Hacker News, Election systems, Doodle.
 
 **Why it's interesting:**
+
 - **Idempotency** — same user voting twice should not double-count
 - **Fraud prevention** — bot voting, Sybil attacks, double voting
 - **Eventual consistency** — vote counts can lag slightly
@@ -1390,6 +1391,7 @@ Integrate with live events (sports, TV): real-time polls during events, voting b
 | Cost | ~$78K/month for 500M users |
 
 **Key takeaways:**
+
 - **Idempotency is non-negotiable** — Redis SET NX + DB unique constraint
 - **Sharded counters** solve the hot poll problem (100K+ votes/min on one poll)
 - **Async aggregation via Kafka** decouples vote writes from count updates
@@ -1402,6 +1404,7 @@ Integrate with live events (sports, TV): real-time polls during events, voting b
 - **Vote changes and retractions** must be atomic (Redis Lua or DB transaction)
 
 **Similar Pattern Problems:**
+
 - Reddit-style Forum (content voting, ranking)
 - Social Feed (upvotes/downvotes affect ranking)
 - News Feed Ranking (vote score as input)

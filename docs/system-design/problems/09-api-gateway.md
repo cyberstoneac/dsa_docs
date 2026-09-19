@@ -1242,6 +1242,7 @@ Multiple teams own different route groups:
 | Cost | ~$20K/month for 1M QPS |
 
 **Key takeaways:**
+
 - **Stateless gateways** scale horizontally with ease
 - **etcd watch** propagates config in < 100 ms across the fleet
 - **JWT with cached JWKS** avoids per-request auth service calls
@@ -1254,6 +1255,7 @@ Multiple teams own different route groups:
 - **API gateway is the single entry point** — must be highly available
 
 **Similar Pattern Problems:**
+
 - Service Discovery (gateway uses discovery to find backends)
 - Rate Limiter (rate limit runs at the gateway)
 - Distributed Cache (gateway caches responses)

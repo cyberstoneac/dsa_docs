@@ -1056,6 +1056,7 @@ These reduce rebalance time and disruption.
 | Latency | Publish < 20 ms, delivery < 100 ms |
 
 **Key takeaways:**
+
 - **Log-based design** (not queue-based) enables replay, ordering, and multi-subscriber fan-out
 - **Partition by key** preserves per-key ordering while allowing parallelism
 - **At-least-once delivery** + **idempotent consumers** is the pragmatic standard
@@ -1067,6 +1068,7 @@ These reduce rebalance time and disruption.
 - **Kafka semantics** are the industry standard for good reason
 
 **Similar Pattern Problems:**
+
 - Log Ingestion System (uses Kafka for collection)
 - Real-Time Notification System (uses pub/sub for fan-out)
 - Distributed Message Queue (queue vs log — complementary)

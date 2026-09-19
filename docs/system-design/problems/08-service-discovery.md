@@ -1027,6 +1027,7 @@ Track who calls whom:
 | Cost | ~$3,350/month for 100K instances |
 
 **Key takeaways:**
+
 - **etcd/Consul** as the storage layer beats building from scratch (consensus, watch, leases)
 - **Self-registration + heartbeats** is the standard pattern
 - **Combined active + passive health checks** gives fast, reliable failure detection
@@ -1038,6 +1039,7 @@ Track who calls whom:
 - **Service discovery is cheap** — focus on correctness, not cost
 
 **Similar Pattern Problems:**
+
 - API Gateway (uses discovery to find backends)
 - Distributed Lock (uses registry for leader election)
 - Service Mesh (builds on discovery)

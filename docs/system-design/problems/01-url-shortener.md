@@ -131,39 +131,37 @@ Decision: 7-character base62 codes
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-cloud "CDN Edge" as CDN
-component "Load Balancer" as LB
-component "API Gateway" as GW
-component "Write Service" as WS
-component "Read Service" as RS
-component "ID Generator (Snowflake)" as IDGen
-database "Redis Cache Cluster" as Cache
-database "PostgreSQL (Sharded)" as DB
-queue "Kafka (Click Events)" as Kafka
-component "Analytics Worker" as AW
-database "Cassandra (Analytics)" as ADB
+user: User {shape: person}
+cdn: "CDN Edge" {shape: cloud}
+lb: "Load Balancer" {shape: hexagon}
+gw: "API Gateway" {shape: hexagon}
+ws: "Write Service" {shape: rectangle}
+rs: "Read Service" {shape: rectangle}
+idgen: "ID Generator Snowflake" {shape: rectangle}
+cache: "Redis Cache Cluster" {shape: cylinder}
+db: "PostgreSQL Sharded" {shape: cylinder}
+kafka: "Kafka Click Events" {shape: queue}
+aw: "Analytics Worker" {shape: rectangle}
+adb: "Cassandra Analytics" {shape: cylinder}
 
-User --> CDN : short URL visit
-CDN --> LB : cache miss
-User --> GW : POST /shorten
-GW --> LB
-LB --> WS : write path
-LB --> RS : read path
-WS --> IDGen : get unique id
-WS --> DB : insert mapping
-RS --> Cache : get short_code
-Cache --> RS : hit
-Cache --> DB : miss
-RS --> Kafka : publish click event
-Kafka --> AW : consume
-AW --> ADB : store analytics
-RS --> User : 302 redirect
-@enduml
+user -> cdn: short URL visit
+cdn -> lb: cache miss
+user -> gw: POST /shorten
+gw -> lb
+lb -> ws: write path
+lb -> rs: read path
+ws -> idgen: get unique id
+ws -> db: insert mapping
+rs -> cache: get short_code
+cache -> rs: hit
+cache -> db: miss
+rs -> kafka: publish click event
+kafka -> aw: consume
+aw -> adb: store analytics
+rs -> user: 302 redirect
 ```
 
 ### Component Responsibilities
@@ -414,27 +412,25 @@ Key Generation Service (KGS):
 
 ## 7. Deep Dive: Redirect Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor User
-cloud "CDN Edge" as CDN
-component "Load Balancer" as LB
-component "Read Service" as RS
-database "Redis Cache" as Cache
-database "PostgreSQL" as DB
-queue "Kafka" as Kafka
+user: User {shape: person}
+cdn: "CDN Edge" {shape: cloud}
+lb: "Load Balancer" {shape: hexagon}
+rs: "Read Service" {shape: rectangle}
+cache: "Redis Cache" {shape: cylinder}
+db: "PostgreSQL" {shape: cylinder}
+kafka: "Kafka" {shape: queue}
 
-User --> CDN : GET /aB3xK9z
-CDN --> User : cached 302 (if hit)
-CDN --> LB : forward (if miss)
-LB --> RS : route
-RS --> Cache : GET short:aB3xK9z
-Cache --> RS : hit long_url
-RS --> Kafka : publish click event async
-RS --> User : 302 Location
-@enduml
+user -> cdn: GET /aB3xK9z
+cdn -> user: cached 302 (if hit)
+cdn -> lb: forward (if miss)
+lb -> rs: route
+rs -> cache: GET short:aB3xK9z
+cache -> rs: hit long_url
+rs -> kafka: publish click event async
+rs -> user: 302 Location
 ```
 
 **Step-by-step:**
@@ -469,28 +465,26 @@ Well under the 100ms p99 target.
 
 ## 8. Deep Dive: Write Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "API Gateway" as GW
-component "Write Service" as WS
-component "Snowflake Generator" as SF
-database "PostgreSQL Shard" as DB
-database "Redis Cache" as Cache
+client: Client {shape: person}
+gw: "API Gateway" {shape: hexagon}
+ws: "Write Service" {shape: rectangle}
+sf: "Snowflake Generator" {shape: rectangle}
+db: "PostgreSQL Shard" {shape: cylinder}
+cache: "Redis Cache" {shape: cylinder}
 
-Client --> GW : POST /shorten
-GW --> WS : validate + route
-WS --> WS : validate URL
-WS --> SF : next ID
-SF --> WS : 64-bit id
-WS --> WS : base62 encode
-WS --> DB : INSERT mapping
-DB --> WS : ok
-WS --> Cache : pre-warm cache
-WS --> Client : 201 Created
-@enduml
+client -> gw: POST /shorten
+gw -> ws: validate + route
+ws -> ws: validate URL
+ws -> sf: next ID
+sf -> ws: 64-bit id
+ws -> ws: base62 encode
+ws -> db: INSERT mapping
+db -> ws: ok
+ws -> cache: pre-warm cache
+ws -> client: 201 Created
 ```
 
 **Step-by-step:**
@@ -523,26 +517,24 @@ throw new RuntimeException("Collision limit exceeded");
 
 ## 9. Deep Dive: Analytics Pipeline
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Read Service" as RS
-queue "Kafka Topic Clicks" as K
-component "Stream Processor" as SP
-database "Cassandra (Raw Events)" as C
-database "ClickHouse (Rollups)" as CH
-component "Dashboard API" as API
-actor User
+rs: "Read Service" {shape: rectangle}
+k: "Kafka Topic Clicks" {shape: queue}
+sp: "Stream Processor" {shape: rectangle}
+c: "Cassandra Raw Events" {shape: cylinder}
+ch: "ClickHouse Rollups" {shape: cylinder}
+api: "Dashboard API" {shape: rectangle}
+user: User {shape: person}
 
-RS --> K : publish click events
-K --> SP : consume
-SP --> C : raw events
-SP --> CH : aggregated rollups
-API --> C : query raw
-API --> CH : query aggregates
-User --> API : GET analytics
-@enduml
+rs -> k: publish click events
+k -> sp: consume
+sp -> c: raw events
+sp -> ch: aggregated rollups
+api -> c: query raw
+api -> ch: query aggregates
+user -> api: GET analytics
 ```
 
 ### Event Schema (Kafka)
@@ -590,19 +582,17 @@ This keeps analytics queries fast (aggregates) while retaining detail (raw event
 
 ### Global Deployment
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "Global DNS" as DNS
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
+dns: "Global DNS" {shape: cloud}
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
 
-DNS --> US : user in Americas
-DNS --> EU : user in Europe/Africa
-DNS --> APAC : user in Asia
-@enduml
+dns -> us: user in Americas
+dns -> eu: user in Europe/Africa
+dns -> apac: user in Asia
 ```
 
 Each region has:
@@ -789,8 +779,16 @@ Rough monthly cost (AWS, us-east-1):
 | Storage | ~312 TB over 5 years |
 
 **Key takeaways:**
+
 - Read:write ratio of 100:1 drives cache-first design
 - Snowflake IDs avoid collisions without coordination
 - Async analytics keeps redirects fast
 - Multi-level caching (CDN + Redis) is essential at this scale
 - Sharding by `short_code` naturally distributes load evenly
+
+**Similar Pattern Problems:**
+
+- URL Shortener (self)
+- Pastebin
+- TinyURL
+- Link tracking systems

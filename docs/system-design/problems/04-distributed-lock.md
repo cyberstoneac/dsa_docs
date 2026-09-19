@@ -930,6 +930,7 @@ UPDATE items SET qty = ? WHERE id = ? AND version = ?
 | Latency | < 10 ms p99 |
 
 **Key takeaways:**
+
 - **Redis SET NX is unsafe** for correctness-critical locks (AP, no consensus)
 - **Fencing tokens are mandatory** — TTL alone can't prevent stale writes
 - **etcd lease + CAS** is the modern standard for distributed locks
@@ -940,6 +941,7 @@ UPDATE items SET qty = ? WHERE id = ? AND version = ?
 - **CP over AP** — locks are a safety mechanism; availability is secondary
 
 **Similar Pattern Problems:**
+
 - Distributed Task Scheduler (uses leader locks for worker election)
 - Distributed Cache (uses locks for cache invalidation)
 - Payment System (uses locks for idempotency keys)

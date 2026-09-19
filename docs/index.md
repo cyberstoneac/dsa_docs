@@ -10,108 +10,104 @@ Whether you're preparing for interviews, improving problem-solving skills, or ju
 
 ---
 
-## 🏛️ System Design Notes (New)
+## 🏛️ System Design Notes
 
-Alongside DSA, this site now includes a complete **System Design** curriculum — fundamentals, building blocks, and **52 practice problems** covering everything from URL shorteners to distributed message queues.
+Alongside DSA, this site includes a complete **System Design** curriculum — fundamentals, building blocks, and **52 practice problems** covering everything from URL shorteners to distributed tracing.
 
 [📖 System Design Overview](system-design/index.md){ .md-button .md-button--primary }
 [🧱 Back of Envelope](system-design/fundamentals/back-of-envelope.md){ .md-button }
 [🗄️ Database Design](system-design/fundamentals/database-design.md){ .md-button }
 [🧩 Building Blocks](system-design/fundamentals/building-blocks.md){ .md-button }
 
-### 📚 System Design Fundamentals
+### 📚 Fundamentals
 
 | Topic | What You'll Learn |
 |-------|-------------------|
 | [Back of Envelope Estimation](system-design/fundamentals/back-of-envelope.md) | QPS, storage, bandwidth, cache sizing, latency numbers |
-| [Database Design](system-design/fundamentals/database-design.md) | SQL vs NoSQL, sharding, replication, indexing, CAP theorem |
-| [Building Blocks](system-design/fundamentals/building-blocks.md) | Load balancers, caches, queues, rate limiters, CDNs, circuit breakers |
+| [Database Design](system-design/fundamentals/database-design.md) | SQL vs NoSQL, sharding, replication, indexing, CAP |
+| [Building Blocks](system-design/fundamentals/building-blocks.md) | Load balancers, caches, queues, rate limiters, CDNs |
 
-### 🎯 System Design Problems (52 Total)
-
-Organized into **7 progressive phases** — foundations first, then composites that reuse earlier patterns.
+### 🎯 52 Practice Problems (7 Phases)
 
 #### Phase 1 — Foundations
-| # | Problem | Status |
-|---|---|---|
-| 01 | [URL Shortener](system-design/problems/01-url-shortener.md) | ✅ Done |
-| 02 | [Rate Limiter](system-design/problems/02-rate-limiter.md) | ⏳ Pending |
-| 03 | [Distributed Unique ID Generator](system-design/problems/03-distributed-id-generator.md) | ⏳ Pending |
-| 04 | [Distributed Lock](system-design/problems/04-distributed-lock.md) | ⏳ Pending |
-| 05 | [Pub/Sub System](system-design/problems/05-pub-sub-system.md) | ⏳ Pending |
-| 06 | [Distributed Message Queue](system-design/problems/06-distributed-message-queue.md) | ⏳ Pending |
-| 07 | [Distributed Cache](system-design/problems/07-distributed-cache.md) | ⏳ Pending |
-| 08 | [Service Discovery](system-design/problems/08-service-discovery.md) | ⏳ Pending |
-| 09 | [API Gateway](system-design/problems/09-api-gateway.md) | ⏳ Pending |
-| 10 | [CDN](system-design/problems/10-cdn.md) | ⏳ Pending |
+| # | Problem |
+|---|---------|
+| 01 | [URL Shortener](system-design/problems/01-url-shortener.md) |
+| 02 | [Rate Limiter](system-design/problems/02-rate-limiter.md) |
+| 03 | [Distributed Unique ID Generator](system-design/problems/03-distributed-id-generator.md) |
+| 04 | [Distributed Lock](system-design/problems/04-distributed-lock.md) |
+| 05 | [Pub/Sub System](system-design/problems/05-pub-sub-system.md) |
+| 06 | [Distributed Message Queue](system-design/problems/06-distributed-message-queue.md) |
+| 07 | [Distributed Cache](system-design/problems/07-distributed-cache.md) |
+| 08 | [Service Discovery](system-design/problems/08-service-discovery.md) |
+| 09 | [API Gateway](system-design/problems/09-api-gateway.md) |
+| 10 | [CDN](system-design/problems/10-cdn.md) |
 
 #### Phase 2 — Simple Products
-| # | Problem | Status |
-|---|---|---|
-| 11 | [Cash Split](system-design/problems/11-cash-split.md) | ⏳ Pending |
-| 12 | [Calendar / Scheduling](system-design/problems/12-calendar-scheduling.md) | ⏳ Pending |
-| 13 | [Show / Ticket Booking](system-design/problems/13-show-ticket-booking.md) | ⏳ Pending |
-| 14 | [Task Management](system-design/problems/14-task-management.md) | ⏳ Pending |
-| 15 | [Voting / Polling](system-design/problems/15-voting-polling.md) | ⏳ Pending |
-| 16 | [Hospital Appointment Booking](system-design/problems/16-hospital-appointment-booking.md) | ⏳ Pending |
-| 17 | [Insurance Platform](system-design/problems/17-insurance-platform.md) | ⏳ Pending |
-| 18 | [Product Catalog](system-design/problems/18-product-catalog.md) | ⏳ Pending |
-| 19 | [Job Search Platform](system-design/problems/19-job-search-platform.md) | ⏳ Pending |
-| 20 | [Search Autocomplete](system-design/problems/20-search-autocomplete.md) | ⏳ Pending |
+| # | Problem |
+|---|---------|
+| 11 | [Cash Split](system-design/problems/11-cash-split.md) |
+| 12 | [Calendar / Scheduling](system-design/problems/12-calendar-scheduling.md) |
+| 13 | [Show / Ticket Booking](system-design/problems/13-show-ticket-booking.md) |
+| 14 | [Task Management](system-design/problems/14-task-management.md) |
+| 15 | [Voting / Polling](system-design/problems/15-voting-polling.md) |
+| 16 | [Hospital Appointment Booking](system-design/problems/16-hospital-appointment-booking.md) |
+| 17 | [Insurance Platform](system-design/problems/17-insurance-platform.md) |
+| 18 | [Product Catalog](system-design/problems/18-product-catalog.md) |
+| 19 | [Job Search Platform](system-design/problems/19-job-search-platform.md) |
+| 20 | [Search Autocomplete](system-design/problems/20-search-autocomplete.md) |
 
 #### Phase 3 — Communication
-| # | Problem | Status |
-|---|---|---|
-| 21 | [Notification System](system-design/problems/21-notification-system.md) | ⏳ Pending |
-| 22 | [Online Messaging App](system-design/problems/22-online-messaging-app.md) | ⏳ Pending |
-| 23 | [Mail Sharing](system-design/problems/23-mail-sharing.md) | ⏳ Pending |
-| 24 | [Content Sharing / Microblog](system-design/problems/24-content-sharing-microblog.md) | ⏳ Pending |
-| 25 | [Social Feed / Timeline](system-design/problems/25-social-feed-timeline.md) | ⏳ Pending |
-| 26 | [News Feed Ranking](system-design/problems/26-news-feed-ranking.md) | ⏳ Pending |
-| 27 | [Content Moderation](system-design/problems/27-content-moderation.md) | ⏳ Pending |
-| 28 | [Reddit-style Forum](system-design/problems/28-reddit-style-forum.md) | ⏳ Pending |
-| 29 | [Video Conferencing](system-design/problems/29-video-conferencing.md) | ⏳ Pending |
+| # | Problem |
+|---|---------|
+| 21 | [Notification System](system-design/problems/21-notification-system.md) |
+| 22 | [Online Messaging App](system-design/problems/22-online-messaging-app.md) |
+| 23 | [Mail Sharing](system-design/problems/23-mail-sharing.md) |
+| 24 | [Content Sharing / Microblog](system-design/problems/24-content-sharing-microblog.md) |
+| 25 | [Social Feed / Timeline](system-design/problems/25-social-feed-timeline.md) |
+| 26 | [News Feed Ranking](system-design/problems/26-news-feed-ranking.md) |
+| 27 | [Content Moderation](system-design/problems/27-content-moderation.md) |
+| 28 | [Reddit-style Forum](system-design/problems/28-reddit-style-forum.md) |
+| 29 | [Video Conferencing](system-design/problems/29-video-conferencing.md) |
 
 #### Phase 4 — Media & Content
-| # | Problem | Status |
-|---|---|---|
-| 30 | [Video Streaming (VOD)](system-design/problems/30-video-streaming-vod.md) | ⏳ Pending |
-| 31 | [Music Streaming](system-design/problems/31-music-streaming.md) | ⏳ Pending |
-| 32 | [Live Streaming](system-design/problems/32-live-streaming.md) | ⏳ Pending |
-| 33 | [Recommendation Engine](system-design/problems/33-recommendation-engine.md) | ⏳ Pending |
-| 34 | [File Storage Service](system-design/problems/34-file-storage-service.md) | ⏳ Pending |
-| 35 | [Collaborative Document Editor](system-design/problems/35-collaborative-document-editor.md) | ⏳ Pending |
+| # | Problem |
+|---|---------|
+| 30 | [Video Streaming (VOD)](system-design/problems/30-video-streaming-vod.md) |
+| 31 | [Music Streaming](system-design/problems/31-music-streaming.md) |
+| 32 | [Live Streaming](system-design/problems/32-live-streaming.md) |
+| 33 | [Recommendation Engine](system-design/problems/33-recommendation-engine.md) |
+| 34 | [File Storage Service](system-design/problems/34-file-storage-service.md) |
+| 35 | [Collaborative Document Editor](system-design/problems/35-collaborative-document-editor.md) |
 
 #### Phase 5 — Location & Mobility
-| # | Problem | Status |
-|---|---|---|
-| 36 | [Proximity Service](system-design/problems/36-proximity-service.md) | ⏳ Pending |
-| 37 | [Ride Booking](system-design/problems/37-ride-booking.md) | ⏳ Pending |
-| 38 | [Food Delivery](system-design/problems/38-food-delivery.md) | ⏳ Pending |
-| 39 | [Dating App](system-design/problems/39-dating-app.md) | ⏳ Pending |
-| 40 | [Proximity Matchmaking](system-design/problems/40-proximity-matchmaking.md) | ⏳ Pending |
+| # | Problem |
+|---|---------|
+| 36 | [Proximity Service](system-design/problems/36-proximity-service.md) |
+| 37 | [Ride Booking](system-design/problems/37-ride-booking.md) |
+| 38 | [Food Delivery](system-design/problems/38-food-delivery.md) |
+| 39 | [Dating App](system-design/problems/39-dating-app.md) |
+| 40 | [Proximity Matchmaking](system-design/problems/40-proximity-matchmaking.md) |
 
 #### Phase 6 — Fintech
-| # | Problem | Status |
-|---|---|---|
-| 41 | [Payment System](system-design/problems/41-payment-system.md) | ⏳ Pending |
-| 42 | [Digital Wallet](system-design/problems/42-digital-wallet.md) | ⏳ Pending |
-| 43 | [E-Commerce Checkout](system-design/problems/43-ecommerce-checkout.md) | ⏳ Pending |
-| 44 | [Travel Booking](system-design/problems/44-travel-booking.md) | ⏳ Pending |
-| 45 | [Trading Platform](system-design/problems/45-trading-platform.md) | ⏳ Pending |
-| 46 | [Fraud Detection](system-design/problems/46-fraud-detection.md) | ⏳ Pending |
+| # | Problem |
+|---|---------|
+| 41 | [Payment System](system-design/problems/41-payment-system.md) |
+| 42 | [Digital Wallet](system-design/problems/42-digital-wallet.md) |
+| 43 | [E-Commerce Checkout](system-design/problems/43-ecommerce-checkout.md) |
+| 44 | [Travel Booking](system-design/problems/44-travel-booking.md) |
+| 45 | [Trading Platform](system-design/problems/45-trading-platform.md) |
+| 46 | [Fraud Detection](system-design/problems/46-fraud-detection.md) |
 
 #### Phase 7 — Distributed Systems
-| # | Problem | Status |
-|---|---|---|
-| 47 | [Web Crawler](system-design/problems/47-web-crawler.md) | ⏳ Pending |
-| 48 | [Distributed Task Scheduler](system-design/problems/48-distributed-task-scheduler.md) | ⏳ Pending |
-| 49 | [Log Ingestion System](system-design/problems/49-log-ingestion-system.md) | ⏳ Pending |
-| 50 | [Metrics / Monitoring](system-design/problems/50-metrics-monitoring.md) | ⏳ Pending |
-| 51 | [Distributed Tracing](system-design/problems/51-distributed-tracing.md) | ⏳ Pending |
-| 52 | [Online Judge](system-design/problems/52-online-judge.md) | ⏳ Pending |
-
-**Progress:** 1 / 52 problems complete
+| # | Problem |
+|---|---------|
+| 47 | [Web Crawler](system-design/problems/47-web-crawler.md) |
+| 48 | [Distributed Task Scheduler](system-design/problems/48-distributed-task-scheduler.md) |
+| 49 | [Log Ingestion System](system-design/problems/49-log-ingestion-system.md) |
+| 50 | [Metrics / Monitoring](system-design/problems/50-metrics-monitoring.md) |
+| 51 | [Distributed Tracing](system-design/problems/51-distributed-tracing.md) |
+| 52 | [Online Judge](system-design/problems/52-online-judge.md) |
 
 ---
 
@@ -128,7 +124,7 @@ Organized into **7 progressive phases** — foundations first, then composites t
 
 ---
 
-## 📚 Topics Covered
+## 📚 DSA Topics Covered
 
 ### 🔹 Linear Data Structures
 
@@ -177,7 +173,7 @@ Organized into **7 progressive phases** — foundations first, then composites t
 
 ---
 
-## 📌 Learning Path (Recommended Order)
+## 📌 DSA Learning Path (Recommended Order)
 
 Follow this order for a smooth learning curve. Each stage builds on the previous one.
 
@@ -194,7 +190,7 @@ Follow this order for a smooth learning curve. Each stage builds on the previous
 
 ---
 
-## 📊 Progress Tracker
+## 📊 DSA Progress Tracker
 
 Track your journey through all 150+ problems. Check them off as you go!
 
@@ -231,7 +227,7 @@ Track your journey through all 150+ problems. Check them off as you go!
 - ✅ **Key techniques** and **common pitfalls** sections
 - ✅ **Advanced algorithms** (Union-Find, Topological Sort, MST, etc.)
 - ✅ **NeetCode 150 aligned** curriculum
-- ✅ **52 System Design problems** with full walkthroughs
+- ✅ **52 System Design problems** with full 16-section walkthroughs
 - ✅ **System Design fundamentals** (estimation, databases, building blocks)
 
 ---
@@ -251,6 +247,7 @@ Track your journey through all 150+ problems. Check them off as you go!
 - [MkDocs](https://www.mkdocs.org/) + [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
 - [Mermaid](https://mermaid.js.org/) for DSA diagrams
 - [PlantUML](https://plantuml.com/) for System Design diagrams
+- [D2](https://d2lang.com/) for architecture diagrams
 - Deployed on [GitHub Pages](https://pages.github.com/)
 
 ---

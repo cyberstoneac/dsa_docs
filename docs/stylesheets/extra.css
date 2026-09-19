@@ -1,0 +1,50 @@
+/* ============================================
+   D2 Diagrams — Force scroll for wide diagrams
+   ============================================ */
+
+/* Any element directly containing a D2 SVG becomes scrollable */
+div:has(> svg[id^="d2"]),
+.d2-render,
+.d2-diagram {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  margin: 16px 0;
+}
+
+/* Force the SVG to a minimum readable width */
+svg[id^="d2"] {
+  min-width: 900px !important;
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+  display: block;
+}
+
+/* ============================================
+   PlantUML Diagrams — Keep them readable
+   ============================================ */
+
+.plantuml img,
+.plantuml svg,
+img.plantuml {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px auto;
+}
+
+/* ============================================
+   Mermaid Diagrams (DSA docs)
+   ============================================ */
+
+.mermaid,
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  overflow-x: auto;
+}

@@ -113,30 +113,28 @@ Headroom for retries: ~2 ms
 
 ## 3. High-Level Design
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor Client
-component "API Gateway" as GW
-component "Rate Limiter Service" as RL
-component "Rules Cache (in-memory)" as Rules
-database "Redis Cluster" as Redis
-component "Backing API" as API
-database "Config Store (etcd)" as Config
-database "Metrics (Prometheus)" as Metrics
+client: Client {shape: person}
+gw: "API Gateway" {shape: hexagon}
+rl: "Rate Limiter Service" {shape: rectangle}
+rules: "Rules Cache" {shape: rectangle}
+redis: "Redis Cluster" {shape: cylinder}
+api: "Backing API" {shape: rectangle}
+config: "Config Store (etcd)" {shape: cylinder}
+metrics: "Metrics (Prometheus)" {shape: cylinder}
 
-Client --> GW : HTTP request
-GW --> RL : check limit
-RL --> Rules : load rule
-Rules --> Config : fallback
-RL --> Redis : atomic increment
-Redis --> RL : count + TTL
-RL --> GW : allow or deny
-GW --> API : forward if allowed
-GW --> Client : 429 if denied
-RL --> Metrics : publish check result
-@enduml
+client -> gw: HTTP request
+gw -> rl: check limit
+rl -> rules: load rule
+rules -> config: fallback
+rl -> redis: atomic increment
+redis -> rl: count + TTL
+rl -> gw: allow or deny
+gw -> api: forward if allowed
+gw -> client: 429 if denied
+rl -> metrics: publish check result
 ```
 
 ### Component Responsibilities
@@ -242,19 +240,17 @@ Content-Type: application/json
 
 ### 5.1 Token Bucket
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "Bucket capacity 10" as B
-rectangle "Refill 1 token/sec" as R
-rectangle "Request consumes 1 token" as Req
-rectangle "Allowed if token >= cost" as A
+bucket: "Bucket Capacity 10" {shape: cylinder}
+refill: "Refill 1 token per sec" {shape: rectangle}
+req: "Request" {shape: rectangle}
+allow: "Allow if token >= cost" {shape: rectangle}
 
-R --> B : add tokens up to cap
-Req --> B
-B --> A
-@enduml
+refill -> bucket: add tokens up to cap
+req -> bucket
+bucket -> allow
 ```
 
 **How it works:**
@@ -310,19 +306,17 @@ The Lua script runs atomically in Redis — no race conditions between read and 
 
 ### 5.2 Leaky Bucket
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-queue "Queue FIFO" as Q
-rectangle "Leak rate 1 req/sec" as L
-rectangle "Request" as Req
-rectangle "Processed" as Out
+q: "Queue FIFO" {shape: queue}
+leak: "Leak rate 1 req per sec" {shape: rectangle}
+req: "Request" {shape: rectangle}
+out: "Processed" {shape: rectangle}
 
-Req --> Q : enqueue
-Q --> L : drain at fixed rate
-L --> Out
-@enduml
+req -> q: enqueue
+q -> leak: drain at fixed rate
+leak -> out
 ```
 
 **How it works:**
@@ -341,15 +335,15 @@ L --> Out
 
 ### 5.3 Fixed Window Counter
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "Window 12:00:00 - 12:00:59" as W1
-rectangle "Window 12:01:00 - 12:01:59" as W2
-note right of W1 : Counter resets at boundary
-note right of W2 : New counter starts at 0
-@enduml
+w1: "Window 12:00:00 - 12:00:59" {shape: rectangle}
+w2: "Window 12:01:00 - 12:01:59" {shape: rectangle}
+note: "Counter resets at boundary | New counter starts at 0" {shape: rectangle}
+
+w1 -> w2
+w2 -> note
 ```
 
 **How it works:**
@@ -497,19 +491,17 @@ Rate limits must be **globally accurate**, but Redis itself is distributed. Thre
 
 ### Approach 1: Central Redis Cluster (Simplest)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "API Server 1" as S1
-component "API Server 2" as S2
-component "API Server 3" as S3
-database "Redis Cluster" as Redis
+s1: "API Server 1" {shape: rectangle}
+s2: "API Server 2" {shape: rectangle}
+s3: "API Server 3" {shape: rectangle}
+redis: "Redis Cluster" {shape: cylinder}
 
-S1 --> Redis : check
-S2 --> Redis : check
-S3 --> Redis : check
-@enduml
+s1 -> redis: check
+s2 -> redis: check
+s3 -> redis: check
 ```
 
 - All servers check the same Redis cluster
@@ -521,43 +513,39 @@ S3 --> Redis : check
 
 ### Approach 2: Local Counters with Periodic Sync
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "API Server 1 (local counter)" as L1
-component "API Server 2 (local counter)" as L2
-component "API Server 3 (local counter)" as L3
-database "Redis Sync" as Redis
+l1: "API Server 1 (local counter)" {shape: rectangle}
+l2: "API Server 2 (local counter)" {shape: rectangle}
+l3: "API Server 3 (local counter)" {shape: rectangle}
+redis: "Redis Sync" {shape: cylinder}
 
-L1 --> Redis : sync every 100 ms
-L2 --> Redis : sync every 100 ms
-L3 --> Redis : sync every 100 ms
-@enduml
+l1 -> redis: sync every 100 ms
+l2 -> redis: sync every 100 ms
+l3 -> redis: sync every 100 ms
 ```
 
 - Each server has a local counter
 - Periodically syncs with Redis
 - **Fast** (local check, no round-trip)
-- **Approximate** (may over-admit by up to N-1 servers x local limit)
+- **Approximate** (may over-admit by up to N-1 servers × local limit)
 
 **When to use:** Extremely high QPS where 5ms matters, and slight over-admission is OK.
 
 ### Approach 3: Sharded Counters by User
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-component "Router" as Router
-database "Shard 1 (users A-H)" as R1
-database "Shard 2 (users I-P)" as R2
-database "Shard 3 (users Q-Z)" as R3
+router: Router {shape: hexagon}
+r1: "Shard 1 (users A-H)" {shape: cylinder}
+r2: "Shard 2 (users I-P)" {shape: cylinder}
+r3: "Shard 3 (users Q-Z)" {shape: cylinder}
 
-Router --> R1
-Router --> R2
-Router --> R3
-@enduml
+router -> r1
+router -> r2
+router -> r3
 ```
 
 - Shard by user_id
@@ -617,21 +605,19 @@ Evaluation order: most specific wins.
 
 ### Rule Update Flow
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor Admin
-database "Config DB" as DB
-component "etcd Watch" as Watch
-component "Rate Limiter 1" as RL1
-component "Rate Limiter 2" as RL2
+admin: Admin {shape: person}
+db: "Config DB" {shape: cylinder}
+watch: "etcd Watch" {shape: rectangle}
+rl1: "Rate Limiter 1" {shape: rectangle}
+rl2: "Rate Limiter 2" {shape: rectangle}
 
-Admin --> DB : update rule
-DB --> Watch : publish change
-Watch --> RL1 : invalidate cache
-Watch --> RL2 : invalidate cache
-@enduml
+admin -> db: update rule
+db -> watch: publish change
+watch -> rl1: invalidate cache
+watch -> rl2: invalidate cache
 ```
 
 Rules are cached locally; changes propagate within 100 ms.
@@ -702,23 +688,21 @@ Example:
 
 ### Multi-Region
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-cloud "Global DNS" as DNS
-cloud "US Region" as US
-cloud "EU Region" as EU
-cloud "APAC Region" as APAC
-component "API Gateway" as GW
-database "Local Redis" as Redis
+dns: "Global DNS" {shape: cloud}
+us: "US Region" {shape: cloud}
+eu: "EU Region" {shape: cloud}
+apac: "APAC Region" {shape: cloud}
+gw: "API Gateway" {shape: hexagon}
+redis: "Local Redis" {shape: cylinder}
 
-DNS --> US : US users
-DNS --> EU : EU users
-DNS --> APAC : APAC users
-US --> GW : local rate limiter
-GW --> Redis : local counters
-@enduml
+dns -> us: US users
+dns -> eu: EU users
+dns -> apac: APAC users
+us -> gw: local rate limiter
+gw -> redis: local counters
 ```
 
 - **Per-region rate limits**: Each region has its own Redis
@@ -951,6 +935,7 @@ Useful for cost-based abuse prevention.
 | Client hints | Standard `X-RateLimit-*` headers |
 
 **Key takeaways:**
+
 - Rate limiter must be **fast** — on the critical path of every request
 - **Token bucket** is the industry standard for good reason
 - **Atomic Redis operations** prevent race conditions
@@ -961,6 +946,7 @@ Useful for cost-based abuse prevention.
 - **Per-region limits** beat global consistency for most cases
 
 **Similar Pattern Problems:**
+
 - Distributed Cache (Redis internals)
 - API Gateway (rate limiter is often part of the gateway)
 - Distributed Lock (uses similar atomic Redis ops)

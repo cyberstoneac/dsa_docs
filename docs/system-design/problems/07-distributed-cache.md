@@ -997,6 +997,7 @@ For very high write throughput:
 | Failure mode | Fallback to DB with rate limit |
 
 **Key takeaways:**
+
 - **Consistent hashing with virtual nodes** minimizes disruption during scale events
 - **LRU or W-TinyLFU** eviction is best general-purpose
 - **Cache-aside** is the default pattern; write-through for critical data
@@ -1009,6 +1010,7 @@ For very high write throughput:
 - **Monitoring hit ratio** is the top cache health signal
 
 **Similar Pattern Problems:**
+
 - Rate Limiter (uses Redis for counters)
 - Distributed Lock (uses Redis/etcd for coordination)
 - URL Shortener (uses Redis for redirect cache)

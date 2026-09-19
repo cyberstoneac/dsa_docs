@@ -44,43 +44,53 @@
 ## 🔹 Basic Template
 
 ### Database Selection Flow
-```plantuml
-@startuml
-skinparam componentStyle rectangle
 
-start
-:Identify data shape;
-if (Relational with joins?) then (yes)
-  if (Need ACID?) then (yes)
-    :PostgreSQL / MySQL;
-  else (no)
-    :NewSQL (CockroachDB, TiDB);
-  endif
-else (no)
-  if (Write-heavy at scale?) then (yes)
-    :Cassandra / DynamoDB / ScyllaDB;
-  else (no)
-    if (Document / JSON?) then (yes)
-      :MongoDB / Couchbase;
-    else (no)
-      if (Full-text search?) then (yes)
-        :Elasticsearch / OpenSearch;
-      else (no)
-        if (Time-series?) then (yes)
-          :InfluxDB / TimescaleDB / Prometheus;
-        else (no)
-          if (Key-value cache?) then (yes)
-            :Redis / Memcached;
-          else (no)
-            :Graph DB (Neo4j) or custom;
-          endif
-        endif
-      endif
-    endif
-  endif
-endif
-stop
-@enduml
+```d2
+direction: down
+
+start: Start {shape: circle}
+identify: "Identify data shape" {shape: rectangle}
+q1: "Relational with joins?" {shape: diamond}
+q2: "Need ACID?" {shape: diamond}
+sql: "PostgreSQL / MySQL" {shape: cylinder}
+newsql: "NewSQL (CockroachDB, TiDB)" {shape: cylinder}
+q3: "Write-heavy at scale?" {shape: diamond}
+nosql: "Cassandra / DynamoDB / ScyllaDB" {shape: cylinder}
+q4: "Document / JSON?" {shape: diamond}
+mongo: "MongoDB / Couchbase" {shape: cylinder}
+q5: "Full-text search?" {shape: diamond}
+es: "Elasticsearch / OpenSearch" {shape: cylinder}
+q6: "Time-series?" {shape: diamond}
+tsdb: "InfluxDB / TimescaleDB" {shape: cylinder}
+q7: "Key-value cache?" {shape: diamond}
+kv: "Redis / Memcached" {shape: cylinder}
+graph: "Graph DB (Neo4j)" {shape: cylinder}
+end: End {shape: circle}
+
+start -> identify
+identify -> q1
+q1 -> q2: yes
+q1 -> q3: no
+q2 -> sql: yes
+q2 -> newsql: no
+q3 -> nosql: yes
+q3 -> q4: no
+q4 -> mongo: yes
+q4 -> q5: no
+q5 -> es: yes
+q5 -> q6: no
+q6 -> tsdb: yes
+q6 -> q7: no
+q7 -> kv: yes
+q7 -> graph: no
+sql -> end
+newsql -> end
+nosql -> end
+mongo -> end
+es -> end
+tsdb -> end
+kv -> end
+graph -> end
 ```
 
 ### The 5 Questions Before Picking a DB
@@ -245,19 +255,17 @@ But NOT for:
 
 ### 1. Range-Based Sharding
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-rectangle "Shard 1\nuser_id 1 - 1M" as S1
-rectangle "Shard 2\nuser_id 1M - 2M" as S2
-rectangle "Shard 3\nuser_id 2M - 3M" as S3
+app: App {shape: hexagon}
+s1: "Shard 1 (user_id 1-1M)" {shape: cylinder}
+s2: "Shard 2 (user_id 1M-2M)" {shape: cylinder}
+s3: "Shard 3 (user_id 2M-3M)" {shape: cylinder}
 
-actor "App" as App
-App --> S1
-App --> S2
-App --> S3
-@enduml
+app -> s1
+app -> s2
+app -> s3
 ```
 
 **Pros:** Simple, range queries efficient within a shard
@@ -265,21 +273,19 @@ App --> S3
 
 ### 2. Hash-Based Sharding
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor "App" as App
-rectangle "Hash Function\nshard = hash(key) % N" as Hash
-rectangle "Shard 1" as S1
-rectangle "Shard 2" as S2
-rectangle "Shard 3" as S3
+app: App {shape: hexagon}
+hash: "Hash Function (shard = hash(key) % N)" {shape: rectangle}
+s1: "Shard 1" {shape: cylinder}
+s2: "Shard 2" {shape: cylinder}
+s3: "Shard 3" {shape: cylinder}
 
-App --> Hash
-Hash --> S1
-Hash --> S2
-Hash --> S3
-@enduml
+app -> hash
+hash -> s1
+hash -> s2
+hash -> s3
 ```
 
 **Pros:** Even distribution, no hotspots
@@ -287,21 +293,19 @@ Hash --> S3
 
 ### 3. Directory-Based Sharding
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor "App" as App
-rectangle "Lookup Service\n(key -> shard map)" as Lookup
-rectangle "Shard 1" as S1
-rectangle "Shard 2" as S2
-rectangle "Shard 3" as S3
+app: App {shape: hexagon}
+lookup: "Lookup Service (key -> shard)" {shape: rectangle}
+s1: "Shard 1" {shape: cylinder}
+s2: "Shard 2" {shape: cylinder}
+s3: "Shard 3" {shape: cylinder}
 
-App --> Lookup
-Lookup --> S1
-Lookup --> S2
-Lookup --> S3
-@enduml
+app -> lookup
+lookup -> s1
+lookup -> s2
+lookup -> s3
 ```
 
 **Pros:** Flexible (move keys without rehashing)
@@ -309,22 +313,20 @@ Lookup --> S3
 
 ### 4. Geo-Based Sharding
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "US Shard" as US
-rectangle "EU Shard" as EU
-rectangle "APAC Shard" as APAC
+u1: "US User" {shape: person}
+u2: "EU User" {shape: person}
+u3: "APAC User" {shape: person}
 
-actor "US User" as U1
-actor "EU User" as U2
-actor "APAC User" as U3
+us: "US Shard" {shape: cylinder}
+eu: "EU Shard" {shape: cylinder}
+apac: "APAC Shard" {shape: cylinder}
 
-U1 --> US
-U2 --> EU
-U3 --> APAC
-@enduml
+u1 -> us
+u2 -> eu
+u3 -> apac
 ```
 
 **Pros:** Low latency, compliance (GDPR)
@@ -332,20 +334,13 @@ U3 --> APAC
 
 ### 5. Consistent Hashing
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-rectangle "Hash Ring\n0 to 2^32 - 1" as Ring
-note right of Ring
-  Server A at 100
-  Server B at 500
-  Server C at 900
-  Keys 101-500 -> B
-  Keys 501-900 -> C
-  Keys 901-100 -> A
-end note
-@enduml
+ring: "Hash Ring (0 to 2^32 - 1)" {shape: cylinder}
+note: "Server A at position 100 | Server B at position 500 | Server C at position 900 | Keys 101-500 -> B | Keys 501-900 -> C | Keys 901-100 -> A" {shape: rectangle}
+
+ring -> note
 ```
 
 **Pros:** Minimal rebalancing on scale events (only 1/N keys move)
@@ -367,21 +362,19 @@ end note
 
 ### 1. Master-Slave (Primary-Replica)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor "App" as App
-database "Master\n(writes)" as M
-database "Slave 1\n(reads)" as S1
-database "Slave 2\n(reads)" as S2
+app: App {shape: hexagon}
+m: "Master (writes)" {shape: cylinder}
+s1: "Slave 1 (reads)" {shape: cylinder}
+s2: "Slave 2 (reads)" {shape: cylinder}
 
-App --> M : writes
-App --> S1 : reads
-App --> S2 : reads
-M --> S1 : replicate
-M --> S2 : replicate
-@enduml
+app -> m: writes
+app -> s1: reads
+app -> s2: reads
+m -> s1: replicate
+m -> s2: replicate
 ```
 
 **Pros:** Simple, read scaling, HA with failover
@@ -389,18 +382,16 @@ M --> S2 : replicate
 
 ### 2. Master-Master (Multi-Primary)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: right
 
-actor "App" as App
-database "Master 1\n(writes + reads)" as M1
-database "Master 2\n(writes + reads)" as M2
+app: App {shape: hexagon}
+m1: "Master 1 (writes + reads)" {shape: cylinder}
+m2: "Master 2 (writes + reads)" {shape: cylinder}
 
-App --> M1
-App --> M2
-M1 <--> M2 : bidirectional replication
-@enduml
+app -> m1
+app -> m2
+m1 <-> m2: bidirectional replication
 ```
 
 **Pros:** Write scaling, no single write SPOF
@@ -408,26 +399,20 @@ M1 <--> M2 : bidirectional replication
 
 ### 3. Leaderless (Quorum)
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
+```d2
+direction: down
 
-actor "App" as App
-database "Node A" as A
-database "Node B" as B
-database "Node C" as C
+app: App {shape: hexagon}
+a: "Node A" {shape: cylinder}
+b: "Node B" {shape: cylinder}
+c: "Node C" {shape: cylinder}
+note: "N = 3 replicas | W = 2 (write quorum) | R = 2 (read quorum) | R + W > N => strong consistency" {shape: rectangle}
 
-App --> A : write
-App --> B : write
-A --> C : replicate
-B --> C : replicate
-note bottom
-  N = 3 replicas
-  W = 2 (write quorum)
-  R = 2 (read quorum)
-  R + W > N => strong consistency
-end note
-@enduml
+app -> a: write
+app -> b: write
+a -> c: replicate
+b -> c: replicate
+app -> note
 ```
 
 **Pros:** No leader election, always available, tunable consistency

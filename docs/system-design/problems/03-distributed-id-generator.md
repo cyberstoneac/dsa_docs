@@ -914,6 +914,7 @@ For ultra-high precision:
 | Sortability | Roughly time-ordered (millisecond precision) |
 
 **Key takeaways:**
+
 - **Snowflake** is the industry standard for distributed unique IDs
 - **64 bits** fits in a `long` — database-friendly
 - **Time-sortable** IDs make B-tree indexes efficient
@@ -924,6 +925,7 @@ For ultra-high precision:
 - IDs are **enumerable** — if that's a concern, add a random suffix
 
 **Similar Pattern Problems:**
+
 - URL Shortener (uses Snowflake for short codes)
 - Twitter / Social Feed (uses Snowflake for post IDs)
 - Payment System (uses Snowflake for transaction IDs)

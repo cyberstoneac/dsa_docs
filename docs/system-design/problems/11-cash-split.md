@@ -26,6 +26,7 @@ Simplified settlement:
 **Real-world apps:** Splitwise, Settle Up, Tricount, Venmo, Google Pay (split feature).
 
 **Why it's interesting:**
+
 - Deceptively simple — looks like CRUD, but has:
   - Debt simplification algorithm (graph problem)
   - Multi-currency handling
@@ -1284,6 +1285,7 @@ For groups that want full transparency:
 | Cost | ~$19K/month |
 
 **Key takeaways:**
+
 - **This is a correctness problem, not a scale problem** — 175 writes/sec is trivial, but money must never be wrong
 - **Materialized balances** trade write complexity for read speed — worth it because reads are 20x writes
 - **Greedy debt simplification** is fast, good enough, and predictable; optimal is NP-hard
@@ -1296,6 +1298,7 @@ For groups that want full transparency:
 - **Costs are tiny** — $0.0004 per user per month; correctness is the focus
 
 **Similar Pattern Problems:**
+
 - Payment System (same idempotency, ACID, consistency requirements)
 - Digital Wallet (double-entry ledger)
 - E-Commerce Checkout (multi-party settlement)

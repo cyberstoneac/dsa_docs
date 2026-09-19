@@ -64,6 +64,13 @@ plugins:
   - plantuml-local:
       shortname: plantuml
       cache: true
+  - d2:
+      theme: 0
+      dark_theme: 200
+  - glightbox:
+      zoomable: true
+  - panzoom:
+      full_screen: True   # optional — enable fullscreen button
 
 
 markdown_extensions:
@@ -103,6 +110,9 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
         - name: plantuml
           class: plantuml
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: d2
+          class: d2
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true

@@ -31,6 +31,7 @@ System must handle:
 **Real-world apps:** Practo, Apollo 24/7, Zocdoc, 1mg, DoctorOnCall, Lybrate.
 
 **Why it's interesting:**
+
 - **Time slot locking** at scale (like ticket booking, but per-doctor)
 - **Recurring availability** (doctor's weekly schedule)
 - **Teleconsult vs in-person** (different resource requirements)
@@ -1830,6 +1831,7 @@ For diabetes, hypertension:
 | Cost | ~$215K/month for 100M users |
 
 **Key takeaways:**
+
 - **Slot locking is the core problem** — Redis SET NX + TTL prevents double-booking
 - **Hybrid slot storage** balances storage and freshness
 - **Doctor schedules are templates** — generate slots with exceptions
@@ -1842,6 +1844,7 @@ For diabetes, hypertension:
 - **Patient trust is paramount** — privacy, security, and reliability drive design
 
 **Similar Pattern Problems:**
+
 - Show / Ticket Booking (slot locking, payment flow)
 - Calendar / Scheduling (recurring availability, exceptions)
 - Ride Booking (real-time slot allocation, payment)
