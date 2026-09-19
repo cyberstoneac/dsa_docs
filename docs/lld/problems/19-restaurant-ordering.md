@@ -616,12 +616,46 @@ left to right direction
 skinparam nodesep 20
 skinparam ranksep 30
 
-enum TableState { FREE SEATED ORDERING EATING PAYING CLEANING }
-enum TableSessionState { OPEN BILLED PAID CLOSED }
-enum Course { APPETIZER MAIN DESSERT DRINK SIDE }
-enum Station { GRILL SALAD FRYER BAR DESSERT }
-enum TicketState { QUEUED PREPARING READY SERVED }
-enum SplitType { BY_ITEM BY_HEAD CUSTOM_AMOUNT PAY_ALL }
+enum TableState {
+  FREE
+  SEATED
+  ORDERING
+  EATING
+  PAYING
+  CLEANING
+}
+enum TableSessionState {
+  OPEN
+  BILLED
+  PAID
+  CLOSED
+}
+enum Course {
+  APPETIZER
+  MAIN
+  DESSERT
+  DRINK
+  SIDE
+}
+enum Station {
+  GRILL
+  SALAD
+  FRYER
+  BAR
+  DESSERT
+}
+enum TicketState {
+  QUEUED
+  PREPARING
+  READY
+  SERVED
+}
+enum SplitType {
+  BY_ITEM
+  BY_HEAD
+  CUSTOM_AMOUNT
+  PAY_ALL
+}
 
 class Table {
   - String id

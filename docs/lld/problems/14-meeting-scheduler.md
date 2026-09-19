@@ -365,107 +365,126 @@ left to right direction
 skinparam nodesep 20
 skinparam ranksep 30
 
-enum MeetingStatus { TENTATIVE CONFIRMED CANCELLED COMPLETED }
-enum ResponseStatus { PENDING ACCEPTED DECLINED TENTATIVE }
-enum RecurrenceFreq { DAILY WEEKLY MONTHLY YEARLY }
-enum ReminderChannel { EMAIL PUSH SMS }
+enum MeetingStatus {
+  TENTATIVE
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum ResponseStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  TENTATIVE
+}
+
+enum RecurrenceFreq {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum ReminderChannel {
+  EMAIL
+  PUSH
+  SMS
+}
 
 class TimeRange {
-  - ZonedDateTime start
-  - ZonedDateTime end
-  + boolean overlaps(TimeRange o)
-  + Duration duration()
-  + TimeRange inZone(ZoneId z)
-  + TimeRange merge(TimeRange o)
+  - start : ZonedDateTime
+  - end : ZonedDateTime
+  + overlaps(TimeRange o) : boolean
+  + duration() : Duration
+  + inZone(ZoneId z) : TimeRange
+  + merge(TimeRange o) : TimeRange
 }
 
 class User {
-  - String id
-  - String name
-  - ZoneId defaultZone
-  + ZoneId defaultZone()
+  - id : String
+  - name : String
+  - defaultZone : ZoneId
+  + defaultZone() : ZoneId
 }
 
 class Room {
-  - String id
-  - String name
-  - int capacity
-  - String location
-  + String id()
-  + int capacity()
+  - id : String
+  - name : String
+  - capacity : int
+  - location : String
+  + id() : String
+  + capacity() : int
 }
 
 class RecurrenceRule {
-  - RecurrenceFreq freq
-  - int interval
-  - Set<DayOfWeek> byDay
-  - Integer count
-  - LocalDate until
+  - freq : RecurrenceFreq
+  - interval : int
+  - byDay : Set
+  - count : Integer
+  - until : LocalDate
 }
 
 class Meeting {
-  - String id
-  - String organizerId
-  - String title
-  - TimeRange range
-  - ZoneId zone
-  - String roomId
-  - RecurrenceRule recurrence
-  - MeetingStatus status
-  - List<String> attendeeIds
-  - String idempotencyKey
-  + String id()
-  + MeetingStatus status()
-  + void confirm()
-  + void cancel()
+  - id : String
+  - organizerId : String
+  - title : String
+  - range : TimeRange
+  - zone : ZoneId
+  - roomId : String
+  - recurrence : RecurrenceRule
+  - status : MeetingStatus
+  - attendeeIds : List
+  - idempotencyKey : String
+  + id() : String
+  + status() : MeetingStatus
+  + confirm()
+  + cancel()
 }
 
 class Invitation {
-  - String meetingId
-  - String userId
-  - ResponseStatus response
-  + void accept()
-  + void decline()
-  + void tentative()
+  - meetingId : String
+  - userId : String
+  - response : ResponseStatus
+  + accept()
+  + decline()
+  + tentative()
 }
 
 class Reminder {
-  - String id
-  - String meetingId
-  - Instant at
-  - ReminderChannel channel
+  - id : String
+  - meetingId : String
+  - at : Instant
+  - channel : ReminderChannel
 }
 
 class Calendar {
-  - String userId
-  - List<Meeting> meetings
-  + void add(Meeting m)
-  + List<Meeting> meetings()
+  - userId : String
+  - meetings : List
+  + add(Meeting m)
+  + meetings() : List
 }
 
 class AvailabilityService {
-  + List<TimeRange> findFreeSlots(List<List<Interval>> busy, Instant start, Instant end, Duration dur, ZoneId zone)
+  + findFreeSlots(List busy, Instant start, Instant end, Duration dur, ZoneId zone) : List
 }
 
 class RecurrenceExpander {
-  + List<TimeRange> expand(TimeRange base, RecurrenceRule rule, ZoneId zone, int max)
+  + expand(TimeRange base, RecurrenceRule rule, ZoneId zone, int max) : List
 }
 
 class MeetingScheduler {
-  - Map<String, Calendar> calendars
-  - Map<String, Room> rooms
-  - Map<String, Meeting> meetings
-  - AvailabilityService availability
-  - RecurrenceExpander expander
-  - Clock clock
-  + Meeting schedule(String organizerId, String title, TimeRange range,
-                     List<String> attendees, String roomId, RecurrenceRule rule,
-                     String idempotencyKey)
-  + List<TimeRange> suggest(String organizerId, List<String> attendees,
-                           Duration duration, TimeRange window, String roomId)
-  + void cancel(String meetingId)
-  + void respond(String meetingId, String userId, ResponseStatus response)
-  + List<TimeRange> busy(String userId, TimeRange window)
+  - calendars : Map
+  - rooms : Map
+  - meetings : Map
+  - availability : AvailabilityService
+  - expander : RecurrenceExpander
+  - clock : Clock
+  + schedule(String organizerId, String title, TimeRange range, List attendees, String roomId, RecurrenceRule rule, String idempotencyKey) : Meeting
+  + suggest(String organizerId, List attendees, Duration duration, TimeRange window, String roomId) : List
+  + cancel(String meetingId)
+  + respond(String meetingId, String userId, ResponseStatus response)
+  + busy(String userId, TimeRange window) : List
 }
 
 MeetingScheduler --> AvailabilityService

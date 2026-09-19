@@ -414,122 +414,150 @@ left to right direction
 skinparam nodesep 20
 skinparam ranksep 30
 
-enum CabinClass { ECONOMY PREMIUM BUSINESS FIRST }
-enum PassengerType { ADULT CHILD INFANT }
-enum PNRStatus { HELD TICKETED CANCELLED CHECKED_IN COMPLETED }
-enum SegmentStatus { CONFIRMED WAITLISTED CANCELLED }
-enum AncillaryType { BAGGAGE MEAL SEAT PRIORITY_BOARDING }
+enum CabinClass {
+  ECONOMY
+  PREMIUM
+  BUSINESS
+  FIRST
+}
+
+enum PassengerType {
+  ADULT
+  CHILD
+  INFANT
+}
+
+enum PNRStatus {
+  HELD
+  TICKETED
+  CANCELLED
+  CHECKED_IN
+  COMPLETED
+}
+
+enum SegmentStatus {
+  CONFIRMED
+  WAITLISTED
+  CANCELLED
+}
+
+enum AncillaryType {
+  BAGGAGE
+  MEAL
+  SEAT
+  PRIORITY_BOARDING
+}
 
 class Flight {
-  - String id
-  - String flightNumber
-  - String origin
-  - String destination
-  + String id()
+  - id : String
+  - flightNumber : String
+  - origin : String
+  - destination : String
+  + id() : String
 }
 
 class FlightInstance {
-  - String id
-  - String flightId
-  - LocalDate date
-  - ZonedDateTime departure
-  - ZonedDateTime arrival
-  + String id()
-  + ZonedDateTime departure()
-  + ZonedDateTime arrival()
+  - id : String
+  - flightId : String
+  - date : LocalDate
+  - departure : ZonedDateTime
+  - arrival : ZonedDateTime
+  + id() : String
+  + departure() : ZonedDateTime
+  + arrival() : ZonedDateTime
 }
 
 class FareClass {
-  - String rbd
-  - CabinClass cabin
-  - Money basePrice
-  - FareRule rule
-  - int baggageAllowanceKg
+  - rbd : String
+  - cabin : CabinClass
+  - basePrice : Money
+  - rule : FareRule
+  - baggageAllowanceKg : int
 }
 
 class FareRule {
-  - boolean refundable
-  - Money changeFee
-  - boolean changeable
-  - int changeWindowHours
-  - int cancelWindowHours
-  - boolean seatSelectionIncluded
+  - refundable : boolean
+  - changeFee : Money
+  - changeable : boolean
+  - changeWindowHours : int
+  - cancelWindowHours : int
+  - seatSelectionIncluded : boolean
 }
 
 class FareInventory {
-  - String flightInstanceId
-  - String rbd
-  - AtomicInteger availableSeats
-  + int available()
-  + boolean tryDecrement()
-  + void increment()
+  - flightInstanceId : String
+  - rbd : String
+  - availableSeats : AtomicInteger
+  + available() : int
+  + tryDecrement() : boolean
+  + increment()
 }
 
 class Segment {
-  - String id
-  - FlightInstance flightInstance
-  - FareClass fareClass
-  - SegmentStatus status
+  - id : String
+  - flightInstance : FlightInstance
+  - fareClass : FareClass
+  - status : SegmentStatus
 }
 
 class Itinerary {
-  - List<Segment> segments
-  + ZonedDateTime departure()
-  + ZonedDateTime arrival()
-  + int stops()
+  - segments : List
+  + departure() : ZonedDateTime
+  + arrival() : ZonedDateTime
+  + stops() : int
 }
 
 class Passenger {
-  - String id
-  - String name
-  - PassengerType type
-  - LocalDate dateOfBirth
+  - id : String
+  - name : String
+  - type : PassengerType
+  - dateOfBirth : LocalDate
 }
 
 class PNR {
-  - String reference
-  - List<Passenger> passengers
-  - Itinerary itinerary
-  - Money totalPrice
-  - Instant ticketTimeLimit
-  - PNRStatus status
-  - List<Ancillary> ancillaries
-  - List<SeatAssignment> seats
-  + void ticket()
-  + void cancel()
-  + boolean isExpired(Instant now)
+  - reference : String
+  - passengers : List
+  - itinerary : Itinerary
+  - totalPrice : Money
+  - ticketTimeLimit : Instant
+  - status : PNRStatus
+  - ancillaries : List
+  - seats : List
+  + ticket()
+  + cancel()
+  + isExpired(Instant now) : boolean
 }
 
 class Ancillary {
-  - AncillaryType type
-  - String passengerId
-  - String segmentId
-  - Money price
-  - String details
+  - type : AncillaryType
+  - passengerId : String
+  - segmentId : String
+  - price : Money
+  - details : String
 }
 
 class SeatAssignment {
-  - String passengerId
-  - String segmentId
-  - String seatNumber
+  - passengerId : String
+  - segmentId : String
+  - seatNumber : String
 }
 
 class InventoryReserver {
-  + boolean tryReserveAll(List<FareInventory> invs, int count)
+  + tryReserveAll(List invs, int count) : boolean
 }
 
 class AirlineReservationService {
-  - Map<String, FlightInstance> instances
-  - Map<String, FareInventory> inventories
-  - Map<String, PNR> pnrs
-  - Map<String, String> pnrsByKey
-  - InventoryReserver reserver
-  - Clock clock
-  + List<Itinerary> search(String origin, String dest, LocalDate date, CabinClass cabin, int pax)
-  + PNR book(Itinerary itinerary, List<Passenger> passengers, String idempotencyKey)
-  + void ticket(String pnrRef, PaymentMethod method)
-  + Money cancel(String pnrRef)
-  + void autoReleaseExpired(Instant now)
+  - instances : Map
+  - inventories : Map
+  - pnrs : Map
+  - pnrsByKey : Map
+  - reserver : InventoryReserver
+  - clock : Clock
+  + search(String origin, String dest, LocalDate date, CabinClass cabin, int pax) : List
+  + book(Itinerary itinerary, List passengers, String idempotencyKey) : PNR
+  + ticket(String pnrRef)
+  + cancel(String pnrRef) : Money
+  + autoReleaseExpired(Instant now)
 }
 
 AirlineReservationService --> InventoryReserver

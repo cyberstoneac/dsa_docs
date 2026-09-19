@@ -116,6 +116,90 @@ Alongside DSA, this site includes a complete **System Design** curriculum — fu
 
 ---
 
+## 🧱 Low-Level Design (LLD) Notes
+
+A complete **LLD** curriculum — 30 problems across 6 categories covering classic OOP, games, booking systems, real-world services, concurrency, and framework design. Each problem comes with a class diagram, working Java 17 implementation, concurrency analysis, and extensibility discussion.
+
+[📖 LLD Overview](lld/index.md){ .md-button .md-button--primary }
+[🎯 How to Approach LLD](lld/how-to-approach-lld.md){ .md-button }
+[🧩 Design Patterns](lld/design-patterns/index.md){ .md-button }
+[⚙️ SOLID Principles](lld/solid-principles.md){ .md-button }
+
+### 📚 Fundamentals
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [How to Approach LLD](lld/how-to-approach-lld.md) | 6-step framework: clarify, entities, relationships, patterns, code, deep dive |
+| [SOLID Principles](lld/solid-principles.md) | SRP, OCP, LSP, ISP, DIP with Java examples and counterexamples |
+| [UML Basics](lld/uml-basics.md) | Class diagrams, sequence diagrams, PlantUML notation |
+| [Concurrency Basics](lld/concurrency-basics.md) | Threads, locks, Java `java.util.concurrent`, common patterns |
+
+### 🧩 Design Patterns
+
+| Category | Patterns |
+|----------|----------|
+| [Creational](lld/design-patterns/creational.md) | Singleton, Factory Method, Abstract Factory, Builder, Prototype |
+| [Structural](lld/design-patterns/structural.md) | Adapter, Decorator, Facade, Proxy, Composite, Bridge, Flyweight |
+| [Behavioral](lld/design-patterns/behavioral.md) | Strategy, Observer, State, Command, Template Method, Iterator, Chain of Responsibility |
+
+### 🎯 30 Practice Problems (6 Categories)
+
+#### Category A — Classic OOP
+| # | Problem |
+|---|---------|
+| 01 | [Parking Lot](lld/problems/01-parking-lot.md) |
+| 02 | [Vending Machine](lld/problems/02-vending-machine.md) |
+| 03 | [ATM](lld/problems/03-atm.md) |
+| 04 | [Elevator System](lld/problems/04-elevator-system.md) |
+| 05 | [Library Management System](lld/problems/05-library-management.md) |
+| 06 | [Hotel Management System](lld/problems/06-hotel-management.md) |
+
+#### Category B — Games
+| # | Problem |
+|---|---------|
+| 07 | [Snake and Ladder](lld/problems/07-snake-and-ladder.md) |
+| 08 | [Tic-Tac-Toe](lld/problems/08-tic-tac-toe.md) |
+| 09 | [Chess](lld/problems/09-chess.md) |
+| 10 | [Splitwise](lld/problems/10-splitwise.md) |
+
+#### Category C — Booking & Scheduling
+| # | Problem |
+|---|---------|
+| 11 | [Movie Ticket Booking](lld/problems/11-movie-ticket-booking.md) |
+| 12 | [Cab Booking](lld/problems/12-cab-booking.md) |
+| 13 | [Food Delivery Order Management](lld/problems/13-food-delivery-order.md) |
+| 14 | [Meeting Scheduler](lld/problems/14-meeting-scheduler.md) |
+| 15 | [Airline Reservation](lld/problems/15-airline-reservation.md) |
+
+#### Category D — Real-World Services
+| # | Problem |
+|---|---------|
+| 16 | [Coffee Machine](lld/problems/16-coffee-machine.md) |
+| 17 | [Car Rental System](lld/problems/17-car-rental.md) |
+| 18 | [Shopping Cart](lld/problems/18-shopping-cart.md) |
+| 19 | [Restaurant Ordering](lld/problems/19-restaurant-ordering.md) |
+| 20 | [Logging Framework](lld/problems/20-logging-framework.md) |
+| 21 | [Rate Limiter (LLD)](lld/problems/21-rate-limiter-lld.md) |
+
+#### Category E — Concurrency / Multithreading
+| # | Problem |
+|---|---------|
+| 22 | [Producer-Consumer](lld/problems/22-producer-consumer.md) |
+| 23 | [Thread-Safe LRU Cache](lld/problems/23-lru-cache.md) |
+| 24 | [Thread Pool Executor](lld/problems/24-thread-pool.md) |
+| 25 | [Reader-Writer Lock](lld/problems/25-reader-writer-lock.md) |
+| 26 | [Dining Philosophers](lld/problems/26-dining-philosophers.md) |
+
+#### Category F — Framework / Infra LLD
+| # | Problem |
+|---|---------|
+| 27 | [Cache with Eviction Policies](lld/problems/27-cache-eviction.md) |
+| 28 | [Message Queue (LLD)](lld/problems/28-message-queue-lld.md) |
+| 29 | [URL Shortener (LLD)](lld/problems/29-url-shortener-lld.md) |
+| 30 | [Pub-Sub System (LLD)](lld/problems/30-pub-sub-lld.md) |
+
+---
+
 ## 🚀 How to Use This Site
 
 - **New to DSA?** Follow the [Recommended Learning Path](#dsa-learning-path-recommended-order) below — it's ordered for gradual skill building.
@@ -124,6 +208,7 @@ Alongside DSA, this site includes a complete **System Design** curriculum — fu
 - **Looking for a specific problem?** Use the search bar (press `/`) or the [topic list](#dsa-topics-covered) below.
 - **Want to see everything at a glance?** Check the [Cheat Sheet](cheatsheet.md) for complexity tables and patterns.
 - **Studying System Design?** Start with [Fundamentals](system-design/index.md), then work through problems in phase order.
+- **Studying Low-Level Design?** Start with [How to Approach LLD](lld/how-to-approach-lld.md), then work through problems by category.
 
 **Prerequisites:** Basic Java syntax (loops, conditionals, methods). No prior DSA knowledge required.
 
@@ -234,6 +319,9 @@ Track your journey through all 150+ problems. Check them off as you go!
 - ✅ **NeetCode 150 aligned** curriculum
 - ✅ **57 System Design problems** with full 18-section walkthroughs
 - ✅ **System Design fundamentals** (estimation, databases, building blocks)
+- ✅ **30 Low-Level Design problems** across 6 categories
+- ✅ **LLD fundamentals** (SOLID, design patterns, UML, concurrency)
+- ✅ **Working Java 17 code** with class diagrams for every LLD problem
 
 ---
 
@@ -244,6 +332,7 @@ Track your journey through all 150+ problems. Check them off as you go!
 - 📖 **Learning** — Foundational to advanced concepts
 - ⚡ **Quick Reference** — Problem solutions and patterns
 - 🏛️ **System Design Interviews** — FAANG-level preparation
+- 🧱 **LLD / Machine Coding Rounds** — Flipkart, Uber, Swiggy style
 
 ---
 
@@ -251,7 +340,7 @@ Track your journey through all 150+ problems. Check them off as you go!
 
 - [MkDocs](https://www.mkdocs.org/) + [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
 - [Mermaid](https://mermaid.js.org/) for DSA diagrams
-- [PlantUML](https://plantuml.com/) for System Design diagrams
+- [PlantUML](https://plantuml.com/) for System Design and LLD diagrams
 - [D2](https://d2lang.com/) for architecture diagrams
 - Deployed on [GitHub Pages](https://pages.github.com/)
 

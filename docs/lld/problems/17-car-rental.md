@@ -537,12 +537,44 @@ left to right direction
 skinparam nodesep 20
 skinparam ranksep 30
 
-enum VehicleStatus { AVAILABLE RESERVED RENTED MAINTENANCE TRANSFER RETIRED }
-enum ReservationStatus { PENDING CONFIRMED PICKED_UP RETURNED CANCELLED NO_SHOW }
-enum AddOnType { INSURANCE_BASIC INSURANCE_PREMIUM GPS CHILD_SEAT EXTRA_DRIVER }
-enum FuelPolicy { FULL_TO_FULL PREPAID CHARGE_ON_RETURN }
-enum Transmission { MANUAL AUTOMATIC }
-enum FuelType { PETROL DIESEL ELECTRIC HYBRID }
+enum VehicleStatus {
+  AVAILABLE
+  RESERVED
+  RENTED
+  MAINTENANCE
+  TRANSFER
+  RETIRED
+}
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  PICKED_UP
+  RETURNED
+  CANCELLED
+  NO_SHOW
+}
+enum AddOnType {
+  INSURANCE_BASIC
+  INSURANCE_PREMIUM
+  GPS
+  CHILD_SEAT
+  EXTRA_DRIVER
+}
+enum FuelPolicy {
+  FULL_TO_FULL
+  PREPAID
+  CHARGE_ON_RETURN
+}
+enum Transmission {
+  MANUAL
+  AUTOMATIC
+}
+enum FuelType {
+  PETROL
+  DIESEL
+  ELECTRIC
+  HYBRID
+}
 
 class VehicleClass {
   - String code

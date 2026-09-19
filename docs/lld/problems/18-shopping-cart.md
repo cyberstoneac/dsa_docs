@@ -777,130 +777,174 @@ left to right direction
 skinparam nodesep 20
 skinparam ranksep 30
 
-enum CartStatus { ACTIVE CHECKED_OUT ABANDONED MERGED }
-enum OrderStatus { PENDING PAYMENT_AUTHORIZED CONFIRMED SHIPPED DELIVERED CANCELLED }
-enum DiscountType { PERCENTAGE FLAT BOGO FREE_SHIPPING }
-enum CouponStatus { VALID EXPIRED USAGE_LIMIT_REACHED NOT_APPLICABLE }
-enum ShippingSpeed { STANDARD EXPRESS SAME_DAY }
+enum CartStatus {
+  ACTIVE
+  CHECKED_OUT
+  ABANDONED
+  MERGED
+}
 
-class Product { - String id - String name - String category }
-class ProductVariant { - String id - String productId - String sku - Money price - String category }
-class Seller { - String id - String name }
+enum OrderStatus {
+  PENDING
+  PAYMENT_AUTHORIZED
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FLAT
+  BOGO
+  FREE_SHIPPING
+}
+
+enum CouponStatus {
+  VALID
+  EXPIRED
+  USAGE_LIMIT_REACHED
+  NOT_APPLICABLE
+}
+
+enum ShippingSpeed {
+  STANDARD
+  EXPRESS
+  SAME_DAY
+}
+
+class Product {
+  - id : String
+  - name : String
+  - category : String
+}
+
+class ProductVariant {
+  - id : String
+  - productId : String
+  - sku : String
+  - price : Money
+  - category : String
+}
+
+class Seller {
+  - id : String
+  - name : String
+}
 
 class CartItem {
-  - String itemId
-  - String variantId
-  - String sellerId
-  - Money unitPriceSnapshot
-  - int quantity
-  + Money lineTotal()
+  - itemId : String
+  - variantId : String
+  - sellerId : String
+  - unitPriceSnapshot : Money
+  - quantity : int
+  + lineTotal() : Money
 }
 
 class Cart {
-  - String id
-  - String userId
-  - String guestSessionId
-  - Map<String, CartItem> items
-  - List<String> couponCodes
-  - CartStatus status
-  + void addItem(CartItem item)
-  + void removeItem(String itemId)
-  + void updateQuantity(String itemId, int quantity)
-  + void addCoupon(String code)
-  + void clear()
+  - id : String
+  - userId : String
+  - guestSessionId : String
+  - items : Map
+  - couponCodes : List
+  - status : CartStatus
+  + addItem(CartItem item)
+  + removeItem(String itemId)
+  + updateQuantity(String itemId, int quantity)
+  + addCoupon(String code)
+  + clear()
 }
 
 class OrderItem {
-  - String variantId
-  - String productName
-  - Money unitPriceSnapshot
-  - int quantity
-  + Money lineTotal()
+  - variantId : String
+  - productName : String
+  - unitPriceSnapshot : Money
+  - quantity : int
+  + lineTotal() : Money
 }
 
 class Order {
-  - String id
-  - String userId
-  - String sellerId
-  - List<OrderItem> items
-  - Address destination
-  - Money subtotal
-  - Money tax
-  - Money shipping
-  - Money total
-  - OrderStatus status
-  - String idempotencyKey
+  - id : String
+  - userId : String
+  - sellerId : String
+  - items : List
+  - destination : Address
+  - subtotal : Money
+  - tax : Money
+  - shipping : Money
+  - total : Money
+  - status : OrderStatus
+  - idempotencyKey : String
 }
 
 interface Promotion {
-  + boolean applies(Cart cart, Map catalog)
-  + Optional<AppliedDiscount> evaluate(Cart cart, Map catalog)
-  + String name()
-  + int priority()
-  + boolean stackable()
+  + applies(Cart cart, Map catalog) : boolean
+  + evaluate(Cart cart, Map catalog) : Optional
+  + name() : String
+  + priority() : int
+  + stackable() : boolean
 }
 
 class PercentageCoupon implements Promotion
 class BuyTwoGetOneFree implements Promotion
 
 class AppliedDiscount {
-  - String promotionName
-  - DiscountType type
-  - Money amount
-  - List<String> appliedToItemIds
+  - promotionName : String
+  - type : DiscountType
+  - amount : Money
+  - appliedToItemIds : List
 }
 
 class PromotionEngine {
-  + List<AppliedDiscount> evaluate(Cart cart, Map catalog)
+  + evaluate(Cart cart, Map catalog) : List
 }
 
 interface TaxCalculator {
-  + Money computeTax(Address dest, List<CartItem> items, Map catalog)
+  + computeTax(Address dest, List items, Map catalog) : Money
 }
 
 class RegionCategoryTaxCalculator implements TaxCalculator
 
 interface ShippingCalculator {
-  + Map<String, ShippingQuote> compute(Address dest, Map bySeller, ShippingSpeed speed)
+  + compute(Address dest, Map bySeller, ShippingSpeed speed) : Map
 }
 
 class WeightBasedShippingCalculator implements ShippingCalculator
 
 class ShippingQuote {
-  - String sellerId
-  - Money cost
-  - Duration eta
+  - sellerId : String
+  - cost : Money
+  - eta : Duration
 }
 
 interface InventoryService {
-  + boolean available(String variantId, int qty)
-  + boolean tryReserve(String variantId, int qty)
-  + void release(String variantId, int qty)
+  + available(String variantId, int qty) : boolean
+  + tryReserve(String variantId, int qty) : boolean
+  + release(String variantId, int qty)
 }
 
 class CartTotals {
-  - Money subtotal
-  - Money tax
-  - Money shipping
-  - Money discount
-  - Money total
-  - List<AppliedDiscount> appliedDiscounts
-  - Map<String, ShippingQuote> shippingQuotes
+  - subtotal : Money
+  - tax : Money
+  - shipping : Money
+  - discount : Money
+  - total : Money
+  - appliedDiscounts : List
+  - shippingQuotes : Map
 }
 
 class CartService {
-  - Map<String, Cart> carts
-  - Map<String, ProductVariant> catalog
-  - PromotionEngine promotions
-  - TaxCalculator taxCalculator
-  - ShippingCalculator shippingCalculator
-  - InventoryService inventory
-  + Cart forUser(String userId)
-  + Cart forGuest(String guestSessionId)
-  + Cart mergeOnLogin(String guestSessionId, String userId)
-  + CartTotals totals(Cart cart, Address dest, ShippingSpeed speed)
-  + List<Order> checkout(String cartId, Address dest, ShippingSpeed speed,
-                         String paymentMethod, String idempotencyKey)
+  - carts : Map
+  - catalog : Map
+  - promotions : PromotionEngine
+  - taxCalculator : TaxCalculator
+  - shippingCalculator : ShippingCalculator
+  - inventory : InventoryService
+  + forUser(String userId) : Cart
+  + forGuest(String guestSessionId) : Cart
+  + mergeOnLogin(String guestSessionId, String userId) : Cart
+  + totals(Cart cart, Address dest, ShippingSpeed speed) : CartTotals
+  + checkout(String cartId, Address dest, ShippingSpeed speed, String paymentMethod, String idempotencyKey) : List
 }
 
 CartService *-- Cart

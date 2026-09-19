@@ -398,34 +398,59 @@ left to right direction
 skinparam nodesep 20
 skinparam ranksep 30
 
-enum IngredientType { BEANS WATER MILK SUGAR COCOA OAT_MILK SOY_MILK }
-enum StepType { GRIND TAMP BREW FROTH_MILK DISPENSE WAIT }
-enum OrderState { PENDING PAID BREWING DISPENSING COMPLETED CANCELLED FAILED }
+enum IngredientType {
+  BEANS
+  WATER
+  MILK
+  SUGAR
+  COCOA
+  OAT_MILK
+  SOY_MILK
+}
+
+enum StepType {
+  GRIND
+  TAMP
+  BREW
+  FROTH_MILK
+  DISPENSE
+  WAIT
+}
+
+enum OrderState {
+  PENDING
+  PAID
+  BREWING
+  DISPENSING
+  COMPLETED
+  CANCELLED
+  FAILED
+}
 
 class RecipeStep {
-  - StepType type
-  - IngredientType ingredient
-  - double quantityMlOrG
-  - Duration duration
+  - type : StepType
+  - ingredient : IngredientType
+  - quantityMlOrG : double
+  - duration : Duration
 }
 
 class Recipe {
-  - String beverageId
-  - List<RecipeStep> steps
-  + Map<IngredientType, Double> requiredIngredients()
+  - beverageId : String
+  - steps : List
+  + requiredIngredients() : Map
 }
 
 class Beverage {
-  - String id
-  - String name
-  - Money basePrice
-  + String id()
+  - id : String
+  - name : String
+  - basePrice : Money
+  + id() : String
 }
 
 interface Customization {
-  + Recipe apply(Recipe base)
-  + String name()
-  + Money additionalCost()
+  + apply(Recipe base) : Recipe
+  + name() : String
+  + additionalCost() : Money
 }
 
 class ExtraShot implements Customization
@@ -433,67 +458,81 @@ class MilkSwap implements Customization
 class SizeUpgrade implements Customization
 
 class IngredientContainer {
-  - IngredientType type
-  - double capacityMlOrG
-  - double levelMlOrG
-  - double lowThresholdMlOrG
-  + boolean tryConsume(double amount)
-  + void restock(double amount)
+  - type : IngredientType
+  - capacityMlOrG : double
+  - levelMlOrG : double
+  - lowThresholdMlOrG : double
+  + tryConsume(double amount) : boolean
+  + restock(double amount)
 }
 
 class IngredientReserver {
-  + boolean tryConsumeAll(Map containers, Map required)
+  + tryConsumeAll(Map containers, Map required) : boolean
 }
 
 class BrewingSession {
-  - String orderId
-  - Recipe recipe
-  + void execute()
-  + void cancel()
+  - orderId : String
+  - recipe : Recipe
+  + execute()
+  + cancel()
 }
 
 class BeverageOrder {
-  - String id
-  - String beverageId
-  - List<Customization> customizations
-  - Money totalPrice
-  - OrderState state
-  - String idempotencyKey
-  + String id()
-  + OrderState state()
-  + void markPaid()
-  + void markBrewing()
-  + void markCompleted()
-  + void markFailed()
-  + void cancel()
+  - id : String
+  - beverageId : String
+  - customizations : List
+  - totalPrice : Money
+  - state : OrderState
+  - idempotencyKey : String
+  + id() : String
+  + state() : OrderState
+  + markPaid()
+  + markBrewing()
+  + markCompleted()
+  + markFailed()
+  + cancel()
 }
 
-interface Grinder
-interface Tamper
-interface Brewer
-interface MilkFrother
-interface Dispenser
+interface Grinder {
+  + grind(double grams)
+}
+
+interface Tamper {
+  + tamp()
+}
+
+interface Brewer {
+  + brew(double waterMl, Duration duration)
+}
+
+interface MilkFrother {
+  + froth(double milkMl, Duration duration)
+}
+
+interface Dispenser {
+  + dispense()
+}
 
 class CoffeeMachine {
-  - Map<String, Beverage> beverages
-  - Map<String, Recipe> recipes
-  - Map<IngredientType, IngredientContainer> containers
-  - Map<String, BeverageOrder> orders
-  - Map<String, String> ordersByKey
-  - IngredientReserver reserver
-  - Grinder grinder
-  - Tamper tamper
-  - Brewer brewer
-  - MilkFrother frother
-  - Dispenser dispenser
-  - volatile boolean maintenance
-  + BeverageOrder order(String beverageId, List<Customization> customizations, String idempotencyKey)
-  + void pay(String orderId)
-  + void brew(String orderId)
-  + void cancel(String orderId)
-  + void restock(IngredientType type, double amount)
-  + void enterMaintenance()
-  + void exitMaintenance()
+  - beverages : Map
+  - recipes : Map
+  - containers : Map
+  - orders : Map
+  - ordersByKey : Map
+  - reserver : IngredientReserver
+  - grinder : Grinder
+  - tamper : Tamper
+  - brewer : Brewer
+  - frother : MilkFrother
+  - dispenser : Dispenser
+  - maintenance : boolean
+  + order(String beverageId, List customizations, String idempotencyKey) : BeverageOrder
+  + pay(String orderId)
+  + brew(String orderId)
+  + cancel(String orderId)
+  + restock(IngredientType type, double amount)
+  + enterMaintenance()
+  + exitMaintenance()
 }
 
 CoffeeMachine --> IngredientContainer
