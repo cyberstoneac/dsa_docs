@@ -15,24 +15,20 @@ and enforce design constraints:
 ```d2
 direction: right
 
-classes: "Special Class Forms" {
-  style.fill: "#f5f5f5"
-
-  enum: "Enum" {
-    style.fill: "#bbdefb"
-    desc: "Fixed set of instances\nSingleton per constant\nCan have fields, methods,\ninterfaces, abstract methods"
-  }
-
-  record: "Record" {
-    style.fill: "#c8e6c9"
-    desc: "Immutable data holder\nAuto: ctor, accessors,\nequals, hashCode, toString"
-  }
-
-  sealed: "Sealed" {
-    style.fill: "#fff9c4"
-    desc: "Restricted subclassing\nClosed type hierarchies"
-  }
+enumClass: "Enum\nFixed set of instances\nSingleton per constant\nFields, methods, interfaces,\nabstract methods allowed" {
+  style.fill: "#bbdefb"
 }
+
+recordClass: "Record\nImmutable data holder\nAuto: ctor, accessors,\nequals, hashCode, toString" {
+  style.fill: "#c8e6c9"
+}
+
+sealedClass: "Sealed\nRestricted subclassing\nClosed type hierarchies" {
+  style.fill: "#fff9c4"
+}
+
+enumClass -> recordClass: "modern class forms"
+recordClass -> sealedClass: "paired for ADTs"
 ```
 
 ---

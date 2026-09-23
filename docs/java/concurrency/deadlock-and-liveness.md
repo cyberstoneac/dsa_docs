@@ -12,7 +12,7 @@ logic, but because threads are waiting on each other in a cycle.
 Four classic liveness failures:
 
 ```d2
-direction: right
+direction: down
 
 problems: "Liveness Failures" {
   style.fill: "#ffcdd2"

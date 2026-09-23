@@ -10,7 +10,7 @@ An **immutable object** cannot change state after construction. Every
 "modification" returns a new instance.
 
 ```d2
-direction: right
+direction: down
 
 mutable: "Mutable object" {
   style.fill: "#ffcdd2"

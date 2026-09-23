@@ -100,7 +100,7 @@ executor.shutdown();
 ## Thread Lifecycle
 
 ```d2
-direction: right
+direction: down
 
 states: "Thread States" {
   style.fill: "#f5f5f5"

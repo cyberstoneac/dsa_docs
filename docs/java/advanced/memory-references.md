@@ -10,7 +10,7 @@ The JVM **doesn't count references** — it determines reachability from roots.
 Four reference strengths control when an object becomes eligible for GC.
 
 ```d2
-direction: right
+direction: down
 
 refs: "Reference Types" {
   style.fill: "#f5f5f5"

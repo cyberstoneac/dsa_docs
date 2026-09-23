@@ -10,7 +10,7 @@
 questions about **ordering**:
 
 ```d2
-direction: right
+direction: down
 
 sets: "Set implementations" {
   style.fill: "#f5f5f5"

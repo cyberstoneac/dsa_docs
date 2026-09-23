@@ -11,7 +11,7 @@ The JVM multiplexes many virtual threads onto a small pool of **carrier
 threads** (platform threads).
 
 ```d2
-direction: down
+direction: right
 
 vthreads: "10,000 Virtual Threads" {
   style.fill: "#e3f2fd"

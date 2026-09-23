@@ -10,7 +10,7 @@
 Three main `List` implementations, three different trade-offs:
 
 ```d2
-direction: right
+direction: down
 
 list: "List implementations" {
   style.fill: "#f5f5f5"
@@ -333,7 +333,7 @@ For 10 million elements, `ArrayList` iteration is **5–10× faster** than
 `LinkedList`. Same big-O, but cache locality dominates.
 
 ```d2
-direction: right
+direction: down
 
 array: "ArrayList\nContiguous memory" {
   style.fill: "#c8e6c9"

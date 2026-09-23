@@ -14,7 +14,7 @@ give you a shared vocabulary and a starting point — not templates to paste in.
 The GoF patterns split into three families:
 
 ```d2
-direction: right
+direction: down
 
 gof: "Gang-of-Four Patterns" {
   style.fill: "#f5f5f5"

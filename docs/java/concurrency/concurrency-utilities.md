@@ -13,7 +13,7 @@ The `java.util.concurrent` utilities fall into three families:
 3. **Concurrent collections** — covered in [Concurrent Collections](../collections/concurrent-collections.md)
 
 ```d2
-direction: right
+direction: down
 
 juc: "java.util.concurrent" {
   style.fill: "#f5f5f5"

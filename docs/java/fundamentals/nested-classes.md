@@ -76,7 +76,7 @@ Outer.Nested n = new Outer.Nested();
 - Preferring a nested type over a top-level one because it's only meaningful in context
 
 ```d2
-direction: down
+direction: right
 
 outer: "Outer Class" {
   style.fill: "#e3f2fd"
@@ -348,54 +348,81 @@ you need a class body or when the SAM isn't a functional interface.
 
 ## When to Choose Which
 
+| Situation | Choose |
+|---|---|
+| Grouping helper classes — no outer instance needed | **Static Nested** |
+| Needs access to outer instance's fields/methods | **Inner (non-static)** |
+| Used in only one method, needs a name | **Local Class** |
+| Used in only one place, single-method interface | **Lambda** |
+| Used in only one place, multiple methods or extends a class | **Anonymous Class** |
+
+### Decision flow
+
 ```d2
 direction: down
 
-decision: "Which nested type?" {
-  style.fill: "#f5f5f5"
-
-  q1: "Need outer instance?" {
-    style.fill: "#bbdefb"
-  }
-  q2: "Used in one method only?" {
-    style.fill: "#c8e6c9"
-  }
-  q3: "Needs multiple methods?" {
-    style.fill: "#fff9c4"
-  }
-
-  static: "Static Nested" {
-    style.fill: "#a5d6a7"
-  }
-  inner: "Inner" {
-    style.fill: "#81c784"
-  }
-  local: "Local" {
-    style.fill: "#ffe082"
-  }
-  anon: "Anonymous" {
-    style.fill: "#ffcc80"
-  }
-  lambda: "Lambda" {
-    style.fill: "#ffb74d"
-  }
-
-  decision.q1 -> decision.static: "no"
-  decision.q1 -> decision.q2: "yes"
-  decision.q2 -> decision.local: "yes (with name)"
-  decision.q2 -> decision.q3: "no"
-  decision.q3 -> decision.inner: "yes"
-  decision.q3 -> decision.anon: "no"
-  decision.q3 -> decision.lambda: "if functional interface"
+start: "Need a helper class" {
+  style.fill: "#e3f2fd"
 }
+
+needsOuter: "Does it need the outer\ninstance's state?" {
+  style.fill: "#bbdefb"
+}
+
+oneMethod: "Is it used in only\none method?" {
+  style.fill: "#c8e6c9"
+}
+
+multiMethod: "Does it need more than\none method, or extend a class?" {
+  style.fill: "#fff9c4"
+}
+
+staticNested: "Static Nested" {
+  style.fill: "#a5d6a7"
+}
+
+innerClass: "Inner (non-static)" {
+  style.fill: "#81c784"
+}
+
+localClass: "Local Class" {
+  style.fill: "#ffe082"
+}
+
+anonymousClass: "Anonymous Class" {
+  style.fill: "#ffcc80"
+}
+
+lambdaExpression: "Lambda" {
+  style.fill: "#ffb74d"
+}
+
+start -> needsOuter
+needsOuter -> staticNested: "no"
+needsOuter -> oneMethod: "yes"
+oneMethod -> localClass: "yes"
+oneMethod -> multiMethod: "no"
+multiMethod -> innerClass: "needs outer instance"
+multiMethod -> anonymousClass: "multiple methods"
+multiMethod -> lambdaExpression: "single method"
 ```
 
-**Rule of thumb:**
+### Rule of thumb
 
-1. Default to **static nested** — it has no hidden coupling.
-2. Use **inner** only when you genuinely need the outer instance.
-3. Prefer **lambdas** over anonymous classes when the target is functional.
-4. Use **local classes** sparingly — they're hard to read.
+1. **Default to static nested** — no hidden coupling to the outer class.
+2. **Use inner (non-static)** only when you genuinely need the outer instance.
+3. **Prefer lambdas** over anonymous classes when the target is a functional interface.
+4. **Use local classes sparingly** — they're hard to read and rarely needed since Java 8.
+
+### Quick comparison
+
+| Type | Needs outer instance? | Named? | Scope |
+|---|---|---|---|
+| Static Nested | ❌ | ✅ | Outer class |
+| Inner | ✅ | ✅ | Outer class |
+| Local | ✅ (if in instance method) | ✅ | Method/block |
+| Anonymous | ✅ | ❌ | Expression |
+| Lambda | ✅ | ❌ | Expression |
 
 ---
 

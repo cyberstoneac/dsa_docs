@@ -41,7 +41,7 @@ pool.threads -> threads: "runs on"
 ## The `Executor` Hierarchy
 
 ```d2
-direction: down
+direction: right
 
 executor: Executor {
   style.fill: "#e3f2fd"

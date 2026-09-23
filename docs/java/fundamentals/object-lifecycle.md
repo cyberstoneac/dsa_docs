@@ -303,7 +303,7 @@ regions with the most garbage are collected first, hitting a pause target
 whole heap.
 
 ```d2
-direction: right
+direction: down
 
 g1: G1 Heap {
   style.fill: "#e8f5e9"

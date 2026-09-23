@@ -12,7 +12,7 @@ Regular collections aren't thread-safe. Wrapping them with
 The concurrent collections use **finer-grained** strategies:
 
 ```d2
-direction: right
+direction: down
 
 approaches: "Thread-Safe Collections" {
   style.fill: "#f5f5f5"
