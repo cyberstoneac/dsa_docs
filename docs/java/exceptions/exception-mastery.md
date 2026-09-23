@@ -304,6 +304,7 @@ try {
 ```
 
 **Rules:**
+
 - Catch types must be **disjoint** — no `IOException | FileNotFoundException`
 - The caught variable is implicitly `final`
 - You cannot reassign `e` inside the block

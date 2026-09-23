@@ -143,6 +143,7 @@ management:
 ```
 
 **Rules:**
+
 - **JSON, not strings.** Every field queryable.
 - **Consistent schema across services.**
 - **Never log PII / secrets.** Scrub at the framework level.
@@ -172,6 +173,7 @@ management:
 | Alert | ElastAlert, Grafana |
 
 **Rules:**
+
 - Centralize. Local logs are useless.
 - Retention is bounded (cost).
 - Standardize JSON schema.
@@ -296,6 +298,7 @@ management:
 ```
 
 **Rules:**
+
 - Liveness must be cheap and unconditional.
 - Readiness can check critical dependencies.
 - Never check downstreams in liveness.

@@ -57,6 +57,7 @@ Define severity before you need it.
 | **Sev4** | Cosmetic, no user impact | Normal ticket |
 
 **Rules:**
+
 - **Err on the side of higher severity.** You can downgrade; you can't un-delay comms.
 - **Declare early.** A declared incident with no impact is cheap. An undeclared incident with impact is expensive.
 - **Anyone can declare.** No permission needed to call an incident.
@@ -143,6 +144,7 @@ Owner: @you
 ```
 
 **Rules:**
+
 - Even "no update" is an update.
 - State facts, not speculation.
 - State the next update time explicitly.
@@ -259,6 +261,7 @@ On-call is a **team health** concern as much as an operational one.
 | Escalation path | No heroics |
 
 **Rules:**
+
 - **Noisy alerts get fixed or deleted.** Every false page erodes trust.
 - **Every page must be actionable.** If it can't be acted on, it's a dashboard, not an alert.
 - **No hero culture.** One person solving everything is a systemic failure.

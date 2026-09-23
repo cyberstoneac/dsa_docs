@@ -118,6 +118,7 @@ Phase 3: Remove `user_id` from response
 ```
 
 **Rules:**
+
 - Every change is additive first.
 - Never rename or remove in one step.
 - Monitor usage of the old field before removing.
@@ -138,6 +139,7 @@ The riskiest part of any migration. Always expand-contract.
 | Drop column | Stop writing, wait, stop reading, drop |
 
 **Rules:**
+
 - **Never lock the table** in a hot path. Use `CONCURRENTLY` where available.
 - **Backfill in batches** with rate limiting.
 - **Dual-write** during transition, with a reconciliation job.
@@ -176,6 +178,7 @@ Extracting a service from a monolith:
 7. **Delete the shared tables** (carefully).
 
 **Rules:**
+
 - Extract **reads first**, writes second.
 - Keep the old path alive as a fallback until proven.
 - Use CDC or outbox, not dual-write-in-app, if possible.
@@ -208,6 +211,7 @@ compare -> result
 - Changing a computation.
 
 **Rules:**
+
 - New system's output is **discarded** (or shadowed).
 - Compare outputs continuously, alert on divergence.
 - Run in production-like load.
@@ -226,6 +230,7 @@ if (flags.isEnabled("new-pricing-engine", user)) {
 ```
 
 **Rules:**
+
 - **Per-user or per-tenant** rollout, not just global.
 - **Always safe default** (old behavior) if the flag service is down.
 - **Log which path was taken** for observability.
@@ -247,6 +252,7 @@ For large migrations (database engine, cloud provider, monolith → services), p
 | 5. Decommission | Remove old | Weeks |
 
 **Rules:**
+
 - **Every phase has a rollback plan.**
 - **Every phase has a clear exit criterion.**
 - **Communicate status** to stakeholders weekly.

@@ -143,6 +143,7 @@ Diagrams should be **versioned, reviewable, and regenerable**, just like code.
 | **Excalidraw** | Whiteboarding (not version-controlled well) |
 
 **Rules:**
+
 - Diagrams live in the repo, next to the code they describe.
 - Diagrams are **generated in CI** (catch breakage).
 - No hand-drawn images committed to git (they can't be diffed).
@@ -187,6 +188,7 @@ Checkout requests are failing more than normal.
 ```
 
 **Rules:**
+
 - Every alert has a runbook.
 - Runbooks are **tested** during incidents.
 - Runbooks live near the code, version-controlled.
@@ -216,6 +218,7 @@ Code comments should explain **why**, not **what**.
 | `// null check` | `// Null when the user hasn't set a preference yet; default in caller` |
 
 **Rules:**
+
 - **Names > comments.** A good name replaces most comments.
 - **Comment the non-obvious.** Why this hack, why this constant.
 - **Delete commented-out code.** Git remembers.

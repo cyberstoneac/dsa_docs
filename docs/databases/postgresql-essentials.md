@@ -55,6 +55,7 @@ backend -> index
 | `TSVECTOR` | Full-text search |
 
 **Rules:**
+
 - **Always use `TIMESTAMPTZ`**, never `TIMESTAMP`.
 - **`NUMERIC` for money.** Floating point loses cents.
 - **`JSONB` over `JSON`** — queryable, indexable.
@@ -196,6 +197,7 @@ MVCC keeps old versions until no transaction needs them. `VACUUM` reclaims space
 - **`VACUUM FULL`** rewrites the table (locks); use rarely.
 
 **Rules:**
+
 - Monitor bloat.
 - Tune autovacuum for hot tables.
 - Avoid long-running idle transactions.
@@ -214,6 +216,7 @@ MVCC keeps old versions until no transaction needs them. `VACUUM` reclaims space
 - Used for migrations, CDC, multi-master-ish setups.
 
 **Rules:**
+
 - **Async streaming = potential data loss** on primary failover.
 - **Sync streaming = higher write latency** (waits for replica ack).
 - **Replica lag causes stale reads.**
@@ -235,6 +238,7 @@ Splitting large tables into smaller physical tables.
 - Parallel operations.
 
 **Rules:**
+
 - Partition when tables exceed ~100M rows or when retention requires it.
 - Choose the partition key based on query patterns.
 - Too many partitions hurt planner performance.

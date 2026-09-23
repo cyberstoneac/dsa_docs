@@ -433,6 +433,7 @@ public final class PromotionEngine {
 ```
 
 **Rules:**
+
 - **Non-stackable** promotions are mutually exclusive; highest priority wins.
 - **Stackable** promotions combine; total discount capped at subtotal.
 - Priority order is deterministic (sorted descending).

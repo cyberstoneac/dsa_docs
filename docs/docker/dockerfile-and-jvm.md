@@ -39,6 +39,7 @@ overhead -> container
 | `-XshowSettings:vm` | Print effective settings | Debugging |
 
 **Rules:**
+
 - **Never use `-Xmx` in containers.** It doesn't adjust when the container size changes.
 - **Use `-XX:MaxRAMPercentage=75`** — leaves 25% for overhead.
 - For memory-constrained environments, 75% is aggressive; 60–70% is safer.
@@ -81,6 +82,7 @@ Non-heap memory can be substantial:
 | **Shenandoah** | Low-latency alternative | <10ms pauses |
 
 **Rules:**
+
 - **Default to G1.** It's the default for a reason.
 - **ZGC for p99-sensitive services.** Available in production since JDK 15, generational in 21.
 - **Parallel for batch/throughput.**
@@ -247,6 +249,7 @@ terminationGracePeriodSeconds: 60
 | JMX remote | `-Dcom.sun.management.jmxremote` (careful) |
 
 **Rules:**
+
 - Don't bake debug flags into prod images.
 - Use sidecars or ephemeral containers for debugging.
 - Enable GC logs in prod (low overhead, high value).

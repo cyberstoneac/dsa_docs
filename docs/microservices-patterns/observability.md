@@ -205,6 +205,7 @@ Logback + `logstash-logback-encoder`:
 ```
 
 **Rules:**
+
 - **Never log PII / secrets.** Scrub emails, tokens, card numbers.
 - **Log at boundaries** — inbound request, outbound call, DB write, error.
 - **Log the correlation ID, not the whole request.**
@@ -244,6 +245,7 @@ public class DownstreamHealthIndicator implements HealthIndicator {
 ```
 
 **Rules:**
+
 - Liveness must be **cheap** and **unconditional**. Never check downstreams in liveness — a downstream outage would restart all your pods.
 - Readiness can check critical dependencies.
 - Startup should only be used for slow-booting apps (JVM warmup).
@@ -261,6 +263,7 @@ Centralize logs from all services. Common stack: **ELK/OpenSearch** or **Loki + 
 | Alert | ElastAlert, Grafana alerts |
 
 **Rules:**
+
 - Every log line has `service`, `correlationId`, `traceId`.
 - Log retention is bounded (cost).
 - Never log to local disk only.

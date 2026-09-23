@@ -57,6 +57,7 @@ An index is a data structure that speeds up reads at the cost of write throughpu
 | **Composite** | Multi-column queries — order matters |
 
 **Rules:**
+
 - **Index the columns you filter and join on.**
 - **Composite index order matters** — leftmost prefix rule.
 - **Covering indexes** include all columns the query needs.
@@ -79,6 +80,7 @@ The SQL standard defines four isolation levels:
 **MongoDB:** Tunable via read/write concerns.
 
 **Rules:**
+
 - **Read committed is the default** and correct for most OLTP.
 - **Serializable for financial operations**, but expect retries on serialization failures.
 - **Postgres `repeatable read`** actually prevents phantoms (stronger than the standard).
@@ -104,6 +106,7 @@ primary -> replica2
 | Quorum | Small | Balanced |
 
 **Rules:**
+
 - **Async replication = data loss on failover.** Acceptable for reads, not for writes.
 - **Sync replication = higher write latency.** Needed for zero-RPO.
 - **Replication lag causes stale reads.** Route reads that need freshness to primary.
@@ -121,6 +124,7 @@ Splitting data across multiple nodes.
 | **Geographic** | Data residency |
 
 **Rules:**
+
 - **Shard when a single node can't keep up** with writes.
 - **Choose a shard key carefully.** It's hard to change.
 - **Cross-shard queries are expensive.** Design access patterns around the shard key.
@@ -140,6 +144,7 @@ Every DB connection is expensive. Pool them.
 | HikariCP | Default in Spring Boot |
 
 **Rules:**
+
 - **Every service has a connection pool.** Size it based on DB capacity, not client count.
 - **PgBouncer** for many clients (transaction pooling).
 - **Monitor pool utilization.** Saturation = latency.
@@ -158,6 +163,7 @@ Every DB connection is expensive. Pool them.
 | Lock waits / deadlocks | Contention |
 
 **Rules:**
+
 - Enable slow query logging.
 - Use `pg_stat_statements` (Postgres) for query analysis.
 - Monitor replica lag — alert on > threshold.

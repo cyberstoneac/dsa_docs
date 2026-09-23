@@ -56,6 +56,7 @@ JWT is the common format. Claims:
 - `tenant` — multi-tenancy
 
 **Rules:**
+
 - **Validate signature, issuer, audience, expiry** on every request.
 - **Short-lived access tokens** (5–15 min), refresh tokens rotated.
 - **Never store tokens in localStorage** — use httpOnly, secure, SameSite cookies for browsers.
@@ -181,6 +182,7 @@ spring:
 ```
 
 **Rules:**
+
 - Secrets are **scoped** per service (least privilege).
 - Secrets are **rotated** (dynamic secrets in Vault are ideal).
 - Secrets are **audited** (who read what, when).
@@ -205,6 +207,7 @@ public Order getOrder(String userId, String orderId) { ... }
 ```
 
 **Rules:**
+
 - Authorize at the **service**, not just the gateway.
 - Check **resource ownership**, not just role.
 - Deny by default.

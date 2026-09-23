@@ -39,6 +39,7 @@ Your stories are **data**. Their structure is your job. The signal is theirs.
 | **L** | Learning — what you'd do differently | 5–10% |
 
 **Rules:**
+
 - **"I" not "we"** for actions. The interviewer needs to know what **you** did.
 - **"We"** for the result is fine — teams win.
 - **Quantify** wherever possible (time, cost, %, headcount).
@@ -147,6 +148,7 @@ Example:
 > "I'm a tech lead with 13 years in backend and distributed systems, currently managing two teams on a payments platform. I've led a migration from a monolith to services that cut deploy time from 2 weeks to a day, built an on-call program that reduced Sev1s by 60%, and mentored three engineers into senior roles. I'm looking for a role where I can lead at a larger scope — multiple teams, deeper architectural influence — and this team's domain is exactly where I want to go deep."
 
 **Rules:**
+
 - **Rehearse it.** This is the one answer you should have memorized.
 - **Lead with impact**, not chronology.
 - **End with why this role.**
@@ -179,6 +181,7 @@ At lead level, your questions signal seniority.
 - Why did the last person in this role leave?
 
 **Rules:**
+
 - Ask 3–5 questions.
 - Ask about **hard things** — not just culture and perks.
 - Take notes.

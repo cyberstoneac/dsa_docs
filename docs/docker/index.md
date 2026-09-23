@@ -36,6 +36,7 @@ image -> container
 | **Digest** | Content hash (`sha256:...`), immutable |
 
 **Rules:**
+
 - **Tag for humans, digest for reproducibility.**
 - Never use `latest` in production.
 - Pin base images by digest in critical pipelines.
@@ -75,6 +76,7 @@ ENTRYPOINT ["java", \
 ```
 
 **Rules:**
+
 - Order instructions from least to most frequently changing.
 - Combine `RUN` commands to reduce layers.
 - Always use a non-root user in production.
@@ -137,6 +139,7 @@ ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-jar", "app.jar"]
 | Native image (GraalVM) | ~50 MB (startup ~50ms) |
 
 **Rules:**
+
 - Prefer `-jre` over `-jdk` in runtime images.
 - Alpine is small but uses musl; occasionally causes issues with native libs.
 - Distroless is the smallest and most secure but has no shell (harder to debug).
@@ -157,6 +160,7 @@ The JVM reads container memory limits only if configured correctly.
 | `-XshowSettings:vm` | Print effective memory settings |
 
 **Rules:**
+
 - **Never set `-Xmx` in containers** — use `-XX:MaxRAMPercentage`.
 - **Leave 25–40% of container memory** for JVM overhead (metaspace, threads, direct buffers, code cache).
 - Set container memory limit → JVM computes heap from it.
@@ -202,6 +206,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
 ```
 
 **Rules:**
+
 - Docker `HEALTHCHECK` is different from K8s probes. K8s probes are preferred.
 - In K8s, use `httpGet` probes, not shell commands.
 - Startup probe for slow-booting apps.
@@ -244,6 +249,7 @@ node_modules/
 | GHCR | GitHub-native |
 
 **Rules:**
+
 - Use private registries for private code.
 - Enable image scanning.
 - Set retention policies for old images.

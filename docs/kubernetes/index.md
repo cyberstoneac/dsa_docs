@@ -190,6 +190,7 @@ The scheduler picks a node based on:
 | **KEDA** | Pod count based on external events (Kafka lag, queue depth) |
 
 **Rules:**
+
 - HPA needs **requests** set, or it can't calculate utilization.
 - Scale on the **right metric** — CPU isn't always the bottleneck.
 - Kafka consumers scale on **lag**, not CPU. Use KEDA.
@@ -216,6 +217,7 @@ resources:
 | Memory exceeded | (n/a) | OOMKilled |
 
 **Rules:**
+
 - **Requests = what you need; limits = what you'll accept.**
 - **Never set CPU limit if you don't have to** — it causes throttling. Set requests.
 - **Always set memory limits** to prevent node OOM.
@@ -231,6 +233,7 @@ resources:
 | **Startup** | Has it finished initializing? | Delay liveness/readiness checks |
 
 **Rules:**
+
 - **Liveness must be cheap** and not depend on downstreams.
 - **Readiness can check critical dependencies.**
 - **Startup probe** for slow-booting apps.

@@ -188,6 +188,7 @@ Deliberately inject failures to validate resilience.
 Tools: Chaos Monkey, Litmus, Gremlin, Chaos Mesh.
 
 **Rules:**
+
 - **Start in staging.** Move to prod only after building confidence.
 - **Have a hypothesis.** "If X fails, Y should happen."
 - **Minimize blast radius.** Small scope first.

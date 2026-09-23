@@ -175,6 +175,7 @@ Types:
 - **Permission flags** — entitlements, long-lived.
 
 **Rules:**
+
 - Every flag has an **owner** and an **expiry date**.
 - Stale flags are technical debt — clean them up.
 - Flag evaluation must be **fast** and **fail-safe** (default to old behavior on error).

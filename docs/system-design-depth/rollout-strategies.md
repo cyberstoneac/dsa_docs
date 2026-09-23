@@ -107,6 +107,7 @@ Runtime toggles that decouple deploy from release.
 - **Permission flags:** entitlements (long-lived).
 
 **Rules:**
+
 - Every flag has an **owner** and **expiry**.
 - Default must be **safe** (old behavior on flag-service failure).
 - Flags are **per-user or per-tenant** for gradual rollout.
@@ -133,6 +134,7 @@ Ship the code with the behavior off, and mirror traffic to it without affecting 
 - Capacity testing.
 
 **Rules:**
+
 - **No side effects** — no writes, no emails, no charges.
 - Isolate resources so shadow traffic doesn't affect production.
 - Compare old and new outputs continuously.
@@ -150,6 +152,7 @@ Route users to different variants and measure a business metric.
 - Guardrail metrics (latency, errors, crashes).
 
 **Rules:**
+
 - **Don't peek and stop early.** That's p-hacking.
 - **One change per test.** Otherwise you can't attribute.
 - **Segment carefully** — new users vs returning.
@@ -173,6 +176,7 @@ Run old and new systems side-by-side with the same input and compare outputs.
 - High-risk refactors.
 
 **Rules:**
+
 - New system's output must not reach users.
 - No side effects from the new system.
 - Continuous comparison with alerting.
@@ -215,6 +219,7 @@ Every rollout needs a rollback plan.
 | Parallel run | Don't cut over | N/A |
 
 **Rules:**
+
 - **Test the rollback path** before you need it.
 - **Rollback is not the same as forward-fix.** Choose based on safety.
 - **Data migrations must be reversible** (or forward-compatible).

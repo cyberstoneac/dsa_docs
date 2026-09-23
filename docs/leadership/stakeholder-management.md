@@ -63,6 +63,7 @@ Next: canary to 50%, then full rollout.
 ```
 
 **Rules:**
+
 - Lead with **status** in one line.
 - **Risks** with a mitigation, not just a complaint.
 - **Asks** with a deadline.
@@ -140,6 +141,7 @@ Your team is your most important stakeholder group. They need:
 | Safety | Blameless culture, honest communication |
 
 **Rules:**
+
 - **Communicate first, filter rarely.** Treat them like adults.
 - **Share bad news with the team before it leaks.**
 - **Give context for decisions, not just the decision.**

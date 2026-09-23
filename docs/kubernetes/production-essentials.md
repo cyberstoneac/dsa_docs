@@ -131,6 +131,7 @@ Options:
 4. **CSI Secrets Store** — mount secrets from cloud providers directly.
 
 **Rules:**
+
 - Never commit secrets to git.
 - Rotate credentials.
 - Scope secrets per namespace/service.
@@ -158,6 +159,7 @@ grafana -> alerts
 ```
 
 **Rules:**
+
 - Prometheus scrape via ServiceMonitor (Prometheus Operator).
 - Logs via Fluent Bit / Promtail → Loki.
 - Traces via OTLP → Tempo / Jaeger.
@@ -175,6 +177,7 @@ resources:
 ```
 
 **Rules:**
+
 - Requests for scheduling.
 - Memory limits to prevent OOM.
 - Avoid CPU limits for latency-sensitive workloads (throttling).
@@ -231,6 +234,7 @@ At lead level, know the options:
 | Active-active | High | Seconds |
 
 **Rules:**
+
 - Active-passive is the default.
 - Active-active requires conflict resolution and per-region data residency.
 - Most apps start with single-region + multi-AZ.

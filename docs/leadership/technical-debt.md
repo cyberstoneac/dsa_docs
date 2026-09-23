@@ -165,6 +165,7 @@ Stakeholders don't fund "refactoring." They fund **outcomes**.
 | "We should rewrite it." | "We'll incrementally replace the legacy module with a strangler, keeping behavior identical." |
 
 **Rules:**
+
 - **Frame in their currency:** time, cost, risk, customer impact.
 - **Quantify** wherever possible.
 - **Propose** a plan, not a complaint.

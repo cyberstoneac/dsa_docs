@@ -82,6 +82,7 @@ MongoDB modeling is **access-pattern-driven**. You embed or reference based on h
 ```
 
 **Rules:**
+
 - **Embed what you read together.**
 - **Reference what you read separately.**
 - **Watch the 16 MB document limit.**
@@ -117,6 +118,7 @@ db.orders.createIndex(
 ```
 
 **Rules:**
+
 - **ESR rule for compound indexes:** Equality → Sort → Range.
 - **Covered queries** — all fields in the index; no document fetch.
 - **`explain("executionStats")`** to analyze.
@@ -156,6 +158,7 @@ db.orders.insertOne(doc, { writeConcern: { w: "majority", j: true } })
 | n | n nodes |
 
 **Rules:**
+
 - **`w: "majority"` for durability.**
 - **`j: true` for journaled writes.**
 - **`w: 1` is fast but risks data loss on failover.**
@@ -205,6 +208,7 @@ Horizontal scaling via a shard key.
 | **Zoned** | Data residency, tiering |
 
 **Rules:**
+
 - **High cardinality** — many distinct values.
 - **Low frequency** — no single value dominates.
 - **Non-monotonic** — avoid `_id` or timestamp alone (hot shard).
@@ -237,6 +241,7 @@ db.orders.aggregate([
 ```
 
 **Rules:**
+
 - **`$match` early** to reduce pipeline size.
 - **Indexes can be used by `$match` and `$sort`.**
 - **`$lookup` is a left outer join** — expensive on large collections.
@@ -261,6 +266,7 @@ try {
 ```
 
 **Rules:**
+
 - **Transactions have a 60-second default limit.**
 - **Transactions are slower than single-document operations.**
 - **Prefer single-document atomicity** — design documents so updates are atomic.

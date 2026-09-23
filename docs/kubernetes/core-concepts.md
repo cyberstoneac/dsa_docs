@@ -38,6 +38,7 @@ spec:
 ```
 
 **Rules:**
+
 - `maxUnavailable: 0` ensures capacity never drops.
 - `maxSurge: 1` limits extra capacity.
 - `minReadySeconds` adds a stability window before considering a pod ready.
@@ -95,6 +96,7 @@ spec:
 ```
 
 **Rules:**
+
 - Ingress = HTTP(S) routing; not for TCP/UDP (use LoadBalancer service).
 - One Ingress controller per cluster (nginx, traefik, ALB).
 - TLS termination at the Ingress.
@@ -120,6 +122,7 @@ data:
 ```
 
 **Rules:**
+
 - ConfigMaps for non-sensitive config.
 - Secrets are **base64**, not encrypted by default — enable etcd encryption at rest.
 - For real secret management, use **External Secrets Operator** with Vault / cloud secret manager.
@@ -161,6 +164,7 @@ spec:
 ```
 
 **Rules:**
+
 - Use StatefulSet only when you need stable identity or storage.
 - Pods are named `name-0`, `name-1`, ...
 - Rollout is ordered (0 first, or reverse).
@@ -190,6 +194,7 @@ spec:
 ```
 
 **Rules:**
+
 - Requires **requests** set.
 - Scale on the **right metric** (CPU is easy but not always right).
 - For Kafka: use KEDA on consumer lag.
@@ -215,6 +220,7 @@ spec:
 ```
 
 **Rules:**
+
 - Use `minAvailable` or `maxUnavailable`.
 - Prevents eviction of all pods at once during a drain.
 - Doesn't prevent node failures (those are involuntary).
@@ -240,6 +246,7 @@ spec:
 ```
 
 **Rules:**
+
 - Without a NetworkPolicy, all traffic is allowed.
 - With a NetworkPolicy, only specified traffic is allowed for selected pods.
 - Requires a CNI that supports policies (Calico, Cilium, Weave).
@@ -261,6 +268,7 @@ rules:
 ```
 
 **Rules:**
+
 - Namespaces for grouping + RBAC + quotas.
 - **Not a security boundary by themselves.** Combine with RBAC + NetworkPolicy.
 - Use `Role`/`RoleBinding` for namespaced; `ClusterRole`/`ClusterRoleBinding` for cluster-wide.
@@ -285,6 +293,7 @@ spec:
 ```
 
 **Rules:**
+
 - Jobs are one-shot; CronJobs are scheduled.
 - `restartPolicy: OnFailure` retries failures.
 - `concurrencyPolicy: Forbid` prevents overlapping runs.

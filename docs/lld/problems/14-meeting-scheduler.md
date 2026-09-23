@@ -103,6 +103,7 @@ Entities reused from references:
 A meeting stored in UTC but displayed in local time must round-trip correctly across DST boundaries.
 
 **Rules:**
+
 - Store times as **`ZonedDateTime`** with explicit zone — not `LocalDateTime`.
 - Overlaps computed in **UTC** (`Instant`) to avoid DST ambiguity.
 - When suggesting slots for attendees in different zones, convert to a **common zone** (organizer's) for comparison.

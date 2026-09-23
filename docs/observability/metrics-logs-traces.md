@@ -126,6 +126,7 @@ Every log line is a JSON object with a stable schema:
 ```
 
 **Rules:**
+
 - **Fixed schema across all services.** Queryable, joinable.
 - **Never log PII or secrets.** Scrub at the framework level.
 - **Log at boundaries:** inbound request, outbound call, DB write, error.

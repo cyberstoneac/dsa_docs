@@ -696,6 +696,7 @@ retries:
 ```
 
 **Rules:**
+
 - Only retry idempotent methods (GET, HEAD) by default
 - POST/PUT need explicit idempotency keys to be retryable
 - Exponential backoff with jitter prevents thundering herd

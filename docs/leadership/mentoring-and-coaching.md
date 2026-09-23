@@ -74,6 +74,7 @@ A growth plan is a shared document, not a wish list. It has:
 | Support | "I'll pair on the first doc, then step back" |
 
 **Rules:**
+
 - Owned by the engineer, supported by the lead.
 - Concrete and observable, not vague ("be more senior").
 - Reviewed quarterly, adjusted as needed.

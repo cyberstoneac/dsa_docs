@@ -43,6 +43,7 @@ Estimation is not prediction. It is **communication of uncertainty**. The goal i
 | Reference stories | Calibration | Anchor new work to past work |
 
 **Rules:**
+
 - **Estimate the work, not the person.**
 - **Small stories estimate better** than large ones. If it's > 3 days, split it.
 - **Re-estimate when scope changes** — don't silently absorb.
@@ -78,6 +79,7 @@ Structure (for a 2-week sprint):
 | 6. Risks & dependencies | 15 min | Flag anything external |
 
 **Rules:**
+
 - **Capacity, not velocity, drives scope.** Velocity is a lagging indicator; capacity is real.
 - **Commit to outcomes, not tickets.** "Ship checkout v2 to 10% of users" beats "complete 12 stories."
 - **Leave slack.** 20% buffer for unplanned work, bugs, and support.
@@ -205,6 +207,7 @@ The retro is where the team improves. Structure:
 5. **Close** — commitment.
 
 **Rules:**
+
 - **Blameless.** Systems fail, not people.
 - **Action-oriented.** Insights without actions are just talk.
 - **Follow up.** Review last retro's actions first.

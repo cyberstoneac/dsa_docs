@@ -887,6 +887,7 @@ Send one digest: "10 updates on Q4 Marketing board"
 ```
 
 **Rules:**
+
 - Immediate: if action is critical (mention, assignment)
 - Digest (5 min): if user is idle
 - Daily digest: if user has notifications disabled in real-time
