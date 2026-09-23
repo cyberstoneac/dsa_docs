@@ -5,11 +5,79 @@
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
-         <loc>https://cyberstoneac.github.io/dsa_docs/cheatsheet/</loc>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
-         <loc>https://cyberstoneac.github.io/dsa_docs/tags/</loc>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/adrs-and-documentation/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/api-first/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/decision-frameworks/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/domain-driven-design/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/evolution-and-migration/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/http-methods/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/trade-off-analysis/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/architecture/twelve-factor-app/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/cloud/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/cloud/service-models/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/databases/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/databases/mongodb-essentials/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/databases/postgresql-essentials/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/databases/redis-essentials/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/databases/sql-interview-questions/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/docker/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/docker/dockerfile-and-jvm/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/dsa/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
@@ -26,6 +94,10 @@
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/bit-manipulation/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/dsa/cheatsheet/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
@@ -73,6 +145,10 @@
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/dsa/tags/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/tree/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
@@ -89,6 +165,14 @@
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/design-patterns-advanced/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/jvm-tools/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/memory-references/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
@@ -97,7 +181,15 @@
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/modern-jdk-apis/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/reflection-and-classloaders/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/thread-local-and-scoped-values/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
@@ -118,6 +210,10 @@
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/java/collections/set-and-sorted/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/collections/streams-advanced/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
@@ -202,6 +298,94 @@
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/java/strings/string-internals/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kafka/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kafka/delivery-semantics/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kafka/fundamentals/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kafka/operations-and-scenarios/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kafka/patterns/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kafka/producer-consumer/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kubernetes/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kubernetes/core-concepts/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/kubernetes/production-essentials/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/agile-ceremonies/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/behavioral-interviews/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/code-reviews/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/delivery-and-planning/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/incident-command/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/mentoring-and-coaching/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/north-star-metrics/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/safe-and-scaling-agile/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/sdlc-lifecycle/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/shift-left/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/stakeholder-management/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/leadership/technical-debt/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
@@ -358,6 +542,142 @@
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/30-pub-sub-lld/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/communication/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/contract-testing/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/data-management/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/decomposition/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/deployment/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/observability/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/reliability/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/microservices-patterns/security/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/observability/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/observability/metrics-logs-traces/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/security/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/security/authentication-and-authorization/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/security/owasp-and-appsec/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/aop/aop-and-proxies/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/boot/auto-configuration/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/boot/configuration/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/core/bean-lifecycle/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/core/circular-dependencies/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/core/ioc-and-di/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/data/batch-processing/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/data/n-plus-one/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/data/spring-data-jpa/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/microservices/api-gateway/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/microservices/circuit-breaker/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/microservices/config-server/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/microservices/feign-and-tracing/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/microservices/service-discovery/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/mvc/spring-mvc/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/security/jwt-and-oauth2/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/security/method-security/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/security/spring-security-basics/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/spring/transactions/transaction-management/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
     <url>
@@ -602,6 +922,38 @@
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/57-maps-routing/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/system-design-depth/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/system-design-depth/capacity-planning/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/system-design-depth/evolution-stories/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/system-design-depth/failure-modes/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/system-design-depth/non-functional-requirements/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/system-design-depth/rollout-strategies/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/testing/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/testing/tdd-bdd-atdd/</loc>
          <lastmod>2026-09-23</lastmod>
     </url>
 </urlset>
