@@ -2,486 +2,606 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/cheatsheet/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/tags/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/array/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/backtracking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/binary-search/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/bit-manipulation/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/dynamic-programming/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/graph/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/greedy/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/heap/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/intervals/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/linked-list/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/maths/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/queue/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/sliding-window/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/stack/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/string/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/tree/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/trie/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/dsa/two-pointers/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/memory-references/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/misc-tricky/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/advanced/reflection-and-classloaders/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/collections/collections-overview/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/collections/concurrent-collections/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/collections/hashmap-internals/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/collections/list-implementations/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/collections/set-and-sorted/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/collections/streams-and-functional/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/concurrency/concurrency-utilities/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/concurrency/deadlock-and-liveness/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/concurrency/executors-and-futures/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/concurrency/synchronization/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/concurrency/threads-basics/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/concurrency/virtual-threads/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/design-patterns-java/immutable-objects/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/design-patterns-java/patterns-in-java/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/exceptions/exception-mastery/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/fundamentals/java-versions/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/fundamentals/jvm-architecture/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/fundamentals/keywords-deep-dive/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/fundamentals/nested-classes/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/fundamentals/object-lifecycle/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/fundamentals/oop-principles/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/fundamentals/records-and-enums/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/generics/generics-and-wildcards/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/io-serialization/object-copying-and-cloning/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/io-serialization/serialization-deep-dive/</loc>
+         <lastmod>2026-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cyberstoneac.github.io/dsa_docs/java/strings/string-internals/</loc>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/concurrency-basics/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/how-to-approach-lld/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/solid-principles/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/uml-basics/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/design-patterns/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/design-patterns/behavioral/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/design-patterns/creational/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/design-patterns/structural/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/01-parking-lot/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/02-vending-machine/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/03-atm/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/04-elevator-system/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/05-library-management/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/06-hotel-management/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/07-snake-and-ladder/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/08-tic-tac-toe/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/09-chess/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/10-splitwise/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/11-movie-ticket-booking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/12-cab-booking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/13-food-delivery-order/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/14-meeting-scheduler/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/15-airline-reservation/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/16-coffee-machine/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/17-car-rental/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/18-shopping-cart/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/19-restaurant-ordering/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/20-logging-framework/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/21-rate-limiter-lld/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/22-producer-consumer/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/23-lru-cache/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/24-thread-pool/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/25-reader-writer-lock/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/26-dining-philosophers/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/27-cache-eviction/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/28-message-queue-lld/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/29-url-shortener-lld/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/lld/problems/30-pub-sub-lld/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/fundamentals/back-of-envelope/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/fundamentals/building-blocks/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/fundamentals/database-design/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/01-url-shortener/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/02-rate-limiter/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/03-distributed-id-generator/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/04-distributed-lock/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/05-pub-sub-system/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/06-distributed-message-queue/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/07-distributed-cache/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/08-service-discovery/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/09-api-gateway/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/10-cdn/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/11-cash-split/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/12-calendar-scheduling/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/13-show-ticket-booking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/14-task-management/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/15-voting-polling/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/16-hospital-appointment-booking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/17-insurance-platform/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/18-product-catalog/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/19-job-search-platform/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/20-search-autocomplete/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/21-notification-system/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/22-online-messaging-app/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/23-mail-sharing/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/24-content-sharing-microblog/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/25-social-feed-timeline/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/26-news-feed-ranking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/27-content-moderation/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/28-reddit-style-forum/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/29-video-conferencing/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/30-video-streaming-vod/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/31-music-streaming/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/32-live-streaming/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/33-recommendation-engine/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/34-file-storage-service/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/35-collaborative-document-editor/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/36-proximity-service/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/37-ride-booking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/38-food-delivery/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/39-dating-app/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/40-proximity-matchmaking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/41-payment-system/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/42-digital-wallet/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/43-ecommerce-checkout/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/44-travel-booking/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/45-trading-platform/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/46-fraud-detection/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/47-web-crawler/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/48-distributed-task-scheduler/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/49-log-ingestion-system/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/50-metrics-monitoring/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/51-distributed-tracing/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/52-online-judge/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/53-distributed-key-value-store/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/54-distributed-cloud-storage/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/55-authentication-authorization/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/56-code-deployment-cicd/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
     <url>
          <loc>https://cyberstoneac.github.io/dsa_docs/system-design/problems/57-maps-routing/</loc>
-         <lastmod>2026-09-19</lastmod>
+         <lastmod>2026-09-23</lastmod>
     </url>
 </urlset>
