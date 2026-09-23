@@ -420,7 +420,6 @@ cdn: "CDN Edge" {shape: cloud}
 lb: "Load Balancer" {shape: hexagon}
 rs: "Read Service" {shape: rectangle}
 cache: "Redis Cache" {shape: cylinder}
-db: "PostgreSQL" {shape: cylinder}
 kafka: "Kafka" {shape: queue}
 
 user -> cdn: GET /aB3xK9z

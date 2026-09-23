@@ -200,6 +200,98 @@ A complete **LLD** curriculum — 30 problems across 6 categories covering class
 
 ---
 
+## ☕ Core Java — Interview Revision
+
+A concept-dense **Core Java** reference for engineers who already write Java daily. **31 deep-dive documents** covering JVM internals, language semantics, collections, concurrency, streams, serialization, design patterns, and JDK 7 → 21 evolution — with D2 and PlantUML diagrams and working code examples throughout.
+
+[📖 Core Java Overview](java/index.md){ .md-button .md-button--primary }
+[🧱 JVM Architecture](java/fundamentals/jvm-architecture.md){ .md-button }
+[📦 HashMap Internals](java/collections/hashmap-internals.md){ .md-button }
+[🌊 Streams & Functional](java/collections/streams-and-functional.md){ .md-button }
+
+### 📚 Fundamentals
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [JVM Architecture](java/fundamentals/jvm-architecture.md) | Class loaders, runtime memory areas, bytecode execution, JDK vs JRE vs JVM |
+| [Object Lifecycle](java/fundamentals/object-lifecycle.md) | Creation paths, `this`, GC roots, reachability, strong/weak/soft/phantom refs |
+| [OOP Principles](java/fundamentals/oop-principles.md) | Encapsulation, inheritance, polymorphism, composition, up/downcasting |
+| [Keyword Deep Dive](java/fundamentals/keywords-deep-dive.md) | `final`, `super`, `this`, `static`, `transient`, `volatile`, `var` |
+| [Nested Classes](java/fundamentals/nested-classes.md) | Static nested, inner, local, anonymous classes; `this$0`; memory leaks |
+| [Records & Enums](java/fundamentals/records-and-enums.md) | Records, canonical constructors, enums with abstract methods, sealed types |
+| [Java Versions](java/fundamentals/java-versions.md) | JDK 7 → 21 feature evolution with rationale |
+
+### 🧵 Language Semantics
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [String Internals](java/strings/string-internals.md) | String pool, immutability, object counts, `intern()`, encoding vs encryption |
+| [Exception Mastery](java/exceptions/exception-mastery.md) | Hierarchy, checked vs unchecked, try/catch/finally edge cases, try-with-resources |
+| [Generics & Wildcards](java/generics/generics-and-wildcards.md) | Type erasure, bounded types, PECS, why generics exist in collections |
+
+### 📦 Collections
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [Collections Overview](java/collections/collections-overview.md) | Hierarchy, List/Set/Map/Queue, when to use what |
+| [HashMap Internals](java/collections/hashmap-internals.md) | Buckets, hashing, collisions, resize, treeify, `hashCode`/`equals` contract |
+| [List Implementations](java/collections/list-implementations.md) | ArrayList vs LinkedList vs Vector, fail-fast vs fail-safe |
+| [Set & Sorted Collections](java/collections/set-and-sorted.md) | HashSet, TreeSet, LinkedHashSet, Comparable vs Comparator, `EnumSet` |
+| [Concurrent Collections](java/collections/concurrent-collections.md) | ConcurrentHashMap, CopyOnWrite, BlockingQueue, bucket-level sync |
+| [Streams & Functional](java/collections/streams-and-functional.md) | Full Streams deep dive (JDK 21), lambdas, functional interfaces, collectors |
+
+### ⚙️ Concurrency
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [Threads Basics](java/concurrency/threads-basics.md) | Thread lifecycle, Runnable vs Thread vs Callable, join, daemon, interrupts |
+| [Synchronization](java/concurrency/synchronization.md) | `synchronized`, `volatile`, wait/notify, ReentrantLock |
+| [Executors & Futures](java/concurrency/executors-and-futures.md) | ExecutorService, Future, CompletableFuture, thread pool tuning |
+| [Concurrency Utilities](java/concurrency/concurrency-utilities.md) | Semaphore, CountDownLatch, CyclicBarrier, AtomicInteger, CAS |
+| [Deadlock & Liveness](java/concurrency/deadlock-and-liveness.md) | Detection, prevention, starvation, livelock, thread dumps |
+| [Virtual Threads](java/concurrency/virtual-threads.md) | Java 21 virtual threads, pinning, structured concurrency |
+
+### 🔌 I/O & Serialization
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [Serialization Deep Dive](java/io-serialization/serialization-deep-dive.md) | Serializable, Externalizable, custom serialization, transient, superclass rules, network transfer |
+| [Object Copying & Cloning](java/io-serialization/object-copying-and-cloning.md) | Shallow vs deep copy, `Cloneable`, copy constructors, serialization-based deep copy |
+
+### 🎨 Design Patterns
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [Patterns in Java](java/design-patterns-java/patterns-in-java.md) | Singleton (thread-safe), Builder, Factory, Observer, Strategy, Proxy |
+| [Immutable Objects](java/design-patterns-java/immutable-objects.md) | Five rules of immutability, defensive copies, prevent cloning/serialization |
+
+### 🔬 Advanced
+
+| Topic | What You'll Learn |
+|-------|-------------------|
+| [Reflection & Classloaders](java/advanced/reflection-and-classloaders.md) | Reflection API, `MethodHandle`, classloader hierarchy, `ClassNotFoundException` vs `NoClassDefFoundError` |
+| [Memory References](java/advanced/memory-references.md) | Strong/Weak/Soft/Phantom refs, `WeakHashMap`, GC collectors, tuning |
+| [Misc Tricky Corners](java/advanced/misc-tricky.md) | Array comparison, pass-by-value, 2D arrays, null static access, method hiding, autoboxing traps |
+
+### 🧭 JDK Feature Timeline
+
+| JDK | Headline Features |
+|-----|-------------------|
+| **7** | try-with-resources, diamond operator, strings in switch, `ForkJoinPool` |
+| **8** | Lambdas, Streams, `Optional`, default methods, `CompletableFuture`, new Date/Time API |
+| **9** | JPMS (modules), `jshell`, `Stream.ofNullable`, `takeWhile`/`dropWhile`, private interface methods |
+| **10** | `var` (local variable type inference) |
+| **11** | HTTP/2 client, `var` in lambdas, `String.isBlank/lines/repeat` |
+| **14** | Switch expressions (standard) |
+| **16** | Records, pattern matching for `instanceof`, `Stream.toList()` |
+| **17** | Sealed classes, pattern matching for switch (preview) |
+| **18** | Simple web server for static files |
+| **21** | Virtual threads, sequenced collections, pattern matching for switch (standard), record patterns, ZGC generational |
+
+Full breakdown in [Java Versions](java/fundamentals/java-versions.md).
+
+---
+
 ## 🚀 How to Use This Site
 
 - **New to DSA?** Follow the [Recommended Learning Path](#dsa-learning-path-recommended-order) below — it's ordered for gradual skill building.
@@ -209,6 +301,7 @@ A complete **LLD** curriculum — 30 problems across 6 categories covering class
 - **Want to see everything at a glance?** Check the [Cheat Sheet](cheatsheet.md) for complexity tables and patterns.
 - **Studying System Design?** Start with [Fundamentals](system-design/index.md), then work through problems in phase order.
 - **Studying Low-Level Design?** Start with [How to Approach LLD](lld/how-to-approach-lld.md), then work through problems by category.
+- **Studying Core Java?** Start with [Core Java Overview](java/index.md), then follow the [recommended reading order](java/index.md#-recommended-reading-order).
 
 **Prerequisites:** Basic Java syntax (loops, conditionals, methods). No prior DSA knowledge required.
 
@@ -307,6 +400,44 @@ Track your journey through all 150+ problems. Check them off as you go!
 
 ---
 
+## ☕ Core Java Progress Tracker
+
+Track your Java revision across all 31 documents.
+
+| Stage | Topic | Done? |
+|-------|-------|:-----:|
+| 1 | JVM Architecture | [ ] |
+| 1 | Object Lifecycle | [ ] |
+| 1 | OOP Principles | [ ] |
+| 1 | Keywords Deep Dive | [ ] |
+| 1 | Nested Classes | [ ] |
+| 1 | Records & Enums | [ ] |
+| 1 | Java Versions | [ ] |
+| 2 | String Internals | [ ] |
+| 2 | Exception Mastery | [ ] |
+| 2 | Generics & Wildcards | [ ] |
+| 3 | Collections Overview | [ ] |
+| 3 | HashMap Internals | [ ] |
+| 3 | List Implementations | [ ] |
+| 3 | Set & Sorted Collections | [ ] |
+| 3 | Concurrent Collections | [ ] |
+| 4 | Streams & Functional | [ ] |
+| 5 | Threads Basics | [ ] |
+| 5 | Synchronization | [ ] |
+| 5 | Executors & Futures | [ ] |
+| 5 | Concurrency Utilities | [ ] |
+| 5 | Deadlock & Liveness | [ ] |
+| 5 | Virtual Threads | [ ] |
+| 6 | Serialization Deep Dive | [ ] |
+| 6 | Object Copying & Cloning | [ ] |
+| 6 | Patterns in Java | [ ] |
+| 6 | Immutable Objects | [ ] |
+| 6 | Reflection & Classloaders | [ ] |
+| 6 | Memory References | [ ] |
+| 6 | Misc Tricky Corners | [ ] |
+
+---
+
 ## ✨ Highlights
 
 - ✅ **150+ working Java solutions**
@@ -322,6 +453,10 @@ Track your journey through all 150+ problems. Check them off as you go!
 - ✅ **30 Low-Level Design problems** across 6 categories
 - ✅ **LLD fundamentals** (SOLID, design patterns, UML, concurrency)
 - ✅ **Working Java 17 code** with class diagrams for every LLD problem
+- ✅ **31 Core Java deep-dive documents** (JVM, collections, concurrency, streams, patterns)
+- ✅ **Working code examples** with expected output throughout Core Java docs
+- ✅ **D2 + PlantUML diagrams** in every Core Java section
+- ✅ **JDK 7 → 21 feature evolution** with rationale
 
 ---
 
@@ -333,6 +468,7 @@ Track your journey through all 150+ problems. Check them off as you go!
 - ⚡ **Quick Reference** — Problem solutions and patterns
 - 🏛️ **System Design Interviews** — FAANG-level preparation
 - 🧱 **LLD / Machine Coding Rounds** — Flipkart, Uber, Swiggy style
+- ☕ **Core Java Rounds** — JVM internals, collections, concurrency, modern Java
 
 ---
 
@@ -340,8 +476,8 @@ Track your journey through all 150+ problems. Check them off as you go!
 
 - [MkDocs](https://www.mkdocs.org/) + [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
 - [Mermaid](https://mermaid.js.org/) for DSA diagrams
-- [PlantUML](https://plantuml.com/) for System Design and LLD diagrams
-- [D2](https://d2lang.com/) for architecture diagrams
+- [PlantUML](https://plantuml.com/) for System Design, LLD, and Core Java diagrams
+- [D2](https://d2lang.com/) for architecture and concept diagrams
 - Deployed on [GitHub Pages](https://pages.github.com/)
 
 ---
