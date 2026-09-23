@@ -1,7 +1,7 @@
-site_name: DSA Notes (Java)
-site_description: Comprehensive Data Structures & Algorithms notes with 150+ Java solutions, aligned with NeetCode 150
-site_author: Jagdish
+site_name: Interview Prep Notes
+site_description: DSA, System Design, LLD & Core Java — all in one place.
 site_url: https://cyberstoneac.github.io/dsa_docs/
+site_author: Jagdish
 
 repo_name: cyberstoneac/dsa_docs
 repo_url: https://github.com/cyberstoneac/dsa_docs
@@ -60,7 +60,7 @@ plugins:
   #     lang: en
   #     separator: '[\s\-\.]+'
   - tags:
-      tags_file: tags.md
+      tags_file: dsa/tags.md
   - minify:
       minify_html: true
   - plantuml-local:
@@ -129,9 +129,10 @@ extra_css:
 
 nav:
   - Home: index.md
-  - 📋 Cheat Sheet: cheatsheet.md
-  - 🏷️ Tags: tags.md
   - DSA:
+    - Overview: dsa/index.md
+    - 📋 Cheat Sheet: dsa/cheatsheet.md
+    - 🏷️ Tags: dsa/tags.md
     - Linear Data Structures:
         - Array: dsa/array.md
         - String: dsa/string.md
@@ -279,7 +280,7 @@ nav:
             - 29. URL Shortener (LLD): lld/problems/29-url-shortener-lld.md
             - 30. Pub-Sub System (LLD): lld/problems/30-pub-sub-lld.md
   - Java:
-    - java/index.md
+    - Overview: java/index.md
     - Fundamentals:
         - JVM Architecture: java/fundamentals/jvm-architecture.md
         - Object Lifecycle: java/fundamentals/object-lifecycle.md
@@ -301,6 +302,7 @@ nav:
         - Set & Sorted Collections: java/collections/set-and-sorted.md
         - Concurrent Collections: java/collections/concurrent-collections.md
         - Streams & Functional: java/collections/streams-and-functional.md
+        - Streams Advanced: java/collections/streams-advanced.md
     - Concurrency:
         - Threads Basics: java/concurrency/threads-basics.md
         - Synchronization: java/concurrency/synchronization.md
@@ -314,10 +316,43 @@ nav:
     - Design Patterns:
         - Patterns in Java: java/design-patterns-java/patterns-in-java.md
         - Immutable Objects: java/design-patterns-java/immutable-objects.md
+        - Design Patterns Advanced: java/advanced/design-patterns-advanced.md
     - Advanced:
         - Reflection & Classloaders: java/advanced/reflection-and-classloaders.md
         - Memory References: java/advanced/memory-references.md
         - Misc Tricky Corners: java/advanced/misc-tricky.md
+        - JVM Tools: java/advanced/jvm-tools.md
+        - Modern JDK APIs: java/advanced/modern-jdk-apis.md
+        - ThreadLocal & Scoped Values: java/advanced/thread-local-and-scoped-values.md
+  - Spring:
+      - Overview: spring/index.md
+      - Core:
+          - IoC & Dependency Injection: spring/core/ioc-and-di.md
+          - Bean Lifecycle: spring/core/bean-lifecycle.md
+          - Circular Dependencies: spring/core/circular-dependencies.md
+      - AOP:
+          - AOP & Proxies: spring/aop/aop-and-proxies.md
+      - Transactions:
+          - Transaction Management: spring/transactions/transaction-management.md
+      - Spring Boot:
+          - Auto-Configuration: spring/boot/auto-configuration.md
+          - Configuration: spring/boot/configuration.md
+      - Data:
+          - Spring Data JPA: spring/data/spring-data-jpa.md
+          - Batch Processing: spring/data/batch-processing.md
+          - N+1 Problem: spring/data/n-plus-one.md
+      - Security:
+          - Security Basics: spring/security/spring-security-basics.md
+          - JWT & OAuth2: spring/security/jwt-and-oauth2.md
+          - Method Security: spring/security/method-security.md
+      - Web:
+          - Spring MVC: spring/mvc/spring-mvc.md
+      - Microservices:
+          - Service Discovery: spring/microservices/service-discovery.md
+          - API Gateway: spring/microservices/api-gateway.md
+          - Circuit Breaker: spring/microservices/circuit-breaker.md
+          - Config Server: spring/microservices/config-server.md
+          - Feign & Tracing: spring/microservices/feign-and-tracing.md
 extra:
   social:
     - icon: fontawesome/brands/github
@@ -328,4 +363,4 @@ extra:
       name: LinkedIn
   generator: false  # Hides "Made with MkDocs" footer
 
-copyright: Copyright &copy; 2026 DSA Notes — Built with ❤️ for learners
+copyright: Copyright &copy; 2026 Interview Prep Notes — Built with ❤️ for learners

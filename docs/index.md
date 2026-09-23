@@ -1,462 +1,70 @@
-# 🧠 Data Structures & Algorithms (Java)
+# 🧠 Interview Prep Notes
 
-Welcome to **DSA Notes**! This documentation covers essential concepts and algorithms in computer science, with examples in **Java**.
-
-Whether you're preparing for interviews, improving problem-solving skills, or just exploring DSA, this guide is comprehensive and covers **150+ problems** aligned with **NeetCode 150** standards.
-
-[🚀 Get Started](#how-to-use-this-site){ .md-button .md-button--primary }
-[📋 Cheat Sheet](cheatsheet.md){ .md-button }
-[🔍 Search](#){ .md-button }
+A complete interview-prep reference — **Data Structures & Algorithms**,
+**System Design**, **Low-Level Design**, **Java**, and **Spring** — with
+working code, diagrams, and concept-dense explanations.
 
 ---
 
-## 🏛️ System Design Notes
+## 📚 Five Sections
 
-Alongside DSA, this site includes a complete **System Design** curriculum — fundamentals, building blocks, and **57 practice problems** covering everything from URL shorteners to distributed tracing.
+### 🧠 Data Structures & Algorithms
+**150+ problems** aligned with NeetCode 150 — arrays, strings, trees, graphs,
+DP, and more. Every problem has working Java code, complexity analysis, and
+pattern notes.
 
-[📖 System Design Overview](system-design/index.md){ .md-button .md-button--primary }
-[🧱 Back of Envelope](system-design/fundamentals/back-of-envelope.md){ .md-button }
-[🗄️ Database Design](system-design/fundamentals/database-design.md){ .md-button }
-[🧩 Building Blocks](system-design/fundamentals/building-blocks.md){ .md-button }
+[📖 Open DSA →](dsa/index.md){ .md-button .md-button--primary }
 
-### 📚 Fundamentals
+### 🏛️ System Design
+**57 practice problems** across 7 phases — from URL shorteners to distributed
+tracing — plus fundamentals (estimation, databases, building blocks).
 
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [Back of Envelope Estimation](system-design/fundamentals/back-of-envelope.md) | QPS, storage, bandwidth, cache sizing, latency numbers |
-| [Database Design](system-design/fundamentals/database-design.md) | SQL vs NoSQL, sharding, replication, indexing, CAP |
-| [Building Blocks](system-design/fundamentals/building-blocks.md) | Load balancers, caches, queues, rate limiters, CDNs |
+[📖 Open System Design →](system-design/index.md){ .md-button .md-button--primary }
 
-### 🎯 57 Practice Problems (7 Phases)
+### 🧱 Low-Level Design (LLD)
+**30 problems** across 6 categories — OOP design, games, booking systems,
+concurrency, and framework design. Full class diagrams + Java 17 code.
 
-#### Phase 1 — Foundations
-| # | Problem |
-|---|---------|
-| 01 | [URL Shortener](system-design/problems/01-url-shortener.md) |
-| 02 | [Rate Limiter](system-design/problems/02-rate-limiter.md) |
-| 03 | [Distributed Unique ID Generator](system-design/problems/03-distributed-id-generator.md) |
-| 04 | [Distributed Lock](system-design/problems/04-distributed-lock.md) |
-| 05 | [Pub/Sub System](system-design/problems/05-pub-sub-system.md) |
-| 06 | [Distributed Message Queue](system-design/problems/06-distributed-message-queue.md) |
-| 07 | [Distributed Cache](system-design/problems/07-distributed-cache.md) |
-| 08 | [Service Discovery](system-design/problems/08-service-discovery.md) |
-| 09 | [API Gateway](system-design/problems/09-api-gateway.md) |
-| 10 | [CDN](system-design/problems/10-cdn.md) |
-| 53 | [Distributed Key-Value Store](system-design/problems/53-distributed-key-value-store.md) |
-| 55 | [Authentication & Authorization (SSO / OAuth2)](system-design/problems/55-authentication-authorization.md) |
+[📖 Open LLD →](lld/index.md){ .md-button .md-button--primary }
 
-#### Phase 2 — Simple Products
-| # | Problem |
-|---|---------|
-| 11 | [Cash Split](system-design/problems/11-cash-split.md) |
-| 12 | [Calendar / Scheduling](system-design/problems/12-calendar-scheduling.md) |
-| 13 | [Show / Ticket Booking](system-design/problems/13-show-ticket-booking.md) |
-| 14 | [Task Management](system-design/problems/14-task-management.md) |
-| 15 | [Voting / Polling](system-design/problems/15-voting-polling.md) |
-| 16 | [Hospital Appointment Booking](system-design/problems/16-hospital-appointment-booking.md) |
-| 17 | [Insurance Platform](system-design/problems/17-insurance-platform.md) |
-| 18 | [Product Catalog](system-design/problems/18-product-catalog.md) |
-| 19 | [Job Search Platform](system-design/problems/19-job-search-platform.md) |
-| 20 | [Search Autocomplete](system-design/problems/20-search-autocomplete.md) |
+### ☕ Java
+**36 deep-dive documents** — JVM internals, language semantics, collections,
+concurrency, streams, serialization, patterns, JDK tools, and Java 9 → 21 API
+evolution.
 
-#### Phase 3 — Communication
-| # | Problem |
-|---|---------|
-| 21 | [Notification System](system-design/problems/21-notification-system.md) |
-| 22 | [Online Messaging App](system-design/problems/22-online-messaging-app.md) |
-| 23 | [Mail Sharing](system-design/problems/23-mail-sharing.md) |
-| 24 | [Content Sharing / Microblog](system-design/problems/24-content-sharing-microblog.md) |
-| 25 | [Social Feed / Timeline](system-design/problems/25-social-feed-timeline.md) |
-| 26 | [News Feed Ranking](system-design/problems/26-news-feed-ranking.md) |
-| 27 | [Content Moderation](system-design/problems/27-content-moderation.md) |
-| 28 | [Reddit-style Forum](system-design/problems/28-reddit-style-forum.md) |
-| 29 | [Video Conferencing](system-design/problems/29-video-conferencing.md) |
+[📖 Open Java →](java/index.md){ .md-button .md-button--primary }
 
-#### Phase 4 — Media & Content
-| # | Problem |
-|---|---------|
-| 30 | [Video Streaming (VOD)](system-design/problems/30-video-streaming-vod.md) |
-| 31 | [Music Streaming](system-design/problems/31-music-streaming.md) |
-| 32 | [Live Streaming](system-design/problems/32-live-streaming.md) |
-| 33 | [Recommendation Engine](system-design/problems/33-recommendation-engine.md) |
-| 34 | [File Storage Service](system-design/problems/34-file-storage-service.md) |
-| 35 | [Collaborative Document Editor](system-design/problems/35-collaborative-document-editor.md) |
-| 54 | [Distributed Cloud Storage (S3-like)](system-design/problems/54-distributed-cloud-storage.md) |
+### 🌱 Spring Framework
+**19 deep-dive documents** — IoC/DI, bean lifecycle, AOP, transactions,
+Spring Boot auto-config, JPA, security, MVC, and microservices patterns.
 
-#### Phase 5 — Location & Mobility
-| # | Problem |
-|---|---------|
-| 36 | [Proximity Service](system-design/problems/36-proximity-service.md) |
-| 37 | [Ride Booking](system-design/problems/37-ride-booking.md) |
-| 38 | [Food Delivery](system-design/problems/38-food-delivery.md) |
-| 39 | [Dating App](system-design/problems/39-dating-app.md) |
-| 40 | [Proximity Matchmaking](system-design/problems/40-proximity-matchmaking.md) |
-| 57 | [Maps & Routing / Navigation](system-design/problems/57-maps-routing.md) |
-
-#### Phase 6 — Fintech
-| # | Problem |
-|---|---------|
-| 41 | [Payment System](system-design/problems/41-payment-system.md) |
-| 42 | [Digital Wallet](system-design/problems/42-digital-wallet.md) |
-| 43 | [E-Commerce Checkout](system-design/problems/43-ecommerce-checkout.md) |
-| 44 | [Travel Booking](system-design/problems/44-travel-booking.md) |
-| 45 | [Trading Platform](system-design/problems/45-trading-platform.md) |
-| 46 | [Fraud Detection](system-design/problems/46-fraud-detection.md) |
-
-#### Phase 7 — Distributed Systems
-| # | Problem |
-|---|---------|
-| 47 | [Web Crawler](system-design/problems/47-web-crawler.md) |
-| 48 | [Distributed Task Scheduler](system-design/problems/48-distributed-task-scheduler.md) |
-| 49 | [Log Ingestion System](system-design/problems/49-log-ingestion-system.md) |
-| 50 | [Metrics / Monitoring](system-design/problems/50-metrics-monitoring.md) |
-| 51 | [Distributed Tracing](system-design/problems/51-distributed-tracing.md) |
-| 52 | [Online Judge](system-design/problems/52-online-judge.md) |
-| 56 | [Code Deployment / CI-CD](system-design/problems/56-code-deployment-cicd.md) |
-
----
-
-## 🧱 Low-Level Design (LLD) Notes
-
-A complete **LLD** curriculum — 30 problems across 6 categories covering classic OOP, games, booking systems, real-world services, concurrency, and framework design. Each problem comes with a class diagram, working Java 17 implementation, concurrency analysis, and extensibility discussion.
-
-[📖 LLD Overview](lld/index.md){ .md-button .md-button--primary }
-[🎯 How to Approach LLD](lld/how-to-approach-lld.md){ .md-button }
-[🧩 Design Patterns](lld/design-patterns/index.md){ .md-button }
-[⚙️ SOLID Principles](lld/solid-principles.md){ .md-button }
-
-### 📚 Fundamentals
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [How to Approach LLD](lld/how-to-approach-lld.md) | 6-step framework: clarify, entities, relationships, patterns, code, deep dive |
-| [SOLID Principles](lld/solid-principles.md) | SRP, OCP, LSP, ISP, DIP with Java examples and counterexamples |
-| [UML Basics](lld/uml-basics.md) | Class diagrams, sequence diagrams, PlantUML notation |
-| [Concurrency Basics](lld/concurrency-basics.md) | Threads, locks, Java `java.util.concurrent`, common patterns |
-
-### 🧩 Design Patterns
-
-| Category | Patterns |
-|----------|----------|
-| [Creational](lld/design-patterns/creational.md) | Singleton, Factory Method, Abstract Factory, Builder, Prototype |
-| [Structural](lld/design-patterns/structural.md) | Adapter, Decorator, Facade, Proxy, Composite, Bridge, Flyweight |
-| [Behavioral](lld/design-patterns/behavioral.md) | Strategy, Observer, State, Command, Template Method, Iterator, Chain of Responsibility |
-
-### 🎯 30 Practice Problems (6 Categories)
-
-#### Category A — Classic OOP
-| # | Problem |
-|---|---------|
-| 01 | [Parking Lot](lld/problems/01-parking-lot.md) |
-| 02 | [Vending Machine](lld/problems/02-vending-machine.md) |
-| 03 | [ATM](lld/problems/03-atm.md) |
-| 04 | [Elevator System](lld/problems/04-elevator-system.md) |
-| 05 | [Library Management System](lld/problems/05-library-management.md) |
-| 06 | [Hotel Management System](lld/problems/06-hotel-management.md) |
-
-#### Category B — Games
-| # | Problem |
-|---|---------|
-| 07 | [Snake and Ladder](lld/problems/07-snake-and-ladder.md) |
-| 08 | [Tic-Tac-Toe](lld/problems/08-tic-tac-toe.md) |
-| 09 | [Chess](lld/problems/09-chess.md) |
-| 10 | [Splitwise](lld/problems/10-splitwise.md) |
-
-#### Category C — Booking & Scheduling
-| # | Problem |
-|---|---------|
-| 11 | [Movie Ticket Booking](lld/problems/11-movie-ticket-booking.md) |
-| 12 | [Cab Booking](lld/problems/12-cab-booking.md) |
-| 13 | [Food Delivery Order Management](lld/problems/13-food-delivery-order.md) |
-| 14 | [Meeting Scheduler](lld/problems/14-meeting-scheduler.md) |
-| 15 | [Airline Reservation](lld/problems/15-airline-reservation.md) |
-
-#### Category D — Real-World Services
-| # | Problem |
-|---|---------|
-| 16 | [Coffee Machine](lld/problems/16-coffee-machine.md) |
-| 17 | [Car Rental System](lld/problems/17-car-rental.md) |
-| 18 | [Shopping Cart](lld/problems/18-shopping-cart.md) |
-| 19 | [Restaurant Ordering](lld/problems/19-restaurant-ordering.md) |
-| 20 | [Logging Framework](lld/problems/20-logging-framework.md) |
-| 21 | [Rate Limiter (LLD)](lld/problems/21-rate-limiter-lld.md) |
-
-#### Category E — Concurrency / Multithreading
-| # | Problem |
-|---|---------|
-| 22 | [Producer-Consumer](lld/problems/22-producer-consumer.md) |
-| 23 | [Thread-Safe LRU Cache](lld/problems/23-lru-cache.md) |
-| 24 | [Thread Pool Executor](lld/problems/24-thread-pool.md) |
-| 25 | [Reader-Writer Lock](lld/problems/25-reader-writer-lock.md) |
-| 26 | [Dining Philosophers](lld/problems/26-dining-philosophers.md) |
-
-#### Category F — Framework / Infra LLD
-| # | Problem |
-|---|---------|
-| 27 | [Cache with Eviction Policies](lld/problems/27-cache-eviction.md) |
-| 28 | [Message Queue (LLD)](lld/problems/28-message-queue-lld.md) |
-| 29 | [URL Shortener (LLD)](lld/problems/29-url-shortener-lld.md) |
-| 30 | [Pub-Sub System (LLD)](lld/problems/30-pub-sub-lld.md) |
-
----
-
-## ☕ Core Java — Interview Revision
-
-A concept-dense **Core Java** reference for engineers who already write Java daily. **31 deep-dive documents** covering JVM internals, language semantics, collections, concurrency, streams, serialization, design patterns, and JDK 7 → 21 evolution — with D2 and PlantUML diagrams and working code examples throughout.
-
-[📖 Core Java Overview](java/index.md){ .md-button .md-button--primary }
-[🧱 JVM Architecture](java/fundamentals/jvm-architecture.md){ .md-button }
-[📦 HashMap Internals](java/collections/hashmap-internals.md){ .md-button }
-[🌊 Streams & Functional](java/collections/streams-and-functional.md){ .md-button }
-
-### 📚 Fundamentals
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [JVM Architecture](java/fundamentals/jvm-architecture.md) | Class loaders, runtime memory areas, bytecode execution, JDK vs JRE vs JVM |
-| [Object Lifecycle](java/fundamentals/object-lifecycle.md) | Creation paths, `this`, GC roots, reachability, strong/weak/soft/phantom refs |
-| [OOP Principles](java/fundamentals/oop-principles.md) | Encapsulation, inheritance, polymorphism, composition, up/downcasting |
-| [Keyword Deep Dive](java/fundamentals/keywords-deep-dive.md) | `final`, `super`, `this`, `static`, `transient`, `volatile`, `var` |
-| [Nested Classes](java/fundamentals/nested-classes.md) | Static nested, inner, local, anonymous classes; `this$0`; memory leaks |
-| [Records & Enums](java/fundamentals/records-and-enums.md) | Records, canonical constructors, enums with abstract methods, sealed types |
-| [Java Versions](java/fundamentals/java-versions.md) | JDK 7 → 21 feature evolution with rationale |
-
-### 🧵 Language Semantics
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [String Internals](java/strings/string-internals.md) | String pool, immutability, object counts, `intern()`, encoding vs encryption |
-| [Exception Mastery](java/exceptions/exception-mastery.md) | Hierarchy, checked vs unchecked, try/catch/finally edge cases, try-with-resources |
-| [Generics & Wildcards](java/generics/generics-and-wildcards.md) | Type erasure, bounded types, PECS, why generics exist in collections |
-
-### 📦 Collections
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [Collections Overview](java/collections/collections-overview.md) | Hierarchy, List/Set/Map/Queue, when to use what |
-| [HashMap Internals](java/collections/hashmap-internals.md) | Buckets, hashing, collisions, resize, treeify, `hashCode`/`equals` contract |
-| [List Implementations](java/collections/list-implementations.md) | ArrayList vs LinkedList vs Vector, fail-fast vs fail-safe |
-| [Set & Sorted Collections](java/collections/set-and-sorted.md) | HashSet, TreeSet, LinkedHashSet, Comparable vs Comparator, `EnumSet` |
-| [Concurrent Collections](java/collections/concurrent-collections.md) | ConcurrentHashMap, CopyOnWrite, BlockingQueue, bucket-level sync |
-| [Streams & Functional](java/collections/streams-and-functional.md) | Full Streams deep dive (JDK 21), lambdas, functional interfaces, collectors |
-
-### ⚙️ Concurrency
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [Threads Basics](java/concurrency/threads-basics.md) | Thread lifecycle, Runnable vs Thread vs Callable, join, daemon, interrupts |
-| [Synchronization](java/concurrency/synchronization.md) | `synchronized`, `volatile`, wait/notify, ReentrantLock |
-| [Executors & Futures](java/concurrency/executors-and-futures.md) | ExecutorService, Future, CompletableFuture, thread pool tuning |
-| [Concurrency Utilities](java/concurrency/concurrency-utilities.md) | Semaphore, CountDownLatch, CyclicBarrier, AtomicInteger, CAS |
-| [Deadlock & Liveness](java/concurrency/deadlock-and-liveness.md) | Detection, prevention, starvation, livelock, thread dumps |
-| [Virtual Threads](java/concurrency/virtual-threads.md) | Java 21 virtual threads, pinning, structured concurrency |
-
-### 🔌 I/O & Serialization
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [Serialization Deep Dive](java/io-serialization/serialization-deep-dive.md) | Serializable, Externalizable, custom serialization, transient, superclass rules, network transfer |
-| [Object Copying & Cloning](java/io-serialization/object-copying-and-cloning.md) | Shallow vs deep copy, `Cloneable`, copy constructors, serialization-based deep copy |
-
-### 🎨 Design Patterns
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [Patterns in Java](java/design-patterns-java/patterns-in-java.md) | Singleton (thread-safe), Builder, Factory, Observer, Strategy, Proxy |
-| [Immutable Objects](java/design-patterns-java/immutable-objects.md) | Five rules of immutability, defensive copies, prevent cloning/serialization |
-
-### 🔬 Advanced
-
-| Topic | What You'll Learn |
-|-------|-------------------|
-| [Reflection & Classloaders](java/advanced/reflection-and-classloaders.md) | Reflection API, `MethodHandle`, classloader hierarchy, `ClassNotFoundException` vs `NoClassDefFoundError` |
-| [Memory References](java/advanced/memory-references.md) | Strong/Weak/Soft/Phantom refs, `WeakHashMap`, GC collectors, tuning |
-| [Misc Tricky Corners](java/advanced/misc-tricky.md) | Array comparison, pass-by-value, 2D arrays, null static access, method hiding, autoboxing traps |
-
-### 🧭 JDK Feature Timeline
-
-| JDK | Headline Features |
-|-----|-------------------|
-| **7** | try-with-resources, diamond operator, strings in switch, `ForkJoinPool` |
-| **8** | Lambdas, Streams, `Optional`, default methods, `CompletableFuture`, new Date/Time API |
-| **9** | JPMS (modules), `jshell`, `Stream.ofNullable`, `takeWhile`/`dropWhile`, private interface methods |
-| **10** | `var` (local variable type inference) |
-| **11** | HTTP/2 client, `var` in lambdas, `String.isBlank/lines/repeat` |
-| **14** | Switch expressions (standard) |
-| **16** | Records, pattern matching for `instanceof`, `Stream.toList()` |
-| **17** | Sealed classes, pattern matching for switch (preview) |
-| **18** | Simple web server for static files |
-| **21** | Virtual threads, sequenced collections, pattern matching for switch (standard), record patterns, ZGC generational |
-
-Full breakdown in [Java Versions](java/fundamentals/java-versions.md).
+[📖 Open Spring →](spring/index.md){ .md-button .md-button--primary }
 
 ---
 
 ## 🚀 How to Use This Site
 
-- **New to DSA?** Follow the [Recommended Learning Path](#dsa-learning-path-recommended-order) below — it's ordered for gradual skill building.
-- **Preparing for interviews?** Jump to any topic — each file is self-contained with working code and explanations.
-- **Quick revision?** Look for the **Key Tips** and **Common Pitfalls** sections at the bottom of each topic.
-- **Looking for a specific problem?** Use the search bar (press `/`) or the [topic list](#dsa-topics-covered) below.
-- **Want to see everything at a glance?** Check the [Cheat Sheet](cheatsheet.md) for complexity tables and patterns.
-- **Studying System Design?** Start with [Fundamentals](system-design/index.md), then work through problems in phase order.
-- **Studying Low-Level Design?** Start with [How to Approach LLD](lld/how-to-approach-lld.md), then work through problems by category.
-- **Studying Core Java?** Start with [Core Java Overview](java/index.md), then follow the [recommended reading order](java/index.md#-recommended-reading-order).
+- **Interview prep** — jump into any section; every file is self-contained.
+- **Quick revision** — look for **Key Tips** and **Common Pitfalls** at the
+  bottom of each topic.
+- **Search anything** — press `/` to open search.
+- **Cheat sheet** — see [Cheatsheet](dsa/cheatsheet.md) for complexity tables
+  and patterns.
 
-**Prerequisites:** Basic Java syntax (loops, conditionals, methods). No prior DSA knowledge required.
+**Prerequisites:** Basic Java syntax. No prior DSA knowledge required.
 
 ---
 
-## 📚 DSA Topics Covered
+## ✨ What's Inside
 
-### 🔹 Linear Data Structures
-
-| Topic | Problems | Difficulty Mix |
-|-------|----------|----------------|
-| [Array](dsa/array.md) | 13 | 🟢 7 · 🟡 4 · 🔴 2 |
-| [String](dsa/string.md) | 11 | 🟢 5 · 🟡 5 · 🔴 1 |
-| [Stack](dsa/stack.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
-| [Queue](dsa/queue.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-| [Linked List](dsa/linked-list.md) | 11 | 🟢 5 · 🟡 4 · 🔴 2 |
-
-### 🌲 Non-Linear Data Structures
-
-| Topic | Problems | Difficulty Mix |
-|-------|----------|----------------|
-| [Tree](dsa/tree.md) | 9 | 🟢 4 · 🟡 3 · 🔴 2 |
-| [Graph](dsa/graph.md) | 12+ | 🟢 4 · 🟡 4 · 🔴 4 |
-| [Trie](dsa/trie.md) | 4 | 🟡 2 · 🔴 2 |
-| [Heap / Priority Queue](dsa/heap.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
-
-### 🎯 Problem-Solving Techniques
-
-| Topic | Problems | Difficulty Mix |
-|-------|----------|----------------|
-| [Two Pointers](dsa/two-pointers.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-| [Sliding Window](dsa/sliding-window.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-| [Binary Search](dsa/binary-search.md) | 8 | 🟢 2 · 🟡 4 · 🔴 2 |
-| [Backtracking](dsa/backtracking.md) | 8 | 🟢 3 · 🟡 3 · 🔴 2 |
-| [Intervals](dsa/intervals.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-
-### ⚙️ Algorithms & Patterns
-
-| Topic | Problems | Difficulty Mix |
-|-------|----------|----------------|
-| [Dynamic Programming](dsa/dynamic-programming.md) | 13 | 🟢 4 · 🟡 6 · 🔴 3 |
-| [Greedy Algorithm](dsa/greedy.md) | 11 | 🟢 4 · 🟡 5 · 🔴 2 |
-
-### 🧮 Techniques & Math
-
-| Topic | Problems | Difficulty Mix |
-|-------|----------|----------------|
-| [Maths](dsa/maths.md) | 9 | 🟢 3 · 🟡 4 · 🔴 2 |
-| [Bit Manipulation](dsa/bit-manipulation.md) | 10 | 🟢 5 · 🟡 3 · 🔴 2 |
-
-> 🟢 Easy &nbsp;&nbsp; 🟡 Medium &nbsp;&nbsp; 🔴 Hard
-
----
-
-## 📌 DSA Learning Path (Recommended Order)
-
-Follow this order for a smooth learning curve. Each stage builds on the previous one.
-
-| Stage | Topics | Estimated Time | Focus |
-|-------|--------|----------------|-------|
-| **1. Foundation** | Array, String | 2–3 weeks | Core iteration, hashing, two-pointers |
-| **2. Techniques** | Two Pointers, Sliding Window, Binary Search | 2 weeks | Pattern recognition, O(n) thinking |
-| **3. Data Structures** | Stack, Queue, Linked List, Tree | 3 weeks | Recursion, traversal, pointers |
-| **4. Advanced DS** | Heap, Graph, Trie | 2–3 weeks | Priority, connectivity, prefix search |
-| **5. Algorithms** | Dynamic Programming, Backtracking, Greedy | 3–4 weeks | Optimization, recursion trees, choices |
-| **6. Optimization** | Bit Manipulation, Maths, Intervals | 1–2 weeks | Low-level tricks, number theory |
-
-**Tip:** Don't rush. It's better to deeply understand 5 problems per topic than to skim 20.
-
----
-
-## 📊 DSA Progress Tracker
-
-Track your journey through all 150+ problems. Check them off as you go!
-
-| Stage | Topic | Done? |
-|-------|-------|:-----:|
-| 1 | Array | [ ] |
-| 1 | String | [ ] |
-| 2 | Two Pointers | [ ] |
-| 2 | Sliding Window | [ ] |
-| 2 | Binary Search | [ ] |
-| 3 | Stack | [ ] |
-| 3 | Queue | [ ] |
-| 3 | Linked List | [ ] |
-| 3 | Tree | [ ] |
-| 4 | Heap | [ ] |
-| 4 | Graph | [ ] |
-| 4 | Trie | [ ] |
-| 5 | Dynamic Programming | [ ] |
-| 5 | Backtracking | [ ] |
-| 5 | Greedy | [ ] |
-| 6 | Bit Manipulation | [ ] |
-| 6 | Maths | [ ] |
-| 6 | Intervals | [ ] |
-
----
-
-## ☕ Core Java Progress Tracker
-
-Track your Java revision across all 31 documents.
-
-| Stage | Topic | Done? |
-|-------|-------|:-----:|
-| 1 | JVM Architecture | [ ] |
-| 1 | Object Lifecycle | [ ] |
-| 1 | OOP Principles | [ ] |
-| 1 | Keywords Deep Dive | [ ] |
-| 1 | Nested Classes | [ ] |
-| 1 | Records & Enums | [ ] |
-| 1 | Java Versions | [ ] |
-| 2 | String Internals | [ ] |
-| 2 | Exception Mastery | [ ] |
-| 2 | Generics & Wildcards | [ ] |
-| 3 | Collections Overview | [ ] |
-| 3 | HashMap Internals | [ ] |
-| 3 | List Implementations | [ ] |
-| 3 | Set & Sorted Collections | [ ] |
-| 3 | Concurrent Collections | [ ] |
-| 4 | Streams & Functional | [ ] |
-| 5 | Threads Basics | [ ] |
-| 5 | Synchronization | [ ] |
-| 5 | Executors & Futures | [ ] |
-| 5 | Concurrency Utilities | [ ] |
-| 5 | Deadlock & Liveness | [ ] |
-| 5 | Virtual Threads | [ ] |
-| 6 | Serialization Deep Dive | [ ] |
-| 6 | Object Copying & Cloning | [ ] |
-| 6 | Patterns in Java | [ ] |
-| 6 | Immutable Objects | [ ] |
-| 6 | Reflection & Classloaders | [ ] |
-| 6 | Memory References | [ ] |
-| 6 | Misc Tricky Corners | [ ] |
-
----
-
-## ✨ Highlights
-
-- ✅ **150+ working Java solutions**
-- ✅ **Complete explanations** for every problem
-- ✅ **Time & Space complexity** analysis
-- ✅ **Multiple difficulty levels** (Easy, Medium, Hard)
-- ✅ **Similar pattern problems** listed for each solution
-- ✅ **Key techniques** and **common pitfalls** sections
-- ✅ **Advanced algorithms** (Union-Find, Topological Sort, MST, etc.)
-- ✅ **NeetCode 150 aligned** curriculum
-- ✅ **57 System Design problems** with full 18-section walkthroughs
-- ✅ **System Design fundamentals** (estimation, databases, building blocks)
-- ✅ **30 Low-Level Design problems** across 6 categories
-- ✅ **LLD fundamentals** (SOLID, design patterns, UML, concurrency)
-- ✅ **Working Java 17 code** with class diagrams for every LLD problem
-- ✅ **31 Core Java deep-dive documents** (JVM, collections, concurrency, streams, patterns)
-- ✅ **Working code examples** with expected output throughout Core Java docs
-- ✅ **D2 + PlantUML diagrams** in every Core Java section
+- ✅ **150+ DSA problems** with working Java solutions
+- ✅ **57 System Design problems** with full walkthroughs
+- ✅ **30 LLD problems** with class diagrams and Java 17 code
+- ✅ **36 Java deep-dive documents**
+- ✅ **19 Spring Framework deep-dive documents**
+- ✅ **D2 + PlantUML diagrams** throughout
 - ✅ **JDK 7 → 21 feature evolution** with rationale
+- ✅ **NeetCode 150 aligned** DSA curriculum
 
 ---
 
@@ -465,10 +73,10 @@ Track your Java revision across all 31 documents.
 - 🎯 **Interview Preparation** — LeetCode / HackerRank practice
 - 🏆 **Competitive Programming** — Algorithm optimization
 - 📖 **Learning** — Foundational to advanced concepts
-- ⚡ **Quick Reference** — Problem solutions and patterns
 - 🏛️ **System Design Interviews** — FAANG-level preparation
 - 🧱 **LLD / Machine Coding Rounds** — Flipkart, Uber, Swiggy style
-- ☕ **Core Java Rounds** — JVM internals, collections, concurrency, modern Java
+- ☕ **Java Rounds** — JVM internals, collections, concurrency
+- 🌱 **Spring / Backend Rounds** — IoC, AOP, transactions, Spring Boot
 
 ---
 
@@ -476,15 +84,13 @@ Track your Java revision across all 31 documents.
 
 - [MkDocs](https://www.mkdocs.org/) + [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
 - [Mermaid](https://mermaid.js.org/) for DSA diagrams
-- [PlantUML](https://plantuml.com/) for System Design, LLD, and Core Java diagrams
+- [PlantUML](https://plantuml.com/) for System Design, LLD,  Java, and Spring diagrams
 - [D2](https://d2lang.com/) for architecture and concept diagrams
 - Deployed on [GitHub Pages](https://pages.github.com/)
 
 ---
 
 ## 🤝 Contributing
-
-Found a bug, typo, or have a better solution? Contributions are welcome!
 
 - 🐛 [Report an issue](https://github.com/cyberstoneac/dsa_docs/issues)
 - ✏️ Edit any page directly (click the ✏️ pencil icon on top-right of each page)
@@ -499,4 +105,4 @@ Found a bug, typo, or have a better solution? Contributions are welcome!
 
 ---
 
-> 📍 _Each file contains detailed problems with working code, complexity analysis, and similar pattern problems. Start with any topic or follow the recommended learning path above. Happy coding!_ 🚀
+> 📍 _Start with any section. Each is self-contained. Happy learning!_ 🚀

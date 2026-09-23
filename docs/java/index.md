@@ -48,6 +48,7 @@ root: Core Java Revision {
     st: Set & Sorted
     cc: Concurrent Collections
     stream: Streams & Functional
+    advStream: Streams Advanced
   }
 
   conc: Concurrency {
@@ -70,6 +71,7 @@ root: Core Java Revision {
     style.fill: "#b2dfdb"
     patterns: Patterns in Java
     immut: Immutable Objects
+    advPat: Design Patterns Advanced
   }
 
   adv: Advanced {
@@ -77,6 +79,9 @@ root: Core Java Revision {
     refl: Reflection & Classloaders
     mem: Memory References
     misc: Misc Tricky Corners
+    jvmTools: JVM Tools
+    modernApis: Modern JDK APIs
+    tl: ThreadLocal & Scoped Values
   }
 }
 
@@ -115,6 +120,7 @@ root.pat -> root.adv: "then depth"
 | [Set & Sorted Collections](collections/set-and-sorted.md) | HashSet, TreeSet, LinkedHashSet, Comparable vs Comparator, `EnumSet` |
 | [Concurrent Collections](collections/concurrent-collections.md) | ConcurrentHashMap, CopyOnWrite, BlockingQueue, bucket-level sync |
 | [Streams & Functional](collections/streams-and-functional.md) | Full Streams deep dive (JDK 21), lambdas, functional interfaces, collectors |
+| [Streams Advanced](collections/streams-advanced.md) | Collector internals, custom collectors, Spliterator, parallel reduce, anti-patterns |
 
 ### ⚙️ Concurrency
 | Topic | What You'll Learn |
@@ -137,6 +143,7 @@ root.pat -> root.adv: "then depth"
 |-------|-------------------|
 | [Patterns in Java](design-patterns-java/patterns-in-java.md) | Singleton (thread-safe), Builder, Factory, Observer, Strategy, Proxy |
 | [Immutable Objects](design-patterns-java/immutable-objects.md) | Five rules of immutability, defensive copies, prevent cloning/serialization |
+| [Design Patterns Advanced](advanced/design-patterns-advanced.md) | Abstract Factory, Composite, Bridge, Flyweight, State, Command, Visitor + DI, Repository, Circuit Breaker, Saga |
 
 ### 🔬 Advanced
 | Topic | What You'll Learn |
@@ -144,6 +151,9 @@ root.pat -> root.adv: "then depth"
 | [Reflection & Classloaders](advanced/reflection-and-classloaders.md) | Reflection API, `MethodHandle`, classloader hierarchy, `ClassNotFoundException` vs `NoClassDefFoundError` |
 | [Memory References](advanced/memory-references.md) | Strong/Weak/Soft/Phantom refs, `WeakHashMap`, GC collectors, tuning |
 | [Misc Tricky Corners](advanced/misc-tricky.md) | Array comparison, pass-by-value, 2D arrays, null static access, method hiding, autoboxing traps |
+| [JVM Tools](advanced/jvm-tools.md) | JVM flags, heap sizing, GC logging, `jps`/`jmap`/`jstat`/`jstack`/`jcmd`, JFR, diagnostic workflows |
+| [Modern JDK APIs](advanced/modern-jdk-apis.md) | Java 9 → 21 API additions (HttpClient, text blocks, records, sealed classes, pattern matching, sequenced collections) |
+| [ThreadLocal & Scoped Values](advanced/thread-local-and-scoped-values.md) | ThreadLocal internals, leaks, InheritableThreadLocal, ScopedValue, structured concurrency |
 
 ---
 
@@ -152,7 +162,7 @@ root.pat -> root.adv: "then depth"
 ```d2
 direction: right
 
-s1: "1. Core Semantics\nOOP + Keywords\n+ Object Lifecycle" {
+s1: "1. Core Semantics\nOOP + Keywords\n+ Nested + Lifecycle" {
   style.fill: "#bbdefb"
 }
 s2: "2. Data Handling\nStrings + Exceptions\n+ Generics" {
@@ -161,13 +171,13 @@ s2: "2. Data Handling\nStrings + Exceptions\n+ Generics" {
 s3: "3. Collections\nHashMap + List + Set\n+ Concurrent" {
   style.fill: "#fff9c4"
 }
-s4: "4. Modern Java\nStreams + Lambdas" {
+s4: "4. Modern Java\nStreams + Streams Adv\n+ Records + Modern APIs" {
   style.fill: "#ffe0b2"
 }
-s5: "5. Concurrency\nThreads + Sync\n+ Executors" {
+s5: "5. Concurrency\nThreads + Sync\n+ Executors + VThreads" {
   style.fill: "#ffccbc"
 }
-s6: "6. Advanced\nJVM + Serialization\n+ References" {
+s6: "6. Depth\nJVM + Serialization\n+ Patterns + Tools" {
   style.fill: "#f8bbd0"
 }
 
@@ -179,9 +189,9 @@ s1 -> s2 -> s3 -> s4 -> s5 -> s6
 | **1. Core semantics** | Language foundation | `oop-principles`, `keywords-deep-dive`, `nested-classes`, `object-lifecycle` |
 | **2. Data handling** | Strings, exceptions, generics | `string-internals`, `exception-mastery`, `generics-and-wildcards` |
 | **3. Collections mastery** | The #1 interview area | `hashmap-internals`, `list-implementations`, `set-and-sorted`, `concurrent-collections` |
-| **4. Modern Java** | Streams, lambdas, records | `streams-and-functional`, `records-and-enums` |
-| **5. Concurrency** | Threading essentials | `threads-basics`, `synchronization`, `executors-and-futures`, `concurrency-utilities` |
-| **6. Advanced** | Depth & gotchas | `jvm-architecture`, `serialization-deep-dive`, `memory-references`, `reflection-and-classloaders` |
+| **4. Modern Java** | Streams, lambdas, records, JDK APIs | `streams-and-functional`, `streams-advanced`, `records-and-enums`, `modern-jdk-apis` |
+| **5. Concurrency** | Threading essentials | `threads-basics`, `synchronization`, `executors-and-futures`, `concurrency-utilities`, `virtual-threads`, `thread-local-and-scoped-values` |
+| **6. Advanced** | Depth & gotchas | `jvm-architecture`, `serialization-deep-dive`, `memory-references`, `reflection-and-classloaders`, `jvm-tools`, `design-patterns-advanced` |
 
 ---
 
@@ -211,6 +221,7 @@ jdk9: "JDK 9\n2017" {
   f1: "JPMS modules"
   f2: "jshell"
   f3: "ofNullable/takeWhile"
+  f4: "Collection.of"
 }
 jdk10: "JDK 10\n2018" {
   style.fill: "#4fc3f7"
@@ -224,6 +235,7 @@ jdk11: "JDK 11\n2018 LTS" {
 jdk14: "JDK 14\n2020" {
   style.fill: "#03a9f4"
   f1: "Switch expressions"
+  f2: "Helpful NPEs"
 }
 jdk16: "JDK 16\n2021" {
   style.fill: "#039be5"
@@ -234,7 +246,7 @@ jdk16: "JDK 16\n2021" {
 jdk17: "JDK 17\n2021 LTS" {
   style.fill: "#0288d1"
   f1: "Sealed classes"
-  f2: "switch pattern (preview)"
+  f2: "HexFormat"
 }
 jdk21: "JDK 21\n2023 LTS" {
   style.fill: "#01579b"
@@ -256,10 +268,10 @@ jdk7 -> jdk8 -> jdk9 -> jdk10 -> jdk11 -> jdk14 -> jdk16 -> jdk17 -> jdk21
 | **9** | JPMS (modules), `jshell`, `Stream.ofNullable`, `takeWhile`/`dropWhile`, private interface methods |
 | **10** | `var` (local variable type inference) |
 | **11** | HTTP/2 client, `var` in lambdas, `String.isBlank/lines/repeat` |
-| **14** | Switch expressions (standard) |
+| **14** | Switch expressions (standard), helpful NPEs |
 | **16** | Records, pattern matching for `instanceof`, `Stream.toList()` |
-| **17** | Sealed classes, pattern matching for switch (preview) |
-| **18** | Simple web server for static files |
+| **17** | Sealed classes, `HexFormat`, pattern matching for switch (preview) |
+| **18** | Simple web server for static files, UTF-8 default |
 | **21** | Virtual threads, sequenced collections, pattern matching for switch (standard), record patterns, ZGC generational |
 
 Full breakdown in [Java Versions](fundamentals/java-versions.md).
@@ -268,7 +280,7 @@ Full breakdown in [Java Versions](fundamentals/java-versions.md).
 
 ## ✨ Highlights
 
-- ✅ **31 deep-dive documents** — concepts, not Q&A
+- ✅ **36 deep-dive documents** — concepts, not Q&A
 - ✅ **Internals-focused** — bytecode, memory layout, JVM behavior
 - ✅ **Tricky corners** called out explicitly in every file
 - ✅ **Working code examples** with expected output
@@ -279,7 +291,7 @@ Full breakdown in [Java Versions](fundamentals/java-versions.md).
 
 ---
 
-## 🗂️ Full File List (31 Documents)
+## 🗂️ Full File List (36 Documents)
 
 ### Fundamentals (7)
 - [JVM Architecture](fundamentals/jvm-architecture.md)
@@ -295,13 +307,14 @@ Full breakdown in [Java Versions](fundamentals/java-versions.md).
 - [Exception Mastery](exceptions/exception-mastery.md)
 - [Generics & Wildcards](generics/generics-and-wildcards.md)
 
-### Collections (6)
+### Collections (7)
 - [Collections Overview](collections/collections-overview.md)
 - [HashMap Internals](collections/hashmap-internals.md)
 - [List Implementations](collections/list-implementations.md)
 - [Set & Sorted Collections](collections/set-and-sorted.md)
 - [Concurrent Collections](collections/concurrent-collections.md)
 - [Streams & Functional](collections/streams-and-functional.md)
+- [Streams Advanced](collections/streams-advanced.md)
 
 ### Concurrency (6)
 - [Threads Basics](concurrency/threads-basics.md)
@@ -315,20 +328,24 @@ Full breakdown in [Java Versions](fundamentals/java-versions.md).
 - [Serialization Deep Dive](io-serialization/serialization-deep-dive.md)
 - [Object Copying & Cloning](io-serialization/object-copying-and-cloning.md)
 
-### Design Patterns (2)
+### Design Patterns (3)
 - [Patterns in Java](design-patterns-java/patterns-in-java.md)
 - [Immutable Objects](design-patterns-java/immutable-objects.md)
+- [Design Patterns Advanced](advanced/design-patterns-advanced.md)
 
-### Advanced (3)
+### Advanced (6)
 - [Reflection & Classloaders](advanced/reflection-and-classloaders.md)
 - [Memory References](advanced/memory-references.md)
 - [Misc Tricky Corners](advanced/misc-tricky.md)
+- [JVM Tools](advanced/jvm-tools.md)
+- [Modern JDK APIs](advanced/modern-jdk-apis.md)
+- [ThreadLocal & Scoped Values](advanced/thread-local-and-scoped-values.md)
 
 ---
 
 ## 📊 Progress Tracker
 
-Track your revision across all 31 documents.
+Track your revision across all 36 documents.
 
 | Stage | Topic | Done? |
 |-------|-------|:-----:|
@@ -348,19 +365,24 @@ Track your revision across all 31 documents.
 | 3 | Set & Sorted Collections | [ ] |
 | 3 | Concurrent Collections | [ ] |
 | 4 | Streams & Functional | [ ] |
+| 4 | Streams Advanced | [ ] |
 | 5 | Threads Basics | [ ] |
 | 5 | Synchronization | [ ] |
 | 5 | Executors & Futures | [ ] |
 | 5 | Concurrency Utilities | [ ] |
 | 5 | Deadlock & Liveness | [ ] |
 | 5 | Virtual Threads | [ ] |
+| 5 | ThreadLocal & Scoped Values | [ ] |
 | 6 | Serialization Deep Dive | [ ] |
 | 6 | Object Copying & Cloning | [ ] |
 | 6 | Patterns in Java | [ ] |
 | 6 | Immutable Objects | [ ] |
+| 6 | Design Patterns Advanced | [ ] |
 | 6 | Reflection & Classloaders | [ ] |
 | 6 | Memory References | [ ] |
 | 6 | Misc Tricky Corners | [ ] |
+| 6 | JVM Tools | [ ] |
+| 6 | Modern JDK APIs | [ ] |
 
 ---
 
