@@ -56,9 +56,9 @@ theme:
     - content.tabs.link           # Link tabs across pages
 
 plugins:
-  # - search:
-  #     lang: en
-  #     separator: '[\s\-\.]+'
+  - search:
+      lang: en
+      separator: '[\s\-\.]+'
   - tags:
       tags_file: dsa/tags.md
   - minify:
@@ -230,6 +230,13 @@ nav:
           - 51. Distributed Tracing: system-design/problems/51-distributed-tracing.md
           - 52. Online Judge: system-design/problems/52-online-judge.md
           - 56. Code Deployment / CI-CD: system-design/problems/56-code-deployment-cicd.md
+      - 🎯 System Design Depth:
+          - Overview: system-design-depth/index.md
+          - Non-Functional Requirements: system-design-depth/non-functional-requirements.md
+          - Failure Modes: system-design-depth/failure-modes.md
+          - Evolution Stories: system-design-depth/evolution-stories.md
+          - Capacity Planning: system-design-depth/capacity-planning.md
+          - Rollout Strategies: system-design-depth/rollout-strategies.md
   - Low-Level Design (LLD):
     - Overview: lld/index.md
     - Fundamentals:
@@ -353,6 +360,53 @@ nav:
           - Circuit Breaker: spring/microservices/circuit-breaker.md
           - Config Server: spring/microservices/config-server.md
           - Feign & Tracing: spring/microservices/feign-and-tracing.md
+  - 📨 Kafka:
+      - Overview: kafka/index.md
+      - Fundamentals: kafka/fundamentals.md
+      - Producer & Consumer: kafka/producer-consumer.md
+      - Delivery Semantics: kafka/delivery-semantics.md
+      - Patterns: kafka/patterns.md
+      - Operations & Scenarios: kafka/operations-and-scenarios.md
+  - 🔗 Microservices Patterns:
+      - Overview: microservices-patterns/index.md
+      - Decomposition: microservices-patterns/decomposition.md
+      - Communication: microservices-patterns/communication.md
+      - Data Management: microservices-patterns/data-management.md
+      - Reliability: microservices-patterns/reliability.md
+      - Observability: microservices-patterns/observability.md
+      - Deployment: microservices-patterns/deployment.md
+      - Security: microservices-patterns/security.md
+  - 🏗️ Architecture:
+      - Overview: architecture/index.md
+      - Decision Frameworks: architecture/decision-frameworks.md
+      - Trade-off Analysis: architecture/trade-off-analysis.md
+      - Evolution & Migration: architecture/evolution-and-migration.md
+      - ADRs & Documentation: architecture/adrs-and-documentation.md
+  - 👥 Leadership:
+      - Overview: leadership/index.md
+      - Code Reviews: leadership/code-reviews.md
+      - Mentoring & Coaching: leadership/mentoring-and-coaching.md
+      - Delivery & Planning: leadership/delivery-and-planning.md
+      - Stakeholder Management: leadership/stakeholder-management.md
+      - Technical Debt: leadership/technical-debt.md
+      - Incident Command: leadership/incident-command.md
+      - Behavioral Interviews: leadership/behavioral-interviews.md
+  - 🏗️ Infrastructure:
+      - ☸️ Kubernetes:
+          - Overview: kubernetes/index.md
+          - Core Concepts: kubernetes/core-concepts.md
+          - Production Essentials: kubernetes/production-essentials.md
+      - 🐳 Docker:
+          - Overview: docker/index.md
+          - Dockerfile & JVM: docker/dockerfile-and-jvm.md
+      - 🗄️ Databases:
+          - Overview: databases/index.md
+          - PostgreSQL Essentials: databases/postgresql-essentials.md
+          - MongoDB Essentials: databases/mongodb-essentials.md
+      - 📊 Observability:
+          - Overview: observability/index.md
+          - Metrics, Logs, Traces: observability/metrics-logs-traces.md
+
 extra:
   social:
     - icon: fontawesome/brands/github
