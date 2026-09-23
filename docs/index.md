@@ -2,8 +2,9 @@
 
 A complete interview-prep reference — **Data Structures & Algorithms**,
 **System Design**, **Low-Level Design**, **Java**, **Spring**, **Kafka**,
-**Microservices Patterns**, **Architecture**, and **Leadership** — with
-working code, diagrams, and concept-dense explanations.
+**Microservices Patterns**, **Architecture**, **Leadership**, **Testing**,
+**Security**, and **Cloud** — with working code, diagrams, and concept-dense
+explanations.
 
 ---
 
@@ -55,26 +56,52 @@ operations-and-scenarios file that mirrors real interview questions.
 [📖 Open Kafka →](kafka/index.md){ .md-button .md-button--primary }
 
 ### 🔗 Microservices Patterns
-**8 documents** — decomposition, communication, data management, reliability,
-observability, deployment, and security. The Chris Richardson catalog,
-applied in a Spring Boot 3 stack.
+**9 documents** — decomposition, communication, data management, reliability,
+observability, deployment, security, and **contract testing** (Pact, consumer-
+driven contracts, `can-i-deploy`). The Chris Richardson catalog, applied in a
+Spring Boot 3 stack.
 
 [📖 Open Microservices Patterns →](microservices-patterns/index.md){ .md-button .md-button--primary }
 
 ### 🏗️ Architecture
-**5 documents** — decision frameworks, trade-off analysis (monolith vs
+**9 documents** — decision frameworks, trade-off analysis (monolith vs
 microservices, SQL vs NoSQL, sync vs async, stateful vs stateless, batch vs
 stream), evolution and migration (strangler fig, expand-contract, parallel
-runs), and ADRs and documentation.
+runs), ADRs and documentation, plus **Domain-Driven Design**, **API-First
+Design**, **HTTP Methods**, and the **Twelve-Factor App**.
 
 [📖 Open Architecture →](architecture/index.md){ .md-button .md-button--primary }
 
 ### 👥 Leadership
-**8 documents** — code reviews, mentoring and coaching, delivery and
+**13 documents** — code reviews, mentoring and coaching, delivery and
 planning, stakeholder management, technical debt, incident command, and
-behavioral interviews. For 13 YOE tech leads managing multiple teams.
+behavioral interviews, plus **North Star Metrics**, **Agile Ceremonies**,
+**SAFe & Scaling Agile**, **SDLC Lifecycle**, and **Shift-Left**. For 13 YOE
+tech leads managing multiple teams.
 
 [📖 Open Leadership →](leadership/index.md){ .md-button .md-button--primary }
+
+### 🧪 Testing
+**2 documents** — the testing pyramid and quality gates, plus **TDD, BDD &
+ATDD** (red/green/refactor, Gherkin, Three Amigos, Spring Boot examples).
+Contract testing lives under Microservices Patterns.
+
+[📖 Open Testing →](testing/index.md){ .md-button .md-button--primary }
+
+### 🔒 Security
+**3 documents** — threat modelling and defense in depth, **Authentication &
+Authorization** (OAuth 2.0 flows + PKCE, OIDC, SAML, JWT validation, mTLS,
+RBAC vs ABAC), and **OWASP & AppSec** (Top 10, injection, XSS, CSRF, SSRF,
+deserialization, secrets management).
+
+[📖 Open Security →](security/index.md){ .md-button .md-button--primary }
+
+### ☁️ Cloud
+**2 documents** — cloud-native principles, well-architected pillars, cost
+awareness, multi-region patterns, and **service models** (IaaS/PaaS/CaaS/
+FaaS/SaaS) with the responsibility matrix, TCO, and lock-in trade-offs.
+
+[📖 Open Cloud →](cloud/index.md){ .md-button .md-button--primary }
 
 ### 🏗️ Infrastructure
 
@@ -88,8 +115,9 @@ about production, not just operate.
   scheduling, autoscaling, production essentials
 - [🐳 Docker](docker/index.md) — images, layers, multi-stage builds,
   JVM-in-container memory and GC, native images
-- [🗄️ Databases](databases/index.md) — PostgreSQL and MongoDB essentials:
-  modeling, indexing, transactions, replication, sharding
+- [🗄️ Databases](databases/index.md) — PostgreSQL, MongoDB, and **Redis**
+  essentials: modeling, indexing, transactions, replication, sharding,
+  caching patterns, distributed locks
 - [📊 Observability](observability/index.md) — metrics, logs, traces,
   correlation IDs, alerts, cost discipline
 
@@ -118,11 +146,16 @@ about production, not just operate.
 - ✅ **36 Java deep-dive documents**
 - ✅ **19 Spring deep-dive documents**
 - ✅ **6 Kafka documents** — fundamentals to operations
-- ✅ **8 Microservices Patterns documents**
-- ✅ **5 Architecture documents**
-- ✅ **8 Leadership documents**
-- ✅ **10 Infrastructure documents** — Kubernetes, Docker, Databases,
-  Observability
+- ✅ **9 Microservices Patterns documents** (incl. contract testing)
+- ✅ **9 Architecture documents** (incl. DDD, API-first, HTTP methods,
+  twelve-factor)
+- ✅ **13 Leadership documents** (incl. north star metrics, agile ceremonies,
+  SAFe, SDLC, shift-left)
+- ✅ **2 Testing documents** — pyramid, TDD/BDD/ATDD
+- ✅ **3 Security documents** — threat model, AuthN/AuthZ, OWASP Top 10
+- ✅ **2 Cloud documents** — cloud-native principles, service models
+- ✅ **11 Infrastructure documents** — Kubernetes, Docker, Databases (incl.
+  Redis), Observability
 - ✅ **D2 + PlantUML diagrams** throughout
 - ✅ **JDK 7 → 21 feature evolution** with rationale
 - ✅ **NeetCode 150 aligned** DSA curriculum
@@ -139,10 +172,17 @@ about production, not just operate.
 - ☕ **Java Rounds** — JVM internals, collections, concurrency
 - 🌱 **Spring / Backend Rounds** — IoC, AOP, transactions, Spring Boot
 - 📨 **Kafka / Streaming Rounds** — delivery semantics, patterns, ops
-- 🔗 **Microservices Rounds** — decomposition, data, reliability, security
-- 🏗️ **Architecture / Lead Rounds** — trade-offs, evolution, ADRs
+- 🔗 **Microservices Rounds** — decomposition, data, reliability, contract
+  testing, security
+- 🏗️ **Architecture / Lead Rounds** — trade-offs, DDD, evolution, ADRs,
+  twelve-factor
 - 👥 **Leadership / Behavioral Rounds** — code reviews, mentoring,
-  stakeholder management, incidents, STAR stories
+  stakeholder management, incidents, agile, STAR stories
+- 🧪 **Testing Rounds** — pyramid, TDD/BDD/ATDD, quality gates, flaky tests
+- 🔒 **Security Rounds** — OAuth 2.0/OIDC, JWT, OWASP Top 10, secrets
+  management
+- ☁️ **Cloud Rounds** — service models, twelve-factor, cost, multi-region,
+  lock-in
 
 ---
 

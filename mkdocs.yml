@@ -161,7 +161,7 @@ nav:
         - Maths: dsa/maths.md
         - Bit Manipulation: dsa/bit-manipulation.md
 
-  - 🏛️ System Design:
+  - 🏛️ Sys Design:
       - Overview: system-design/index.md
       - 📐 Fundamentals:
           - Back of Envelope: system-design/fundamentals/back-of-envelope.md
@@ -239,7 +239,7 @@ nav:
           - Capacity Planning: system-design-depth/capacity-planning.md
           - Rollout Strategies: system-design-depth/rollout-strategies.md
 
-  - 🧱 Low-Level Design (LLD):
+  - 🧱 LLD:
     - Overview: lld/index.md
     - 📐 Fundamentals:
         - How to Approach LLD: lld/how-to-approach-lld.md
@@ -373,7 +373,7 @@ nav:
       - Patterns: kafka/patterns.md
       - Operations & Scenarios: kafka/operations-and-scenarios.md
 
-  - 🔗 Microservices Patterns:
+  - 🔗 Microservices:
       - Overview: microservices-patterns/index.md
       - Decomposition: microservices-patterns/decomposition.md
       - Communication: microservices-patterns/communication.md
@@ -382,15 +382,20 @@ nav:
       - Observability: microservices-patterns/observability.md
       - Deployment: microservices-patterns/deployment.md
       - Security: microservices-patterns/security.md
+      - Contract Testing: microservices-patterns/contract-testing.md
 
-  - 🏗️ Architecture:
+  - 🏗️ Arch:
       - Overview: architecture/index.md
       - Decision Frameworks: architecture/decision-frameworks.md
       - Trade-off Analysis: architecture/trade-off-analysis.md
       - Evolution & Migration: architecture/evolution-and-migration.md
       - ADRs & Documentation: architecture/adrs-and-documentation.md
+      - Domain-Driven Design: architecture/domain-driven-design.md
+      - API-First Design: architecture/api-first.md
+      - HTTP Methods: architecture/http-methods.md
+      - Twelve-Factor App: architecture/twelve-factor-app.md
 
-  - 👥 Leadership:
+  - 👥 Lead:
       - Overview: leadership/index.md
       - Code Reviews: leadership/code-reviews.md
       - Mentoring & Coaching: leadership/mentoring-and-coaching.md
@@ -399,8 +404,26 @@ nav:
       - Technical Debt: leadership/technical-debt.md
       - Incident Command: leadership/incident-command.md
       - Behavioral Interviews: leadership/behavioral-interviews.md
+      - North Star Metrics: leadership/north-star-metrics.md
+      - Agile Ceremonies: leadership/agile-ceremonies.md
+      - SAFe & Scaling Agile: leadership/safe-and-scaling-agile.md
+      - SDLC Lifecycle: leadership/sdlc-lifecycle.md
+      - Shift-Left: leadership/shift-left.md
 
-  - 🏗️ Infrastructure:
+  - 🧪 Testing:
+      - Overview: testing/index.md
+      - TDD, BDD & ATDD: testing/tdd-bdd-atdd.md
+
+  - 🔒 Security:
+      - Overview: security/index.md
+      - Authentication & Authorization: security/authentication-and-authorization.md
+      - OWASP & AppSec: security/owasp-and-appsec.md
+
+  - ☁️ Cloud:
+      - Overview: cloud/index.md
+      - Service Models: cloud/service-models.md
+
+  - 🏗️ Infra:
       - ☸️ Kubernetes:
           - Overview: kubernetes/index.md
           - Core Concepts: kubernetes/core-concepts.md
@@ -410,8 +433,10 @@ nav:
           - Dockerfile & JVM: docker/dockerfile-and-jvm.md
       - 🗄️ Databases:
           - Overview: databases/index.md
+          - SQL Interview Questions: databases/sql-interview-questions.md
           - PostgreSQL Essentials: databases/postgresql-essentials.md
           - MongoDB Essentials: databases/mongodb-essentials.md
+          - Redis Essentials: databases/redis-essentials.md
       - 📊 Observability:
           - Overview: observability/index.md
           - Metrics, Logs, Traces: observability/metrics-logs-traces.md

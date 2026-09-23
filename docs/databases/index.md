@@ -207,6 +207,7 @@ Every DB connection is expensive. Pool them.
 ## Related
 
 - [Databases index](index.md)
+- [SQL Interview Questions](sql-interview-questions.md)
 - [PostgreSQL Essentials](postgresql-essentials.md)
 - [MongoDB Essentials](mongodb-essentials.md)
 - [System Design Depth → Capacity Planning](../system-design-depth/capacity-planning.md)
