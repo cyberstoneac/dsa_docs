@@ -5,6 +5,7 @@
 Activate your Python virtual environment, then install MkDocs:
 
 ```bash
+python install -r requirements.txt
 python -m pip install mkdocs
 ```
 
