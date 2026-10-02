@@ -14,11 +14,14 @@ tags:
 A string is just a sequence of characters — like a word, a sentence, or a whole book. In programming, strings are everywhere: names, messages, DNA sequences, URLs, code itself.
 
 **Real-life analogies:**
+
 - A string is like a necklace of beads, where each bead is a character
 - A palindrome is like a mirror — "racecar" reads the same forward and backward
 - An anagram is like rearranging Scrabble tiles — "listen" and "silent" use the same letters
 
-**Important in Java:** Strings are **immutable** — once created, they can't be changed. Every "modification" actually creates a new string. For heavy modifications, use `StringBuilder`.
+**Important in Java:** 
+
+Strings are **immutable** — once created, they can't be changed. Every "modification" actually creates a new string. For heavy modifications, use `StringBuilder`.
 
 ## Key Concepts (In Simple Terms)
 - **Immutable**: Strings can't be changed after creation (Java)
@@ -189,9 +192,11 @@ Expected Output: false (different lengths)
 ```
 
 **Key Insight - Same Characters, Same Counts:**
+
 Two strings are anagrams if and only if they have the same length and the same character frequencies. Either sort both and compare, or count frequencies.
 
 **Why It Works:**
+
 - Sorting groups identical characters together
 - If sorted strings are equal, they have same characters
 - Alternatively, frequency counting directly compares counts
@@ -221,15 +226,18 @@ public boolean isAnagram(String s, String t) {
 ```
 
 **Edge Cases:**
+
 - Different lengths: returns false immediately
 - Empty strings: returns true (both empty)
 - Same characters different order: returns true
 - Same length different chars: returns false
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1) — 26-element array
 
 **Similar Pattern Problems:**
+
 - Group Anagrams
 - Find All Anagrams in a String
 - Permutation in String
@@ -276,9 +284,11 @@ Expected Output: 0 (empty needle found at start)
 ```
 
 **Key Insight - Check Every Position:**
+
 For each position i in haystack (from 0 to n-m), check if the substring of length m starting at i equals needle.
 
 **Why It Works:**
+
 - Needle can only start at positions 0 to n-m
 - At each position, compare character by character
 - If all match, return i
@@ -306,15 +316,18 @@ public int strStr(String haystack, String needle) {
 ```
 
 **Edge Cases:**
+
 - Empty needle: returns 0
 - Needle longer than haystack: returns -1
 - Empty haystack: returns -1 (unless needle empty)
 - Needle equals haystack: returns 0
 
 **Time Complexity**: O(n*m) naive; O(n+m) with KMP
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Implement indexOf
 - String Matching with Wildcards
 - Repeated Substring Pattern
@@ -359,6 +372,7 @@ Expected Output: ['a'] (single char, nothing to swap)
 Use two pointers, one at the start and one at the end. Swap characters, move pointers toward center, repeat until they meet.
 
 **Why It Works:**
+
 - Swapping symmetric positions reverses the string
 - Each swap fixes two positions (left and right)
 - When pointers meet or cross, all positions are fixed
@@ -386,15 +400,18 @@ public void reverseString(char[] s) {
 ```
 
 **Edge Cases:**
+
 - Empty array: nothing to do
 - Single character: nothing to do
 - Two characters: one swap
 - Even/odd length: both work
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Reverse Words in a String
 - Reverse Vowels of a String
 - Reverse String II
@@ -445,6 +462,7 @@ No unique character -> return -1
 First pass: count frequencies of all characters. Second pass: scan in order and return the first character with count 1.
 
 **Why It Works:**
+
 - Need to know frequencies before deciding
 - First pass builds the frequency map
 - Second pass preserves original order
@@ -475,15 +493,18 @@ public int firstUniqChar(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns -1
 - Single character: returns 0
 - All unique: returns 0
 - All duplicates: returns -1
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1) — 26-element array
 
 **Similar Pattern Problems:**
+
 - First Unique Number
 - First Missing Positive
 - Find the Difference
@@ -539,6 +560,7 @@ Expected Output: true (empty after cleaning)
 Use two pointers from both ends. Skip non-alphanumeric characters. Compare lowercase versions. If all match, it's a palindrome.
 
 **Why It Works:**
+
 - Only alphanumeric characters matter
 - Case doesn't matter
 - Two pointers check symmetric positions
@@ -575,6 +597,7 @@ public boolean isPalindrome(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns true
 - Only non-alnum: returns true
 - Single char: returns true
@@ -582,9 +605,11 @@ public boolean isPalindrome(String s) {
 - Numbers included: alphanumeric includes digits
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Valid Palindrome II (allow one deletion)
 - Palindromic Substrings
 - Palindrome Linked List
@@ -649,9 +674,11 @@ Return 3
 ```
 
 **Key Insight - Sliding Window with Last Index Map:**
+
 Store the last index of each character. When we see a duplicate, jump the left pointer to (lastIndex + 1) if that's greater than current left. Track max window size.
 
 **Why It Works:**
+
 - Map tells us where we last saw each character
 - When we see a duplicate, the window must start after the previous occurrence
 - We take max of current left and lastIndex+1 (can't go backward)
@@ -684,127 +711,25 @@ public int lengthOfLongestSubstring(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns 0
 - All same characters: returns 1
 - All distinct: returns n
 - Single character: returns 1
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(min(n, charset))
 
 **Similar Pattern Problems:**
+
 - Longest Repeating Character Replacement
 - Substring with K Distinct Characters
 - Fruit Into Baskets
 
 ---
 
-#### 7. **Longest Palindromic Substring**
-
-**Problem Description:**
-Given a string s, return the longest palindromic substring.
-
-**Simple Analogy:**
-Like finding the longest mirror-like stretch in a word.
-
-**Example Walkthrough:**
-
-Input: `s = "babad"`
-```
-Expected Output: "bab" (or "aba")
-
-Expand around each center:
-i=0: odd "b" -> expand: left=-1, right=1 -> len=1
-     even "ba" -> no match -> len=0
-i=1: odd "a" -> expand: "bab" -> len=3
-     even "ab" -> no match -> len=0
-i=2: odd "b" -> expand: "aba" -> len=3
-     even "ba" -> no match -> len=0
-i=3: odd "a" -> expand: len=1
-     even "ad" -> no match
-i=4: odd "d" -> len=1
-
-Max len=3, start=0 or 1
-Return "bab" (or "aba")
-```
-
-Input: `s = "cbbd"`
-```
-Expected Output: "bb"
-
-i=0: "c", len=1
-i=1: "b", even "bb" -> len=2, odd "b" -> len=1
-i=2: "b", even "bd" -> no
-i=3: "d", len=1
-
-Max = "bb"
-```
-
-Input: `s = "a"`
-```
-Expected Output: "a"
-```
-
-**Key Insight - Expand Around Center:**
-Every palindrome has a center. For odd-length, center is a character. For even-length, center is between two characters. Expand outward from each center while characters match.
-
-**Why It Works:**
-- 2n-1 possible centers (n single chars, n-1 gaps)
-- For each center, expand while palindrome
-- Track the longest palindrome found
-- O(n²) time, O(1) space
-- Much simpler than DP approach
-
-**Visualization - Longest Palindrome:**
-```mermaid
-graph LR
-    A["'babad'"] --> B["Center 'a' at i=1: expand to 'bab'"]
-    B --> C["Center 'b' at i=2: expand to 'aba'"]
-    C --> D["Max length 3"]
-```
-
-```java
-public String longestPalindrome(String s) {
-    if (s.length() < 2) return s;
-    int maxLen = 0, start = 0;
-    for (int i = 0; i < s.length(); i++) {
-        int len1 = expandAroundCenter(s, i, i);
-        int len2 = expandAroundCenter(s, i, i + 1);
-        int len = Math.max(len1, len2);
-        if (len > maxLen) {
-            maxLen = len;
-            start = i - (len - 1) / 2;
-        }
-    }
-    return s.substring(start, start + maxLen);
-}
-
-private int expandAroundCenter(String s, int left, int right) {
-    while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
-        left--;
-        right++;
-    }
-    return right - left - 1;
-}
-```
-
-**Edge Cases:**
-- Single character: returns it
-- Two same characters: returns both
-- All same: returns whole string
-- No palindrome > 1: returns first character
-
-**Time Complexity**: O(n²)
-**Space Complexity**: O(1)
-
-**Similar Pattern Problems:**
-- Palindromic Substrings (count)
-- Longest Palindromic Subsequence
-- Shortest Palindrome
-
----
-
-#### 8. **Group Anagrams**
+#### 7. **Group Anagrams** (Use hashmap and update the code) #todo
 
 **Problem Description:**
 Given an array of strings, group anagrams together.
@@ -843,9 +768,11 @@ Expected Output: [["a"]]
 ```
 
 **Key Insight - Sorted String as Key:**
+
 Anagrams have the same characters, so sorting them gives the same string. Use this sorted string as a HashMap key to group anagrams.
 
 **Why It Works:**
+
 - Anagrams share the same sorted form
 - HashMap groups strings by this canonical form
 - All strings with same key are anagrams
@@ -873,128 +800,25 @@ public List<List<String>> groupAnagrams(String[] strs) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns empty list
 - Single string: returns single group
 - All anagrams: returns one group
 - No anagrams: each string own group
 
 **Time Complexity**: O(n * k log k)
+
 **Space Complexity**: O(n * k)
 
 **Similar Pattern Problems:**
+
 - Count Isomorphic Strings
 - Word Patterns
 - Find All Anagrams in a String
 
 ---
 
-#### 9. **Edit Distance (Levenshtein Distance)**
-
-**Problem Description:**
-Given two strings word1 and word2, return the minimum number of operations (insert, delete, replace) to convert word1 to word2.
-
-**Simple Analogy:**
-Like fixing a typo with minimum keystrokes. How many edits to transform one word into another?
-
-**Example Walkthrough:**
-
-Input: `word1 = "horse"`, `word2 = "ros"`
-```
-Expected Output: 3
-
-horse -> rorse (replace 'h' with 'r')
-rorse -> rose (delete 'r')
-rose -> ros (delete 'e')
-
-DP table:
-    ""  r  o  s
-""   0  1  2  3
-h    1  1  2  3
-o    2  2  1  2
-r    3  2  2  2
-s    4  3  3  2
-e    5  4  4  3
-
-dp[5][3] = 3
-```
-
-Input: `word1 = "intention"`, `word2 = "execution"`
-```
-Expected Output: 5
-
-intention -> inention (remove 't')
-inention -> enention (replace 'i' with 'e')
-enention -> exention (replace 'n' with 'x')
-exention -> exection (replace 'n' with 'c')
-exection -> execution (insert 'u')
-```
-
-Input: `word1 = ""`, `word2 = "abc"`
-```
-Expected Output: 3 (insert 3 chars)
-```
-
-Input: `word1 = "abc"`, `word2 = "abc"`
-```
-Expected Output: 0 (already equal)
-```
-
-**Key Insight - Three Operations:**
-dp[i][j] = min operations to convert word1[0..i] to word2[0..j].
-- If chars match: dp[i][j] = dp[i-1][j-1]
-- If not: dp[i][j] = 1 + min(delete, insert, replace)
-
-**Why It Works:**
-- Optimal substructure: solution uses solutions of smaller prefixes
-- Overlapping subproblems: many prefixes repeat
-- Base cases: dp[i][0] = i (delete all), dp[0][j] = j (insert all)
-- Each cell considers three operations
-- O(m*n) time and space
-
-**Visualization - Edit Distance:**
-```mermaid
-graph LR
-    A["word1='horse', word2='ros'"] --> B["DP table 6x4"]
-    B --> C["dp[5][3]=3"]
-```
-
-```java
-public int minDistance(String word1, String word2) {
-    int m = word1.length(), n = word2.length();
-    int[][] dp = new int[m + 1][n + 1];
-    for (int i = 0; i <= m; i++) dp[i][0] = i;
-    for (int j = 0; j <= n; j++) dp[0][j] = j;
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
-            if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
-                dp[i][j] = dp[i - 1][j - 1];
-            } else {
-                dp[i][j] = 1 + Math.min(dp[i - 1][j - 1],
-                          Math.min(dp[i - 1][j], dp[i][j - 1]));
-            }
-        }
-    }
-    return dp[m][n];
-}
-```
-
-**Edge Cases:**
-- One empty: returns length of other
-- Both empty: returns 0
-- Identical: returns 0
-- Completely different: returns max length
-
-**Time Complexity**: O(m*n)
-**Space Complexity**: O(m*n) — can optimize to O(min(m,n))
-
-**Similar Pattern Problems:**
-- Edit Distance II
-- Minimum Window Substring
-- Regular Expression Matching
-
----
-
-#### 10. **Minimum Window Substring**
+#### 8. **Minimum Window Substring**
 
 **Problem Description:**
 Given strings s and t, find the minimum window substring of s that contains all characters of t (including duplicates).
@@ -1040,9 +864,11 @@ Expected Output: "aa"
 ```
 
 **Key Insight - Expand Until Valid, Shrink While Valid:**
+
 Expand right until window contains all of t. Then shrink left while still valid, tracking minimum length.
 
 **Why It Works:**
+
 - Need a window containing all characters of t
 - Expand until valid (formed == required)
 - Once valid, try to shrink to find smaller valid windows
@@ -1090,130 +916,21 @@ public String minWindow(String s, String t) {
 ```
 
 **Edge Cases:**
+
 - t longer than s: returns ""
 - t has chars not in s: returns ""
 - Exact match: returns s
 - Multiple valid windows: returns smallest
 
 **Time Complexity**: O(m + n)
+
 **Space Complexity**: O(charset)
 
 **Similar Pattern Problems:**
+
 - Permutation in String
 - Anagrams in Array
 - Smallest Range
-
----
-
-### Hard
-
-#### 11. **Regular Expression Matching**
-
-**Problem Description:**
-Implement regular expression matching with support for '.' (matches any single character) and '*' (matches zero or more of the preceding element).
-
-**Simple Analogy:**
-Like pattern matching in search/replace, but with wildcards.
-
-**Example Walkthrough:**
-
-Input: `s = "aa"`, `p = "a"`
-```
-Expected Output: false
-
-"a" doesn't match "aa" (missing second a)
-```
-
-Input: `s = "aa"`, `p = "a*"`
-```
-Expected Output: true
-
-"a*" means zero or more 'a's
-"aa" matches (two a's)
-```
-
-Input: `s = "ab"`, `p = ".*"`
-```
-Expected Output: true
-
-".*" means zero or more of any character
-Matches any string
-```
-
-Input: `s = "aab"`, `p = "c*a*b"`
-```
-Expected Output: true
-
-"c*" matches zero c's
-"a*" matches two a's
-"b" matches b
-Total: "aab" matches
-```
-
-Input: `s = "mississippi"`, `p = "mis*is*p*."`
-```
-Expected Output: false
-```
-
-**Key Insight - DP on Two Strings:**
-dp[i][j] = true if s[0..i-1] matches p[0..j-1].
-- If p[j-1] is normal char or '.': match if s[i-1] matches p[j-1] and dp[i-1][j-1]
-- If p[j-1] is '*': two cases:
-  - Zero occurrences: dp[i][j-2]
-  - One or more: match previous char and dp[i-1][j]
-
-**Why It Works:**
-- Build solution from smaller prefixes
-- '*' has two interpretations (zero or more)
-- '.' matches any character
-- Base case: empty pattern matches empty string
-- Handle '*' at start of pattern carefully
-
-**Visualization - Regex Matching:**
-```mermaid
-graph LR
-    A["s='aa', p='a*'"] --> B["dp table 3x3"]
-    B --> C["dp[2][2]=true"]
-```
-
-```java
-public boolean isMatch(String s, String p) {
-    int m = s.length(), n = p.length();
-    boolean[][] dp = new boolean[m + 1][n + 1];
-    dp[0][0] = true;
-    for (int j = 1; j <= n; j++) {
-        if (p.charAt(j - 1) == '*') {
-            dp[0][j] = dp[0][j - 2];
-        }
-    }
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
-            if (p.charAt(j - 1) == '*') {
-                dp[i][j] = dp[i][j - 2] ||
-                           (dp[i - 1][j] && (p.charAt(j - 2) == '.' || p.charAt(j - 2) == s.charAt(i - 1)));
-            } else {
-                dp[i][j] = dp[i - 1][j - 1] &&
-                           (p.charAt(j - 1) == '.' || p.charAt(j - 1) == s.charAt(i - 1));
-            }
-        }
-    }
-    return dp[m][n];
-}
-```
-
-**Edge Cases:**
-- Empty pattern: matches empty string only
-- Empty string: pattern must be all '*'
-- ".*" pattern: matches anything
-- Multiple '*': handled by DP
-
-**Time Complexity**: O(m*n)
-**Space Complexity**: O(m*n)
-
-**Similar Pattern Problems:**
-- Wildcard Matching
-- Word Pattern Matching
-- Glob Matching
 
 ---
 

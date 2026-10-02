@@ -18,6 +18,7 @@ Imagine a map of cities connected by roads:
 - **Roads** = Edges (connections between cities)
 
 A graph is just a way to represent connections between things. It could be:
+
 - Friends on social media (who knows whom)
 - Web pages linking to each other
 - Flights between airports
@@ -204,9 +205,11 @@ Expected Output: 1 (all land is connected)
 ```
 
 **Key Insight - Sink the Island:**
+
 When we find land ('1'), we start a DFS that "sinks" the entire island by changing all connected '1's to '0's. Then we count how many times we had to start a new DFS.
 
 **Why It Works:**
+
 - Each DFS call marks an entire connected component
 - After marking, those cells won't trigger another count
 - Number of DFS calls = number of islands
@@ -254,15 +257,18 @@ private void dfs(char[][] grid, int i, int j) {
 ```
 
 **Edge Cases:**
+
 - Empty grid: returns 0
 - All water: returns 0
 - All land: returns 1
 - Single cell '1': returns 1
 
 **Time Complexity**: O(m * n) - visit each cell once
+
 **Space Complexity**: O(m * n) - recursion stack in worst case
 
 **Similar Pattern Problems:**
+
 - Max Area of Island
 - Number of Connected Components
 - Surrounded Regions
@@ -307,9 +313,11 @@ No change needed (already the target color)
 ```
 
 **Key Insight - Same as Island Counting:**
+
 This is almost identical to Number of Islands. Instead of counting, we just change colors. The key check is: only change pixels that match the ORIGINAL color.
 
 **Why It Works:**
+
 - Start DFS from the given pixel
 - Change its color to new color
 - Recursively visit all 4 neighbors
@@ -348,15 +356,18 @@ private void dfs(int[][] image, int i, int j, int original, int color) {
 ```
 
 **Edge Cases:**
+
 - New color same as original: return unchanged (avoid infinite loop)
 - Single pixel: changes it
 - All same color: changes all
 - No matching neighbors: changes only the starting pixel
 
 **Time Complexity**: O(m * n)
+
 **Space Complexity**: O(m * n) recursion stack
 
 **Similar Pattern Problems:**
+
 - Surrounded Regions
 - Pacific Atlantic Water Flow
 - Number of Islands
@@ -419,9 +430,11 @@ Step 1: Create copy of node 1
 ```
 
 **Key Insight - HashMap to Track Copies:**
+
 Use a HashMap that maps original nodes to their copies. Before creating a copy, check if it already exists. This prevents infinite loops in cyclic graphs.
 
 **Why It Works:**
+
 - HashMap ensures we create exactly one copy per original node
 - When we encounter an already-copied node, we reuse the copy
 - DFS or BFS both work; DFS is simpler
@@ -458,15 +471,18 @@ private Node dfs(Node node, Map<Node, Node> map) {
 ```
 
 **Edge Cases:**
+
 - Null node: return null
 - Single node: return single copy
 - Cyclic graph: handled by map
 - Self-loop: handled by map
 
 **Time Complexity**: O(V + E)
+
 **Space Complexity**: O(V) for the map
 
 **Similar Pattern Problems:**
+
 - Copy List with Random Pointer
 - Deep Copy of Binary Tree
 
@@ -523,13 +539,16 @@ Person 1 is the judge.
 ```
 
 **Key Insight - Two Counters:**
+
 Track two things per person:
+
 1. How many people they trust (out-degree)
 2. How many people trust them (in-degree)
 
 The judge has out-degree 0 and in-degree n-1.
 
 **Why It Works:**
+
 - Judge trusts nobody -> out-degree = 0
 - Everyone else trusts judge -> in-degree = n-1
 - Only one person can satisfy both conditions
@@ -564,15 +583,18 @@ public int findJudge(int n, int[][] trust) {
 ```
 
 **Edge Cases:**
+
 - n = 1, no trust: returns 1
 - No judge exists: returns -1
 - Multiple potential judges: impossible (only one can have in-degree n-1)
 - Self-trust: ignored (judge trusts nobody)
 
 **Time Complexity**: O(n + E)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Celebrity Problem
 - Single Number
 
@@ -622,9 +644,11 @@ count = 0 != 2 -> Return false
 ```
 
 **Key Insight - In-Degree and Queue:**
+
 Think of courses as nodes and prerequisites as directed edges. A course with no prerequisites (in-degree 0) can be taken first. Remove it, which might free up other courses. If we can remove all courses, no cycle.
 
 **Why It Works:**
+
 - A cycle means some courses can never have in-degree 0
 - Kahn's algorithm removes nodes with in-degree 0 one by one
 - If we process all nodes, no cycle exists (can finish)
@@ -674,15 +698,18 @@ public boolean canFinish(int numCourses, int[][] prerequisites) {
 ```
 
 **Edge Cases:**
+
 - No prerequisites: all courses can be taken
 - Self-loop [0,0]: impossible
 - Disconnected graph: still works
 - Linear chain: always possible
 
 **Time Complexity**: O(V + E)
+
 **Space Complexity**: O(V + E)
 
 **Similar Pattern Problems:**
+
 - Course Schedule II (return the order)
 - Alien Dictionary
 - Topological Sort
@@ -751,9 +778,11 @@ Single cell touches both oceans (corner)
 ```
 
 **Key Insight - Reverse Thinking (Start from Ocean):**
+
 Instead of checking each cell (which would be expensive), start DFS from the ocean borders and move INWARD to higher or equal cells. A cell can reach the ocean if the ocean can reach it (going uphill).
 
 **Why It Works:**
+
 - Water flows from high to low
 - Reverse: we can flow from low to high (going uphill from ocean)
 - If ocean can reach a cell going uphill, water can flow from that cell to ocean
@@ -815,15 +844,18 @@ private void dfs(int[][] heights, boolean[][] visited, int i, int j) {
 ```
 
 **Edge Cases:**
+
 - Single row: all cells touch both oceans (top = Pacific, bottom = Atlantic)
 - Single column: all cells touch both
 - All same height: all cells reach both oceans
 - Single cell: touches both
 
 **Time Complexity**: O(m * n)
+
 **Space Complexity**: O(m * n)
 
 **Similar Pattern Problems:**
+
 - Number of Islands
 - Surrounded Regions
 - Walls and Gates
@@ -868,9 +900,11 @@ Return 0
 ```
 
 **Key Insight - BFS for Shortest Path:**
+
 Each word is a node. Two words are connected if they differ by exactly one letter. BFS finds the shortest path because BFS explores level by level (all words 1 step away, then 2 steps away, etc.).
 
 **Why It Works:**
+
 - BFS guarantees shortest path in unweighted graphs
 - Each transformation = one edge
 - Level in BFS = number of transformations
@@ -932,15 +966,18 @@ private List<String> getNeighbors(String word, Set<String> words) {
 ```
 
 **Edge Cases:**
+
 - endWord not in list: returns 0
 - beginWord == endWord: returns 1 (or 0 depending on definition)
 - No valid path: returns 0
 - Single character words: works
 
 **Time Complexity**: O(N * L^2) where N = words, L = word length
+
 **Space Complexity**: O(N * L)
 
 **Similar Pattern Problems:**
+
 - Word Ladder II (find all shortest paths)
 - Minimum Genetic Mutation
 - Open the Lock
@@ -985,13 +1022,16 @@ Only one edge, removing it disconnects
 ```
 
 **Key Insight - Discovery Time and Low Value:**
+
 Tarjan's algorithm uses two values per node:
+
 - **disc[u]**: When was u first discovered? (timestamp)
 - **low[u]**: What's the earliest discovered node reachable from u's subtree?
 
 An edge (u, v) is a bridge if low[v] > disc[u], meaning v's subtree can't reach any ancestor of u.
 
 **Why It Works:**
+
 - If v's subtree has a back edge to u or higher, low[v] <= disc[u]
 - If no back edge exists, low[v] > disc[u], meaning removing (u,v) disconnects v's subtree
 - DFS explores all edges, tracking discovery times
@@ -1051,15 +1091,18 @@ private void dfs(int u, int parent, int[] disc, int[] low, boolean[] visited,
 ```
 
 **Edge Cases:**
+
 - Single edge: it's a bridge
 - No edges: no bridges
 - Fully connected: no bridges
 - Tree structure: all edges are bridges
 
 **Time Complexity**: O(V + E)
+
 **Space Complexity**: O(V)
 
 **Similar Pattern Problems:**
+
 - Minimum Height Trees
 - Network Delay Time
 - Articulation Points
@@ -1101,9 +1144,11 @@ Too many obstacles, can't reach with only 1 elimination
 ```
 
 **Key Insight - BFS with Extra State:**
+
 Regular BFS state is (row, col). Here we need (row, col, obstacles_used). We track visited[row][col][obstacles] to avoid revisiting the same state.
 
 **Why It Works:**
+
 - BFS guarantees shortest path in unweighted graphs
 - Extra dimension tracks how many obstacles we've eliminated
 - We can visit the same cell with different obstacle counts
@@ -1158,15 +1203,18 @@ public int shortestPath(int[][] grid, int k) {
 ```
 
 **Edge Cases:**
+
 - Start == end: returns 0
 - No obstacles: standard BFS
 - Too many obstacles: returns -1
 - k large enough: shortest path without detours
 
 **Time Complexity**: O(m * n * k)
+
 **Space Complexity**: O(m * n * k)
 
 **Similar Pattern Problems:**
+
 - Shortest Path in Matrix
 - Path with Minimum Effort
 - Minimum Obstacle Removal to Reach Corner
@@ -1228,9 +1276,11 @@ This is a cycle! Topological sort only works on DAG.
 ```
 
 **Key Insight - Post-Order Reversal:**
+
 DFS finishes a node only after all its descendants are finished. So the last node to finish has no outgoing edges to unvisited nodes. If we push nodes onto a stack as they finish, popping gives topological order.
 
 **Why It Works:**
+
 - DFS explores all descendants before finishing a node
 - A node is finished only after all reachable nodes are processed
 - Pushing to stack at finish time and reversing gives topological order
@@ -1280,15 +1330,18 @@ private void dfs(int node, boolean[] visited, List<Integer>[] graph, Stack<Integ
 ```
 
 **Edge Cases:**
+
 - No edges: any order works
 - Linear chain: only one valid order
 - Multiple components: each sorted independently
 - Cycle: no valid topological order
 
 **Time Complexity**: O(V + E)
+
 **Space Complexity**: O(V)
 
 **Similar Pattern Problems:**
+
 - Course Schedule
 - Alien Dictionary
 - Build Order
@@ -1335,11 +1388,13 @@ countComponents: roots = {0, 4} -> 2
 ```
 
 **Key Insight - Path Compression + Union by Rank:**
+
 - **Path compression**: When finding root, make all nodes on path point directly to root
 - **Union by rank**: Attach smaller tree under larger tree
 - Together they give nearly O(1) amortized operations
 
 **Why It Works:**
+
 - Each set is a tree with a root
 - find(x) follows parent pointers to root
 - union merges two trees by attaching one root to another
@@ -1396,15 +1451,18 @@ class UnionFind {
 ```
 
 **Edge Cases:**
+
 - Single element: one component
 - No unions: n components
 - All unions: 1 component
 - Union same set: returns false
 
 **Time Complexity**: O(α(n)) amortized per operation (α is inverse Ackermann, nearly constant)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Accounts Merge
 - Friends of Appropriate Ages
 - Smallest String with Swaps
@@ -1447,12 +1505,14 @@ Can't form spanning tree
 ```
 
 **Key Insight - Sort Edges + Union-Find:**
+
 - Sort all edges by weight
 - Process from smallest to largest
 - Add edge if it doesn't form a cycle (Union-Find check)
 - Stop when we have n-1 edges (spanning tree complete)
 
 **Why It Works:**
+
 - Greedy works for MST (unlike many problems)
 - Smallest edge that doesn't create cycle must be in some MST
 - Union-Find efficiently detects cycles
@@ -1489,15 +1549,18 @@ public int minimumCost(int n, int[][] connections) {
 ```
 
 **Edge Cases:**
+
 - Already connected: processes until n-1 edges
 - Disconnected: returns -1
 - Single node: returns 0
 - All same weights: works correctly
 
 **Time Complexity**: O(E log E) for sorting
+
 **Space Complexity**: O(V) for Union-Find
 
 **Similar Pattern Problems:**
+
 - Connect All Points
 - Min Cost to Connect Sticks
 - Optimize Water Distribution

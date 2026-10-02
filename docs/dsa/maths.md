@@ -14,6 +14,7 @@ tags:
 Many coding problems are math problems in disguise. This topic covers the math tricks and formulas that show up again and again in interviews and competitive programming.
 
 **Real-life analogies:**
+
 - **GCD/LCM**: Finding the largest tile size that fits two rooms exactly
 - **Prime numbers**: Building blocks of all numbers (like atoms for numbers)
 - **Modulo arithmetic**: Clock arithmetic (13:00 = 1:00 on a 12-hour clock)
@@ -184,9 +185,11 @@ Expected Output: 8 (primes: 2, 3, 5, 7, 11, 13, 17, 19)
 ```
 
 **Key Insight - Mark Multiples, Not Check Each:**
+
 Instead of checking each number individually (O(n√n)), we start with 2 and mark all its multiples as non-prime. Then 3, then 5, etc. Each remaining unmarked number is prime.
 
 **Why It Works:**
+
 - Every composite number has a prime factor <= √n
 - When we process prime i, all smaller primes have already marked their multiples
 - So if isPrime[i] is still true, i must be prime
@@ -226,15 +229,18 @@ public int countPrimes(int n) {
 ```
 
 **Edge Cases:**
+
 - n = 0 or 1: returns 0
 - n = 2: returns 0 (no primes less than 2)
 - n = 3: returns 1 (only 2)
 - Large n: sieve is efficient
 
 **Time Complexity**: O(n log log n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Prime Factorization
 - Smallest Prime Factor
 - Count Primes in Range
@@ -295,9 +301,11 @@ HAPPY!
 ```
 
 **Key Insight - Cycle Detection:**
+
 The process either reaches 1 or enters a cycle. We use a HashSet to track seen numbers. If we see a number again, we're in a cycle (not happy). If we reach 1, we're happy.
 
 **Why It Works:**
+
 - Every number eventually reaches 1 or enters a cycle
 - HashSet detects the cycle
 - No infinite loop possible
@@ -331,15 +339,18 @@ public boolean isHappy(int n) {
 ```
 
 **Edge Cases:**
+
 - n = 1: returns true
 - n = 0: not a positive integer (problem guarantees positive)
 - n = 2, 3, 4, 5, 6: all unhappy
 - n = 7: happy
 
 **Time Complexity**: O(log n) — number of digits
+
 **Space Complexity**: O(log n) — for the set
 
 **Similar Pattern Problems:**
+
 - Digit Cycle Detection
 - Sum of Digits
 - Linked List Cycle (Floyd's)
@@ -402,9 +413,11 @@ Expected Output: false (not positive)
 ```
 
 **Key Insight - Divide Out All 2s, 3s, 5s:**
+
 Repeatedly divide n by 2, 3, and 5 as long as it's divisible. If we end up with 1, the original number had only these prime factors. If anything else remains, it's not ugly.
 
 **Why It Works:**
+
 - Any number with only prime factors 2, 3, 5 can be reduced to 1 by dividing these out
 - If a different prime factor exists, it can't be divided out
 - Order doesn't matter (commutative)
@@ -432,15 +445,18 @@ public boolean isUgly(int n) {
 ```
 
 **Edge Cases:**
+
 - n = 0: returns false (not positive)
 - n = 1: returns true (no prime factors)
 - n negative: returns false
 - n = 2, 3, 5: returns true
 
 **Time Complexity**: O(log n) — number of divisions
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Ugly Number II (find nth ugly number)
 - Super Ugly Number
 - Prime Factorization
@@ -490,9 +506,11 @@ Expected Output: true (3^0 = 1)
 ```
 
 **Key Insight - Divide by 3 Until Not Divisible:**
+
 Repeatedly divide n by 3 as long as it's divisible. If we end up with 1, it's a power of 3. Otherwise, it's not.
 
 **Why It Works:**
+
 - Any power of 3 can be reduced to 1 by dividing by 3
 - Any non-power will have a remainder or reach a number not divisible by 3
 - Order doesn't matter
@@ -521,15 +539,18 @@ public boolean isPowerOfThree(int n) {
 ```
 
 **Edge Cases:**
+
 - n = 0: returns false
 - n = 1: returns true (3^0 = 1)
 - n negative: returns false
 - n = 3: returns true
 
 **Time Complexity**: O(log n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Power of Two
 - Power of Four
 - Power of K
@@ -585,9 +606,11 @@ Return 18278
 ```
 
 **Key Insight - Base-26 Conversion:**
+
 It's just like converting a base-26 number to decimal, except digits are 1-26 (not 0-25). Process characters left to right: result = result * 26 + (char - 'A' + 1).
 
 **Why It Works:**
+
 - Each character position represents a power of 26
 - 'A' = 1, 'B' = 2, ..., 'Z' = 26
 - Building left to right: shift existing value by one base-26 digit
@@ -612,15 +635,18 @@ public int titleToNumber(String columnTitle) {
 ```
 
 **Edge Cases:**
+
 - Single character: returns its position
 - All Zs: returns large number
 - "A": returns 1
 - Empty string: not valid (problem guarantees non-empty)
 
 **Time Complexity**: O(n) — n = string length
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Excel Sheet Column Title (reverse)
 - Number to Excel
 - Base Conversion
@@ -666,9 +692,11 @@ Return 6
 ```
 
 **Key Insight - Digital Root Formula:**
+
 The digital root of a number (for n > 0) is `1 + (n - 1) % 9`. This is a mathematical property: every number is congruent to its digit sum modulo 9.
 
 **Why It Works:**
+
 - Modulo 9, a number equals its digit sum
 - Example: 38 mod 9 = 2, and 3+8=11, 1+1=2 ✓
 - Special case: multiples of 9 have digital root 9, not 0
@@ -702,15 +730,18 @@ public int addDigits(int num) {
 ```
 
 **Edge Cases:**
+
 - num = 0: returns 0
 - num single digit: returns it
 - num = 9: returns 9 (not 0)
 - num = 18: returns 9
 
 **Time Complexity**: O(log n) for loop, O(1) for formula
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Sum of Digits
 - Digital Root Variants
 - Repeated Digit Sum
@@ -771,9 +802,11 @@ Total = 24
 ```
 
 **Key Insight - Count Factors of 5:**
+
 Trailing zeroes = number of times 10 divides n! = min(count of 2s, count of 5s). Since 2s are more abundant, just count 5s. Count = floor(n/5) + floor(n/25) + floor(n/125) + ...
 
 **Why It Works:**
+
 - 10 = 2 × 5
 - Each pair of 2 and 5 creates a trailing zero
 - Multiples of 5 contribute one 5 each
@@ -802,15 +835,18 @@ public int trailingZeroes(int n) {
 ```
 
 **Edge Cases:**
+
 - n = 0: returns 0
 - n < 5: returns 0
 - n = 5: returns 1
 - Large n: use long for intermediate
 
 **Time Complexity**: O(log n) — base 5
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Trailing Zeroes in Product
 - Prime Factorization Count
 - Count Factors
@@ -858,9 +894,11 @@ Expected Output: "Zero"
 ```
 
 **Key Insight - Group by Thousands:**
+
 Break the number into groups of 3 digits: ones, thousands, millions, billions. Convert each group to words, then append the scale word.
 
 **Why It Works:**
+
 - English numbers are structured in groups of 3 digits
 - 1-19 have unique names
 - 20-99 are tens + ones
@@ -922,15 +960,18 @@ private String convertHundred(int num, String[] ones, String[] teens, String[] t
 ```
 
 **Edge Cases:**
+
 - num = 0: returns "Zero"
 - num = 100: returns "One Hundred"
 - num = 1000000: returns "One Million"
 - num with internal zeros: handled correctly
 
 **Time Complexity**: O(1) — max 10 digits
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Roman to Integer
 - Integer to Roman
 - Number to Words (other languages)
@@ -980,10 +1021,12 @@ digit 2: result = power(1, 10) * power(2147483647, 2) % 1337
 ```
 
 **Key Insight - Process Digits Left to Right:**
+
 Instead of computing the huge exponent directly, process the exponent digit by digit. For each new digit d:
 `result = (result^10 * a^d) % mod`
 
 **Why It Works:**
+
 - If exponent = [d1, d2, d3], then exponent = d1*100 + d2*10 + d3
 - a^(d1*100 + d2*10 + d3) = (a^100)^d1 * (a^10)^d2 * a^d3
 - Processing left to right: `result = result^10 * a^digit`
@@ -1024,15 +1067,18 @@ private int power(int base, int exp, int mod) {
 ```
 
 **Edge Cases:**
+
 - a = 1: returns 1
 - b = [0]: returns 1 (anything^0 = 1)
 - Large a: base %= mod handles it
 - Large b: processed digit by digit
 
 **Time Complexity**: O(n) where n = number of digits
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Fast Exponentiation
 - Modular Arithmetic
 - Pow(x, n)

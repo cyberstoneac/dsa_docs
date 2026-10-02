@@ -155,12 +155,14 @@ Step 3: i=2, num=4, complement=2, 2 IS in map!
 ```
 
 **Why It Works:**
+
 - HashMap stores each number's index as we iterate
 - For each number, we check if its complement (target - num) was already seen
 - Since we check before inserting, we won't use the same element twice
 - One pass guarantees O(n) time
 
 **Time Complexity**: O(n) - single pass through array
+
 **Space Complexity**: O(n) - HashMap can store up to n elements
 
 **Visualization - Hash Map Lookup:**
@@ -191,12 +193,14 @@ public int[] twoSum(int[] nums, int target) {
 ```
 
 **Edge Cases:**
+
 - Two elements only: works correctly
 - Negative numbers: complement logic handles correctly
 - Duplicate numbers: map stores latest index, but we find solution first
 - No solution: returns empty array (problem guarantees solution)
 
 **Similar Pattern Problems:**
+
 - Two Sum II (sorted array, two pointers)
 - Two Sum III (data structure design)
 - Three Sum (fix one, two sum on rest)
@@ -263,7 +267,9 @@ Step 1: maxEndingHere = max(1, 1) = 1
 ```
 
 **Key Insight - Local vs Global Decision:**
+
 At each position, we make a choice:
+
 - **Extend**: Add current element to existing subarray (`maxEndingHere + nums[i]`)
 - **Restart**: Start a new subarray from current element (`nums[i]`)
 
@@ -272,6 +278,7 @@ We choose whichever is larger. This works because:
 - If `maxEndingHere` is positive, extending can only help (or at least not hurt more than starting fresh)
 
 **Why It Works:**
+
 - `maxEndingHere` tracks the maximum sum of subarray ending at current position
 - `maxSoFar` tracks the global maximum seen so far
 - At each step, we either extend the previous best or start new
@@ -301,12 +308,14 @@ public int maxSubArray(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - All negative numbers: returns least negative (single element)
 - Single element: returns that element
 - All positive: returns sum of entire array
 - Alternating positive/negative: correctly identifies best subarray
 
 **Similar Pattern Problems:**
+
 - Maximum Product Subarray (track min and max)
 - Maximum Sum Circular Subarray (handle wrap-around)
 - Maximum Sum Subarray of Size K (sliding window)
@@ -365,12 +374,14 @@ Return 0
 ```
 
 **Key Insight - Track Minimum So Far:**
+
 - We want to buy at the lowest price and sell at the highest price AFTER buying
 - As we iterate, we track the minimum price seen so far (best buying opportunity)
 - At each day, we calculate profit if we sold today (current price - minPrice)
 - We keep track of the maximum profit seen
 
 **Why It Works:**
+
 - The optimal buying day must come before the optimal selling day
 - By tracking minimum price as we go, we always know the best buying opportunity up to current day
 - For each selling day, we compute the best possible profit
@@ -400,12 +411,14 @@ public int maxProfit(int[] prices) {
 ```
 
 **Edge Cases:**
+
 - Single day: no transaction possible, returns 0
 - Decreasing prices: returns 0 (no profit)
 - Increasing prices: returns last - first
 - Same prices: returns 0
 
 **Similar Pattern Problems:**
+
 - Best Time to Buy and Sell Stock II (multiple transactions)
 - Best Time to Buy and Sell Stock III (at most 2 transactions)
 - Best Time to Buy and Sell Stock with Cooldown
@@ -448,12 +461,14 @@ Loop ends, return false
 ```
 
 **Why It Works:**
+
 - HashSet provides O(1) average-case lookup and insertion
 - We check for existence before inserting
 - If element already exists, we found a duplicate
 - If we complete the loop, no duplicates exist
 
 **Time Complexity**: O(n) - single pass, O(1) average for set operations
+
 **Space Complexity**: O(n) - set can store up to n elements
 
 ```java
@@ -470,16 +485,19 @@ public boolean containsDuplicate(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Empty array: loop doesn't execute, returns false
 - Single element: returns false
 - All same elements: returns true on second element
 - Duplicates at end: correctly detects
 
 **Alternative Approaches:**
+
 - Sort first: O(n log n) time, O(1) space (if in-place sort)
 - Brute force: O(n^2) time, O(1) space (nested loops)
 
 **Similar Pattern Problems:**
+
 - Contains Duplicate II (duplicates within distance k)
 - Contains Duplicate III (duplicates within value range)
 - Find All Duplicates in Array
@@ -518,7 +536,9 @@ Return 1
 ```
 
 **Key Insight - XOR Properties:**
+
 XOR (^) has two critical properties:
+
 1. **a ^ a = 0** (any number XOR itself = 0)
 2. **a ^ 0 = a** (any number XOR 0 = itself)
 3. **Commutative and Associative**: order doesn't matter
@@ -528,6 +548,7 @@ Therefore, if we XOR all elements:
 - Only the single element remains (0 ^ single = single)
 
 **Why It Works:**
+
 - XOR is commutative: a ^ b ^ a = a ^ a ^ b = 0 ^ b = b
 - All paired elements cancel regardless of order
 - The remaining value is the single element
@@ -552,11 +573,13 @@ public int singleNumber(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Single element array: returns that element
 - Negative numbers: XOR works on binary representation
 - Large numbers: no overflow with XOR
 
 **Similar Pattern Problems:**
+
 - Single Number II (every element appears 3 times except one)
 - Single Number III (two elements appear once, rest twice)
 - Find the Duplicate Number (XOR with indices)
@@ -609,12 +632,14 @@ Final: [1, 0, 0]
 ```
 
 **Key Insight - Two Pointers:**
+
 - `leftPointer` tracks where the next non-zero element should be placed
 - `i` scans through the array
 - When we find a non-zero at `i`, swap it with `leftPointer` and increment
 - This preserves relative order while moving zeros to the end
 
 **Why It Works:**
+
 - All elements before `leftPointer` are non-zero (in original order)
 - Elements between `leftPointer` and `i` are zeros
 - When we find non-zero at `i`, swapping places it after the last non-zero
@@ -648,12 +673,14 @@ public void moveZeroes(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - No zeros: all elements non-zero, swaps with self, order preserved
 - All zeros: no non-zero found, array unchanged
 - Single element: works correctly
 - Zeros at start: moved to end correctly
 
 **Similar Pattern Problems:**
+
 - Remove Duplicates from Sorted Array
 - Remove Element
 - Sort Colors (Dutch National Flag)
@@ -695,12 +722,14 @@ Step 3: Reverse last 2 -> [3, 99, -1, -100]
 ```
 
 **Key Insight - Triple Reverse:**
+
 The rotation can be achieved by three reversals:
 1. Reverse entire array
 2. Reverse first k elements
 3. Reverse remaining n-k elements
 
 **Why It Works:**
+
 - Reversing entire array puts the last k elements at the front (but reversed)
 - Reversing first k fixes their order
 - Reversing the rest fixes the remaining elements
@@ -734,12 +763,14 @@ private void reverse(int[] nums, int start, int end) {
 ```
 
 **Edge Cases:**
+
 - k = 0: no rotation, array unchanged
 - k = n: k % n = 0, no rotation
 - k > n: k % n handles correctly
 - Single element: reverse does nothing, works
 
 **Similar Pattern Problems:**
+
 - Rotate Matrix (90 degrees)
 - Rotate List (linked list)
 - Reverse Words in a String
@@ -802,12 +833,14 @@ Result: [[0, 0, 0]]
 ```
 
 **Key Insight - Sort + Two Pointers:**
+
 - Sort array first to enable two-pointer technique and handle duplicates
 - Fix one element (nums[i]), then find pairs summing to -nums[i]
 - Use two pointers from opposite ends to find pairs
 - Skip duplicates to ensure unique triplets
 
 **Why It Works:**
+
 - Sorting allows us to use two pointers efficiently
 - For each fixed element, the problem reduces to Two Sum on sorted array
 - Two pointers can find all pairs in O(n) time
@@ -863,12 +896,14 @@ public List<List<Integer>> threeSum(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Less than 3 elements: returns empty list
 - All zeros: returns [[0,0,0]] once
 - No valid triplets: returns empty list
 - Multiple duplicates: correctly skips
 
 **Similar Pattern Problems:**
+
 - 3Sum Closest (track closest sum)
 - 4Sum (add another outer loop)
 - K Sum (generalization)
@@ -927,12 +962,15 @@ Final: [0, 0, 9, 0, 0]
 ```
 
 **Key Insight - Prefix and Suffix Products:**
+
 For each index i:
+
 - Product of all except i = (product of all before i) x (product of all after i)
 - We can compute prefix products in one pass
 - Then compute suffix products on the fly in a second pass
 
 **Why It Works:**
+
 - First pass computes prefix products (left to right)
 - Second pass multiplies by suffix products (right to left)
 - This avoids division and handles zeros correctly
@@ -969,12 +1007,14 @@ public int[] productExceptSelf(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - One zero: product of all except zero = product of non-zero elements
 - Two zeros: product of all except zero = 0 (contains other zero)
 - No zeros: works correctly
 - Single element: returns [1]
 
 **Similar Pattern Problems:**
+
 - Trapping Rain Water (prefix/suffix max)
 - Paint House (prefix/suffix optimization)
 - Maximum Product Subarray
@@ -1017,12 +1057,14 @@ Result: [[1,5]]
 ```
 
 **Key Insight - Sort by Start:**
+
 - Sort intervals by start time
 - Two intervals overlap if: current.start <= previous.end
 - When overlapping, merge by extending end: max(previous.end, current.end)
 - When not overlapping, add previous interval and start new one
 
 **Why It Works:**
+
 - Sorting by start ensures intervals are processed in order
 - If an interval starts after the previous ends, they can't overlap with any later interval
 - Merging extends the end to cover both intervals
@@ -1063,12 +1105,14 @@ public int[][] merge(int[][] intervals) {
 ```
 
 **Edge Cases:**
+
 - Single interval: returns it as-is
 - All overlapping: merges into one interval
 - No overlapping: returns all intervals
 - Intervals touching (end == start): considered overlapping
 
 **Similar Pattern Problems:**
+
 - Insert Interval (insert and merge)
 - Meeting Rooms (check conflicts)
 - Non-overlapping Intervals (maximum count)
@@ -1146,12 +1190,15 @@ Total = 9
 ```
 
 **Key Insight - Water Level at Each Position:**
+
 For each position i:
+
 - Water level = min(max height to left, max height to right)
 - Trapped water = water level - height[i]
 - Water is trapped only if water level > height[i]
 
 **Why It Works:**
+
 - The maximum water level at any position is determined by the shorter of the two tallest bars on either side
 - Water can't go higher than the shorter boundary
 - Precomputing left and right maximums allows O(1) water calculation per position
@@ -1189,12 +1236,14 @@ public int trap(int[] height) {
 ```
 
 **Edge Cases:**
+
 - Less than 3 bars: no water can be trapped
 - All same height: no water trapped
 - Increasing heights: no water trapped
 - Decreasing heights: no water trapped
 
 **Similar Pattern Problems:**
+
 - Trapping Rain Water II (2D version)
 - Container With Most Water (two pointers)
 - Largest Rectangle in Histogram
@@ -1254,12 +1303,14 @@ Step 2: Scan
 ```
 
 **Key Insight - Array as Hash Table:**
+
 - Use array indices as hash keys
 - Place value v at index v-1 (for 1 <= v <= n)
 - After placement, index i should contain i+1
 - First index where this fails gives the missing number
 
 **Why It Works:**
+
 - If all numbers 1 to n are present, they'll be placed at indices 0 to n-1
 - Any missing number leaves a gap where nums[i] != i+1
 - The first such gap is the smallest missing positive
@@ -1299,12 +1350,14 @@ public int firstMissingPositive(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns 1
 - No positive numbers: returns 1
 - All positives present: returns n+1
 - Duplicates: handled by while condition
 
 **Similar Pattern Problems:**
+
 - Find All Numbers Disappeared in Array
 - Find the Duplicate Number
 - Missing Number (XOR approach)
@@ -1352,12 +1405,14 @@ Max length = 9
 ```
 
 **Key Insight - Sequence Start Detection:**
+
 - A number is a sequence start if num-1 is NOT in the set
 - Only start counting from sequence starts to avoid redundant work
 - Use HashSet for O(1) lookups
 - For each start, count consecutive numbers using set.contains()
 
 **Why It Works:**
+
 - HashSet provides O(1) existence checking
 - By only starting from sequence starts, each sequence is counted once
 - Total work is O(n) because each number is visited at most twice
@@ -1397,12 +1452,14 @@ public int longestConsecutive(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns 0
 - Single element: returns 1
 - All consecutive: returns n
 - Duplicates: set handles automatically
 
 **Similar Pattern Problems:**
+
 - Consecutive Numbers Sum
 - Longest Substring Without Repeating Characters
 - Binary Tree Longest Consecutive Sequence

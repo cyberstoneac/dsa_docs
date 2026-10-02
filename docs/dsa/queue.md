@@ -13,11 +13,13 @@ tags:
 Imagine a line at a coffee shop. The first person in line gets served first, and new people join at the back. That's a **queue**!
 
 A queue is a "First In, First Out" (FIFO) data structure:
+
 - **Enqueue**: Add to the back (join the line)
 - **Dequeue**: Remove from the front (get served)
 - **Peek**: Look at the front without removing
 
 **Real-life analogies:**
+
 - Line at a ticket counter
 - Printer queue (documents print in order)
 - Customer service call queue
@@ -187,9 +189,11 @@ pop():   popStack=[2], pop -> 2
 ```
 
 **Key Insight - Two Stacks, Reversed:**
+
 Stack1 (pushStack) is for adding new elements. Stack2 (popStack) is for removing. When popStack is empty, transfer all from pushStack to popStack — this reverses the order, so the oldest element ends up on top.
 
 **Why It Works:**
+
 - Stack reverses order (LIFO)
 - Transferring from one stack to another reverses again
 - Double reversal gives FIFO behavior
@@ -239,15 +243,18 @@ class MyQueue {
 ```
 
 **Edge Cases:**
+
 - Pop from empty: problem guarantees valid calls
 - Multiple pops in a row: works (popStack stays populated)
 - Push after pop: new elements go to pushStack
 - Peek after pop: same transfer logic
 
 **Time Complexity**: O(1) amortized per operation
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Implement Deque using Arrays
 - Stack using Queues
 - Min Stack
@@ -294,9 +301,11 @@ ping(3001): add 3001, remove 1 (1 < 1)? No, 1 >= 1, keep
 ```
 
 **Key Insight - Sliding Window with Queue:**
+
 Maintain a queue of timestamps. When a new ping arrives, add it to the rear. Remove timestamps from the front that are older than t - 3000. The queue size is the answer.
 
 **Why It Works:**
+
 - Timestamps are increasing (guaranteed by problem)
 - So the oldest timestamp is always at the front
 - We only need to remove from the front (FIFO)
@@ -328,15 +337,18 @@ class RecentCounter {
 ```
 
 **Edge Cases:**
+
 - First ping: queue size 1
 - Multiple pings at same timestamp: all counted
 - Exactly 3000 ms apart: counted (boundary inclusive)
 - Very large gap: old pings removed
 
 **Time Complexity**: O(1) amortized per ping
+
 **Space Complexity**: O(n) where n = number of pings in window
 
 **Similar Pattern Problems:**
+
 - Last N Orders
 - Expiring Map
 - Sliding Window Count
@@ -396,9 +408,11 @@ Expected Output: [1,-1]
 ```
 
 **Key Insight - Monotonic Deque:**
+
 Maintain a deque of indices where values are in decreasing order. The front of the deque is always the maximum of the current window. Before adding a new element, remove from the back any smaller elements (they can never be the max). Remove from the front any indices outside the window.
 
 **Why It Works:**
+
 - A smaller element behind a larger element can never be the max
 - So we can safely discard smaller elements
 - The deque maintains decreasing order of values
@@ -438,15 +452,18 @@ public int[] maxSlidingWindow(int[] nums, int k) {
 ```
 
 **Edge Cases:**
+
 - k = 1: every element is its own max
 - k = n: single window, max of whole array
 - All decreasing: deque grows to size k
 - All increasing: deque size stays 1
 
 **Time Complexity**: O(n) — each element added/removed once
+
 **Space Complexity**: O(k) — deque size
 
 **Similar Pattern Problems:**
+
 - Maximum of Minimum Subarrays
 - Max Consecutive Ones
 - Shortest Subarray with Sum at Least K
@@ -501,9 +518,11 @@ Expected Output: 1 (4 = 4)
 ```
 
 **Key Insight - BFS on Numbers:**
+
 Think of each number as a node. From number x, you can go to x - 1, x - 4, x - 9, ... (subtracting a perfect square). BFS finds the shortest path from n to 0.
 
 **Why It Works:**
+
 - Each edge represents subtracting a perfect square
 - BFS explores all numbers reachable in k steps before k+1
 - So first time we reach 0, we've used the minimum steps
@@ -541,12 +560,14 @@ public int numSquares(int n) {
 ```
 
 **Edge Cases:**
+
 - n = 0: returns 0 (no squares needed)
 - n = 1: returns 1
 - n perfect square: returns 1
 - Large n: BFS still efficient with visited set
 
 **Time Complexity**: O(n * √n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
@@ -599,9 +620,11 @@ Insert:
 ```
 
 **Key Insight - Process Tallest First:**
+
 Sort by height descending, then k ascending. Insert each person at position k. Since taller people are already placed, the k value correctly represents how many taller people should be in front.
 
 **Why It Works:**
+
 - Tallest people are placed first; they don't care about shorter people
 - When inserting a shorter person, all currently placed people are taller or equal
 - So inserting at index k guarantees exactly k taller people in front
@@ -633,15 +656,18 @@ public int[][] reconstructQueue(int[][] people) {
 ```
 
 **Edge Cases:**
+
 - Single person: returns as-is
 - All same height: sort by k, insert in order
 - All different heights: works correctly
 - k = 0 for all: tallest first
 
 **Time Complexity**: O(n²) — LinkedList insertion
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Create Sorted Array
 - Process Queue by Conditions
 - Height Sorting
@@ -709,9 +735,11 @@ R remaining -> Radiant wins
 ```
 
 **Key Insight - Queue with Re-entry:**
+
 Use two queues: one for Radiant, one for Dire, storing indices. At each step, compare the front indices. The smaller index senator bans the other (since they vote first). The winner goes to the back of their queue with index + n (to represent next round).
 
 **Why It Works:**
+
 - Senators vote in order of their original indices
 - A senator with a smaller index votes before a larger one
 - So they can ban the opponent before being banned
@@ -754,15 +782,18 @@ public String predictPartyVictory(String senate) {
 ```
 
 **Edge Cases:**
+
 - All same party: that party wins immediately
 - Alternating R and D: depends on order
 - Single senator: that party wins
 - Equal numbers: first senator's party likely wins
 
 **Time Complexity**: O(n) — each senator processed at most once per round
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Robot Returning to Origin
 - Process Requests
 - Task Scheduler

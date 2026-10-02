@@ -20,7 +20,7 @@ aligned with **NeetCode 150** standards.
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
 | [Array](array.md) | 13 | 🟢 7 · 🟡 4 · 🔴 2 |
-| [String](string.md) | 11 | 🟢 5 · 🟡 5 · 🔴 1 |
+| [String](string.md) | 11 | 🟢 5 · 🟡 5 · 🔴 0 |
 | [Stack](stack.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
 | [Queue](queue.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
 | [Linked List](linked-list.md) | 11 | 🟢 5 · 🟡 4 · 🔴 2 |

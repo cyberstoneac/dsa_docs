@@ -15,6 +15,7 @@ tags:
 Imagine a family tree: one ancestor at the top, their children below them, and their grandchildren below that. That's a **tree** structure!
 
 In computer science, a tree is a hierarchical data structure where:
+
 - One node is the **root** (top)
 - Each node can have **children** (nodes below it)
 - A node with no children is a **leaf**
@@ -225,9 +226,11 @@ Expected Output: 1
 ```
 
 **Key Insight - Recursive Max + 1:**
+
 The depth of a tree = 1 (for the root) + max(depth of left subtree, depth of right subtree). Base case: null has depth 0.
 
 **Why It Works:**
+
 - Every path goes through the root
 - Longest path = 1 + longer of (left subtree's longest path, right subtree's longest path)
 - This is divide and conquer
@@ -252,15 +255,18 @@ public int maxDepth(TreeNode root) {
 ```
 
 **Edge Cases:**
+
 - Empty tree: returns 0
 - Single node: returns 1
 - Skewed tree (all left or all right): returns n
 - Balanced tree: returns log n + 1
 
 **Time Complexity**: O(n) — visit every node once
+
 **Space Complexity**: O(h) — recursion stack
 
 **Similar Pattern Problems:**
+
 - Minimum Depth of Binary Tree
 - Tree Height
 - Balanced Binary Tree
@@ -322,12 +328,14 @@ Expected Output: true (empty is symmetric)
 ```
 
 **Key Insight - Mirror Comparison:**
+
 Two trees are mirrors if:
 - Their root values are equal
 - Left subtree of first is mirror of right subtree of second
 - Right subtree of first is mirror of left subtree of second
 
 **Why It Works:**
+
 - Symmetry means left side mirrors right side
 - Compare outer pairs (left.left vs right.right)
 - Compare inner pairs (left.right vs right.left)
@@ -362,15 +370,18 @@ private boolean isMirror(TreeNode left, TreeNode right) {
 ```
 
 **Edge Cases:**
+
 - Empty tree: returns true
 - Single node: returns true
 - Two nodes different: returns false
 - Perfect mirror: returns true
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(h)
 
 **Similar Pattern Problems:**
+
 - Same Tree
 - Is Subtree
 - Flip Equivalent Binary Trees
@@ -429,9 +440,11 @@ Expected Output: null
 ```
 
 **Key Insight - Swap and Recurse:**
+
 For each node, swap its left and right children. Then recursively invert both subtrees.
 
 **Why It Works:**
+
 - Inverting means every left-right relationship is reversed
 - Swapping at each node flips the immediate children
 - Recursing ensures all descendants are also flipped
@@ -466,15 +479,18 @@ public TreeNode invertTree(TreeNode root) {
 ```
 
 **Edge Cases:**
+
 - Empty tree: returns null
 - Single node: returns it unchanged
 - Skewed tree: inverts to opposite skew
 - Complete tree: fully mirrored
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(h)
 
 **Similar Pattern Problems:**
+
 - Flip Tree
 - Mirror Tree Operations
 - Symmetric Tree
@@ -542,9 +558,11 @@ Expected Output: true (single node, 5=5)
 ```
 
 **Key Insight - Subtract at Each Step:**
+
 At each node, subtract its value from targetSum. At a leaf, check if remaining target is 0. Recurse on both children.
 
 **Why It Works:**
+
 - A root-to-leaf path sum can be checked by subtracting as we go
 - At a leaf, if remaining sum is 0, path sum equals original target
 - Recurse on both children (OR relationship)
@@ -570,15 +588,18 @@ public boolean hasPathSum(TreeNode root, int targetSum) {
 ```
 
 **Edge Cases:**
+
 - Empty tree: returns false
 - Single node matching target: returns true
 - Single node not matching: returns false
 - Negative values: handled correctly
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(h)
 
 **Similar Pattern Problems:**
+
 - Path Sum II (return all paths)
 - Path Sum III (any path)
 - Path Sum IV (depth sum)
@@ -637,9 +658,11 @@ Expected Output: []
 ```
 
 **Key Insight - Stack Simulates Recursion:**
+
 Push nodes as you go left. When you can't go left, pop a node, visit it, then go right. The stack replaces the call stack.
 
 **Why It Works:**
+
 - Inorder: left subtree, then root, then right subtree
 - Stack holds "pending" nodes (ancestors we haven't visited)
 - Go left as far as possible, pushing nodes
@@ -676,15 +699,18 @@ public List<Integer> inorderTraversal(TreeNode root) {
 ```
 
 **Edge Cases:**
+
 - Empty tree: returns []
 - Single node: returns [val]
 - Skewed left: processes in reverse order of insertion
 - Skewed right: processes in order
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(h)
 
 **Similar Pattern Problems:**
+
 - Preorder Traversal (Iterative)
 - Postorder Traversal (Iterative)
 - Morris Traversal (O(1) space)
@@ -739,11 +765,13 @@ Expected Output: 4
 ```
 
 **Key Insight - BST Property Guides Direction:**
+
 - If both p and q < root, LCA is in left subtree
 - If both p and q > root, LCA is in right subtree
 - Otherwise (one on each side, or one equals root), root is the LCA
 
 **Why It Works:**
+
 - BST property: left < root < right
 - If both nodes are smaller, they're both in left subtree
 - If both are larger, they're both in right subtree
@@ -771,15 +799,18 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 ```
 
 **Edge Cases:**
+
 - p or q equals root: root is LCA
 - Both in left: recurse left
 - Both in right: recurse right
 - One on each side: root is LCA
 
 **Time Complexity**: O(h) — height of tree
+
 **Space Complexity**: O(h) — recursion
 
 **Similar Pattern Problems:**
+
 - LCA Binary Tree (generic)
 - LCA with Parent Pointers
 - LCA of Deepest Leaves
@@ -840,9 +871,11 @@ Expected Output: null
 ```
 
 **Key Insight - First Preorder is Root, Split Inorder:**
+
 The first element of preorder is always the root. Find it in inorder — everything left is the left subtree, everything right is the right subtree. Recurse.
 
 **Why It Works:**
+
 - Preorder: root, left subtree, right subtree
 - Inorder: left subtree, root, right subtree
 - So preorder[0] gives root
@@ -883,15 +916,18 @@ private TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd,
 ```
 
 **Edge Cases:**
+
 - Empty arrays: returns null
 - Single element: returns single node
 - Skewed trees: works correctly
 - Duplicate values: problem assumes unique values
 
 **Time Complexity**: O(n) — with HashMap for O(1) lookup
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Build from Postorder-Inorder
 - Build from Preorder-Postorder
 - Construct BST from Preorder
@@ -964,9 +1000,11 @@ Expected Output: 2 (don't include -1)
 ```
 
 **Key Insight - Best Path Through Each Node:**
+
 For each node, the best path passing through it = node + max(0, leftBest) + max(0, rightBest). We track the global max. The return value is node + max(leftBest, rightBest) — the best downward path.
 
 **Why It Works:**
+
 - A path through a node uses at most one child (for extension upward)
 - But as a complete path, it can use both children
 - Use max(0, child) to skip negative branches
@@ -1003,15 +1041,18 @@ private int dfs(TreeNode node) {
 ```
 
 **Edge Cases:**
+
 - Single node: returns its value
 - All negative: returns max (least negative) value
 - Mixed: correctly handles negatives
 - Large tree: O(n) time
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(h)
 
 **Similar Pattern Problems:**
+
 - Maximum Path Sum in N-ary Tree
 - Path Sum III
 - Diameter of Binary Tree
@@ -1137,9 +1178,11 @@ Result: 1, 2, 3
 ```
 
 **Key Insight - Inorder Should Be Sorted:**
+
 In a BST, inorder traversal gives sorted order. If two nodes are swapped, there will be 1 or 2 "violations" (prev > curr). Track the first and last violating nodes, then swap their values.
 
 **Why It Works:**
+
 - BST inorder is sorted ascending
 - Swapped nodes create inversions (prev > curr)
 - If adjacent swapped: 1 inversion (first=prev, second=curr)
@@ -1181,15 +1224,18 @@ private void inorder(TreeNode node) {
 ```
 
 **Edge Cases:**
+
 - Adjacent swap: first and second set once
 - Non-adjacent swap: first set once, second updated
 - Root involved: works correctly
 - Single node: no swap needed
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(h)
 
 **Similar Pattern Problems:**
+
 - Find Duplicate Subtree
 - Validate BST
 - Trim BST

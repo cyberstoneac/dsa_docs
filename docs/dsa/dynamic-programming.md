@@ -133,15 +133,18 @@ Return 8
 ```
 
 **Key Insight - Fibonacci Pattern:**
+
 To reach step n, you must come from step n-1 (climb 1) or step n-2 (climb 2). So dp[n] = dp[n-1] + dp[n-2]. This is the Fibonacci sequence.
 
 **Why It Works:**
+
 - Last step is either 1 or 2 stairs
 - All ways to reach n = ways to reach n-1 + ways to reach n-2
 - Base cases: dp[1] = 1, dp[2] = 2
 - This gives the classic Fibonacci recurrence
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(n) for array, O(1) for optimized
 
 **Visualization - Climbing Stairs:**
@@ -180,12 +183,14 @@ public int climbStairsOptimized(int n) {
 ```
 
 **Edge Cases:**
+
 - n = 1: returns 1
 - n = 2: returns 2
 - Large n: use long or modulo if needed
 - n = 0: returns 1 (empty staircase, one way)
 
 **Similar Pattern Problems:**
+
 - Min Cost Climbing Stairs
 - Frog Jump
 - Decode Ways
@@ -230,19 +235,23 @@ Return 4
 ```
 
 **Key Insight - Skip or Rob:**
+
 At each house, we have two choices:
+
 - **Skip**: Keep the maximum from previous house (dp[i-1])
 - **Rob**: Take current + maximum from two houses back (dp[i-2] + nums[i])
 
 Choose whichever gives more money.
 
 **Why It Works:**
+
 - Can't rob adjacent houses, so robbing house i means we can only consider up to i-2
 - Skipping house i means we keep whatever we had at i-1
 - Taking max of both choices gives optimal at each step
 - This is optimal substructure: best at i depends on best at i-1 and i-2
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1) optimized
 
 **Visualization - House Robber:**
@@ -270,12 +279,14 @@ public int rob(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns 0
 - Single house: returns its value
 - Two houses: returns max of both
 - All houses same: alternates
 
 **Similar Pattern Problems:**
+
 - House Robber II (circular street)
 - House Robber III (binary tree)
 - Delete and Earn
@@ -323,9 +334,11 @@ Return -1
 ```
 
 **Key Insight - Try Every Coin:**
+
 For each amount i, try every coin. If coin <= i, we can use it plus the optimal solution for (i - coin). Take the minimum over all coins.
 
 **Why It Works:**
+
 - dp[i] = minimum coins to make amount i
 - For each coin, if we use it, remaining amount is i - coin
 - Optimal solution uses one of the coins as the "last" coin
@@ -333,6 +346,7 @@ For each amount i, try every coin. If coin <= i, we can use it plus the optimal 
 - Base case: dp[0] = 0 (zero coins for zero amount)
 
 **Time Complexity**: O(amount * coins)
+
 **Space Complexity**: O(amount)
 
 **Visualization - Coin Change:**
@@ -369,12 +383,14 @@ public int coinChange(int[] coins, int amount) {
 ```
 
 **Edge Cases:**
+
 - amount = 0: returns 0
 - No valid combination: returns -1
 - Single coin = amount: returns 1
 - Coin larger than amount: ignored
 
 **Similar Pattern Problems:**
+
 - Coin Change II (count ways)
 - Perfect Squares
 - Minimum Cost For Tickets
@@ -432,12 +448,15 @@ dp[3][5] = 7
 ```
 
 **Key Insight - Include or Exclude:**
+
 For each item i and capacity w:
+
 - **Exclude**: Keep value from i-1 items with same capacity
 - **Include**: If item fits, take item i + best value from i-1 items with reduced capacity
 - Choose max of both options
 
 **Why It Works:**
+
 - dp[i][w] = max value using first i items with capacity w
 - Each item has exactly 2 choices: include or exclude
 - Including item i: value[i-1] + dp[i-1][w - weight[i-1]]
@@ -445,6 +464,7 @@ For each item i and capacity w:
 - This explores all 2^n combinations efficiently in O(n*W)
 
 **Time Complexity**: O(n * capacity)
+
 **Space Complexity**: O(n * capacity), optimized to O(capacity)
 
 **Visualization - 0/1 Knapsack:**
@@ -479,12 +499,14 @@ public int knapsack(int[] weights, int[] values, int capacity) {
 ```
 
 **Edge Cases:**
+
 - No items: returns 0
 - No capacity: returns 0
 - All items fit: returns sum of all values
 - No item fits: returns 0
 
 **Similar Pattern Problems:**
+
 - Partition Equal Subset Sum
 - Target Sum
 - Subset Sum Problem
@@ -537,17 +559,21 @@ dp[3][3] = 0
 ```
 
 **Key Insight - Match or Skip:**
+
 For each pair (i, j):
+
 - If characters match: dp[i][j] = dp[i-1][j-1] + 1
 - If characters don't match: dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 
 **Why It Works:**
+
 - If last characters match, they're part of LCS, so add 1 to LCS of prefixes without them
 - If they don't match, one of them is not in LCS, so take max of skipping either
 - Base case: empty string has LCS of 0 with anything
 - Builds up solution from smallest prefixes to full strings
 
 **Time Complexity**: O(m * n)
+
 **Space Complexity**: O(m * n), optimized to O(min(m,n))
 
 **Visualization - LCS:**
@@ -579,12 +605,14 @@ public int longestCommonSubsequence(String text1, String text2) {
 ```
 
 **Edge Cases:**
+
 - Empty strings: returns 0
 - One empty string: returns 0
 - Identical strings: returns length
 - No common characters: returns 0
 
 **Similar Pattern Problems:**
+
 - Longest Common Substring (contiguous)
 - Longest Increasing Subsequence
 - Edit Distance
@@ -633,7 +661,9 @@ dp[9][9] = 5
 ```
 
 **Key Insight - Three Operations:**
+
 For each pair (i, j):
+
 - If characters match: dp[i][j] = dp[i-1][j-1] (no operation)
 - If characters don't match: dp[i][j] = 1 + min(
     - dp[i-1][j] (delete from word1)
@@ -642,6 +672,7 @@ For each pair (i, j):
   )
 
 **Why It Works:**
+
 - dp[i][j] = min operations to convert word1[0..i] to word2[0..j]
 - If last characters match, no operation needed on them
 - If they don't match, we must either delete, insert, or replace
@@ -649,6 +680,7 @@ For each pair (i, j):
 - Taking minimum over all three gives optimal solution
 
 **Time Complexity**: O(m * n)
+
 **Space Complexity**: O(m * n), optimized to O(min(m,n))
 
 **Visualization - Edit Distance:**
@@ -684,12 +716,14 @@ public int editDistance(String word1, String word2) {
 ```
 
 **Edge Cases:**
+
 - One empty string: returns length of other
 - Both empty: returns 0
 - Identical strings: returns 0
 - Completely different: returns max length
 
 **Similar Pattern Problems:**
+
 - Regular Expression Matching
 - Distinct Subsequences
 - One Edit Distance
@@ -731,9 +765,11 @@ Return 1
 ```
 
 **Key Insight - Compare with All Previous:**
+
 For each index i, check all previous indices j < i. If nums[j] < nums[i], we can extend the LIS ending at j. dp[i] = max(dp[j] + 1) for all valid j.
 
 **Why It Works:**
+
 - dp[i] = length of LIS ending at index i
 - To extend to i, previous element must be smaller
 - Try all possible previous elements
@@ -741,6 +777,7 @@ For each index i, check all previous indices j < i. If nums[j] < nums[i], we can
 - Answer is max over all dp[i]
 
 **Time Complexity**: O(n^2), optimized to O(n log n)
+
 **Space Complexity**: O(n)
 
 **Visualization - LIS:**
@@ -789,12 +826,14 @@ public int lengthOfLISOptimized(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns 0
 - Single element: returns 1
 - All same elements: returns 1
 - Strictly increasing: returns n
 
 **Similar Pattern Problems:**
+
 - Largest Divisible Subset
 - Russian Doll Envelopes
 - Maximum Length of Pair Chain
@@ -850,15 +889,18 @@ dp[2][2] = 6
 ```
 
 **Key Insight - Two Ways to Reach:**
+
 To reach cell (i, j), robot must come from (i-1, j) [from above] or (i, j-1) [from left]. So dp[i][j] = dp[i-1][j] + dp[i][j-1].
 
 **Why It Works:**
+
 - First row: only one way (all right moves)
 - First column: only one way (all down moves)
 - Every other cell: sum of paths from above and left
 - This is optimal substructure: paths to (i,j) depend on paths to neighbors
 
 **Time Complexity**: O(m * n)
+
 **Space Complexity**: O(m * n), optimized to O(n)
 
 **Visualization - Unique Paths:**
@@ -899,12 +941,14 @@ public int uniquePathsOptimized(int m, int n) {
 ```
 
 **Edge Cases:**
+
 - m = 1, n = 1: returns 1
 - m = 1, n > 1: returns 1
 - m > 1, n = 1: returns 1
 - Large m, n: use long or BigInteger
 
 **Similar Pattern Problems:**
+
 - Unique Paths II (with obstacles)
 - Min Path Sum
 - Dungeon Game
@@ -960,15 +1004,18 @@ Return 0
 ```
 
 **Key Insight - Capture Every Upward Trend:**
+
 Since we can make unlimited transactions, we can capture every price increase. If tomorrow's price > today's, we "buy today and sell tomorrow" for profit.
 
 **Why It Works:**
+
 - Any profitable sequence can be decomposed into consecutive day transactions
 - Sum of all positive differences = maximum profit
 - Greedy works because there's no limit on transactions
 - Equivalent to: sum of all (prices[i] - prices[i-1]) where positive
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Visualization - Stock II:**
@@ -1002,12 +1049,14 @@ public int maxProfitDP(int[] prices) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns 0
 - Single day: returns 0
 - Strictly increasing: returns last - first
 - Strictly decreasing: returns 0
 
 **Similar Pattern Problems:**
+
 - Best Time to Buy and Sell Stock III (2 transactions)
 - Best Time to Buy and Sell Stock IV (k transactions)
 - Best Time to Buy and Sell Stock with Cooldown
@@ -1063,15 +1112,18 @@ Return false
 ```
 
 **Key Insight - Check All Split Points:**
+
 dp[i] = true if s[0:i] can be segmented. For each i, check all j < i. If dp[j] is true and s[j:i] is in dictionary, then dp[i] is true.
 
 **Why It Works:**
+
 - dp[i] represents whether prefix s[0:i] can be segmented
 - If we can segment s[0:j] and s[j:i] is a word, then s[0:i] can be segmented
 - Try all possible split points j
 - Base case: dp[0] = true (empty string)
 
 **Time Complexity**: O(n^2 * m) where m is average word length
+
 **Space Complexity**: O(n)
 
 **Visualization - Word Break:**
@@ -1102,12 +1154,14 @@ public boolean wordBreak(String s, List<String> wordDict) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns true
 - Single word: returns true if in dict
 - No valid segmentation: returns false
 - Repeated words: works correctly
 
 **Similar Pattern Problems:**
+
 - Word Break II (return all segmentations)
 - Concatenated Words
 - Palindrome Partitioning
@@ -1289,9 +1343,11 @@ Max = 10
 ```
 
 **Key Insight - Reverse Thinking (Last Balloon):**
+
 Instead of thinking about which balloon to burst first, think about which balloon to burst LAST in a range. If balloon k is burst last in range [i, j], then all balloons between i and k-1 and between k+1 and j are already burst. The coins from bursting k last = nums[i-1] * nums[k] * nums[j+1].
 
 **Why It Works:**
+
 - dp[i][j] = max coins from bursting all balloons in range [i, j]
 - If k is the last balloon burst in [i, j], then:
   - First burst all in [i, k-1] (dp[i][k-1])
@@ -1301,6 +1357,7 @@ Instead of thinking about which balloon to burst first, think about which balloo
 - Add boundaries (1 at both ends) to handle edge cases
 
 **Time Complexity**: O(n^3) - three nested loops
+
 **Space Complexity**: O(n^2) - 2D DP table
 
 **Visualization - Burst Balloons:**
@@ -1337,12 +1394,14 @@ public int maxCoins(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns 0
 - Single balloon: returns its value
 - Two balloons: max of bursting either first
 - All same values: works correctly
 
 **Similar Pattern Problems:**
+
 - Remove Boxes
 - Zuma Game
 - Strange Printer
@@ -1407,18 +1466,21 @@ Return 30000
 ```
 
 **Key Insight - Try Every Split:**
+
 For range [i, j], try every possible split point k. The cost is:
 - Cost of left part [i, k]
 - Cost of right part [k+1, j]
 - Cost of multiplying the two resulting matrices
 
 **Why It Works:**
+
 - Matrix multiplication is associative, so we can parenthesize in many ways
 - Optimal parenthesization has optimal sub-parenthesizations
 - dp[i][j] = min over all k of: dp[i][k] + dp[k+1][j] + dimensions[i]*dimensions[k+1]*dimensions[j+1]
 - Build from smaller chains to larger chains
 
 **Time Complexity**: O(n^3)
+
 **Space Complexity**: O(n^2)
 
 **Visualization - Matrix Chain:**
@@ -1450,12 +1512,14 @@ public int matrixChainOrder(int[] dimensions) {
 ```
 
 **Edge Cases:**
+
 - Two matrices: only one way
 - Single matrix: returns 0
 - All same dimensions: works correctly
 - Large chains: O(n^3) may be slow
 
 **Similar Pattern Problems:**
+
 - Optimal Binary Search Tree
 - Palindrome Partitioning II
 - Minimum Cost to Cut a Stick
@@ -1518,9 +1582,11 @@ Return 1
 ```
 
 **Key Insight - Precompute Palindromes:**
+
 First, precompute which substrings are palindromes using DP. Then, use another DP to find minimum cuts. dp[i] = minimum cuts for s[0:i]. If s[0:i] is palindrome, dp[i] = 0. Otherwise, try all j where s[j:i] is palindrome and dp[i] = min(dp[j-1] + 1).
 
 **Why It Works:**
+
 - dp[i] = min cuts for prefix s[0:i]
 - If prefix is palindrome, 0 cuts needed
 - Otherwise, we make a cut at some j, and s[j:i] must be palindrome
@@ -1528,6 +1594,7 @@ First, precompute which substrings are palindromes using DP. Then, use another D
 - Precomputing palindromes avoids repeated O(n) checks
 
 **Time Complexity**: O(n^2) - both palindrome precompute and DP
+
 **Space Complexity**: O(n^2) for isPalin, O(n) for dp
 
 **Visualization - Palindrome Partitioning II:**
@@ -1569,12 +1636,14 @@ public int minCut(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns 0
 - Single character: returns 0
 - All same characters: returns 0
 - No palindromes > 1: returns n-1
 
 **Similar Pattern Problems:**
+
 - Palindrome Partitioning (all partitions)
 - Palindrome Removal
 - Minimum Cost to Cut a Stick

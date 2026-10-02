@@ -13,6 +13,7 @@ tags:
 Imagine a dictionary organized by prefixes. To look up "cat", you'd go to the "c" section, then "ca", then "cat". That's a **trie** (pronounced "try")!
 
 A trie is a tree-like data structure where:
+
 - Each node represents a single character
 - The path from root to a node spells out a prefix
 - Words share common prefixes (like "car", "cart", "care" all share "car")
@@ -255,15 +256,18 @@ class Trie {
 ```
 
 **Edge Cases:**
+
 - Empty word: inserts root as end (or ignore)
 - Duplicate insert: sets isEnd again (idempotent)
 - Search empty: returns isEnd of root
 - Prefix longer than any word: returns false
 
 **Time Complexity**: O(m) per operation (m = word length)
+
 **Space Complexity**: O(ALPHABET * N * m) for N words
 
 **Similar Pattern Problems:**
+
 - Autocomplete
 - Type-ahead Search
 - Word Dictionary with Wildcards
@@ -310,9 +314,11 @@ Expected Output: "dog" (no match)
 ```
 
 **Key Insight - Shortest Prefix Match:**
+
 Build a trie from dictionary roots. For each word in the sentence, traverse the trie character by character. If we hit an `isEnd` node, we've found the shortest root — replace the word with that prefix. If traversal fails, keep the original word.
 
 **Why It Works:**
+
 - Trie naturally shares prefixes across dictionary words
 - `isEnd` marks complete roots
 - Stopping at first `isEnd` gives the shortest matching root
@@ -359,15 +365,18 @@ public String replaceWords(List<String> dictionary, String sentence) {
 ```
 
 **Edge Cases:**
+
 - Empty dictionary: returns original sentence
 - Word equals root: replaced with same word
 - No matching root: word unchanged
 - Multiple roots match: shortest one wins (first `isEnd`)
 
 **Time Complexity**: O(S * L) where S = sentence length, L = max word length
+
 **Space Complexity**: O(D * L) for trie
 
 **Similar Pattern Problems:**
+
 - Prefix Matching
 - Word Replacement
 - Shortest Root Match
@@ -449,9 +458,11 @@ Expected Output: ["a"]
 ```
 
 **Key Insight - Trie + DFS Backtracking:**
+
 Build a trie from all words. Then DFS from each cell, traversing the trie simultaneously. When we reach a trie `isEnd` node, we found a word. Mark visited cells, restore on backtrack. Store the word in the trie node to avoid string building.
 
 **Why It Works:**
+
 - Trie shares prefixes across words, pruning many paths
 - If no word starts with a prefix, DFS stops immediately
 - DFS explores all 4 directions with backtracking
@@ -522,15 +533,18 @@ class TrieNode {
 ```
 
 **Edge Cases:**
+
 - Empty board: returns empty list
 - Empty words: returns empty list
 - Single cell matching word: returns it
 - Word longer than cells: pruned by trie
 
 **Time Complexity**: O(M * N * 4^L) worst case, but trie pruning makes it much faster in practice
+
 **Space Complexity**: O(W * L) for trie where W = number of words
 
 **Similar Pattern Problems:**
+
 - Word Search (single word)
 - Boggle
 - Word Break
@@ -575,11 +589,13 @@ Expected Output: [[0,1],[1,0]]
 ```
 
 **Key Insight - Split at Each Position:**
+
 For word A, we want word B such that A + B is palindrome. Split A at each position j into left and right. Check:
 1. If right is palindrome, then we need reverse(left) as B
 2. If left is palindrome, then we need reverse(right) as B (with j != word.length())
 
 **Why It Works:**
+
 - A + B palindrome means B's reverse must match A's parts
 - Split A into left and right at each position
 - If right is palindrome, B = reverse(left) makes A+B palindrome
@@ -640,15 +656,18 @@ private boolean isPalindrome(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string in words: pairs with palindromes
 - Single character words: work correctly
 - No valid pairs: returns empty list
 - All same words: problem says unique words
 
 **Time Complexity**: O(N * K²) where N = number of words, K = max word length
+
 **Space Complexity**: O(N * K) for HashMap
 
 **Similar Pattern Problems:**
+
 - Longest Palindrome Pairs
 - Palindrome Words
 - Word Squares

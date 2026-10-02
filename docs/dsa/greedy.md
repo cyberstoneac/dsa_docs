@@ -12,6 +12,7 @@ tags:
 Imagine you're at a buffet and want to eat as much as possible. A greedy strategy would be: "At each step, take the biggest piece of food available." You don't plan ahead or reconsider — you just grab the best thing right now.
 
 That's exactly what a greedy algorithm does:
+
 - **Look at the current situation**
 - **Make the choice that looks best right now**
 - **Never look back or reconsider**
@@ -30,11 +31,13 @@ Sometimes this works perfectly (like getting the maximum number of non-overlappi
 
 ## When to Use Greedy (vs Dynamic Programming)
 Use greedy when:
+
 - You can prove that the best local choice is always part of the best global solution
 - The problem has the "greedy choice property"
 - Future decisions don't affect the validity of past choices
 
 Use DP instead when:
+
 - You need to consider multiple options and pick the best overall
 - Local optimal doesn't guarantee global optimal
 - You need to remember past decisions
@@ -165,9 +168,11 @@ Content children = 2
 ```
 
 **Key Insight - Match Smallest to Smallest:**
+
 Sort both arrays. Use two pointers. If current cookie can satisfy current child, assign it and move both pointers. Otherwise, the cookie is too small — try the next cookie (move cookie pointer only).
 
 **Why It Works:**
+
 - The least greedy child should get the smallest cookie that satisfies them
 - This leaves larger cookies for greedier children
 - If we gave a large cookie to a small-greed child, we might waste it
@@ -201,15 +206,18 @@ public int findContentChildren(int[] g, int[] s) {
 ```
 
 **Edge Cases:**
+
 - No children: returns 0
 - No cookies: returns 0
 - All cookies too small: returns 0
 - All cookies satisfy all children: returns number of children
 
 **Time Complexity**: O(n log n + m log m) - sorting dominates
+
 **Space Complexity**: O(1) - only pointers
 
 **Similar Pattern Problems:**
+
 - Two Sum Closest
 - Best Time to Buy and Sell Stock
 
@@ -256,9 +264,11 @@ Expected Output: true (already at last index)
 ```
 
 **Key Insight - Track Maximum Reach:**
+
 As you scan through the array, keep track of the farthest index you can reach. At each position, update maxReach = max(maxReach, i + nums[i]). If your current index exceeds maxReach, you're stuck.
 
 **Why It Works:**
+
 - If you can reach index i, you can reach any index up to maxReach
 - The greedy choice: always extend your reach as far as possible
 - If you ever find yourself at a position beyond your reach, it's impossible
@@ -286,15 +296,18 @@ public boolean canJump(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Single element: always true (already at end)
 - First element 0 with more elements: false
 - All zeros except last: depends
 - Large jumps: works correctly
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Jump Game II (minimum jumps)
 - Jump Game III (can reach zero)
 - Jump Game VII (with constraints)
@@ -350,10 +363,12 @@ total=0 >= 0 -> return start=4
 ```
 
 **Key Insight - Total and Current:**
+
 - **Total**: sum of (gas[i] - cost[i]) over all stations. If total < 0, impossible.
 - **Current**: running sum from the current starting candidate. If current < 0, no station from start to i can be the answer, so reset start to i+1.
 
 **Why It Works:**
+
 - If total gas >= total cost, a solution exists (and is unique)
 - If current becomes negative at station i, starting anywhere between start and i will also fail
 - This is because the deficit accumulates; starting later only makes it worse
@@ -387,15 +402,18 @@ public int canCompleteCircuit(int[] gas, int[] cost) {
 ```
 
 **Edge Cases:**
+
 - Total gas < total cost: returns -1
 - Single station with enough gas: returns 0
 - Exactly enough gas: returns some valid start
 - All stations have surplus: returns 0
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Gas Station II
 - Circular Rotation
 
@@ -445,9 +463,11 @@ Return 1
 ```
 
 **Key Insight - Track Minimum So Far:**
+
 As you iterate, keep track of the minimum price seen so far (best buying opportunity). At each day, calculate profit if you sold today (current price - minPrice). Track the maximum profit.
 
 **Why It Works:**
+
 - The optimal buying day must come before the optimal selling day
 - By tracking minimum price as you go, you always know the best buying opportunity up to current day
 - For each selling day, compute the best possible profit
@@ -479,15 +499,18 @@ public int maxProfit(int[] prices) {
 ```
 
 **Edge Cases:**
+
 - Single day: no transaction possible, returns 0
 - Decreasing prices: returns 0
 - Increasing prices: returns last - first
 - Same prices: returns 0
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Best Time to Buy and Sell Stock II (multiple transactions)
 - Best Time to Buy and Sell Stock III (at most 2 transactions)
 - Best Time to Buy and Sell Stock with Cooldown
@@ -556,9 +579,11 @@ Return [10]
 ```
 
 **Key Insight - Last Occurrence Tracking:**
+
 Precompute the last occurrence index of each character. Then scan from left to right. For each partition, the end is the maximum last occurrence of all characters seen so far. When the current index equals this end, we've found a valid partition.
 
 **Why It Works:**
+
 - A partition is valid if it contains all occurrences of every character it includes
 - The end of a partition must be at least the maximum last occurrence of all its characters
 - As we scan, we extend the end to cover new characters
@@ -598,15 +623,18 @@ public List<Integer> partitionLabels(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns []
 - Single character: returns [1]
 - All same characters: returns [length]
 - All distinct characters: returns [1, 1, 1, ...]
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1) - fixed 26 characters
 
 **Similar Pattern Problems:**
+
 - Merge Intervals
 - Video Stitching
 
@@ -664,9 +692,11 @@ Expected Output: 0 (already at last index)
 ```
 
 **Key Insight - BFS-like Level Tracking:**
+
 Think of it like BFS levels. Each "level" is the range of indices reachable with the current number of jumps. When you reach the end of a level, you must jump again, and the new level extends to the farthest reachable index.
 
 **Why It Works:**
+
 - `farthest` = farthest index reachable with jumps+1 jumps
 - `endOfJump` = last index reachable with current jumps
 - When i reaches endOfJump, we need one more jump
@@ -698,15 +728,18 @@ public int jump(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Single element: returns 0
 - Two elements with jump >= 1: returns 1
 - All elements 1: returns n-1
 - Large jumps: fewer jumps needed
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Jump Game (can reach end?)
 - Jump Game with Obstacles
 - Minimum Jumps
@@ -767,9 +800,11 @@ Still 16 intervals minimum.
 ```
 
 **Key Insight - Frequency-Based Formula:**
+
 The most frequent task determines the structure. If maxFreq = f, we need (f-1) blocks of (n+1) intervals, plus one final interval for the last occurrence. If multiple tasks have maxFreq, add them to the last block.
 
 **Why It Works:**
+
 - The most frequent task creates "gaps" that must be filled
 - Each gap between same tasks needs n other tasks or idle
 - Total = (maxFreq - 1) * (n + 1) + (number of tasks with maxFreq)
@@ -803,15 +838,18 @@ public int leastInterval(char[] tasks, int n) {
 ```
 
 **Edge Cases:**
+
 - Single task: returns 1
 - All same tasks: formula applies
 - n = 0: returns tasks.length
 - Many different tasks: no idle needed
 
 **Time Complexity**: O(n) - n = number of tasks
+
 **Space Complexity**: O(1) - fixed 26 characters
 
 **Similar Pattern Problems:**
+
 - Scheduler
 - Cooldown Scheduling
 - Rearrange String k Distance Apart
@@ -861,9 +899,11 @@ Insert:
 ```
 
 **Key Insight - Process Tallest First:**
+
 Sort by height descending, then k ascending. Insert each person at position k in the result list. Since taller people are already placed, the k value correctly represents how many taller people should be in front.
 
 **Why It Works:**
+
 - Tallest people are placed first; they don't care about shorter people
 - When inserting a shorter person, all currently placed people are taller or equal
 - So inserting at index k guarantees exactly k taller people in front
@@ -894,15 +934,18 @@ public int[][] reconstructQueue(int[][] people) {
 ```
 
 **Edge Cases:**
+
 - Single person: returns as-is
 - All same height: sort by k, insert in order
 - All different heights: works correctly
 - k = 0 for all: tallest first
 
 **Time Complexity**: O(n^2) - LinkedList insertion
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Height Sorting
 - Queue Ordering
 
@@ -991,12 +1034,14 @@ Correct!
 ```
 
 **Key Insight - Two Passes:**
+
 - First pass (left to right): ensure increasing ratings get more candies
 - Second pass (right to left): ensure decreasing ratings get more candies
 - Take max of both passes at each position
 - This handles all neighbor relationships
 
 **Why It Works:**
+
 - Each child must satisfy constraints with both left and right neighbors
 - Left-to-right pass handles left neighbor constraints
 - Right-to-left pass handles right neighbor constraints
@@ -1034,15 +1079,18 @@ public int candy(int[] ratings) {
 ```
 
 **Edge Cases:**
+
 - Single child: returns 1
 - All same ratings: returns n
 - Strictly increasing: returns n(n+1)/2
 - Strictly decreasing: returns n(n+1)/2
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Candy Distribution Variants
 - Trapping Rain Water (similar two-pass idea)
 
@@ -1099,9 +1147,11 @@ current == target -> true
 ```
 
 **Key Insight - Only Consider Valid Triplets:**
+
 A triplet is useful only if all its elements are <= corresponding target elements. Among useful triplets, take element-wise max. If the result equals target, return true.
 
 **Why It Works:**
+
 - If any element exceeds target, that triplet can't be used (would make result too large)
 - Taking max of all valid triplets gives the best possible result
 - If this max equals target, we can form target
@@ -1132,15 +1182,18 @@ public boolean mergeTriplets(int[][] triplets, int[] target) {
 ```
 
 **Edge Cases:**
+
 - Single triplet equals target: returns true
 - No valid triplets: returns false
 - Multiple valid triplets: works correctly
 - Target has zeros: handled correctly
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Merge Pairs
 - Greedy Selection
 
@@ -1196,9 +1249,11 @@ No stations within reach, heap empty -> return -1
 ```
 
 **Key Insight - Greedy with Max-Heap:**
+
 Drive as far as possible. When you can't reach further, use the best (largest fuel) station you've passed but didn't use. This is greedy because you always want the most fuel when you need it.
 
 **Why It Works:**
+
 - You should only refuel when necessary (to minimize stops)
 - When you must refuel, choose the station with the most fuel (max-heap)
 - This maximizes your reach with each stop
@@ -1236,15 +1291,18 @@ public int minRefuelStops(int target, int startFuel, int[][] stations) {
 ```
 
 **Edge Cases:**
+
 - Start fuel >= target: returns 0
 - No stations: returns -1 if can't reach
 - Single station enough: returns 1
 - Multiple stations needed: works correctly
 
 **Time Complexity**: O(n log n) - heap operations
+
 **Space Complexity**: O(n) - heap
 
 **Similar Pattern Problems:**
+
 - Refueling Stations
 - Minimum Moves
 - Jump Game with Fuel

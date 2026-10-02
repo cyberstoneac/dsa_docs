@@ -12,11 +12,13 @@ tags:
 Imagine a stack of plates. You can only add a plate to the top, and you can only remove a plate from the top. The last plate you put on is the first one you take off. That's a **stack**!
 
 A stack is a "Last In, First Out" (LIFO) data structure:
+
 - **Push**: Add to the top
 - **Pop**: Remove from the top
 - **Peek**: Look at the top without removing
 
 **Real-life analogies:**
+
 - Stack of plates in a cafeteria
 - Browser back button (most recent page first)
 - Undo/redo in text editors
@@ -173,9 +175,11 @@ Return false
 ```
 
 **Key Insight - Stack for Matching:**
+
 Opening brackets are pushed onto the stack. When a closing bracket is encountered, it must match the top of the stack. If it does, pop. If not, invalid. At the end, stack must be empty.
 
 **Why It Works:**
+
 - The most recent unmatched opening bracket is always at the top
 - A closing bracket must match this most recent opening (LIFO)
 - If it doesn't, the brackets are in the wrong order
@@ -213,6 +217,7 @@ public boolean isValid(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns true (vacuously valid)
 - Single opening: returns false
 - Single closing: returns false
@@ -220,9 +225,11 @@ public boolean isValid(String s) {
 - Only closings: returns false
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Valid Parentheses II
 - Check if Balanced
 - Remove Invalid Parentheses
@@ -285,9 +292,11 @@ getMin(): 5
 ```
 
 **Key Insight - Auxiliary Min Stack:**
+
 Maintain two stacks: one for values, one for minimums. The min stack at each level stores the minimum of all elements up to that level. When we push, we push min(new_value, current_min). When we pop, we pop from both.
 
 **Why It Works:**
+
 - The min stack mirrors the value stack
 - At each level, minStack[i] = min of stack[0..i]
 - So minStack.top is always the minimum of all current elements
@@ -330,15 +339,18 @@ class MinStack {
 ```
 
 **Edge Cases:**
+
 - Empty stack: operations invalid (problem guarantees non-empty)
 - Duplicate minimums: handled correctly
 - Negative values: works correctly
 - Single element: top = min = that element
 
 **Time Complexity**: O(1) for all operations
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Max Stack
 - Stack with Duplicate Min
 - Design a Stack with Increment
@@ -395,9 +407,11 @@ Expected Output: 22
 ```
 
 **Key Insight - Stack for Operands:**
+
 Process tokens left to right. Numbers go to stack. When an operator appears, pop two operands, apply the operation, push the result. Order matters for - and /: the second popped is the left operand.
 
 **Why It Works:**
+
 - RPN is designed for stack evaluation
 - Operands are pushed as encountered
 - Operators consume the top two operands
@@ -439,15 +453,18 @@ public int evalRPN(String[] tokens) {
 ```
 
 **Edge Cases:**
+
 - Single number: returns it
 - Division by zero: not in problem
 - Negative numbers: handled
 - Large results: int handles typical cases
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Basic Calculator
 - Expression Evaluation
 - Infix to Postfix
@@ -509,9 +526,11 @@ Expected Output: [1, 1, 0]
 ```
 
 **Key Insight - Monotonic Decreasing Stack:**
+
 Maintain a stack of indices with decreasing temperatures. When a new warmer temperature arrives, it resolves all waiting days on the stack. Pop them and record the distance.
 
 **Why It Works:**
+
 - Stack holds indices of days waiting for a warmer day
 - Temperatures in stack are decreasing (from bottom to top)
 - When a warmer temp arrives, it's the answer for all days on stack with lower temp
@@ -546,15 +565,18 @@ public int[] dailyTemperatures(int[] temperatures) {
 ```
 
 **Edge Cases:**
+
 - All increasing: each day resolves the previous
 - All decreasing: all zeros
 - All same: all zeros
 - Single day: returns [0]
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Next Greater Element
 - Trapping Rain Water
 - Stock Span Problem
@@ -610,16 +632,20 @@ Result: [-2, -1, 1, 2]
 ```
 
 **Key Insight - Stack for Survivors:**
+
 Use a stack to track surviving asteroids. For each asteroid:
+
 - If moving right (positive): push to stack
 - If moving left (negative): collide with rightward asteroids on stack
 
 Collision rules:
+
 - If stack top < |asteroid|: top explodes, continue
 - If stack top == |asteroid|: both explode
 - If stack top > |asteroid|: asteroid explodes
 
 **Why It Works:**
+
 - Only rightward asteroids followed by leftward ones can collide
 - Stack naturally holds rightward asteroids waiting for collision
 - When a leftward asteroid comes, it collides with the most recent rightward one
@@ -666,15 +692,18 @@ public int[] asteroidCollision(int[] asteroids) {
 ```
 
 **Edge Cases:**
+
 - All moving same direction: no collisions
 - Single asteroid: returns it
 - Equal sizes: both explode
 - Leftward asteroid survives: pushed to stack
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Robot Collisions
 - Track Collisions
 - Car Fleet
@@ -747,9 +776,11 @@ Max = 3
 ```
 
 **Key Insight - Monotonic Increasing Stack:**
+
 Maintain a stack of indices with increasing heights. When a shorter bar appears, it's the right boundary for taller bars on the stack. Pop them, compute area with popped bar as height, and (current index - new top - 1) as width.
 
 **Why It Works:**
+
 - For each bar, we want the largest rectangle with that bar as the shortest
 - Left boundary: previous smaller bar (in stack)
 - Right boundary: next smaller bar (current when popping)
@@ -787,6 +818,7 @@ public int largestRectangleArea(int[] heights) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns 0
 - Single bar: returns its height
 - All same height: returns height * n
@@ -794,9 +826,11 @@ public int largestRectangleArea(int[] heights) {
 - Strictly decreasing: each popped immediately
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Maximal Rectangle (2D version)
 - Largest Rectangle with Rotations
 - Trapping Rain Water
@@ -867,6 +901,7 @@ Expected Output: "abcabccdcdcdef"
 Use a stack to handle nesting. Push numbers and strings as encountered. When ']' is found, pop until '[' to get the substring, then pop the number, repeat the substring, and push back.
 
 **Why It Works:**
+
 - Nesting naturally maps to stack LIFO order
 - Numbers are pushed before their '[' so we can retrieve them
 - '[' acts as a marker for "start of group"
@@ -917,6 +952,7 @@ public String decodeString(String s) {
 ```
 
 **Edge Cases:**
+
 - Single group: works
 - Nested groups: works
 - Multiple groups: works
@@ -924,9 +960,11 @@ public String decodeString(String s) {
 - Large repeat count: may cause memory issues
 
 **Time Complexity**: O(n * maxRepeat)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Nested List Weight Sum
 - Decode Ways
 - String Compression

@@ -11,11 +11,13 @@ tags:
 
 ## What are Intervals? (Simple Explanation)
 An **interval** is just a range with a start and an end, like [2, 5]. Think of it as:
+
 - A meeting from 2 PM to 5 PM
 - A hotel room booked from day 2 to day 5
 - A movie showing from minute 2 to minute 5
 
 Intervals show up everywhere in real life:
+
 - Calendar events (meetings, appointments)
 - Resource bookings (rooms, cars, equipment)
 - Time ranges (working hours, shifts)
@@ -222,9 +224,11 @@ Result: [[0,4]]
 ```
 
 **Key Insight - Sort by Start, Then Merge:**
+
 After sorting by start time, intervals that overlap will be adjacent. We keep a "current" interval and extend its end when we find an overlap. When we find a non-overlapping interval, we finalize the current one and start a new one.
 
 **Why It Works:**
+
 - Sorting ensures intervals are processed in order of start time
 - If the next interval starts before or at current's end, they overlap
 - Merging extends the end to cover both
@@ -264,6 +268,7 @@ public int[][] merge(int[][] intervals) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns empty
 - Single interval: returns it as-is
 - All overlapping: merges into one
@@ -271,9 +276,11 @@ public int[][] merge(int[][] intervals) {
 - Touching intervals (end == start): merged (inclusive)
 
 **Time Complexity**: O(n log n) - sorting dominates
+
 **Space Complexity**: O(n) - for result list
 
 **Similar Pattern Problems:**
+
 - Insert Interval
 - Remove Interval Overlap
 - Employee Free Time
@@ -347,12 +354,15 @@ Result: [[1,5]]
 ```
 
 **Key Insight - Three Phases:**
+
 The sorted input makes this easy. We have three phases:
+
 1. **Before**: Intervals completely before newInterval (end < new.start). Add directly.
 2. **Overlap**: Intervals overlapping with newInterval (start <= new.end). Merge by extending newInterval.
 3. **After**: Intervals completely after newInterval. Add directly.
 
 **Why It Works:**
+
 - The input is already sorted, so we don't need to re-sort
 - Phase 1 captures all intervals that end before newInterval starts
 - Phase 2 merges all intervals that overlap with newInterval
@@ -389,15 +399,18 @@ public int[][] insert(int[][] intervals, int[] newInterval) {
 ```
 
 **Edge Cases:**
+
 - newInterval before all: added first
 - newInterval after all: added last
 - newInterval overlaps all: merges into one
 - Empty intervals list: returns [newInterval]
 
 **Time Complexity**: O(n) - single pass
+
 **Space Complexity**: O(n) - for result
 
 **Similar Pattern Problems:**
+
 - Merge Intervals
 - Insert Range
 - Range Module
@@ -453,9 +466,11 @@ Return true
 ```
 
 **Key Insight - Sort and Check Adjacent:**
+
 After sorting by start time, just check if any meeting starts before the previous one ends. If so, there's an overlap.
 
 **Why It Works:**
+
 - Sorting puts meetings in chronological order
 - If meeting i starts before meeting i-1 ends, they overlap
 - We only need to check adjacent pairs (sorted order guarantees this)
@@ -486,15 +501,18 @@ public boolean canAttendMeetings(int[][] intervals) {
 ```
 
 **Edge Cases:**
+
 - Empty list: returns true
 - Single meeting: returns true
 - Touching meetings: depends on definition
 - All overlapping: returns false
 
 **Time Complexity**: O(n log n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Meeting Rooms II
 - Merge Intervals
 - Non-overlapping Intervals
@@ -570,9 +588,11 @@ Return 3
 ```
 
 **Key Insight - Count Overlaps with Sweep:**
+
 Think of time as a line. A meeting "opens" at start and "closes" at end. The maximum number of simultaneously open meetings is the answer. Sort starts and ends separately, then use two pointers.
 
 **Why It Works:**
+
 - Each start means a room is needed; each end means a room is freed
 - If a start comes before the earliest end, we need a new room
 - If an end comes before the next start, we free a room
@@ -619,15 +639,18 @@ public int minMeetingRooms(int[][] intervals) {
 ```
 
 **Edge Cases:**
+
 - Empty list: returns 0
 - Single meeting: returns 1
 - All non-overlapping: returns 1
 - All overlapping: returns n
 
 **Time Complexity**: O(n log n)
+
 **Space Complexity**: O(n) - for starts and ends arrays
 
 **Similar Pattern Problems:**
+
 - Minimum Flights to Connect All Cities
 - Rooms Required
 - Car Pooling
@@ -682,9 +705,11 @@ Removed: 0
 ```
 
 **Key Insight - Sort by End, Greedy:**
+
 To maximize non-overlapping intervals (equivalently, minimize removals), sort by END time. Always keep the interval that ends earliest. This leaves maximum room for future intervals.
 
 **Why It Works:**
+
 - The interval with the earliest end conflicts with the fewest future intervals
 - By keeping it, we maximize the chance of fitting more intervals
 - This greedy choice is provably optimal for interval scheduling
@@ -721,15 +746,18 @@ public int eraseOverlapIntervals(int[][] intervals) {
 ```
 
 **Edge Cases:**
+
 - Empty list: returns 0
 - Single interval: returns 0
 - All same interval: returns n-1
 - No overlaps: returns 0
 
 **Time Complexity**: O(n log n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Maximum Non-overlapping Intervals
 - Interval Scheduling
 - Minimum Arrows to Burst Balloons
@@ -789,9 +817,11 @@ At x=2, all end, height becomes 0.
 ```
 
 **Key Insight - Sweep Line with Max-Height Tracking:**
+
 Treat each building as two events: a "start" event (building begins) and an "end" event (building ends). Process events left to right. At each event, update the count of active heights. The maximum active height is the current skyline height. Record whenever this max changes.
 
 **Why It Works:**
+
 - The skyline only changes at start or end of a building
 - At each event, we know exactly which buildings are active
 - The skyline height = max height among active buildings
@@ -848,15 +878,18 @@ public List<List<Integer>> getSkyline(int[][] buildings) {
 ```
 
 **Edge Cases:**
+
 - Single building: two points (start and end)
 - Overlapping buildings: skyline follows max heights
 - Equal heights: no change recorded
 - Touching buildings: handled by event sorting
 
 **Time Complexity**: O(n log n) - sorting and TreeMap operations
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Rectangle Area II
 - Largest Rectangle in Histogram
 - The Skyline Problem

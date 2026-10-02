@@ -13,10 +13,12 @@ tags:
 Imagine a hospital emergency room. Patients are not treated in the order they arrive — the most critical patient is treated first, regardless of when they arrived. That's a **priority queue**: a collection where each element has a "priority," and the highest (or lowest) priority element is always served first.
 
 A **heap** is the most common way to implement a priority queue. It's like a special tree where:
+
 - The smallest element is always at the top (min-heap), OR
 - The largest element is always at the top (max-heap)
 
 **Real-life analogies:**
+
 - Hospital ER (treat most critical first)
 - Task scheduler (most urgent task first)
 - Merging multiple sorted playlists by "next song"
@@ -185,9 +187,11 @@ Only one element, it's the 1st largest
 ```
 
 **Key Insight - Min-Heap of Size K:**
+
 To find the kth largest, keep a min-heap of the k largest elements seen so far. The top of the heap (smallest of these k) is the kth largest. If a new element is larger than the top, it belongs in the top k, so we remove the smallest and add the new one.
 
 **Why It Works:**
+
 - The heap always contains the k largest elements seen so far
 - The smallest of these k is the kth largest
 - Any element smaller than the heap top can't be in the top k
@@ -220,15 +224,18 @@ public int findKthLargest(int[] nums, int k) {
 ```
 
 **Edge Cases:**
+
 - k = 1: returns maximum
 - k = n: returns minimum
 - Duplicates: handled correctly
 - Single element: returns that element
 
 **Time Complexity**: O(n log k) - each insert/poll is O(log k)
+
 **Space Complexity**: O(k) - heap size
 
 **Similar Pattern Problems:**
+
 - Kth Smallest Element (use max-heap)
 - K Closest Points to Origin
 - Top K Frequent Elements
@@ -283,9 +290,11 @@ Return 0
 ```
 
 **Key Insight - Max-Heap for Heaviest:**
+
 We always need the two heaviest stones. A max-heap gives us the heaviest in O(log n). After smashing, if there's a remainder, push it back.
 
 **Why It Works:**
+
 - Max-heap always gives the two largest in O(log n)
 - Process repeats until 0 or 1 stone remains
 - This simulates the process exactly
@@ -320,15 +329,18 @@ public int lastStoneWeight(int[] stones) {
 ```
 
 **Edge Cases:**
+
 - Single stone: returns its weight
 - Two equal stones: returns 0
 - Two different stones: returns difference
 - Many stones: works correctly
 
 **Time Complexity**: O(n log n) - each smash is O(log n)
+
 **Space Complexity**: O(n) - heap size
 
 **Similar Pattern Problems:**
+
 - Last Stone Weight II
 - Relative Sort Array
 
@@ -370,9 +382,11 @@ Two closest: [3,3] (18) and [-2,4] (20)
 ```
 
 **Key Insight - Max-Heap of Size K:**
+
 To find k closest, keep a max-heap of the k closest points seen so far. The top of the heap is the farthest among the k closest. If a new point is closer than the top, it belongs in the k closest.
 
 **Why It Works:**
+
 - We want the k smallest distances
 - Max-heap keeps the k smallest, with the largest of these at top
 - Any point farther than the top can't be in the k closest
@@ -408,15 +422,18 @@ public int[][] kClosest(int[][] points, int k) {
 ```
 
 **Edge Cases:**
+
 - k = 1: returns closest point
 - k = n: returns all points
 - Duplicate distances: any order works
 - Origin itself: distance 0, always closest
 
 **Time Complexity**: O(n log k)
+
 **Space Complexity**: O(k)
 
 **Similar Pattern Problems:**
+
 - Top K Frequent Elements
 - K Closest Elements
 - Find K Pairs with Smallest Sums
@@ -472,9 +489,11 @@ Result = [1, 2]
 ```
 
 **Key Insight - Count Then Heap:**
+
 First count frequencies using a HashMap. Then use a min-heap of size k, ordered by frequency. The heap keeps the k most frequent elements.
 
 **Why It Works:**
+
 - Frequency counting gives us the "priority" of each element
 - Min-heap of size k keeps the k highest priorities (frequencies)
 - The smallest frequency in the heap is the "threshold"
@@ -515,15 +534,18 @@ public int[] topKFrequent(int[] nums, int k) {
 ```
 
 **Edge Cases:**
+
 - k = 1: returns most frequent
 - k = number of distinct elements: returns all
 - All same frequency: any k elements
 - Single element: returns that element
 
 **Time Complexity**: O(n log k)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Top K Frequent Words
 - Rearrange String K Distance Apart
 - Sort Characters by Frequency
@@ -577,9 +599,11 @@ Expected Output: [] (single empty list)
 ```
 
 **Key Insight - Heap of "Next" Nodes:**
+
 Put the head of each list in a min-heap. Pop the smallest, add it to the result, and push its next node. Repeat until heap is empty.
 
 **Why It Works:**
+
 - The smallest unprocessed node must be the head of some list
 - Min-heap gives us the smallest head in O(log k)
 - After popping, the next node from that list becomes a candidate
@@ -622,15 +646,18 @@ public ListNode mergeKLists(ListNode[] lists) {
 ```
 
 **Edge Cases:**
+
 - Empty array of lists: returns null
 - All lists empty: returns null
 - One list: returns it as-is
 - Different lengths: works correctly
 
 **Time Complexity**: O(n log k) where n = total nodes
+
 **Space Complexity**: O(k) for heap
 
 **Similar Pattern Problems:**
+
 - Merge Sorted Array
 - Merge K Sorted Arrays
 - Smallest Range Covering K Lists
@@ -695,13 +722,16 @@ Step 3: addNum(8) -> 8>3, minHeap=[5,8], sizes: max=1, min=2
 ```
 
 **Key Insight - Two Heaps:**
+
 Maintain two heaps:
+
 - **Max-heap (left)**: contains the smaller half of numbers
 - **Min-heap (right)**: contains the larger half of numbers
 
 Keep sizes balanced (differ by at most 1). The median is either the top of max-heap (odd count) or average of both tops (even count).
 
 **Why It Works:**
+
 - All elements in max-heap are <= all elements in min-heap
 - Max-heap's top is the largest of the smaller half
 - Min-heap's top is the smallest of the larger half
@@ -752,15 +782,18 @@ class MedianFinder {
 ```
 
 **Edge Cases:**
+
 - No numbers: invalid call
 - Single number: returns it
 - Two numbers: returns average
 - All same numbers: works correctly
 
 **Time Complexity**: O(log n) for addNum, O(1) for findMedian
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Find Median of BST
 - Find Mode in BST
 - Sliding Window Median
@@ -816,13 +849,16 @@ Return 0
 ```
 
 **Key Insight - Greedy with Two Heaps (or Sort + Heap):**
+
 Sort projects by capital. Use a max-heap for profits of affordable projects. At each step:
+
 1. Add all projects we can now afford to the max-heap
 2. Pick the project with the highest profit
 3. Add its profit to our capital
 4. Repeat k times
 
 **Why It Works:**
+
 - At each step, we want the highest profit among affordable projects
 - As capital increases, more projects become affordable
 - Greedy works: always pick the best available project
@@ -869,15 +905,18 @@ class Project {
 ```
 
 **Edge Cases:**
+
 - k = 0: returns w
 - No affordable projects: returns w
 - All projects affordable: picks k highest profits
 - Single project: picks it if affordable
 
 **Time Complexity**: O(n log n + k log n)
+
 **Space Complexity**: O(n)
 
 **Similar Pattern Problems:**
+
 - Stock Market Prediction
 - Resource Allocation
 - Course Schedule III

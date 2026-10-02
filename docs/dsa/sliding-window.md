@@ -15,6 +15,7 @@ Imagine looking at a long train through a small window. As the train moves, you 
 In coding, a sliding window is a technique for processing arrays or strings by maintaining a "window" (a contiguous range) and sliding it forward. Instead of re-examining the entire array for every position, you cleverly add the new element and remove the old one.
 
 **Real-life analogies:**
+
 - A magnifying glass moving across a map
 - A camera viewfinder scanning a scene
 - Reading a book through a small index card with a cutout
@@ -185,9 +186,11 @@ Max sum = 7, avg = 7/3 ≈ 2.333
 ```
 
 **Key Insight - Slide by Removing and Adding:**
+
 Instead of recalculating the sum for each window (O(n*k)), maintain a running sum. When the window slides, subtract the leftmost element and add the new rightmost element.
 
 **Why It Works:**
+
 - Each new window differs from the previous by one element
 - Remove old element, add new element -> O(1) per slide
 - Total time O(n) instead of O(n*k)
@@ -217,15 +220,18 @@ public double findMaxAverage(int[] nums, int k) {
 ```
 
 **Edge Cases:**
+
 - k = 1: returns max element
 - k = n: single window, average of all
 - All negative: returns least negative average
 - Single element: returns it
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Maximum Sum Subarray of Size K
 - Minimum Average Subarray
 - Find All Averages of Size K
@@ -292,9 +298,11 @@ Expected Output: true
 ```
 
 **Key Insight - HashSet as Window:**
+
 Maintain a HashSet of the last k elements. Before adding a new element, check if it's already in the set. After adding, if set size > k, remove the element that falls out of the window.
 
 **Why It Works:**
+
 - Set contains exactly the last k elements (or fewer at start)
 - If current element is in set, there's a duplicate within k distance
 - Removing nums[i-k] maintains the window size
@@ -326,15 +334,18 @@ public boolean containsNearbyDuplicate(int[] nums, int k) {
 ```
 
 **Edge Cases:**
+
 - k = 0: no valid i != j, returns false
 - k >= n: any duplicate works
 - No duplicates: returns false
 - Single element: returns false
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(min(n, k))
 
 **Similar Pattern Problems:**
+
 - Contains Duplicate III
 - Find Duplicates
 - Longest Substring with K Distinct
@@ -401,9 +412,11 @@ Return 3
 ```
 
 **Key Insight - Last Index Map:**
+
 Store the last index of each character. When we see a duplicate, jump the left pointer to (lastIndex + 1) if that's greater than current left. This avoids shrinking one step at a time.
 
 **Why It Works:**
+
 - Map tells us where we last saw each character
 - When we see a duplicate, the window must start after the previous occurrence
 - We take max of current left and lastIndex+1 (can't go backward)
@@ -437,15 +450,18 @@ public int lengthOfLongestSubstring(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns 0
 - All same characters: returns 1
 - All distinct: returns n
 - Single character: returns 1
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(min(n, charset))
 
 **Similar Pattern Problems:**
+
 - Longest Substring with At Most 2 Distinct Characters
 - Longest Repeating Character Replacement
 - Fruit Into Baskets
@@ -506,9 +522,11 @@ Expected Output: "aa"
 ```
 
 **Key Insight - Expand Until Valid, Shrink While Valid:**
+
 Expand the right pointer until the window contains all characters of t. Then shrink the left pointer while the window is still valid, updating the minimum length at each step.
 
 **Why It Works:**
+
 - We need a window containing all characters of t
 - Expand until valid (contains all required characters)
 - Once valid, try to shrink to find smaller valid windows
@@ -559,15 +577,18 @@ public String minWindow(String s, String t) {
 ```
 
 **Edge Cases:**
+
 - t longer than s: returns ""
 - t has characters not in s: returns ""
 - Exact match: returns s
 - Multiple valid windows: returns smallest
 
 **Time Complexity**: O(n + m) where n = s.length, m = t.length
+
 **Space Complexity**: O(charset)
 
 **Similar Pattern Problems:**
+
 - Minimum Window Subsequence
 - Smallest Range
 - Substring with Concatenation of All Words
@@ -617,9 +638,11 @@ Return true
 ```
 
 **Key Insight - Fixed Window + Character Count:**
+
 Slide a window of size s1.length() over s2. Compare character counts of the window with s1's counts. If they match, return true.
 
 **Why It Works:**
+
 - A permutation of s1 has exactly the same character counts as s1
 - Window size must equal s1.length()
 - We slide the window, updating counts in O(1) per step
@@ -657,15 +680,18 @@ public boolean checkInclusion(String s1, String s2) {
 ```
 
 **Edge Cases:**
+
 - s1 longer than s2: returns false
 - s1 == s2: returns true
 - Empty s1: returns true (empty permutation)
 - Single character: works
 
 **Time Complexity**: O(n) where n = s2.length
+
 **Space Complexity**: O(1) — 26-element arrays
 
 **Similar Pattern Problems:**
+
 - Find All Anagrams in a String
 - Find Anagram
 - String Permutation
@@ -725,9 +751,11 @@ Windows: [7,2] -> max=7
 ```
 
 **Key Insight - Monotonic Deque:**
+
 Maintain a deque of indices where the values are in decreasing order. The front is always the maximum of the current window. Remove from the back any smaller elements (they can never be max). Remove from the front indices outside the window.
 
 **Why It Works:**
+
 - A smaller element behind a larger one can never be the max
 - So we discard smaller elements from the back
 - Deque maintains decreasing order
@@ -768,15 +796,18 @@ public int[] maxSlidingWindow(int[] nums, int k) {
 ```
 
 **Edge Cases:**
+
 - k = 1: every element is its own max
 - k = n: single window, max of all
 - All decreasing: deque grows to size k
 - All increasing: deque size stays 1
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(k)
 
 **Similar Pattern Problems:**
+
 - Sliding Window Minimum
 - Constrained Subsequence Sum
 - Shortest Subarray with Sum at Least K

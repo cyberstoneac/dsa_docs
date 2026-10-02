@@ -176,9 +176,11 @@ Compare lowercase: '0' != 'p' -> false
 ```
 
 **Key Insight - Two Pointers with Skipping:**
+
 Use two pointers from both ends. Skip non-alphanumeric characters. Compare lowercase versions. If all match, it's a palindrome.
 
 **Why It Works:**
+
 - Only alphanumeric characters matter
 - Case doesn't matter
 - Two pointers check symmetric positions
@@ -215,6 +217,7 @@ public boolean isPalindrome(String s) {
 ```
 
 **Edge Cases:**
+
 - Empty string: returns true
 - Only non-alnum: returns true
 - Single char: returns true
@@ -222,9 +225,11 @@ public boolean isPalindrome(String s) {
 - Numbers included: isLetterOrDigit handles
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Valid Palindrome II (allow one deletion)
 - Palindromic Substrings
 - Palindrome Linked List
@@ -266,9 +271,11 @@ Expected Output: ['a'] (single char)
 ```
 
 **Key Insight - Swap from Both Ends:**
+
 Use two pointers, one at the start and one at the end. Swap characters, move pointers toward center, repeat until they meet.
 
 **Why It Works:**
+
 - Swapping symmetric positions reverses the string
 - Each swap fixes two positions (left and right)
 - When pointers meet or cross, all positions are fixed
@@ -296,15 +303,18 @@ public void reverseString(char[] s) {
 ```
 
 **Edge Cases:**
+
 - Empty array: nothing to do
 - Single character: nothing to do
 - Two characters: one swap
 - Even/odd length: both work
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Reverse Words in a String
 - Reverse Vowels of a String
 - Reverse String II
@@ -347,9 +357,11 @@ left=0 (-1), right=1 (0): sum=-1 == target -> return [1, 2]
 ```
 
 **Key Insight - Move Based on Sum:**
+
 If sum < target, we need a larger number, so move left right. If sum > target, we need a smaller number, so move right left. If sum == target, found it.
 
 **Why It Works:**
+
 - Array is sorted, so left is smallest, right is largest
 - If sum too small, increasing left gives a larger sum
 - If sum too large, decreasing right gives a smaller sum
@@ -382,15 +394,18 @@ public int[] twoSum(int[] numbers, int target) {
 ```
 
 **Edge Cases:**
+
 - Exactly two elements: works
 - Negative numbers: works
 - Duplicates: works (sorted)
 - No solution: returns empty (problem guarantees solution)
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Two Sum (unsorted, use HashMap)
 - 3Sum
 - 4Sum
@@ -436,9 +451,11 @@ left=0 (4), right=4 (4): area = min(4,4) * 4 = 16
 ```
 
 **Key Insight - Move the Shorter Side:**
+
 The area is limited by the shorter line. Moving the taller side inward can only decrease width (worse). Moving the shorter side inward might find a taller line, increasing area.
 
 **Why It Works:**
+
 - Area = min(height[left], height[right]) * width
 - Width decreases as we move inward
 - To increase area, we must increase the minimum height
@@ -475,15 +492,18 @@ public int maxArea(int[] height) {
 ```
 
 **Edge Cases:**
+
 - Two elements: returns min * 1
 - All same height: returns height * (n-1)
 - Increasing heights: works
 - Decreasing heights: works
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Trapping Rain Water
 - Pour Water Between Buckets
 - Largest Rectangle in Histogram
@@ -541,9 +561,11 @@ Expected Output: [] (no triplets sum to 0)
 ```
 
 **Key Insight - Fix One, Two Pointers on Rest:**
+
 Sort the array first. Fix one element (i). Then use two pointers (left, right) on the remaining subarray to find pairs summing to -nums[i]. Skip duplicates to avoid repeated triplets.
 
 **Why It Works:**
+
 - Sorting enables two-pointer technique and duplicate skipping
 - Fixing one element reduces 3Sum to Two Sum II
 - Two pointers find pairs in O(n)
@@ -586,15 +608,18 @@ public List<List<Integer>> threeSum(int[] nums) {
 ```
 
 **Edge Cases:**
+
 - Less than 3 elements: returns empty
 - All zeros: returns [[0,0,0]] once
 - No valid triplets: returns empty
 - Multiple duplicates: correctly skipped
 
 **Time Complexity**: O(n²)
+
 **Space Complexity**: O(1) excluding output
 
 **Similar Pattern Problems:**
+
 - 3Sum Closest
 - 4Sum
 - 3Sum Smaller
@@ -651,9 +676,11 @@ Expected Output: 0 (no water trapped, increasing)
 ```
 
 **Key Insight - Two Pointers with Max Tracking:**
+
 Track the maximum height seen from the left and right. The water at any position is min(leftMax, rightMax) - height[i]. Using two pointers, we always process the side with the smaller max.
 
 **Why It Works:**
+
 - Water trapped at i = min(maxLeft, maxRight) - height[i]
 - If we know the smaller max side, we can compute water immediately
 - Moving the pointer with smaller max is safe
@@ -697,6 +724,7 @@ public int trap(int[] height) {
 ```
 
 **Edge Cases:**
+
 - Less than 3 bars: no water
 - All same height: no water
 - Increasing: no water
@@ -704,9 +732,11 @@ public int trap(int[] height) {
 - V-shape: water in the middle
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Rain Water II (2D version)
 - Trapping Rain Water III
 - Largest Rectangle in Histogram

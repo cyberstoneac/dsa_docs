@@ -163,9 +163,11 @@ Expected Output: 1 -> null
 ```
 
 **Key Insight - Three Pointers:**
+
 To reverse a link, we need to know the previous node. So we keep three pointers: prev (behind), curr (current), and next (ahead, saved before we break the link). We reverse curr's pointer to point to prev, then shift all three forward.
 
 **Why It Works:**
+
 - We process each node exactly once
 - Before changing curr.next, we save the original next
 - Then we point curr.next backward to prev
@@ -196,15 +198,18 @@ public ListNode reverseList(ListNode head) {
 ```
 
 **Edge Cases:**
+
 - Empty list: returns null
 - Single node: returns that node
 - Two nodes: swaps them
 - Long list: works correctly
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Reverse List II (reverse between positions)
 - Reverse Nodes in K-Group
 - Palindrome Linked List
@@ -274,9 +279,11 @@ Result: 1 -> 2 -> 3 -> 5
 ```
 
 **Key Insight - Dummy Node:**
+
 The dummy node is a fake start that simplifies the code. We don't have to handle the "first node" case specially. We just build the merged list starting from dummy.next.
 
 **Why It Works:**
+
 - Both lists are sorted, so the smallest remaining element is always at one of the two heads
 - Compare the two heads, pick the smaller, advance that list
 - Dummy node avoids edge cases (empty result list)
@@ -314,15 +321,18 @@ public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
 ```
 
 **Edge Cases:**
+
 - Both empty: returns null
 - One empty: returns the other
 - One element each: compares and merges
 - Duplicate values: handled correctly
 
 **Time Complexity**: O(m + n)
+
 **Space Complexity**: O(1) - reusing existing nodes
 
 **Similar Pattern Problems:**
+
 - Merge K Sorted Lists
 - Merge Sorted Array
 - Merge Two Sorted Lists II
@@ -371,9 +381,11 @@ List: 2
 ```
 
 **Key Insight - Copy and Skip:**
+
 Since we can't access the previous node, we can't just unlink the current node. Instead, we copy the next node's value into the current node, then remove the next node. This effectively "shifts" the next node's data into the current position.
 
 **Why It Works:**
+
 - We can only modify the current node and everything after it
 - By copying the next node's value, the current node now "looks like" the next node
 - By skipping the next node, we remove the duplicate
@@ -394,15 +406,18 @@ public void deleteNode(ListNode node) {
 ```
 
 **Edge Cases:**
+
 - Node is the last node: problem guarantees it's not
 - Node is the head: works (we don't need previous)
 - Single node list: problem guarantees node is not last
 - Multiple nodes: works correctly
 
 **Time Complexity**: O(1)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Delete Node II
 - Unlink Nodes
 - Remove Elements
@@ -468,9 +483,11 @@ Return 1
 ```
 
 **Key Insight - Two Pointers with Gap:**
+
 Maintain a gap of n+1 between fast and slow. When fast reaches the end, slow is exactly at the node BEFORE the one to remove. Then we can easily skip the target node.
 
 **Why It Works:**
+
 - Fast pointer creates a "lead" of n+1 steps
 - When fast hits null, slow is at position (length - n - 1) from start
 - That's exactly the node before the one we want to remove
@@ -506,15 +523,18 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 ```
 
 **Edge Cases:**
+
 - Remove head: dummy handles it
 - Remove last node: works correctly
 - Single node: removes it, returns null
 - n larger than list: problem guarantees valid n
 
 **Time Complexity**: O(n) - single pass
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Remove Kth Element
 - Remove Elements
 - Delete Middle Node
@@ -564,9 +584,11 @@ Expected Output: false
 ```
 
 **Key Insight - Floyd's Cycle Detection:**
+
 If there's a cycle, a fast pointer (2 steps) will eventually catch up to a slow pointer (1 step) inside the cycle. If there's no cycle, the fast pointer will reach the end (null).
 
 **Why It Works:**
+
 - In a cycle, fast gains on slow by 1 node per step
 - Eventually fast "laps" slow and they meet
 - If no cycle, fast reaches null first
@@ -596,15 +618,18 @@ public boolean hasCycle(ListNode head) {
 ```
 
 **Edge Cases:**
+
 - Empty list: returns false
 - Single node, no cycle: returns false
 - Single node pointing to itself: returns true
 - Long list with cycle: correctly detects
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Detect Cycle II (find the start of cycle)
 - Cycle Length
 - Happy Number (uses same technique)
@@ -658,9 +683,11 @@ Expected Output: 0
 ```
 
 **Key Insight - Grade School Addition:**
+
 Process both lists simultaneously, digit by digit. Keep a carry. Create a new node for each digit. Continue until both lists are exhausted AND carry is 0.
 
 **Why It Works:**
+
 - The lists are in reverse order, so the head is the ones place
 - We can process both lists from head to tail simultaneously
 - At each step, add the two digits plus any carry
@@ -694,15 +721,18 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 ```
 
 **Edge Cases:**
+
 - Different lengths: treat missing digits as 0
 - Final carry: creates extra node
 - Both zero: returns 0
 - Large numbers: works correctly
 
 **Time Complexity**: O(max(m, n))
+
 **Space Complexity**: O(max(m, n)) for result
 
 **Similar Pattern Problems:**
+
 - Add Two Numbers II (digits in forward order)
 - Multiply Two Lists
 - Add Binary
@@ -758,12 +788,15 @@ Expected Output: null
 ```
 
 **Key Insight - Merge Sort on Linked List:**
+
 Merge sort is perfect for linked lists because:
+
 1. Finding the middle is easy (slow/fast pointers)
 2. Merging two sorted lists is O(n)
 3. No random access needed (unlike quicksort)
 
 **Why It Works:**
+
 - Divide: Find middle, split into two halves
 - Conquer: Recursively sort each half
 - Combine: Merge two sorted halves into one
@@ -819,15 +852,18 @@ private ListNode merge(ListNode l1, ListNode l2) {
 ```
 
 **Edge Cases:**
+
 - Empty list: returns null
 - Single node: returns it
 - Two nodes: sorts correctly
 - Duplicates: handled correctly
 
 **Time Complexity**: O(n log n)
+
 **Space Complexity**: O(log n) for recursion stack
 
 **Similar Pattern Problems:**
+
 - Quick Sort Linked List
 - Insertion Sort List
 - Merge K Sorted Lists
@@ -881,9 +917,11 @@ Return copy1
 ```
 
 **Key Insight - HashMap for Mapping:**
+
 Use a HashMap to map each original node to its copy. First pass creates all copy nodes. Second pass sets the next and random pointers using the map.
 
 **Why It Works:**
+
 - We need to create entirely new nodes (deep copy)
 - Random pointers can point anywhere, so we need to know all copies first
 - HashMap gives O(1) lookup of copy for any original
@@ -917,15 +955,18 @@ public Node copyRandomList(Node head) {
 ```
 
 **Edge Cases:**
+
 - Empty list: returns null
 - Single node: copies it, random can be null or self
 - Random points to null: handled by map.get(null) = null
 - Random points to self: handled by map
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(n) for the map
 
 **Similar Pattern Problems:**
+
 - Deep Copy Graph
 - Clone Tree
 - Clone N-ary Tree
@@ -981,11 +1022,13 @@ Expected Output: 1
 ```
 
 **Key Insight - Three Steps:**
+
 1. Find the middle of the list
 2. Reverse the second half
 3. Merge the two halves alternately
 
 **Why It Works:**
+
 - Reordering needs to interleave first half (forward) with second half (backward)
 - Finding middle with slow/fast pointers
 - Reversing second half gives us the backward order
@@ -1024,15 +1067,18 @@ private void merge(ListNode l1, ListNode l2) {
 ```
 
 **Edge Cases:**
+
 - Empty list: returns immediately
 - Single node: returns it
 - Two nodes: reorders correctly
 - Odd length: middle node stays in place
 
 **Time Complexity**: O(n)
+
 **Space Complexity**: O(1)
 
 **Similar Pattern Problems:**
+
 - Reorder Deque
 - Zigzag Traversal
 - Palindrome Linked List
@@ -1103,9 +1149,11 @@ Expected Output: 1 -> 2
 ```
 
 **Key Insight - Min-Heap of Heads:**
+
 The smallest remaining element is always one of the list heads. A min-heap of heads gives us the smallest in O(log k). After popping, the next node from that list becomes the new head.
 
 **Why It Works:**
+
 - Each list is sorted, so its smallest element is at the head
 - The global smallest is among all heads
 - Min-heap finds it in O(log k)
@@ -1146,15 +1194,18 @@ public ListNode mergeKLists(ListNode[] lists) {
 ```
 
 **Edge Cases:**
+
 - Empty array: returns null
 - All null lists: returns null
 - One list: returns it
 - Different lengths: works correctly
 
 **Time Complexity**: O(n log k) where n = total nodes
+
 **Space Complexity**: O(k) for the heap
 
 **Similar Pattern Problems:**
+
 - Merge Multiple Streams
 - K-way Merge
 - Smallest Range Covering K Lists
@@ -1199,6 +1250,7 @@ get(4):   returns 4, list=[4,3]
 ```
 
 **Key Insight - HashMap + Doubly Linked List:**
+
 - **HashMap**: O(1) lookup of node by key
 - **Doubly Linked List**: O(1) move-to-front and remove-last
 - Most recently used = front of list
@@ -1206,6 +1258,7 @@ get(4):   returns 4, list=[4,3]
 - When capacity exceeded, remove from back
 
 **Why It Works:**
+
 - HashMap gives O(1) access to any node
 - Doubly linked list allows O(1) removal and insertion at any position
 - We can move a node to front in O(1) (remove + add at front)
@@ -1285,15 +1338,18 @@ class LRUCache {
 ```
 
 **Edge Cases:**
+
 - Capacity 1: works correctly
 - Get non-existent key: returns -1
 - Put existing key: updates value, moves to front
 - Put new key when full: evicts LRU
 
 **Time Complexity**: O(1) for both get and put
+
 **Space Complexity**: O(capacity)
 
 **Similar Pattern Problems:**
+
 - LFU Cache
 - Time-based Key-Value Store
 - Design Twitter
