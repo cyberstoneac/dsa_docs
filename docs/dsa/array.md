@@ -2440,10 +2440,207 @@ public void sortColors(int[] nums) {
 
 ---
 
+#### 22. **Set Matrix Zeroes**
+
+**Problem Description:**
+Given an `m x n` integer matrix `matrix`, if an element is `0`, set its entire row and column to `0`. You must do it **in-place**.
+
+**Example Walkthrough:**
+
+Input: `matrix = [[1,1,1],[1,0,1],[1,1,1]]`
+```
+Expected Output: [[1,0,1],[0,0,0],[1,0,1]]
+
+Initial matrix:
+[1, 1, 1]
+[1, 0, 1]
+[1, 1, 1]
+
+Step 1: Find zero at (1,1)
+        Mark row 1 and col 1 for zeroing
+
+Step 2: Set row 1 to 0: [0, 0, 0]
+        Set col 1 to 0: [_, 0, _] for each row
+
+Final:
+[1, 0, 1]
+[0, 0, 0]
+[1, 0, 1]
+```
+
+Input: `matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]`
+```
+Expected Output: [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+
+Initial matrix:
+[0, 1, 2, 0]
+[3, 4, 5, 2]
+[1, 3, 1, 5]
+
+Step 1: Zeroes at (0,0) and (0,3)
+        Row 0 must become 0
+        Col 0 must become 0
+        Col 3 must become 0
+
+Final:
+[0, 0, 0, 0]
+[0, 4, 5, 0]
+[0, 3, 1, 0]
+```
+
+Input: `matrix = [[1,2,3,4],[5,6,0,8],[9,10,11,12]]`
+```
+Expected Output: [[1,2,0,4],[0,0,0,0],[9,10,0,12]]
+
+Step 1: Zero at (1,2)
+        Row 1 must become 0
+        Col 2 must become 0
+
+Final:
+[1, 2, 0, 4]
+[0, 0, 0, 0]
+[9, 10, 0, 12]
+```
+
+**Key Insight - Use First Row and First Column as Markers:**
+
+Instead of using extra O(m + n) space to track which rows/columns need zeroing, use the matrix's own **first row** and **first column** as markers:
+
+- `matrix[i][0] == 0` -> row `i` needs to be zeroed
+- `matrix[0][j] == 0` -> column `j` needs to be zeroed
+
+But there's a catch: the first row and first column themselves might need to be zeroed. So we handle them separately using two boolean flags.
+
+**Why It Works:**
+
+- The first row and first column act as storage for row/column markers
+- We iterate through the matrix (excluding first row and column) and:
+  - If `matrix[i][j] == 0`, set `matrix[i][0] = 0` and `matrix[0][j] = 0`
+- Then, in a second pass, use those markers to zero out cells
+- Finally, handle the first row and column separately based on boolean flags recorded at the start
+- This achieves O(1) extra space (excluding the input matrix)
+
+**Visualization - Marker Approach:**
+```mermaid
+graph TD
+    A["Step 1: Check if first row/col contain 0<br/>Store in firstRowZero, firstColZero booleans"]
+    A --> B["Step 2: Use first row/col as markers<br/>For each cell i,j where i,j > 0:<br/>if matrix[i][j]==0 then<br/>matrix[i][0]=0 and matrix[0][j]=0"]
+    B --> C["Step 3: Zero out cells using markers<br/>For each i,j where i,j > 0:<br/>if matrix[i][0]==0 or matrix[0][j]==0<br/>then matrix[i][j]=0"]
+    C --> D["Step 4: Handle first row and column<br/>if firstRowZero, zero entire first row<br/>if firstColZero, zero entire first column"]
+```
+
+```java
+public void setZeroes(int[][] matrix) {
+    int m = matrix.length, n = matrix[0].length;
+    boolean firstRowZero = false, firstColZero = false;
+
+    // Step 1: Check if first row has any zero
+    for (int j = 0; j < n; j++) {
+        if (matrix[0][j] == 0) {
+            firstRowZero = true;
+            break;
+        }
+    }
+
+    // Step 1: Check if first column has any zero
+    for (int i = 0; i < m; i++) {
+        if (matrix[i][0] == 0) {
+            firstColZero = true;
+            break;
+        }
+    }
+
+    // Step 2: Use first row/col as markers for remaining cells
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            if (matrix[i][j] == 0) {
+                matrix[i][0] = 0;
+                matrix[0][j] = 0;
+            }
+        }
+    }
+
+    // Step 3: Zero out cells using markers
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+
+    // Step 4: Handle first row
+    if (firstRowZero) {
+        for (int j = 0; j < n; j++) {
+            matrix[0][j] = 0;
+        }
+    }
+
+    // Step 4: Handle first column
+    if (firstColZero) {
+        for (int i = 0; i < m; i++) {
+            matrix[i][0] = 0;
+        }
+    }
+}
+```
+
+**Alternative - O(m + n) Space (Simple):**
+```java
+public void setZeroes(int[][] matrix) {
+    int m = matrix.length, n = matrix[0].length;
+    boolean[] rowZero = new boolean[m];
+    boolean[] colZero = new boolean[n];
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (matrix[i][j] == 0) {
+                rowZero[i] = true;
+                colZero[j] = true;
+            }
+        }
+    }
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (rowZero[i] || colZero[j]) {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+}
+```
+
+**Time Complexity**: O(m × n) - we make a constant number of passes over the matrix
+
+**Space Complexity**: O(1) - only two boolean variables (optimal approach)
+
+**Edge Cases:**
+
+- Single row matrix: first row flag handles zeroing
+- Single column matrix: first column flag handles zeroing
+- 1x1 matrix with 0: both flags become true, matrix becomes [[0]]
+- No zeros in matrix: matrix remains unchanged
+- All zeros in matrix: entire matrix becomes zeros
+- Multiple zeros in same row/column: markers handle correctly
+
+**Common Pitfalls:**
+
+1. Zeroing cells during the marking pass -- Must mark first, then zero in a separate pass
+2. Forgetting to handle first row/column separately -- They serve as markers but might also need zeroing
+3. Confusing marker indices with actual cells -- Marker at `matrix[i][0]` means row `i` has a zero somewhere
+4. Iterating from index 0 in Step 2/3 -- Should start from 1 to preserve first row/column markers
+
+**Similar Pattern Problems:**
+
+- Game of Life (in-place state encoding)
+- Rotate Image (in-place transformation)
+- Spiral Matrix (boundary traversal)
+- Valid Sudoku (constraint tracking)
+---
+
 
 ### Hard
 
-#### 22. **Trapping Rain Water**
+#### 23. **Trapping Rain Water**
 
 **Problem Description:**
 Given elevation map, compute how much water can be trapped after raining.
@@ -2599,7 +2796,7 @@ public int trap(int[] height) {
 
 ---
 
-#### 23. **First Missing Positive**
+#### 24. **First Missing Positive**
 
 **Problem Description:**
 Given unsorted integer array, find the smallest missing positive integer. Must run in O(n) time and O(1) space.
@@ -2713,7 +2910,7 @@ public int firstMissingPositive(int[] nums) {
 
 ---
 
-#### 24. **Longest Consecutive Sequence**
+#### 25. **Longest Consecutive Sequence**
 
 **Problem Description:**
 Given unsorted array, find length of longest consecutive elements sequence. Must run in O(n) time.
