@@ -73,6 +73,8 @@ plugins:
       zoomable: true
   - panzoom:
       full_screen: True   # optional — enable fullscreen button
+  - zen-mode:
+      max_width: "initial"
 
 markdown_extensions:
   # Python Markdown
