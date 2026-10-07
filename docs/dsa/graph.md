@@ -984,9 +984,811 @@ private List<String> getNeighbors(String word, Set<String> words) {
 
 ---
 
+#### 8. **Rotting Oranges**
+
+**Problem Description:**
+You are given an `m x n` grid where each cell can have one of three values:
+- `0` representing an empty cell
+- `1` representing a fresh orange
+- `2` representing a rotten orange
+
+Every minute, any fresh orange that is **4-directionally adjacent** to a rotten orange becomes rotten. Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return `-1`.
+
+**Example Walkthrough:**
+
+Input: `grid = [[2,1,1],[1,1,0],[0,1,1]]`
+```
+Expected Output: 4
+
+Initial grid:
+[2, 1, 1]
+[1, 1, 0]
+[0, 1, 1]
+
+Minute 0: Rotten at (0,0), fresh count = 6
+          Queue: [(0,0)]
+
+Minute 1: Process (0,0) -> rot (0,1), (1,0)
+          Queue: [(0,1), (1,0)], fresh = 4
+          Grid:
+          [2, 2, 1]
+          [2, 1, 0]
+          [0, 1, 1]
+
+Minute 2: Process (0,1), (1,0)
+          (0,1) -> rot (0,2)
+          (1,0) -> rot (1,1) already processed? No, rot (1,1)
+          Queue: [(0,2), (1,1)], fresh = 2
+          Grid:
+          [2, 2, 2]
+          [2, 2, 0]
+          [0, 1, 1]
+
+Minute 3: Process (0,2), (1,1)
+          (0,2) -> no fresh neighbors
+          (1,1) -> rot (2,1)
+          Queue: [(2,1)], fresh = 1
+          Grid:
+          [2, 2, 2]
+          [2, 2, 0]
+          [0, 2, 1]
+
+Minute 4: Process (2,1) -> rot (2,2)
+          Queue: [(2,2)], fresh = 0
+          Grid:
+          [2, 2, 2]
+          [2, 2, 0]
+          [0, 2, 2]
+
+Fresh = 0, return 4
+```
+
+Input: `grid = [[2,1,1],[0,1,1],[1,0,1]]`
+```
+Expected Output: -1
+
+The orange at (2,0) is isolated (surrounded by empty cells and fresh oranges that can't reach it).
+Return -1.
+```
+
+Input: `grid = [[0,2]]`
+```
+Expected Output: 0
+
+No fresh oranges initially, return 0.
+```
+
+**Key Insight - Multi-Source BFS:**
+
+- All initially rotten oranges are sources for BFS
+- BFS naturally processes level by level (each level = 1 minute)
+- Track fresh orange count; if it reaches 0, return elapsed time
+- If queue empties and fresh > 0, some oranges are unreachable -> return -1
+
+**Why It Works:**
+
+- BFS explores nodes in order of distance from sources
+- All rotten oranges spread simultaneously (multi-source BFS)
+- Each BFS level represents one minute of spreading
+- Fresh count tracks remaining work
+- Unreachable fresh oranges remain after BFS completes
+
+**Visualization - Multi-Source BFS:**
+```mermaid
+graph TD
+    A["Initialize: Add all rotten to queue, count fresh"] --> B{"Queue empty?"}
+    B -->|Yes| C{"fresh == 0?"}
+    C -->|Yes| D["Return minutes"]
+    C -->|No| E["Return -1"]
+    B -->|No| F["Process current level"]
+    F --> G["For each cell in level: rot 4-directional neighbors"]
+    G --> H["Add newly rotten to next level"]
+    H --> I["minutes++"]
+    I --> B
+```
+
+```java
+public int orangesRotting(int[][] grid) {
+    int m = grid.length, n = grid[0].length;
+    Queue<int[]> queue = new LinkedList<>();
+    int fresh = 0;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (grid[i][j] == 2) queue.offer(new int[]{i, j});
+            else if (grid[i][j] == 1) fresh++;
+        }
+    }
+    if (fresh == 0) return 0;
+    int minutes = 0;
+    int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        boolean rotted = false;
+        for (int k = 0; k < size; k++) {
+            int[] cell = queue.poll();
+            for (int[] d : dirs) {
+                int ni = cell[0] + d[0], nj = cell[1] + d[1];
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == 1) {
+                    grid[ni][nj] = 2;
+                    queue.offer(new int[]{ni, nj});
+                    fresh--;
+                    rotted = true;
+                }
+            }
+        }
+        if (rotted) minutes++;
+    }
+    return fresh == 0 ? minutes : -1;
+}
+```
+
+**Time Complexity**: O(m x n) - each cell visited at most once
+
+**Space Complexity**: O(m x n) - queue can hold all cells in worst case
+
+**Edge Cases:**
+
+- No fresh oranges: return 0
+- All fresh, no rotten: return -1
+- All rotten: return 0
+- Isolated fresh oranges: return -1
+- Single cell grid: check value
+
+**Common Pitfalls:**
+
+1. Not tracking fresh count - needed to detect unreachable oranges
+2. Incrementing minutes for empty levels - only increment when rot spreads
+3. Forgetting 4-directional check (up, down, left, right)
+4. Not doing multi-source BFS initially - must add all rotten to queue first
+
+**Similar Pattern Problems:**
+
+- Walls and Gates (multi-source BFS)
+- 01 Matrix (multi-source BFS)
+- Shortest Path in Binary Matrix (BFS)
+- Pacific Atlantic Water Flow (reverse BFS)
+
+---
+
+#### 9. **Number of Connected Components in an Undirected Graph**
+
+**Problem Description:**
+You have a graph of `n` nodes labeled from `0` to `n - 1`. You are given an integer `n` and an array `edges` where `edges[i] = [a_i, b_i]` indicates that there is an undirected edge between nodes `a_i` and `b_i`. Return the number of connected components in the graph.
+
+**Example Walkthrough:**
+
+Input: `n = 5, edges = [[0,1],[1,2],[3,4]]`
+```
+Expected Output: 2
+
+Graph:
+0 -- 1 -- 2    3 -- 4
+
+Component 1: {0, 1, 2}
+Component 2: {3, 4}
+
+Step 1: Initialize parent array: parent[i] = i
+        parent = [0, 1, 2, 3, 4]
+
+Step 2: Process edge (0,1)
+        Find: 0->0, 1->1
+        Union: parent[1] = 0
+        parent = [0, 0, 2, 3, 4]
+
+Step 3: Process edge (1,2)
+        Find: 1->0, 2->2
+        Union: parent[2] = 0
+        parent = [0, 0, 0, 3, 4]
+
+Step 4: Process edge (3,4)
+        Find: 3->3, 4->4
+        Union: parent[4] = 3
+        parent = [0, 0, 0, 3, 3]
+
+Step 5: Count unique roots
+        Roots: 0, 0, 0, 3, 3 -> unique = {0, 3} = 2
+
+Return 2
+```
+
+Input: `n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]`
+```
+Expected Output: 1
+
+All nodes connected in one chain.
+Return 1.
+```
+
+**Key Insight - Union-Find (Disjoint Set Union):**
+
+- Initialize each node as its own parent (n components)
+- For each edge, union the two nodes' sets
+- Decrement component count on successful union
+- Path compression + union by rank optimize to near O(1) per operation
+
+**Why It Works:**
+
+- Each set represents a connected component
+- Union merges sets connected by an edge
+- Final count of distinct roots = number of components
+- Alternative: BFS/DFS from each unvisited node, count traversals
+
+**Visualization - Union-Find:**
+```mermaid
+graph TD
+    A["Initialize parent[i] = i, count = n"] --> B["For each edge (u, v)"]
+    B --> C["Find root of u, root of v"]
+    C --> D{"root_u == root_v?"}
+    D -->|Yes| E["Already connected, skip"]
+    D -->|No| F["Union: parent[root_u] = root_v"]
+    F --> G["count--"]
+    E --> H{"More edges?"}
+    G --> H
+    H -->|Yes| B
+    H -->|No| I["Return count"]
+```
+
+```java
+public int countComponents(int n, int[][] edges) {
+    int[] parent = new int[n];
+    int[] rank = new int[n];
+    for (int i = 0; i < n; i++) parent[i] = i;
+    int components = n;
+    for (int[] edge : edges) {
+        int ru = find(parent, edge[0]);
+        int rv = find(parent, edge[1]);
+        if (ru != rv) {
+            if (rank[ru] < rank[rv]) parent[ru] = rv;
+            else if (rank[ru] > rank[rv]) parent[rv] = ru;
+            else { parent[rv] = ru; rank[ru]++; }
+            components--;
+        }
+    }
+    return components;
+}
+
+private int find(int[] parent, int x) {
+    if (parent[x] != x) parent[x] = find(parent, parent[x]);
+    return parent[x];
+}
+```
+
+**Alternative - BFS/DFS:**
+```java
+public int countComponents(int n, int[][] edges) {
+    List<List<Integer>> adj = new ArrayList<>();
+    for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+    for (int[] e : edges) {
+        adj.get(e[0]).add(e[1]);
+        adj.get(e[1]).add(e[0]);
+    }
+    boolean[] visited = new boolean[n];
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            count++;
+            bfs(adj, visited, i);
+        }
+    }
+    return count;
+}
+
+private void bfs(List<List<Integer>> adj, boolean[] visited, int start) {
+    Queue<Integer> q = new LinkedList<>();
+    q.offer(start);
+    visited[start] = true;
+    while (!q.isEmpty()) {
+        int node = q.poll();
+        for (int neighbor : adj.get(node)) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                q.offer(neighbor);
+            }
+        }
+    }
+}
+```
+
+**Time Complexity**: O(n + E) for BFS/DFS, O(E * α(n)) ≈ O(E) for Union-Find
+
+**Space Complexity**: O(n + E) for adjacency list, O(n) for Union-Find
+
+**Edge Cases:**
+
+- No edges: n components
+- Complete graph: 1 component
+- Self-loops: ignored in union
+- Multiple edges between same nodes: handled by find check
+- n = 1: return 1
+
+**Common Pitfalls:**
+
+1. Not using path compression - degrades to O(n) per find
+2. Not using union by rank - degrades tree balance
+3. Forgetting to decrement component count on successful union
+4. Not checking `ru != rv` before union - would double-count
+
+**Similar Pattern Problems:**
+
+- Redundant Connection (Union-Find cycle detection)
+- Graph Valid Tree (connected + no cycles)
+- Accounts Merge (Union-Find on strings)
+- Number of Provinces (connected components)
+
+---
+
+#### 10. **Redundant Connection**
+
+**Problem Description:**
+In this problem, a tree is an undirected graph that is connected and has no cycles. You are given a graph that started as a tree with `n` nodes labeled from `1` to `n`, with one additional edge added. The added edge has two different vertices chosen from `1` to `n`, and was not an edge that already existed. The graph is represented as an array `edges` of length `n` where `edges[i] = [a_i, b_i]` indicates that there is an edge between nodes `a_i` and `b_i`. Return an edge that can be removed so that the resulting graph is a tree of `n` nodes. If there are multiple answers, return the answer that occurs last in the input.
+
+**Example Walkthrough:**
+
+Input: `edges = [[1,2],[1,3],[2,3]]`
+```
+Expected Output: [2,3]
+
+Graph:
+1 -- 2
+|  /
+| /
+3
+
+Step 1: Process (1,2)
+        Find: 1->1, 2->2
+        Union: parent[2] = 1
+        parent = [_, 1, 1, 3]
+
+Step 2: Process (1,3)
+        Find: 1->1, 3->3
+        Union: parent[3] = 1
+        parent = [_, 1, 1, 1]
+
+Step 3: Process (2,3)
+        Find: 2->1, 3->1
+        Roots are same! Cycle detected.
+        Return [2, 3]
+
+Result: [2,3]
+```
+
+Input: `edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]`
+```
+Expected Output: [1,4]
+
+Step 1: (1,2) -> union, parent[2]=1
+Step 2: (2,3) -> union, parent[3]=1
+Step 3: (3,4) -> union, parent[4]=1
+Step 4: (1,4) -> find(1)=1, find(4)=1 -> SAME! Cycle.
+        Return [1, 4]
+```
+
+**Key Insight - Union-Find Cycle Detection:**
+
+- Process edges in order
+- For each edge, check if endpoints are already connected
+- If yes, this edge creates a cycle -> it's the redundant edge
+- If no, union them
+- Since we process in order, the last edge that creates a cycle is returned
+
+**Why It Works:**
+
+- A tree with n nodes has exactly n-1 edges
+- Given n edges, exactly one edge creates a cycle
+- Union-Find detects when adding an edge would connect already-connected nodes
+- Processing in order and returning the first cycle-creating edge gives the last edge that causes redundancy
+
+**Visualization - Cycle Detection:**
+```mermaid
+graph TD
+    A["For each edge (u, v) in order"] --> B["Find root of u, root of v"]
+    B --> C{"root_u == root_v?"}
+    C -->|Yes| D["Cycle detected! Return edge"]
+    C -->|No| E["Union(u, v)"]
+    E --> F{"More edges?"}
+    F -->|Yes| A
+    F -->|No| G["No cycle (shouldn't happen)"]
+```
+
+```java
+public int[] findRedundantConnection(int[][] edges) {
+    int n = edges.length;
+    int[] parent = new int[n + 1];
+    int[] rank = new int[n + 1];
+    for (int i = 1; i <= n; i++) parent[i] = i;
+    for (int[] edge : edges) {
+        int ru = find(parent, edge[0]);
+        int rv = find(parent, edge[1]);
+        if (ru == rv) return edge;
+        if (rank[ru] < rank[rv]) parent[ru] = rv;
+        else if (rank[ru] > rank[rv]) parent[rv] = ru;
+        else { parent[rv] = ru; rank[ru]++; }
+    }
+    return new int[0];
+}
+
+private int find(int[] parent, int x) {
+    if (parent[x] != x) parent[x] = find(parent, parent[x]);
+    return parent[x];
+}
+```
+
+**Alternative - DFS Cycle Detection:**
+```java
+public int[] findRedundantConnection(int[][] edges) {
+    int n = edges.length;
+    List<List<Integer>> adj = new ArrayList<>();
+    for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());
+    for (int[] edge : edges) {
+        boolean[] visited = new boolean[n + 1];
+        if (hasPath(adj, visited, edge[0], edge[1])) {
+            return edge;
+        }
+        adj.get(edge[0]).add(edge[1]);
+        adj.get(edge[1]).add(edge[0]);
+    }
+    return new int[0];
+}
+
+private boolean hasPath(List<List<Integer>> adj, boolean[] visited, int src, int dst) {
+    if (src == dst) return true;
+    visited[src] = true;
+    for (int neighbor : adj.get(src)) {
+        if (!visited[neighbor] && hasPath(adj, visited, neighbor, dst)) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+**Time Complexity**: O(n * α(n)) ≈ O(n) for Union-Find, O(n²) for DFS
+
+**Space Complexity**: O(n) for Union-Find, O(n + E) for DFS
+
+**Edge Cases:**
+
+- 3 nodes, 3 edges (triangle): return last edge
+- Self-loop: return that edge
+- Multiple redundant edges: return the last one in input order
+- n = 3, edges = [[1,2],[2,3],[1,3]]: return [1,3]
+- Straight line with extra edge: return the closing edge
+
+**Common Pitfalls:**
+
+1. Not using path compression - degrades performance
+2. Returning first cycle-creating edge instead of last - must process in order
+3. Not initializing parent array size correctly (n+1 for 1-indexed)
+4. Not handling disconnected components properly
+
+**Similar Pattern Problems:**
+
+- Number of Connected Components (Union-Find)
+- Graph Valid Tree (cycle detection + connectivity)
+- Accounts Merge (Union-Find on strings)
+- Detect Cycle in Undirected Graph (DFS/Union-Find)
+
+---
+
+#### 11. **Network Delay Time**
+
+**Problem Description:**
+You are given a network of `n` nodes labeled from `1` to `n`. You are also given `times`, a list of travel times as directed edges `times[i] = (u_i, v_i, w_i)`, where `u_i` is the source node, `v_i` is the target node, and `w_i` is the time it takes for a signal to travel from source to target. We will send a signal from a given node `k`. Return the minimum time it takes for all the `n` nodes to receive the signal. If it is impossible for all the `n` nodes to receive the signal, return `-1`.
+
+**Example Walkthrough:**
+
+Input: `times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2`
+```
+Expected Output: 2
+
+Graph:
+2 -> 1 (weight 1)
+2 -> 3 (weight 1)
+3 -> 4 (weight 1)
+
+Dijkstra from node 2:
+dist[2] = 0
+dist[1] = 1 (via 2)
+dist[3] = 1 (via 2)
+dist[4] = 2 (via 2->3->4)
+
+Max dist = 2
+Return 2
+```
+
+Input: `times = [[1,2,1]], n = 2, k = 2`
+```
+Expected Output: -1
+
+Node 1 cannot be reached from node 2.
+Return -1.
+```
+
+Input: `times = [[1,2,1]], n = 2, k = 1`
+```
+Expected Output: 1
+
+dist[1] = 0, dist[2] = 1
+Max dist = 1
+Return 1
+```
+
+**Key Insight - Dijkstra's Shortest Path:**
+
+- Find shortest path from source `k` to all other nodes
+- Answer = maximum of all shortest distances
+- If any node is unreachable, return -1
+- Use min-heap for efficient extraction of minimum distance node
+- Time complexity O((V + E) log V) with binary heap
+
+**Why It Works:**
+
+- Signal travels along shortest paths (it propagates in all directions)
+- Time for all nodes to receive signal = max of shortest distances
+- Dijkstra finds shortest paths from single source
+- Unreachable nodes have infinite distance -> return -1
+
+**Visualization - Dijkstra's Algorithm:**
+```mermaid
+graph TD
+    A["Initialize dist[] = INF, dist[k] = 0"] --> B["Push (0, k) to min-heap"]
+    B --> C{"Heap empty?"}
+    C -->|Yes| D["Find max dist, check all reachable"]
+    C -->|No| E["Pop (d, u) from heap"]
+    E --> F{"d > dist[u]?"}
+    F -->|Yes| G["Stale entry, skip"]
+    F -->|No| H["For each neighbor v of u"]
+    H --> I{"dist[u] + w < dist[v]?"}
+    I -->|Yes| J["Update dist[v], push to heap"]
+    I -->|No| K["Skip"]
+    J --> C
+    K --> C
+```
+
+```java
+public int networkDelayTime(int[][] times, int n, int k) {
+    List<List<int[]>> adj = new ArrayList<>();
+    for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());
+    for (int[] t : times) adj.get(t[0]).add(new int[]{t[1], t[2]});
+    int[] dist = new int[n + 1];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    dist[k] = 0;
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+    pq.offer(new int[]{0, k});
+    while (!pq.isEmpty()) {
+        int[] curr = pq.poll();
+        int d = curr[0], u = curr[1];
+        if (d > dist[u]) continue;
+        for (int[] edge : adj.get(u)) {
+            int v = edge[0], w = edge[1];
+            if (dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.offer(new int[]{dist[v], v});
+            }
+        }
+    }
+    int maxDist = 0;
+    for (int i = 1; i <= n; i++) {
+        if (dist[i] == Integer.MAX_VALUE) return -1;
+        maxDist = Math.max(maxDist, dist[i]);
+    }
+    return maxDist;
+}
+```
+
+**Alternative - Bellman-Ford:**
+```java
+public int networkDelayTime(int[][] times, int n, int k) {
+    int[] dist = new int[n + 1];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    dist[k] = 0;
+    for (int i = 0; i < n - 1; i++) {
+        for (int[] t : times) {
+            if (dist[t[0]] != Integer.MAX_VALUE && dist[t[0]] + t[2] < dist[t[1]]) {
+                dist[t[1]] = dist[t[0]] + t[2];
+            }
+        }
+    }
+    int maxDist = 0;
+    for (int i = 1; i <= n; i++) {
+        if (dist[i] == Integer.MAX_VALUE) return -1;
+        maxDist = Math.max(maxDist, dist[i]);
+    }
+    return maxDist;
+}
+```
+
+**Time Complexity**: O((V + E) log V) for Dijkstra, O(V * E) for Bellman-Ford
+
+**Space Complexity**: O(V + E) for adjacency list, O(V) for dist array
+
+**Edge Cases:**
+
+- k is the only node: return 0
+- Some nodes unreachable: return -1
+- Multiple paths to same node: Dijkstra picks shortest
+- Self-loops: ignored (w > 0)
+- Disconnected graph: return -1
+
+**Common Pitfalls:**
+
+1. Not using min-heap - O(V²) instead of O(E log V)
+2. Not skipping stale entries - inefficient
+3. Forgetting to check unreachable nodes - returns wrong answer
+4. Using 0-indexed arrays with 1-indexed nodes - off-by-one
+
+**Similar Pattern Problems:**
+
+- Cheapest Flights Within K Stops (Dijkstra variant)
+- Path with Minimum Effort (Dijkstra on grid)
+- Swim in Rising Water (Dijkstra / Binary Search + BFS)
+- Shortest Path in Weighted Graph (Dijkstra)
+
+---
+
+#### 12. **Swim in Rising Water**
+
+**Problem Description:**
+You are given an `n x n` integer matrix `grid` where each value `grid[i][j]` represents the elevation at that point `(i, j)`. The rain starts to fall. At time `t`, the depth of the water everywhere is `t`. You can swim from a square to another 4-directionally adjacent square if and only if the elevation of both squares individually are at most `t`. You can swim infinite distances in zero time. You must swim from the top-left square `(0, 0)` to the bottom-right square `(n - 1, n - 1)`. Return the least time until you can reach the bottom-right square.
+
+**Example Walkthrough:**
+
+Input: `grid = [[0,2],[1,3]]`
+```
+Expected Output: 3
+
+Grid:
+0 2
+1 3
+
+Start at (0,0) with elevation 0, end at (1,1) with elevation 3.
+
+t=0: Can only be at (0,0)
+t=1: (0,0) and (1,0) have elevation <= 1. Can move to (1,0).
+t=2: (0,0), (1,0), (0,1) have elevation <= 2. Can move to (0,1).
+t=3: All cells have elevation <= 3. Can reach (1,1).
+
+Return 3.
+```
+
+Input: `grid = [[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]`
+```
+Expected Output: 16
+
+The optimal path: 0 -> 1 -> 2 -> ... -> 16
+Maximum elevation on path = 16
+Return 16.
+```
+
+**Key Insight - Minimax Path (Dijkstra / Binary Search + BFS):**
+
+- We want the path from start to end that **minimizes the maximum elevation** along the path
+- This is a minimax path problem
+- **Approach 1**: Dijkstra where distance = max elevation on path
+- **Approach 2**: Binary search on answer `t`, check if path exists using BFS/DFS
+
+**Why It Works:**
+
+- At time `t`, cells with elevation <= `t` are passable
+- We want the minimum `t` such that a path exists
+- Binary search works because if path exists at `t`, it exists at any `t' > t`
+- Dijkstra works because we track `max elevation so far` as the "distance"
+
+**Visualization - Dijkstra on Grid (Minimax):**
+```mermaid
+graph TD
+    A["Start: dist[0][0] = grid[0][0]"] --> B["Min-heap push (grid[0][0], 0, 0)"]
+    B --> C{"Heap empty?"}
+    C -->|Yes| D["Return dist[n-1][n-1]"]
+    C -->|No| E["Pop (d, i, j)"]
+    E --> F{"d > dist[i][j]?"}
+    F -->|Yes| G["Stale, skip"]
+    F -->|No| H["For each 4-dir neighbor (ni, nj)"]
+    H --> I["newDist = max(d, grid[ni][nj])"]
+    I --> J{"newDist < dist[ni][nj]?"}
+    J -->|Yes| K["Update dist, push to heap"]
+    J -->|No| L["Skip"]
+    K --> C
+    L --> C
+```
+
+```java
+public int swimInWater(int[][] grid) {
+    int n = grid.length;
+    int[][] dist = new int[n][n];
+    for (int[] row : dist) Arrays.fill(row, Integer.MAX_VALUE);
+    dist[0][0] = grid[0][0];
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+    pq.offer(new int[]{grid[0][0], 0, 0});
+    int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+    while (!pq.isEmpty()) {
+        int[] curr = pq.poll();
+        int d = curr[0], i = curr[1], j = curr[2];
+        if (d > dist[i][j]) continue;
+        if (i == n - 1 && j == n - 1) return d;
+        for (int[] dir : dirs) {
+            int ni = i + dir[0], nj = j + dir[1];
+            if (ni >= 0 && ni < n && nj >= 0 && nj < n) {
+                int newDist = Math.max(d, grid[ni][nj]);
+                if (newDist < dist[ni][nj]) {
+                    dist[ni][nj] = newDist;
+                    pq.offer(new int[]{newDist, ni, nj});
+                }
+            }
+        }
+    }
+    return -1;
+}
+```
+
+**Alternative - Binary Search + BFS:**
+```java
+public int swimInWater(int[][] grid) {
+    int n = grid.length;
+    int lo = grid[0][0], hi = n * n - 1;
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (canReach(grid, mid)) hi = mid;
+        else lo = mid + 1;
+    }
+    return lo;
+}
+
+private boolean canReach(int[][] grid, int t) {
+    int n = grid.length;
+    if (grid[0][0] > t) return false;
+    boolean[][] visited = new boolean[n][n];
+    Queue<int[]> q = new LinkedList<>();
+    q.offer(new int[]{0, 0});
+    visited[0][0] = true;
+    int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+    while (!q.isEmpty()) {
+        int[] curr = q.poll();
+        if (curr[0] == n - 1 && curr[1] == n - 1) return true;
+        for (int[] dir : dirs) {
+            int ni = curr[0] + dir[0], nj = curr[1] + dir[1];
+            if (ni >= 0 && ni < n && nj >= 0 && nj < n
+                && !visited[ni][nj] && grid[ni][nj] <= t) {
+                visited[ni][nj] = true;
+                q.offer(new int[]{ni, nj});
+            }
+        }
+    }
+    return false;
+}
+```
+
+**Time Complexity**: O(n² log n) for Dijkstra, O(n² log n) for binary search + BFS
+
+**Space Complexity**: O(n²) for dist/visited arrays and heap/queue
+
+**Edge Cases:**
+
+- n = 1: return grid[0][0]
+- All same elevation: return that elevation
+- Sorted ascending: return grid[n-1][n-1]
+- Sorted descending: return grid[0][0]
+- Random elevations: Dijkstra finds optimal path
+
+**Common Pitfalls:**
+
+1. Using sum of elevations instead of max - wrong problem
+2. Not tracking max elevation correctly during BFS
+3. Binary search bounds: `lo = grid[0][0]`, `hi = n*n - 1`
+4. Not checking if start is reachable at time `t`
+
+**Similar Pattern Problems:**
+
+- Path with Minimum Effort (Dijkstra / Binary Search)
+- Network Delay Time (Dijkstra)
+- Cheapest Flights Within K Stops (Dijkstra variant)
+- Minimum Cost to Reach Destination in Time (Dijkstra)
+
+---
+
 ### Hard
 
-#### 8. **Critical Connections in Network (Bridges)**
+#### 13. **Critical Connections in Network (Bridges)**
 
 **Problem Description:**
 In a network of n servers connected by undirected edges, find all critical connections (bridges). A bridge is an edge that, if removed, disconnects the network.
@@ -1109,7 +1911,7 @@ private void dfs(int u, int parent, int[] disc, int[] low, boolean[] visited,
 
 ---
 
-#### 9. **Shortest Path with Obstacles Elimination**
+#### 14. **Shortest Path with Obstacles Elimination**
 
 **Problem Description:**
 Given an m x n grid where 1 = obstacle and 0 = empty, find the shortest path from (0,0) to (m-1,n-1). You can eliminate at most k obstacles.
@@ -1221,7 +2023,7 @@ public int shortestPath(int[][] grid, int k) {
 
 ---
 
-#### 10. **Topological Sort (DFS)**
+#### 15. **Topological Sort (DFS)**
 
 **Problem Description:**
 Given a directed acyclic graph (DAG), return a linear ordering of vertices such that for every edge (u, v), u comes before v.
@@ -1348,7 +2150,7 @@ private void dfs(int node, boolean[] visited, List<Integer>[] graph, Stack<Integ
 
 ---
 
-#### 11. **Union-Find (Disjoint Set)**
+#### 16. **Union-Find (Disjoint Set)**
 
 **Problem Description:**
 A data structure that tracks elements partitioned into disjoint sets. Supports two operations: find (which set?) and union (merge two sets).
@@ -1469,7 +2271,7 @@ class UnionFind {
 
 ---
 
-#### 12. **Minimum Spanning Tree - Kruskal's Algorithm**
+#### 17. **Minimum Spanning Tree - Kruskal's Algorithm**
 
 **Problem Description:**
 Given a connected weighted undirected graph, find the Minimum Spanning Tree (MST) - a subset of edges that connects all vertices with minimum total weight.

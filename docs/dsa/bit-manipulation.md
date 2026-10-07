@@ -815,9 +815,346 @@ public int rangeBitwiseAnd(int m, int n) {
 
 ---
 
+#### 9. **Divide Two Integers**
+
+**Problem Description:**
+Given two integers `dividend` and `divisor`, divide two integers **without** using multiplication, division, and mod operator. The integer division should truncate toward zero, which means losing its fractional part. For example, `8.345` would be truncated to `8`, and `-2.7335` would be truncated to `-2`. Return the quotient after dividing `dividend` by `divisor`. Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: `[−2^31, 2^31 − 1]`. For this problem, if the quotient is strictly greater than `2^31 - 1`, then return `2^31 - 1`, and if the quotient is strictly less than `-2^31`, then return `-2^31`.[citation:1][citation:16]
+
+**Example Walkthrough:**
+
+Input: `dividend = 10, divisor = 3`
+```
+Expected Output: 3
+
+Approach: Bit Manipulation (Exponential Search)
+
+Step 1: Determine sign: both positive -> positive
+        dividend = 10, divisor = 3
+
+Step 2: Find largest multiple of divisor that fits in dividend
+        3 << 0 = 3   (fits, 3 <= 10)
+        3 << 1 = 6   (fits, 6 <= 10)
+        3 << 2 = 12  (too big, 12 > 10)
+        Use 6 (3 << 1 = 6 = 3 * 2)
+
+Step 3: Subtract: 10 - 6 = 4
+        quotient += 2 (since 6 = 3 * 2)
+        quotient = 2
+
+Step 4: Repeat with remaining 4
+        3 << 0 = 3   (fits, 3 <= 4)
+        3 << 1 = 6   (too big, 6 > 4)
+        Use 3 (3 << 0 = 3 = 3 * 1)
+
+Step 5: Subtract: 4 - 3 = 1
+        quotient += 1
+        quotient = 3
+
+Step 6: 1 < 3, stop
+
+Return 3
+```
+
+Input: `dividend = 7, divisor = -3`
+```
+Expected Output: -2
+
+Step 1: Determine sign: different signs -> negative
+        dividend = 7, divisor = 3 (absolute values)
+
+Step 2: Find largest multiple
+        3 << 0 = 3   (fits, 3 <= 7)
+        3 << 1 = 6   (fits, 6 <= 7)
+        3 << 2 = 12  (too big, 12 > 7)
+        Use 6 (3 << 1 = 6 = 3 * 2)
+
+Step 3: Subtract: 7 - 6 = 1
+        quotient = 2
+
+Step 4: 1 < 3, stop
+
+Step 5: Apply sign: -2
+
+Return -2
+```
+
+Input: `dividend = -2147483648, divisor = -1`
+```
+Expected Output: 2147483647 (overflow case)
+
+-2147483648 / -1 = 2147483648, which exceeds 2^31 - 1
+Clamp to 2147483647
+```
+
+**Key Insight - Bit Shifting with Exponential Search:**
+
+- Division is repeated subtraction, but naive subtraction is O(quotient) which can be billions
+- Optimization: Instead of subtracting divisor once, find the **largest power-of-2 multiple** of divisor that fits in dividend
+- Use left shift (`<<`) to double the divisor: `3 << 0 = 3`, `3 << 1 = 6`, `3 << 2 = 12`
+- Subtract the largest multiple, add the corresponding power-of-2 to quotient
+- Repeat with the remaining dividend
+- Time complexity: O(log² n) — outer loop runs O(log n) times, inner loop runs O(log n) times[citation:3][citation:5]
+
+**Why It Works:**
+
+- Any integer can be represented as a sum of powers of 2 (binary representation)
+- By finding the largest 2^k such that `divisor * 2^k <= dividend`, we greedily subtract the largest chunk
+- The quotient is the sum of all 2^k values we subtract
+- This is essentially long division in binary
+- Sign handling: work with absolute values, apply sign at the end
+- Overflow: only case is `INT_MIN / -1`, which overflows to `2^31` (clamp to `INT_MAX`)[citation:14]
+
+**Visualization - Exponential Search:**
+```mermaid
+graph TD
+    A["Determine sign, work with absolute values"] --> B["While dividend >= divisor"]
+    B --> C["Find largest k such that divisor << k <= dividend"]
+    C --> D["Subtract (divisor << k) from dividend"]
+    D --> E["Add (1 << k) to quotient"]
+    E --> B
+    B --> F["Apply sign, check overflow"]
+    F --> G["Return quotient"]
+```
+
+```java
+public int divide(int dividend, int divisor) {
+    // Handle overflow case: INT_MIN / -1
+    if (dividend == Integer.MIN_VALUE && divisor == -1) {
+        return Integer.MAX_VALUE;
+    }
+    // Determine sign of result
+    boolean negative = (dividend < 0) != (divisor < 0);
+    // Convert to long to handle INT_MIN absolute value overflow
+    long dvd = Math.abs((long) dividend);
+    long dvs = Math.abs((long) divisor);
+    int quotient = 0;
+    // Exponential search: subtract largest power-of-2 multiple
+    while (dvd >= dvs) {
+        long temp = dvs;
+        int multiple = 1;
+        // Double temp while it still fits in dvd
+        while (dvd >= (temp << 1)) {
+            temp <<= 1;
+            multiple <<= 1;
+        }
+        dvd -= temp;
+        quotient += multiple;
+    }
+    return negative ? -quotient : quotient;
+}
+```
+
+**Alternative - Working with Negatives (Avoid Long):**
+```java
+public int divide(int dividend, int divisor) {
+    if (dividend == Integer.MIN_VALUE && divisor == -1) return Integer.MAX_VALUE;
+    boolean negative = (dividend < 0) != (divisor < 0);
+    // Work with negative values to avoid overflow when taking absolute value
+    int dvd = dividend > 0 ? -dividend : dividend;
+    int dvs = divisor > 0 ? -divisor : divisor;
+    int quotient = 0;
+    // Both are negative, so dvd <= dvs means |dvd| >= |dvs|
+    while (dvd <= dvs) {
+        int temp = dvs;
+        int multiple = -1; // Use negative to avoid overflow
+        while (dvd <= (temp << 1) && temp >= Integer.MIN_VALUE >> 1) {
+            temp <<= 1;
+            multiple <<= 1;
+        }
+        dvd -= temp;
+        quotient += multiple;
+    }
+    return negative ? quotient : -quotient;
+}
+```
+
+**Time Complexity**: O(log² n) — outer loop runs O(log n) times as remaining dividend halves, inner loop runs O(log n) times finding largest multiple
+
+**Space Complexity**: O(1) — only a few variables
+
+**Edge Cases:**
+
+- `dividend = 0`: return 0
+- `divisor = 1`: return dividend (fast path)
+- `divisor = -1`: return -dividend (handle INT_MIN overflow)
+- `dividend = INT_MIN, divisor = -1`: return INT_MAX (overflow)
+- `dividend = INT_MIN, divisor = 1`: return INT_MIN
+- Negative results: truncate toward zero (e.g., 7/-3 = -2, not -3)
+
+**Common Pitfalls:**
+
+1. Using `Math.abs` on `Integer.MIN_VALUE` — overflows to itself (use long or work with negatives)[citation:14]
+2. Forgetting to clamp overflow to `Integer.MAX_VALUE`
+3. Not truncating toward zero — integer division in Java already truncates toward zero for `/` operator, but we're implementing our own
+4. Inner loop infinite: must check `temp << 1` doesn't overflow
+5. Off-by-one in multiple calculation
+
+**Similar Pattern Problems:**
+
+- Pow(x, n) (LeetCode 50) — fast exponentiation with bit manipulation
+- Sqrt(x) (LeetCode 69) — binary search / bit manipulation
+- Multiply Strings (LeetCode 43) — multiplication without operators
+- Sum of Two Integers (LeetCode 371) — addition without operators
+
+---
+
+#### 10. **Gray Code**
+
+**Problem Description:**
+An **n-bit gray code sequence** is a sequence of `2ⁿ` integers where:
+- Every integer is in the inclusive range `[0, 2ⁿ - 1]`
+- The first integer is `0`
+- An integer appears no more than once in the sequence
+- The binary representation of every pair of adjacent integers differs by exactly one bit
+- The binary representation of the first and last integers differs by exactly one bit
+
+Given an integer `n`, return any valid n-bit gray code sequence.[citation:2][citation:15]
+
+**Example Walkthrough:**
+
+Input: `n = 2`
+```
+Expected Output: [0,1,3,2]
+
+Binary representations:
+0 -> 00
+1 -> 01
+3 -> 11
+2 -> 10
+
+Check adjacent pairs:
+00 -> 01: differ in 1 bit ✓
+01 -> 11: differ in 1 bit ✓
+11 -> 10: differ in 1 bit ✓
+10 -> 00: differ in 1 bit ✓ (first and last)
+
+Return [0,1,3,2]
+```
+
+Input: `n = 1`
+```
+Expected Output: [0,1]
+
+Binary:
+0 -> 0
+1 -> 1
+
+0 -> 1: differ in 1 bit ✓
+1 -> 0: differ in 1 bit ✓
+
+Return [0,1]
+```
+
+Input: `n = 3`
+```
+Expected Output: [0,1,3,2,6,7,5,4]
+
+Binary:
+000, 001, 011, 010, 110, 111, 101, 100
+
+Each adjacent pair differs by exactly 1 bit.
+Return [0,1,3,2,6,7,5,4]
+```
+
+**Key Insight - Formula: G(n) = n ^ (n >> 1):**
+
+- The i-th gray code can be computed directly using the formula: `gray(i) = i ^ (i >> 1)`
+- This formula gives a valid gray code sequence for any i in `[0, 2^n - 1]`
+- Simply iterate i from 0 to 2^n - 1 and apply the formula[citation:11][citation:18]
+- **Alternative**: Mirror approach — start with `[0]`, for each bit position, mirror the current sequence and add `1 << i` to each mirrored element[citation:11][citation:18]
+
+**Why It Works:**
+
+- The formula `G(n) = n ^ (n >> 1)` converts binary to gray code
+- XOR with right-shifted self ensures adjacent values differ by exactly one bit
+- The first element is `0 ^ 0 = 0`
+- The last element (for n bits) is `(2^n - 1) ^ ((2^n - 1) >> 1)`, which differs from 0 by one bit
+- Proof: For any n, `n` and `n+1` differ in their trailing bits; XOR with `n >> 1` preserves the one-bit difference
+
+**Visualization - Mirror Construction (n=2):**
+```mermaid
+graph TD
+    A["Start: [0]"] --> B["Bit 0: head = 1"]
+    B --> C["Mirror: [0] -> append 1+0 = 1<br/>Result: [0, 1]"]
+    C --> D["Bit 1: head = 2"]
+    D --> E["Mirror: [0,1] reversed = [1,0]<br/>append 2+1=3, 2+0=2<br/>Result: [0,1,3,2]"]
+```
+
+```java
+public List<Integer> grayCode(int n) {
+    List<Integer> result = new ArrayList<>();
+    int total = 1 << n;
+    for (int i = 0; i < total; i++) {
+        result.add(i ^ (i >> 1));
+    }
+    return result;
+}
+```
+
+**Alternative - Mirror Construction:**
+```java
+public List<Integer> grayCode(int n) {
+    List<Integer> result = new ArrayList<>();
+    result.add(0);
+    for (int i = 0; i < n; i++) {
+        int head = 1 << i;
+        for (int j = result.size() - 1; j >= 0; j--) {
+            result.add(head + result.get(j));
+        }
+    }
+    return result;
+}
+```
+
+**Alternative - Recursive:**
+```java
+public List<Integer> grayCode(int n) {
+    if (n == 0) {
+        List<Integer> base = new ArrayList<>();
+        base.add(0);
+        return base;
+    }
+    List<Integer> prev = grayCode(n - 1);
+    List<Integer> result = new ArrayList<>(prev);
+    int head = 1 << (n - 1);
+    for (int i = prev.size() - 1; i >= 0; i--) {
+        result.add(head + prev.get(i));
+    }
+    return result;
+}
+```
+
+**Time Complexity**: O(2^n) — must generate 2^n numbers, each in O(1)
+
+**Space Complexity**: O(1) extra (excluding output), O(2^n) for output
+
+**Edge Cases:**
+
+- n = 1: return [0, 1]
+- n = 2: return [0, 1, 3, 2]
+- n = 0: problem constraints say 1 <= n <= 16, but [0] is valid for n=0
+- Large n (16): 2^16 = 65536 elements, formula approach is efficient
+
+**Common Pitfalls:**
+
+1. Forgetting that gray code sequence is not unique — any valid sequence is accepted
+2. Mirror approach: must iterate in **reverse order** when appending mirrored elements
+3. Formula approach: `i >> 1` is integer division by 2 (right shift)
+4. Off-by-one in `1 << n` (2^n total elements)
+5. Not handling n=0 edge case (though constraints exclude it)
+
+**Similar Pattern Problems:**
+
+- Minimum One Bit Operations to Make Integers Zero (LeetCode 1611) — inverse of gray code
+- Convert Binary Number in a Linked List to Integer (LeetCode 1290) — bit manipulation
+- Complement of Base 10 Integer (LeetCode 1009) — bit manipulation
+- Number Complement (LeetCode 476) — bit manipulation
+
+---
+
 ### Hard
 
-#### 9. **Maximum XOR of Two Numbers in an Array**
+#### 11. **Maximum XOR of Two Numbers in an Array**
 
 **Problem Description:**
 Given an integer array nums, return the maximum result of nums[i] XOR nums[j] where 0 <= i <= j < n.
@@ -942,7 +1279,7 @@ public int findMaximumXOR(int[] nums) {
 
 ---
 
-#### 10. **Number of Distinct Subsequences**
+#### 12. **Number of Distinct Subsequences**
 
 **Problem Description:**
 Given a string s, count the number of distinct subsequences of s. Since answer may be large, return it modulo 10^9 + 7.
@@ -1064,6 +1401,160 @@ public int distinctSubsequences(String s) {
 - Number of Subsequences
 - Distinct Subsequences II
 - Count Different Palindromic Subsequences
+
+---
+
+#### 13. **Minimum One Bit Operations to Make Integers Zero**
+
+**Problem Description:**
+Given an integer `n`, you must transform it into `0` using the following operations any number of times:
+
+1. Change the rightmost (0th) bit in the binary representation of `n`.
+2. Change the ith bit in the binary representation of `n` if the `(i-1)`th bit is set to `1` and the `(i-2)`th through 0th bits are set to `0`.
+
+Return the minimum number of operations to transform `n` into `0`.[citation:1]
+
+**Example Walkthrough:**
+
+Input: `n = 3`
+```
+Expected Output: 2
+
+Binary representation of 3 is "11".
+
+Step 1: "11" -> "01" with the 2nd operation
+        (since the 0th bit is 1)
+
+Step 2: "01" -> "00" with the 1st operation
+
+Return 2
+```
+
+Input: `n = 6`
+```
+Expected Output: 4
+
+Binary representation of 6 is "110".
+
+Step 1: "110" -> "010" with the 2nd operation
+        (since the 1st bit is 1 and 0th bit is 0)
+
+Step 2: "010" -> "011" with the 1st operation
+
+Step 3: "011" -> "001" with the 2nd operation
+        (since the 0th bit is 1)
+
+Step 4: "001" -> "000" with the 1st operation
+
+Return 4
+```
+
+Input: `n = 9`
+```
+Expected Output: 14
+```
+
+Input: `n = 333`
+```
+Expected Output: 393
+```
+
+**Key Insight - Inverse Gray Code:**
+
+The two allowed operations behave exactly like steps in **Gray code**—where consecutive numbers differ by exactly one bit. The minimum number of operations to reach `0` equals the **inverse Gray code** of `n`.
+
+For a Gray code `g`, its binary value `b` is recovered by:
+```
+b = g ^ (g >> 1) ^ (g >> 2) ^ (g >> 3) ^ ...
+```
+
+This can be computed iteratively:
+```
+ans = 0
+while n > 0:
+    ans ^= n
+    n >>= 1
+return ans
+```
+
+**Why It Works:**
+
+- The operations transform `n` through a sequence where each step flips exactly one bit
+- This sequence is precisely the reverse of the Gray code sequence
+- The inverse Gray code formula accumulates the XOR of all right-shifted versions of `n`, which counts the minimum operations needed
+- Time complexity: O(log n) — one iteration per bit of `n`[citation:4]
+
+**Visualization - Inverse Gray Code:**
+```mermaid
+graph TD
+    A["Start: ans = 0, n = original"] --> B{"n > 0?"}
+    B -->|No| C["Return ans"]
+    B -->|Yes| D["ans = ans XOR n"]
+    D --> E["n = n >> 1 (right shift)"]
+    E --> B
+```
+
+```java
+public int minimumOneBitOperations(int n) {
+    int ans = 0;
+    while (n > 0) {
+        ans ^= n;
+        n >>= 1;
+    }
+    return ans;
+}
+```
+
+**Alternative - Recursive:**
+```java
+public int minimumOneBitOperations(int n) {
+    if (n == 0) return 0;
+    return n ^ minimumOneBitOperations(n >> 1);
+}
+```
+
+**Alternative - Iterative with Sign Alternation (Mathematical Approach):**
+```java
+public int minimumOneBitOperations(int n) {
+    int result = 0;
+    int sign = 1;
+    for (int i = 30; i >= 0; i--) {
+        int bit = (1 << i) & n;
+        if (bit == 0) continue;
+        int operations = (1 << (i + 1)) - 1;
+        if (sign > 0) result += operations;
+        else result -= operations;
+        sign = -sign;
+    }
+    return result;
+}
+```
+
+**Time Complexity**: O(log n) — processes each bit of `n` once
+
+**Space Complexity**: O(1) — only a constant number of variables
+
+**Edge Cases:**
+
+- `n = 0`: already zero, return 0
+- `n = 1`: return 1 (flip rightmost bit)
+- `n = 2^k`: returns 2^(k+1) - 1 (e.g., n=4 -> 7, n=8 -> 15)
+- Large `n` (up to 10^9): fits in 32-bit signed integer
+- `n` with all bits set: processes all bits
+
+**Common Pitfalls:**
+
+1. Not recognizing the Gray code relationship — trying to simulate operations leads to exponential time
+2. Using `>>` instead of `>>>` for unsigned right shift (not an issue here since `n >= 0`)
+3. Forgetting that the answer fits in 32-bit signed integer (no overflow concern)
+4. Confusing this with the standard Gray code generation (this is the **inverse** Gray code)
+
+**Similar Pattern Problems:**
+
+- Gray Code (LeetCode 89) — generating the Gray code sequence
+- Convert Binary Number in a Linked List to Integer (LeetCode 1290)
+- Complement of Base 10 Integer (LeetCode 1009)
+- Number Complement (LeetCode 476)
 
 ---
 

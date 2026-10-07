@@ -1356,6 +1356,285 @@ class LRUCache {
 
 ---
 
+#### 12. **Swap Nodes in Pairs**
+
+**Problem Description:**
+Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem **without modifying the values** in the list's nodes (i.e., only nodes themselves may be changed).
+
+**Example Walkthrough:**
+
+Input: `head = [1,2,3,4]`
+```
+Expected Output: [2,1,4,3]
+
+Step 1: Pair (1,2)
+        second = 2
+        1.next = swapPairs(3) -> recursion result
+        After recursion: 2.next = 1
+        Return 2
+
+Step 2: Pair (3,4)
+        second = 4
+        3.next = swapPairs(null) = null
+        4.next = 3
+        Return 4
+
+Step 3: Combine
+        1.next = 4 (from recursion)
+        Result: 2 -> 1 -> 4 -> 3
+```
+
+Input: `head = []`
+```
+Expected Output: []
+```
+
+Input: `head = [1]`
+```
+Expected Output: [1]
+```
+
+**Key Insight - Recursive Pair Swapping:**
+
+- Base case: if head is null or head.next is null, return head (fewer than 2 nodes)
+- Save `second = head.next`
+- Recursively swap the rest starting from `second.next`
+- Point `head.next` to the recursive result
+- Point `second.next` to `head`
+- Return `second` as the new head
+
+**Why It Works:**
+
+- Each recursive call handles one pair (two adjacent nodes)
+- The recursion processes the remaining list and returns the swapped head of the rest
+- By connecting `head` to the swapped rest and `second` to `head`, the pair is swapped
+- The recursion naturally handles all pairs in sequence
+
+**Visualization - Recursive Swapping:**
+```mermaid
+graph TD
+    A["head = 1, second = 2"] --> B["head.next = swapPairs(3)"]
+    B --> C["Recursion on 3,4"]
+    C --> D["Returns 4 -> 3"]
+    D --> E["second.next = head (2.next = 1)"]
+    E --> F["Return second (2)"]
+    F --> G["Result: 2 -> 1 -> 4 -> 3"]
+```
+
+```java
+public ListNode swapPairs(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode second = head.next;
+    head.next = swapPairs(second.next);
+    second.next = head;
+    return second;
+}
+```
+
+**Alternative - Iterative (O(1) Space):**
+```java
+public ListNode swapPairs(ListNode head) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode prev = dummy;
+    while (prev.next != null && prev.next.next != null) {
+        ListNode first = prev.next;
+        ListNode second = first.next;
+        // Swap
+        first.next = second.next;
+        second.next = first;
+        prev.next = second;
+        // Move prev to the end of swapped pair
+        prev = first;
+    }
+    return dummy.next;
+}
+```
+
+**Time Complexity**: O(n) - each node is visited once
+
+**Space Complexity**: O(n) for recursion stack, O(1) for iterative approach
+
+**Edge Cases:**
+
+- Empty list: return null
+- Single node: return head (no pair to swap)
+- Odd number of nodes: last node remains in place
+- Even number of nodes: all pairs swapped
+- Two nodes only: swap and return
+
+**Common Pitfalls:**
+
+1. Not handling base case (head == null || head.next == null)
+2. Forgetting to connect the swapped pair to the rest of the list
+3. Losing reference to the next pair's head before recursion
+4. Using O(n) space when O(1) is possible iteratively
+
+**Similar Pattern Problems:**
+
+- Reverse Linked List (recursive + iterative)
+- Reverse Nodes in k-Group (extended version)
+- Swap Nodes in Pairs (this problem)
+- Odd Even Linked List (rearrangement)
+- Reorder List (pointer manipulation)
+
+---
+
+#### 13. **Reverse Nodes in k-Group**
+
+**Problem Description:**
+Given the `head` of a linked list, reverse the nodes of the list `k` at a time, and return the modified list. `k` is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of `k`, then left-out nodes at the end should remain as they are. You may **not alter the values** in the list's nodes, only nodes themselves may be changed.
+
+**Example Walkthrough:**
+
+Input: `head = [1,2,3,4,5]`, `k = 2`
+```
+Expected Output: [2,1,4,3,5]
+
+Step 1: Find length = 5
+Step 2: Reverse first 2 nodes: 1->2 becomes 2->1
+        Connect to rest: 2->1->3->4->5
+Step 3: Reverse next 2 nodes: 3->4 becomes 4->3
+        Connect: 2->1->4->3->5
+Step 4: Remaining 1 node (5) < k=2, leave as is
+Result: 2->1->4->3->5
+```
+
+Input: `head = [1,2,3,4,5]`, `k = 3`
+```
+Expected Output: [3,2,1,4,5]
+
+Step 1: Find length = 5
+Step 2: Reverse first 3 nodes: 1->2->3 becomes 3->2->1
+        Connect: 3->2->1->4->5
+Step 3: Remaining 2 nodes (4,5) < k=3, leave as is
+Result: 3->2->1->4->5
+```
+
+**Key Insight - Group Reversal with Pointer Management:**
+
+- Count total nodes first to know how many complete groups of k exist
+- For each group of k nodes, reverse them in-place
+- Connect the previous group's tail to the current group's new head
+- Connect the current group's tail to the next group's head
+- Leftover nodes (< k) remain unchanged
+
+**Why It Works:**
+
+- By counting nodes first, we know exactly how many groups to process
+- Reversing each group in isolation is straightforward (standard linked list reversal)
+- The tricky part is reconnecting groups correctly
+- Using a dummy node and tracking `prevGroupTail` simplifies the connection logic
+
+**Visualization - k-Group Reversal:**
+```mermaid
+graph TD
+    A["Count nodes: len"] --> B{"len >= k?"}
+    B -->|Yes| C["Reverse k nodes"]
+    C --> D["Connect prevGroupTail to newHead"]
+    D --> E["Connect groupTail to next group"]
+    E --> F["Update prevGroupTail, len -= k"]
+    F --> B
+    B -->|No| G["Attach remaining nodes"]
+    G --> H["Return dummy.next"]
+```
+
+```java
+public ListNode reverseKGroup(ListNode head, int k) {
+    if (head == null || k == 1) return head;
+    // Count total nodes
+    int len = 0;
+    ListNode temp = head;
+    while (temp != null) {
+        len++;
+        temp = temp.next;
+    }
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode prevGroupTail = dummy;
+    while (len >= k) {
+        ListNode groupHead = prevGroupTail.next;
+        ListNode groupTail = groupHead;
+        // Find the tail of current group
+        for (int i = 1; i < k; i++) {
+            groupTail = groupTail.next;
+        }
+        ListNode nextGroupHead = groupTail.next;
+        // Reverse the group
+        ListNode prev = nextGroupHead;
+        ListNode curr = groupHead;
+        for (int i = 0; i < k; i++) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        // Connect previous group to reversed group
+        prevGroupTail.next = prev;
+        // groupHead is now the tail of reversed group
+        prevGroupTail = groupHead;
+        len -= k;
+    }
+    return dummy.next;
+}
+```
+
+**Alternative - Recursive (Cleaner):**
+```java
+public ListNode reverseKGroup(ListNode head, int k) {
+    ListNode curr = head;
+    int count = 0;
+    // Check if we have k nodes
+    while (curr != null && count < k) {
+        curr = curr.next;
+        count++;
+    }
+    if (count == k) {
+        // Reverse first k nodes
+        ListNode prev = reverseKGroup(curr, k);
+        while (count-- > 0) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+    return head;
+}
+```
+
+**Time Complexity**: O(n) - each node is visited once for counting, once for reversing
+
+**Space Complexity**: O(1) for iterative, O(n/k) for recursive stack
+
+**Edge Cases:**
+
+- k = 1: no reversal needed, return head
+- k = length: reverse entire list
+- k > length: no reversal, return head
+- Single node: return head
+- Empty list: return null
+- k equals length: entire list reversed
+
+**Common Pitfalls:**
+
+1. Not counting nodes first - leads to reversing incomplete groups
+2. Incorrect reconnection of groups - losing nodes or creating cycles
+3. Not handling leftover nodes correctly
+4. Using O(n) extra space (e.g., stack) when O(1) is possible
+5. Modifying node values instead of pointers
+
+**Similar Pattern Problems:**
+
+- Swap Nodes in Pairs (k = 2 special case)
+- Reverse Linked List (k = length special case)
+- Reverse Linked List II (reverse between positions)
+- Rotate List (rotation by k)
+- Odd Even Linked List (rearrangement)
+
+---
+
 ## 📌 Key Patterns & Techniques
 
 ### 1. **Fast and Slow Pointers**

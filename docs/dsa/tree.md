@@ -934,9 +934,498 @@ private TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd,
 
 ---
 
+#### 8. **Subtree of Another Tree**
+
+**Problem Description:**
+Given the roots of two binary trees `root` and `subRoot`, return `true` if there is a subtree of `root` with the same structure and node values of `subRoot` and `false` otherwise. A subtree of a binary tree `tree` is a tree that consists of a node in `tree` and all of this node's descendants.
+
+**Example Walkthrough:**
+
+Input: `root = [3,4,5,1,2]`, `subRoot = [4,1,2]`
+```
+Expected Output: true
+
+Tree structure:
+       3
+      / \
+     4   5
+    / \
+   1   2
+
+subRoot:
+     4
+    / \
+   1   2
+
+Step 1: Check if root (3) matches subRoot (4) -> No
+Step 2: Check if root.left (4) matches subRoot (4) -> Yes
+        Compare structure:
+        4 == 4
+        4.left (1) == subRoot.left (1)
+        4.right (2) == subRoot.right (2)
+        Return true
+```
+
+Input: `root = [3,4,5,1,2,null,null,null,null,0]`, `subRoot = [4,1,2]`
+```
+Expected Output: false
+
+Tree structure:
+       3
+      / \
+     4   5
+    / \
+   1   2
+      /
+     0
+
+subRoot:
+     4
+    / \
+   1   2
+
+Step 1: Check if root (3) matches subRoot (4) -> No
+Step 2: Check if root.left (4) matches subRoot (4) -> Structure differs
+        4 == 4
+        4.left (1) == subRoot.left (1)
+        4.right (2) == subRoot.right (2)
+        BUT: node 2 has a left child (0) while subRoot.right (2) has no children
+        Return false
+```
+
+**Key Insight - Recursive Tree Matching:**
+
+- Use a helper function `isSameTree(p, q)` to check if two trees are identical
+- For `isSubtree`, check if current node matches subRoot
+- If not, recursively check left and right subtrees
+- This is a top-down DFS with nested recursion
+
+**Why It Works:**
+
+- `isSameTree` checks structural equality and value equality recursively
+- `isSubtree` explores every node in `root` as a potential starting point
+- If any node in `root` matches `subRoot` exactly, we found the subtree
+- Time complexity: O(m x n) worst case, where m = nodes in root, n = nodes in subRoot
+
+**Visualization - Recursive Matching:**
+```mermaid
+graph TD
+    A["isSubtree(root, subRoot)"] --> B{"root == null?"}
+    B -->|Yes| C["Return false"]
+    B -->|No| D{"isSameTree(root, subRoot)?"}
+    D -->|Yes| E["Return true"]
+    D -->|No| F["isSubtree(root.left, subRoot)"]
+    F --> G["OR isSubtree(root.right, subRoot)"]
+    G --> H["Return result"]
+```
+
+```java
+public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+    if (root == null) return false;
+    if (isSameTree(root, subRoot)) return true;
+    return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+}
+
+private boolean isSameTree(TreeNode p, TreeNode q) {
+    if (p == null && q == null) return true;
+    if (p == null || q == null) return false;
+    if (p.val != q.val) return false;
+    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+}
+```
+
+**Alternative - Tree Serialization (O(m + n)):**
+```java
+public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+    String rootStr = serialize(root);
+    String subStr = serialize(subRoot);
+    return rootStr.contains(subStr);
+}
+
+private String serialize(TreeNode node) {
+    if (node == null) return "#";
+    return "," + node.val + serialize(node.left) + serialize(node.right);
+}
+```
+
+**Time Complexity**: O(m x n) for recursive, O(m + n) for serialization (with string matching)
+
+**Space Complexity**: O(max(h1, h2)) for recursion stack
+
+**Edge Cases:**
+
+- Both trees empty: return true
+- `subRoot` empty: return true (empty tree is subtree of any tree)
+- `root` empty, `subRoot` not empty: return false
+- Single node trees: check if values match
+- Deep trees: recursion depth may cause stack overflow
+
+**Common Pitfalls:**
+
+1. Not checking structural equality in `isSameTree` (only checking values)
+2. Forgetting to handle null nodes in `isSameTree`
+3. Not exploring both left and right subtrees
+4. Using `==` instead of `.equals()` for value comparison (for objects)
+
+**Similar Pattern Problems:**
+
+- Same Tree (LeetCode 100)
+- Symmetric Tree (LeetCode 101)
+- Binary Tree Paths (LeetCode 257)
+- Lowest Common Ancestor of a Binary Tree (LeetCode 236)
+
+---
+
+#### 9. **Diameter of Binary Tree**
+
+**Problem Description:**
+Given the `root` of a binary tree, return the length of the diameter of the tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root. The length of a path between two nodes is represented by the number of edges between them.
+
+**Example Walkthrough:**
+
+Input: `root = [1,2,3,4,5]`
+```
+Expected Output: 3
+
+Tree structure:
+       1
+      / \
+     2   3
+    / \
+   4   5
+
+Step 1: At node 4 (leaf): height = 1, diameter = 0
+Step 2: At node 5 (leaf): height = 1, diameter = 0
+Step 3: At node 2:
+        leftHeight = 1 (node 4)
+        rightHeight = 1 (node 5)
+        currentDiameter = 1 + 1 = 2
+        height = max(1, 1) + 1 = 2
+        maxDiameter = 2
+
+Step 4: At node 3 (leaf): height = 1, diameter = 0
+Step 5: At node 1 (root):
+        leftHeight = 2 (node 2)
+        rightHeight = 1 (node 3)
+        currentDiameter = 2 + 1 = 3
+        maxDiameter = max(2, 3) = 3
+
+Return 3
+```
+
+Input: `root = [1,2]`
+```
+Expected Output: 1
+
+Step 1: At node 2 (leaf): height = 1, diameter = 0
+Step 2: At node 1 (root):
+        leftHeight = 1
+        rightHeight = 0
+        currentDiameter = 1 + 0 = 1
+        maxDiameter = 1
+
+Return 1
+```
+
+**Key Insight - Height Calculation with Diameter Tracking:**
+
+- The diameter passing through a node = leftHeight + rightHeight
+- Use post-order traversal (bottom-up) to compute heights
+- Track the maximum diameter seen globally
+- Return the height to the parent, not the diameter
+
+**Why It Works:**
+
+- For any node, the longest path through it is the sum of the heights of its left and right subtrees
+- The global diameter is the maximum of all such paths
+- By computing height bottom-up, we avoid redundant calculations
+- Height and diameter can be computed in the same recursive pass
+
+**Visualization - Diameter Calculation:**
+```mermaid
+graph TD
+    A["height(node)"] --> B{"node == null?"}
+    B -->|Yes| C["Return 0"]
+    B -->|No| D["leftHeight = height(node.left)"]
+    D --> E["rightHeight = height(node.right)"]
+    E --> F["currentDiameter = leftHeight + rightHeight"]
+    F --> G["maxDiameter = max(maxDiameter, currentDiameter)"]
+    G --> H["Return max(leftHeight, rightHeight) + 1"]
+```
+
+```java
+class Solution {
+    private int maxDiameter = 0;
+    
+    public int diameterOfBinaryTree(TreeNode root) {
+        height(root);
+        return maxDiameter;
+    }
+    
+    private int height(TreeNode node) {
+        if (node == null) return 0;
+        
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+        
+        // Diameter through this node
+        maxDiameter = Math.max(maxDiameter, leftHeight + rightHeight);
+        
+        // Return height to parent
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+}
+```
+
+**Alternative - Using Array to Store Result:**
+```java
+public int diameterOfBinaryTree(TreeNode root) {
+    int[] maxDiameter = new int[1];
+    height(root, maxDiameter);
+    return maxDiameter[0];
+}
+
+private int height(TreeNode node, int[] maxDiameter) {
+    if (node == null) return 0;
+    
+    int leftHeight = height(node.left, maxDiameter);
+    int rightHeight = height(node.right, maxDiameter);
+    
+    maxDiameter[0] = Math.max(maxDiameter[0], leftHeight + rightHeight);
+    
+    return Math.max(leftHeight, rightHeight) + 1;
+}
+```
+
+**Time Complexity**: O(n) - each node is visited once
+
+**Space Complexity**: O(h) - recursion stack depth, where h is the height of the tree
+
+**Edge Cases:**
+
+- Empty tree: return 0
+- Single node: return 0 (no edges)
+- Two nodes: return 1 (one edge)
+- Skewed tree (all left or all right): diameter = height - 1
+- Balanced tree: diameter may or may not pass through root
+
+**Common Pitfalls:**
+
+1. Confusing height with diameter - height is measured in nodes, diameter in edges
+2. Not tracking global maximum correctly
+3. Returning diameter instead of height from recursive function
+4. Forgetting that diameter may not pass through root
+
+**Similar Pattern Problems:**
+
+- Maximum Depth of Binary Tree (LeetCode 104)
+- Balanced Binary Tree (LeetCode 110)
+- Longest Univalue Path (LeetCode 687)
+- Binary Tree Maximum Path Sum (LeetCode 124)
+
+---
+
+#### 10. **Kth Smallest Element in a BST**
+
+**Problem Description:**
+Given the `root` of a binary search tree, and an integer `k`, return the `kth` smallest value (1-indexed) of all the values of the nodes in the tree.
+
+**Example Walkthrough:**
+
+Input: `root = [3,1,4,null,2]`, `k = 1`
+```
+Expected Output: 1
+
+Tree structure:
+       3
+      / \
+     1   4
+      \
+       2
+
+Inorder traversal: 1, 2, 3, 4
+Kth smallest (k=1): 1
+
+Step 1: Traverse left subtree (node 1)
+        - Traverse left (null) -> return
+        - Count = 1, value = 1
+        - Since count == k, return 1
+
+Return 1
+```
+
+Input: `root = [5,3,6,2,4,null,null,1]`, `k = 3`
+```
+Expected Output: 3
+
+Tree structure:
+         5
+        / \
+       3   6
+      / \
+     2   4
+    /
+   1
+
+Inorder traversal: 1, 2, 3, 4, 5, 6
+Kth smallest (k=3): 3
+
+Step 1: Traverse left subtree of 5 (node 3)
+        - Traverse left subtree of 3 (node 2)
+          - Traverse left subtree of 2 (node 1)
+            - Count = 1, value = 1
+          - Count = 2, value = 2
+        - Count = 3, value = 3
+        - Since count == k, return 3
+
+Return 3
+```
+
+**Key Insight - Inorder Traversal of BST:**
+
+- Inorder traversal (Left -> Root -> Right) of a BST gives sorted ascending order
+- The kth node visited in inorder traversal is the kth smallest element
+- No need to store all values and sort - just count during traversal
+- Early termination when kth element is found
+
+**Why It Works:**
+
+- BST property guarantees: left subtree < root < right subtree
+- Inorder traversal visits nodes in sorted order
+- By counting nodes during traversal, we identify the kth smallest
+- Time complexity: O(h + k) where h is height, O(n) worst case
+
+**Visualization - Inorder Traversal:**
+```mermaid
+graph TD
+    A["inorder(node, k)"] --> B{"node == null?"}
+    B -->|Yes| C["Return"]
+    B -->|No| D["inorder(node.left)"]
+    D --> E["count++"]
+    E --> F{"count == k?"}
+    F -->|Yes| G["Store result"]
+    F -->|No| H["inorder(node.right)"]
+    H --> I["Return"]
+```
+
+```java
+class Solution {
+    private int count = 0;
+    private int result = 0;
+    
+    public int kthSmallest(TreeNode root, int k) {
+        inorder(root, k);
+        return result;
+    }
+    
+    private void inorder(TreeNode node, int k) {
+        if (node == null) return;
+        
+        inorder(node.left, k);
+        
+        count++;
+        if (count == k) {
+            result = node.val;
+            return;
+        }
+        
+        inorder(node.right, k);
+    }
+}
+```
+
+**Alternative - Iterative with Stack:**
+```java
+public int kthSmallest(TreeNode root, int k) {
+    Stack<TreeNode> stack = new Stack<>();
+    TreeNode curr = root;
+    int count = 0;
+    
+    while (curr != null || !stack.isEmpty()) {
+        while (curr != null) {
+            stack.push(curr);
+            curr = curr.left;
+        }
+        
+        curr = stack.pop();
+        count++;
+        
+        if (count == k) {
+            return curr.val;
+        }
+        
+        curr = curr.right;
+    }
+    
+    return -1;
+}
+```
+
+**Alternative - Morris Traversal (O(1) Space):**
+```java
+public int kthSmallest(TreeNode root, int k) {
+    int count = 0;
+    TreeNode curr = root;
+    
+    while (curr != null) {
+        if (curr.left == null) {
+            count++;
+            if (count == k) return curr.val;
+            curr = curr.right;
+        } else {
+            TreeNode pred = curr.left;
+            while (pred.right != null && pred.right != curr) {
+                pred = pred.right;
+            }
+            
+            if (pred.right == null) {
+                pred.right = curr;
+                curr = curr.left;
+            } else {
+                pred.right = null;
+                count++;
+                if (count == k) return curr.val;
+                curr = curr.right;
+            }
+        }
+    }
+    
+    return -1;
+}
+```
+
+**Time Complexity**: O(h + k) for recursive/iterative, O(n) for Morris traversal
+
+**Space Complexity**: O(h) for recursion stack, O(h) for iterative stack, O(1) for Morris traversal
+
+**Edge Cases:**
+
+- k = 1: smallest element (leftmost node)
+- k = n: largest element (rightmost node)
+- Single node: return that node's value
+- Skewed tree: O(n) time in worst case
+- k out of bounds: problem guarantees 1 <= k <= n
+
+**Common Pitfalls:**
+
+1. Forgetting to increment count before checking k
+2. Not returning early when kth element is found
+3. Using global variables incorrectly in recursive solution
+4. Not handling null nodes properly
+5. Morris traversal: must remove threads to restore tree
+
+**Similar Pattern Problems:**
+
+- Validate Binary Search Tree (LeetCode 98)
+- Binary Search Tree Iterator (LeetCode 173)
+- Inorder Successor in BST (LeetCode 285)
+- Convert Sorted Array to Binary Search Tree (LeetCode 108)
+
+---
+
 ### Hard
 
-#### 8. **Binary Tree Maximum Path Sum**
+#### 11. **Binary Tree Maximum Path Sum**
 
 **Problem Description:**
 Given a binary tree, find the maximum path sum. A path is any sequence of nodes where each pair of adjacent nodes is connected. The path can start and end at any node.
@@ -1059,7 +1548,7 @@ private int dfs(TreeNode node) {
 
 ---
 
-#### 9. **Recover Binary Search Tree**
+#### 12. **Recover Binary Search Tree**
 
 **Problem Description:**
 Two nodes in a BST were swapped by mistake. Recover the tree without changing its structure.

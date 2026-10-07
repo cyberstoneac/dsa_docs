@@ -663,9 +663,213 @@ public int findMin(int[] nums) {
 
 ---
 
+#### 7. **Time Based Key-Value Store**
+
+**Problem Description:**
+Design a time-based key-value data structure that can store multiple values for the same key at different time stamps and retrieve the key's value at a certain timestamp.
+
+Implement the `TimeMap` class:
+
+- `TimeMap()` — Initializes the object of the data structure.
+- `void set(String key, String value, int timestamp)` — Stores the key `key` with the value `value` at the given time `timestamp`.
+- `String get(String key, int timestamp)` — Returns a value such that `set` was called previously, with `timestamp_prev <= timestamp`. If there are multiple such values, it returns the value associated with the largest `timestamp_prev`. If there are no values, it returns `""`.
+
+**Example Walkthrough:**
+
+Input:
+```
+["TimeMap", "set", "get", "get", "set", "get", "get"]
+[[], ["foo", "bar", 1], ["foo", 1], ["foo", 3], ["foo", "bar2", 4], ["foo", 4], ["foo", 5]]
+```
+```
+Expected Output: [null, null, "bar", "bar", null, "bar2", "bar2"]
+
+Step 1: TimeMap() -> initialize empty map
+Step 2: set("foo", "bar", 1) -> map = {"foo": [(1, "bar")]}
+Step 3: get("foo", 1) -> largest timestamp <= 1 is 1 -> return "bar"
+Step 4: get("foo", 3) -> largest timestamp <= 3 is 1 -> return "bar"
+Step 5: set("foo", "bar2", 4) -> map = {"foo": [(1, "bar"), (4, "bar2")]}
+Step 6: get("foo", 4) -> largest timestamp <= 4 is 4 -> return "bar2"
+Step 7: get("foo", 5) -> largest timestamp <= 5 is 4 -> return "bar2"
+```
+
+Input:
+```
+["TimeMap", "set", "set", "get", "get", "get", "get"]
+[[], ["love", "high", 10], ["love", "low", 20], ["love", 5], ["love", 10], ["love", 15], ["love", 20]]
+```
+```
+Expected Output: [null, null, null, "", "high", "high", "low"]
+
+Step 1: TimeMap() -> empty map
+Step 2: set("love", "high", 10) -> map = {"love": [(10, "high")]}
+Step 3: set("love", "low", 20) -> map = {"love": [(10, "high"), (20, "low")]}
+Step 4: get("love", 5) -> no timestamp <= 5 -> return ""
+Step 5: get("love", 10) -> largest timestamp <= 10 is 10 -> return "high"
+Step 6: get("love", 15) -> largest timestamp <= 15 is 10 -> return "high"
+Step 7: get("love", 20) -> largest timestamp <= 20 is 20 -> return "low"
+```
+
+**Key Insight - HashMap + Binary Search on Timestamps:**
+
+- Use a `HashMap<String, List<Pair<Integer, String>>>` to store values per key
+- Since `set` is called with **increasing timestamps** for each key (guaranteed by problem), the list for each key is naturally sorted by timestamp
+- For `get`, use **binary search** to find the largest timestamp <= given timestamp
+- Return the corresponding value, or empty string if none exists
+
+**Why It Works:**
+
+- HashMap provides O(1) access to the list for each key
+- The timestamps are strictly increasing per key (problem guarantee), so the list is sorted
+- Binary search finds the rightmost timestamp <= target in O(log m) where m = number of sets for that key
+- If `low < 0`, no valid timestamp exists — return empty string
+- Total time complexity: O(1) for `set`, O(log m) for `get`
+
+**Visualization - Binary Search on Timestamps:**
+```mermaid
+graph TD
+    A["get(key, timestamp)"] --> B{"key in map?"}
+    B -->|No| C["Return empty string"]
+    B -->|Yes| D["list = map[key]"]
+    D --> E["Binary search for largest ts <= target"]
+    E --> F{"Found valid index?"}
+    F -->|No| G["Return empty string"]
+    F -->|Yes| H["Return list[idx].value"]
+```
+
+```java
+class TimeMap {
+    private Map<String, List<int[]>> map;
+    private Map<String, List<String>> values;
+
+    public TimeMap() {
+        map = new HashMap<>();
+        values = new HashMap<>();
+    }
+
+    public void set(String key, String value, int timestamp) {
+        map.computeIfAbsent(key, k -> new ArrayList<>()).add(new int[]{timestamp});
+        values.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
+    }
+
+    public String get(String key, int timestamp) {
+        if (!map.containsKey(key)) return "";
+        List<int[]> times = map.get(key);
+        List<String> vals = values.get(key);
+        int lo = 0, hi = times.size() - 1;
+        int idx = -1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (times.get(mid)[0] <= timestamp) {
+                idx = mid;
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return idx == -1 ? "" : vals.get(idx);
+    }
+}
+```
+
+**Alternative - Using TreeMap (Cleaner):**
+```java
+class TimeMap {
+    private Map<String, TreeMap<Integer, String>> map;
+
+    public TimeMap() {
+        map = new HashMap<>();
+    }
+
+    public void set(String key, String value, int timestamp) {
+        map.computeIfAbsent(key, k -> new TreeMap<>()).put(timestamp, value);
+    }
+
+    public String get(String key, int timestamp) {
+        if (!map.containsKey(key)) return "";
+        TreeMap<Integer, String> tree = map.get(key);
+        Map.Entry<Integer, String> entry = tree.floorEntry(timestamp);
+        return entry == null ? "" : entry.getValue();
+    }
+}
+```
+
+**Alternative - Using List of Pairs with Custom Binary Search:**
+```java
+class TimeMap {
+    class Pair {
+        int timestamp;
+        String value;
+        Pair(int t, String v) {
+            timestamp = t;
+            value = v;
+        }
+    }
+
+    private Map<String, List<Pair>> map;
+
+    public TimeMap() {
+        map = new HashMap<>();
+    }
+
+    public void set(String key, String value, int timestamp) {
+        map.computeIfAbsent(key, k -> new ArrayList<>())
+           .add(new Pair(timestamp, value));
+    }
+
+    public String get(String key, int timestamp) {
+        if (!map.containsKey(key)) return "";
+        List<Pair> list = map.get(key);
+        int lo = 0, hi = list.size() - 1;
+        String result = "";
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (list.get(mid).timestamp <= timestamp) {
+                result = list.get(mid).value;
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return result;
+    }
+}
+```
+
+**Time Complexity**: O(1) for `set`, O(log m) for `get` where m = number of sets for the key
+
+**Space Complexity**: O(n) where n = total number of set operations
+
+**Edge Cases:**
+
+- Empty TimeMap: `get` returns ""
+- Key not in map: `get` returns ""
+- No timestamp <= target: `get` returns ""
+- Exact timestamp match: returns that value
+- Multiple sets with same key: list grows, binary search works
+- Timestamps strictly increasing: guaranteed by problem constraints
+
+**Common Pitfalls:**
+
+1. Not using binary search — linear scan is O(m) per `get`, leading to TLE
+2. Not handling missing key or missing timestamp — must return empty string
+3. Using `TreeMap` incorrectly — `floorEntry` returns null if no valid key
+4. Forgetting that timestamps are strictly increasing per key — the list is sorted
+5. Off-by-one in binary search — must track the rightmost valid index
+
+**Similar Pattern Problems:**
+
+- Design Hit Counter (LeetCode 362)
+- Snapshot Array (LeetCode 1146)
+- LRU Cache (LeetCode 146)
+- LFU Cache (LeetCode 460)
+- Binary Search on Answer (various)
+
+---
+
 ### Hard
 
-#### 7. **Binary Search on Answer: Koko Eating Bananas**
+#### 8. **Binary Search on Answer: Koko Eating Bananas**
 
 **Problem Description:**
 Koko loves eating bananas. There are `n` piles of bananas. Koko eats at a fixed eating speed of `k` bananas per hour. If a pile has fewer bananas than `k`, Koko finishes the pile and moves to the next one (no eating across piles). Find the minimum eating speed so Koko can finish all bananas within `h` hours.
@@ -802,7 +1006,7 @@ To calculate hours for eating a pile:
 
 ---
 
-#### 8. **Median of Two Sorted Arrays**
+#### 9. **Median of Two Sorted Arrays**
 
 **Problem Description:**
 Given two sorted arrays, find the median. If combined length is even, return average of two middle elements. Must solve in O(log(min(m,n))) time.
@@ -933,6 +1137,175 @@ Median = max(left) = max(1, 2) = 2
 **Similar Pattern Problems:**
 - Median of Two Sorted Lists (identical approach)
 - Find K-th Largest Element (partition-based selection)
+
+---
+
+#### 10. **Split Array Largest Sum**
+
+**Problem Description:**
+Given an integer array `nums` and an integer `k`, split `nums` into `k` non-empty subarrays such that the largest sum of any subarray is **minimized**. Return the minimized largest sum of the split. A subarray is a contiguous part of the array.
+
+**Example Walkthrough:**
+
+Input: `nums = [7,2,5,10,8], k = 2`
+```
+Expected Output: 18
+
+All possible splits into 2 subarrays:
+[7] [2,5,10,8]  -> max sum = 7, 25 -> max = 25
+[7,2] [5,10,8]  -> max sum = 9, 23 -> max = 23
+[7,2,5] [10,8]  -> max sum = 14, 18 -> max = 18
+[7,2,5,10] [8]  -> max sum = 24, 8 -> max = 24
+
+Minimum of all max sums = 18
+Return 18
+```
+
+Input: `nums = [1,2,3,4,5], k = 2`
+```
+Expected Output: 9
+
+Splits:
+[1] [2,3,4,5]  -> max = 14
+[1,2] [3,4,5]  -> max = 12
+[1,2,3] [4,5]  -> max = 9
+[1,2,3,4] [5]  -> max = 10
+
+Minimum = 9
+Return 9
+```
+
+Input: `nums = [1,4,4], k = 3`
+```
+Expected Output: 4
+
+Each element must be its own subarray:
+[1] [4] [4] -> max = 4
+
+Return 4
+```
+
+**Key Insight - Binary Search on Answer (Minimax):**
+
+- We're minimizing the **maximum** subarray sum
+- The answer lies between:
+  - `lo = max(nums)` — at least the largest single element
+  - `hi = sum(nums)` — at most the entire array as one subarray
+- **Monotonic property**: If we can split into k subarrays with max sum <= X, then we can also do it with max sum <= X+1
+- Binary search on the answer X: for each candidate, check if we can split into at most k subarrays with each sum <= X
+- Greedy check: iterate through nums, accumulate sum; when sum exceeds X, start a new subarray
+
+**Why It Works:**
+
+- The monotonic property guarantees binary search correctness
+- The greedy check is optimal: to minimize the number of subarrays with each sum <= X, we should pack as many elements as possible into each subarray
+- If greedy uses <= k subarrays, then X is feasible
+- Time complexity: O(n log S) where S = sum of all elements
+
+**Visualization - Binary Search + Greedy Check:**
+```mermaid
+graph TD
+    A["lo = max(nums), hi = sum(nums)"] --> B{"lo < hi?"}
+    B -->|No| C["Return lo"]
+    B -->|Yes| D["mid = lo + (hi - lo) / 2"]
+    D --> E["Greedy: can we split into <= k subarrays<br/>with each sum <= mid?"]
+    E --> F{"Feasible?"}
+    F -->|Yes| G["hi = mid"]
+    F -->|No| H["lo = mid + 1"]
+    G --> B
+    H --> B
+```
+
+```java
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int lo = 0, hi = 0;
+        for (int num : nums) {
+            lo = Math.max(lo, num);
+            hi += num;
+        }
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (canSplit(nums, k, mid)) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
+    }
+
+    private boolean canSplit(int[] nums, int k, int maxSum) {
+        int subarrays = 1;
+        int currentSum = 0;
+        for (int num : nums) {
+            if (currentSum + num > maxSum) {
+                subarrays++;
+                currentSum = num;
+                if (subarrays > k) return false;
+            } else {
+                currentSum += num;
+            }
+        }
+        return true;
+    }
+}
+```
+
+**Alternative - DP (O(n² * k), only for small n):**
+```java
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int n = nums.length;
+        int[] prefix = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = prefix[i] + nums[i];
+        }
+        // dp[i][j] = min largest sum for first i elements split into j subarrays
+        int[][] dp = new int[n + 1][k + 1];
+        for (int[] row : dp) Arrays.fill(row, Integer.MAX_VALUE);
+        dp[0][0] = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= Math.min(i, k); j++) {
+                for (int p = j - 1; p < i; p++) {
+                    int subarraySum = prefix[i] - prefix[p];
+                    dp[i][j] = Math.min(dp[i][j],
+                                        Math.max(dp[p][j - 1], subarraySum));
+                }
+            }
+        }
+        return dp[n][k];
+    }
+}
+```
+
+**Time Complexity**: O(n log S) for binary search, O(n² × k) for DP
+
+**Space Complexity**: O(1) for binary search (excluding input), O(n × k) for DP
+
+**Edge Cases:**
+
+- k = 1: return sum of entire array
+- k = n: return max element (each element its own subarray)
+- Single element: return that element (k must be 1)
+- All same elements: answer = ceil(n/k) × element
+- Large sum: use long for sum computation if overflow is a concern
+
+**Common Pitfalls:**
+
+1. Not setting `lo = max(nums)` — must be at least the largest element
+2. Not using greedy check correctly — count subarrays, not sum of sums
+3. Off-by-one in binary search — `while (lo < hi)` with `hi = mid` / `lo = mid + 1`
+4. Using DP for large inputs — O(n² × k) times out for n > 1000
+5. Forgetting that the answer must be at least `max(nums)` — a subarray can't be smaller than any single element
+
+**Similar Pattern Problems:**
+
+- Capacity to Ship Packages Within D Days (LeetCode 1011) — identical pattern
+- Koko Eating Bananas (LeetCode 875) — binary search on answer
+- Minimum Number of Days to Make m Bouquets (LeetCode 1482)
+- Find the Smallest Divisor Given a Threshold (LeetCode 1283)
+- Magnetic Force Between Two Balls (LeetCode 1552)
 
 ---
 

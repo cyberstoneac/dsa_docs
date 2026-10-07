@@ -19,20 +19,20 @@ aligned with **NeetCode 150** standards.
 
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
-| [Array](array.md) | 24 | 🟢 9 · 🟡 12 · 🔴 3 |
-| [String](string.md) | 11 | 🟢 5 · 🟡 5 · 🔴 0 |
-| [Stack](stack.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
+| [Array](array.md) | 28 | 🟢 10 · 🟡 15 · 🔴 3 |
+| [String](string.md) | 13 | 🟢 5 · 🟡 6 · 🔴 2 |
+| [Stack](stack.md) | 8 | 🟢 2 · 🟡 4 · 🔴 2 |
 | [Queue](queue.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-| [Linked List](linked-list.md) | 11 | 🟢 5 · 🟡 4 · 🔴 2 |
+| [Linked List](linked-list.md) | 13 | 🟢 5 · 🟡 5 · 🔴 3 |
 
 ### 🌲 Non-Linear Data Structures
 
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
-| [Tree](tree.md) | 9 | 🟢 4 · 🟡 3 · 🔴 2 |
-| [Graph](graph.md) | 12+ | 🟢 4 · 🟡 4 · 🔴 4 |
+| [Tree](tree.md) | 12 | 🟢 4 · 🟡 6 · 🔴 2 |
+| [Graph](graph.md) | 17 | 🟢 4 · 🟡 8 · 🔴 5 |
 | [Trie](trie.md) | 4 | 🟡 2 · 🔴 2 |
-| [Heap / Priority Queue](heap.md) | 7 | 🟢 2 · 🟡 4 · 🔴 1 |
+| [Heap / Priority Queue](heap.md) | 10 | 🟢 2 · 🟡 6 · 🔴 2 |
 
 ### 🎯 Problem-Solving Techniques
 
@@ -40,7 +40,7 @@ aligned with **NeetCode 150** standards.
 |-------|----------|----------------|
 | [Two Pointers](two-pointers.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
 | [Sliding Window](sliding-window.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
-| [Binary Search](binary-search.md) | 8 | 🟢 2 · 🟡 4 · 🔴 2 |
+| [Binary Search](binary-search.md) | 10 | 🟢 2 · 🟡 5 · 🔴 3 |
 | [Backtracking](backtracking.md) | 8 | 🟢 3 · 🟡 3 · 🔴 2 |
 | [Intervals](intervals.md) | 6 | 🟢 2 · 🟡 3 · 🔴 1 |
 
@@ -56,7 +56,7 @@ aligned with **NeetCode 150** standards.
 | Topic | Problems | Difficulty Mix |
 |-------|----------|----------------|
 | [Maths](maths.md) | 9 | 🟢 3 · 🟡 4 · 🔴 2 |
-| [Bit Manipulation](bit-manipulation.md) | 10 | 🟢 5 · 🟡 3 · 🔴 2 |
+| [Bit Manipulation](bit-manipulation.md) | 13 | 🟢 5 · 🟡 5 · 🔴 3 |
 
 > 🟢 Easy &nbsp;&nbsp; 🟡 Medium &nbsp;&nbsp; 🔴 Hard
 

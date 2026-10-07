@@ -800,9 +800,493 @@ class MedianFinder {
 
 ---
 
+#### 7. **Task Scheduler**
+
+**Problem Description:**
+You are given an array of CPU tasks, each labeled with a letter from A to Z, and a number n. Each CPU interval can be idle or allow the completion of one task. Tasks can be completed in any order, but there's a constraint: there has to be a gap of at least n intervals between two tasks with the same label. Return the minimum number of CPU intervals required to complete all tasks.
+
+**Example Walkthrough:**
+
+Input: `tasks = ["A","A","A","B","B","B"], n = 2`
+```
+Expected Output: 8
+
+Approach: Greedy Math Formula
+
+Step 1: Count frequencies
+        A: 3, B: 3
+        maxFreq = 3
+
+Step 2: Count how many tasks have maxFreq
+        countMax = 2 (both A and B have freq 3)
+
+Step 3: Calculate minimum intervals
+        Formula: (maxFreq - 1) * (n + 1) + countMax
+        = (3 - 1) * (2 + 1) + 2
+        = 2 * 3 + 2
+        = 8
+
+Step 4: Compare with total tasks
+        max(8, 6) = 8
+
+Return 8
+```
+
+Input: `tasks = ["A","C","A","B","D","B"], n = 1`
+```
+Expected Output: 6
+
+Step 1: Frequencies: A:2, B:2, C:1, D:1
+        maxFreq = 2, countMax = 2
+
+Step 2: Formula: (2-1) * (1+1) + 2 = 1 * 2 + 2 = 4
+
+Step 3: max(4, 6) = 6
+
+Return 6
+```
+
+Input: `tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"], n = 2`
+```
+Expected Output: 16
+
+Step 1: Frequencies: A:6, others: 1 each
+        maxFreq = 6, countMax = 1
+
+Step 2: Formula: (6-1) * (2+1) + 1 = 5 * 3 + 1 = 16
+
+Step 3: max(16, 12) = 16
+
+Return 16
+```
+
+**Key Insight - Greedy Math Formula (No Simulation Needed):**
+
+- The most frequent task dictates the minimum time
+- Imagine slots arranged by the most frequent task: `A _ _ A _ _ A`
+- There are `(maxFreq - 1)` gaps, each of size `n`
+- Total slots = `(maxFreq - 1) * (n + 1) + countMax`
+- If there are more tasks than this formula gives, use total task count
+- Formula: `max(totalTasks, (maxFreq - 1) * (n + 1) + countMax)`
+
+**Why It Works:**
+
+- The most frequent task must be separated by at least `n` idle/other-task slots
+- Other tasks fill these gaps to reduce idle time
+- If there are enough other tasks, no idle time is needed (answer = total tasks)
+- If not, idle time is unavoidable
+- This greedy formula avoids simulation and runs in O(n) time
+
+**Visualization - Task Scheduling:**
+```mermaid
+graph TD
+    A["Count task frequencies"] --> B["Find maxFreq and countMax"]
+    B --> C["Calculate formula = (maxFreq-1)*(n+1)+countMax"]
+    C --> D["Return max(formula, totalTasks)"]
+```
+
+```java
+public int leastInterval(char[] tasks, int n) {
+    int[] freq = new int[26];
+    for (char c : tasks) freq[c - 'A']++;
+    int maxFreq = 0, countMax = 0;
+    for (int f : freq) {
+        if (f > maxFreq) {
+            maxFreq = f;
+            countMax = 1;
+        } else if (f == maxFreq && f > 0) {
+            countMax++;
+        }
+    }
+    int formula = (maxFreq - 1) * (n + 1) + countMax;
+    return Math.max(formula, tasks.length);
+}
+```
+
+**Alternative - Priority Queue Simulation:**
+```java
+public int leastInterval(char[] tasks, int n) {
+    int[] freq = new int[26];
+    for (char c : tasks) freq[c - 'A']++;
+    PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+    for (int f : freq) if (f > 0) pq.offer(f);
+    int time = 0;
+    while (!pq.isEmpty()) {
+        List<Integer> temp = new ArrayList<>();
+        for (int i = 0; i <= n; i++) {
+            if (!pq.isEmpty()) {
+                int f = pq.poll();
+                if (f - 1 > 0) temp.add(f - 1);
+            }
+            time++;
+            if (pq.isEmpty() && temp.isEmpty()) break;
+        }
+        pq.addAll(temp);
+    }
+    return time;
+}
+```
+
+**Time Complexity**: O(n) for formula, O(n log 26) for priority queue simulation
+
+**Space Complexity**: O(1) - only 26 possible tasks
+
+**Edge Cases:**
+
+- n = 0: no cooldown, answer = total tasks
+- All tasks same: answer = (count-1)*(n+1)+1
+- All tasks distinct: answer = total tasks
+- Single task: answer = 1
+- Many tasks but few types: idle time dominates
+
+**Common Pitfalls:**
+
+1. Forgetting to take max with total tasks
+2. Not counting all tasks with maxFreq correctly
+3. Using simulation when formula is simpler and faster
+4. Off-by-one in gap calculation
+
+**Similar Pattern Problems:**
+
+- Reorganize String (LeetCode 767)
+- Rearrange String k Distance Apart (LeetCode 358)
+- Maximum Number of Tasks You Can Assign (LeetCode 2071)
+
+---
+
+#### 8. **Reorganize String**
+
+**Problem Description:**
+Given a string s, rearrange the characters of s so that any two adjacent characters are not the same. Return any possible rearrangement of s or return "" if not possible.
+
+**Example Walkthrough:**
+
+Input: `s = "aab"`
+```
+Expected Output: "aba"
+
+Step 1: Count frequencies: a:2, b:1
+        maxFreq = 2, n = 3
+        Check: maxFreq <= (n+1)/2 -> 2 <= 2 ✓
+
+Step 2: Max-heap: [(-2,'a'), (-1,'b')]
+        Result = "", prev = None
+
+Step 3: Pop a (count 2) -> result = "a"
+        Push back nothing (prev None)
+        prev = (a, 1)
+
+Step 4: Pop b (count 1) -> result = "ab"
+        Push back prev (a, 1) -> heap: [(-1,'a')]
+        prev = (b, 0)
+
+Step 5: Pop a (count 1) -> result = "aba"
+        Push back prev (b, 0) - skip (count 0)
+        prev = (a, 0)
+
+Step 6: Heap empty, return "aba"
+```
+
+Input: `s = "aaab"`
+```
+Expected Output: ""
+
+Step 1: Count frequencies: a:3, b:1
+        maxFreq = 3, n = 4
+        Check: 3 <= (4+1)/2 = 2.5 -> 3 > 2.5
+        Impossible, return ""
+```
+
+**Key Insight - Greedy with Max-Heap and Holding Previous Character:**
+
+- Always place the most frequent remaining character
+- After placing a character, hold it aside for one step so it can't be picked again
+- Push the previous character back into the heap at the next step
+- This prevents placing the same character twice in a row
+- Feasibility check: if any character appears more than `(n+1)/2` times, impossible
+
+**Why It Works:**
+
+- Greedy choice (most frequent first) spreads the most common character as widely as possible
+- Holding one character back ensures no adjacent duplicates
+- The feasibility condition is necessary: if a character appears more than half the string length (rounded up), it must be adjacent to itself
+- Time complexity: O(n log 26) = O(n) since heap size is at most 26
+
+**Visualization - Greedy Heap:**
+```mermaid
+graph TD
+    A["Count frequencies"] --> B{"maxFreq > (n+1)/2?"}
+    B -->|Yes| C["Return empty string"]
+    B -->|No| D["Build max-heap of (freq, char)"]
+    D --> E{"Heap or prev has chars?"}
+    E -->|No| F["Return result"]
+    E -->|Yes| G["Pop most frequent char"]
+    G --> H["Append to result"]
+    H --> I["Push back prev char if count > 0"]
+    I --> J["Set current as prev"]
+    J --> E
+```
+
+```java
+public String reorganizeString(String s) {
+    int[] freq = new int[26];
+    int n = s.length();
+    for (char c : s.toCharArray()) freq[c - 'a']++;
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[0] - a[0]);
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > (n + 1) / 2) return "";
+        if (freq[i] > 0) pq.offer(new int[]{freq[i], i});
+    }
+    StringBuilder result = new StringBuilder();
+    int[] prev = null;
+    while (!pq.isEmpty() || prev != null) {
+        if (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            result.append((char) (curr[1] + 'a'));
+            curr[0]--;
+            if (prev != null && prev[0] > 0) pq.offer(prev);
+            prev = curr[0] > 0 ? curr : null;
+        } else {
+            break;
+        }
+    }
+    return result.length() == n ? result.toString() : "";
+}
+```
+
+**Alternative - Interleaving (Sort by Frequency):**
+```java
+public String reorganizeString(String s) {
+    int[] freq = new int[26];
+    int n = s.length();
+    for (char c : s.toCharArray()) freq[c - 'a']++;
+    int maxFreq = 0, maxIdx = 0;
+    for (int i = 0; i < 26; i++) {
+        if (freq[i] > maxFreq) {
+            maxFreq = freq[i];
+            maxIdx = i;
+        }
+    }
+    if (maxFreq > (n + 1) / 2) return "";
+    char[] result = new char[n];
+    int idx = 0;
+    while (freq[maxIdx] > 0) {
+        result[idx] = (char) (maxIdx + 'a');
+        idx += 2;
+        freq[maxIdx]--;
+    }
+    for (int i = 0; i < 26; i++) {
+        while (freq[i] > 0) {
+            if (idx >= n) idx = 1;
+            result[idx] = (char) (i + 'a');
+            idx += 2;
+            freq[i]--;
+        }
+    }
+    return new String(result);
+}
+```
+
+**Time Complexity**: O(n) - each character processed once
+
+**Space Complexity**: O(n) - for the output string, O(1) extra for frequency array
+
+**Edge Cases:**
+
+- Single character: return that character
+- Two different characters: "ab" -> "ab", "aa" -> ""
+- All same characters: impossible if length > 1
+- Max frequency exactly (n+1)/2: possible (e.g., "aab" -> "aba")
+- Empty string: return ""
+
+**Common Pitfalls:**
+
+1. Not checking feasibility before attempting (waste time)
+2. Forgetting to push previous character back into heap
+3. Using `>=` instead of `>` for feasibility check
+4. In interleaving approach: not resetting index to 1 when reaching end
+5. Off-by-one in feasibility formula: `(n+1)/2`, not `n/2`
+
+**Similar Pattern Problems:**
+
+- Task Scheduler (LeetCode 621)
+- Rearrange String k Distance Apart (LeetCode 358)
+- Sort Characters By Frequency (LeetCode 451)
+- Maximum Frequency Stack (LeetCode 895)
+
+---
+
+#### 9. **Find K Pairs with Smallest Sums**
+
+**Problem Description:**
+You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k. Define a pair (u, v) which consists of one element from the first array and one element from the second array. Return the k pairs (u1, v1), (u2, v2), ..., (uk, vk) with the smallest sums.
+
+**Example Walkthrough:**
+
+Input: `nums1 = [1,7,11], nums2 = [2,4,6], k = 3`
+```
+Expected Output: [[1,2],[1,4],[1,6]]
+
+Approach: Min-Heap with Pair Exploration
+
+Step 1: Initialize min-heap with pairs (nums1[i], nums2[0])
+        Heap: [(1,2), (7,2), (11,2)]
+
+Step 2: Pop smallest -> (1,2), add to result
+        Push next pair from same row: (1,4)
+        Heap: [(1,4), (7,2), (11,2)]
+
+Step 3: Pop smallest -> (1,4), add to result
+        Push next pair from same row: (1,6)
+        Heap: [(1,6), (7,2), (11,2)]
+
+Step 4: Pop smallest -> (1,6), add to result
+        k=3 reached, stop
+
+Result: [[1,2],[1,4],[1,6]]
+```
+
+Input: `nums1 = [1,1,2], nums2 = [1,2,3], k = 2`
+```
+Expected Output: [[1,1],[1,1]]
+
+Step 1: Heap: [(1,1), (1,1), (2,1)]
+
+Step 2: Pop (1,1), push (1,2) -> result: [[1,1]]
+        Heap: [(1,1), (1,2), (2,1)]
+
+Step 3: Pop (1,1), push (1,2) -> result: [[1,1],[1,1]]
+        k=2 reached
+
+Result: [[1,1],[1,1]]
+```
+
+**Key Insight - Min-Heap with Row Exploration:**
+
+- The matrix of pair sums is sorted in both dimensions (since nums1, nums2 sorted)
+- Start with pairs (nums1[i], nums2[0]) for all i
+- Pop the smallest pair, add to result
+- Push the next pair from the same row: (nums1[i], nums2[j+1])
+- This explores the sorted matrix in order without generating all pairs
+
+**Why It Works:**
+
+- The smallest sum must involve nums1[0] and nums2[0]
+- From any pair (i, j), the next smallest in the same row is (i, j+1)
+- Min-heap ensures we always pop the globally smallest available pair
+- This is like merging k sorted lists efficiently
+- Avoids generating all m*n pairs (which could be huge)
+
+**Visualization - Heap Exploration:**
+```mermaid
+graph TD
+    A["Initialize heap with (nums1[i], nums2[0])"] --> B{"k pairs found?"}
+    B -->|No| C["Pop smallest pair (u,v)"]
+    C --> D["Add to result"]
+    D --> E{"j+1 < nums2.length?"}
+    E -->|Yes| F["Push (u, nums2[j+1])"]
+    E -->|No| G["Skip"]
+    F --> B
+    G --> B
+    B -->|Yes| H["Return result"]
+```
+
+```java
+public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+    List<List<Integer>> result = new ArrayList<>();
+    if (nums1.length == 0 || nums2.length == 0 || k == 0) return result;
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> 
+        (nums1[a[0]] + nums2[a[1]]) - (nums1[b[0]] + nums2[b[1]]));
+    for (int i = 0; i < Math.min(nums1.length, k); i++) {
+        pq.offer(new int[]{i, 0});
+    }
+    while (k-- > 0 && !pq.isEmpty()) {
+        int[] pair = pq.poll();
+        int i = pair[0], j = pair[1];
+        result.add(Arrays.asList(nums1[i], nums2[j]));
+        if (j + 1 < nums2.length) {
+            pq.offer(new int[]{i, j + 1});
+        }
+    }
+    return result;
+}
+```
+
+**Alternative - Binary Search on Sum (Advanced):**
+```java
+public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+    int lo = nums1[0] + nums2[0];
+    int hi = nums1[nums1.length - 1] + nums2[nums2.length - 1];
+    while (lo < hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (countPairs(nums1, nums2, mid) < k) lo = mid + 1;
+        else hi = mid;
+    }
+    // Collect all pairs with sum < lo, then pairs with sum == lo until k
+    List<List<Integer>> result = new ArrayList<>();
+    int sum = lo;
+    for (int i = 0; i < nums1.length; i++) {
+        for (int j = 0; j < nums2.length; j++) {
+            if (nums1[i] + nums2[j] < sum) {
+                result.add(Arrays.asList(nums1[i], nums2[j]));
+            }
+        }
+    }
+    int remaining = k - result.size();
+    for (int i = 0; i < nums1.length && remaining > 0; i++) {
+        for (int j = 0; j < nums2.length && remaining > 0; j++) {
+            if (nums1[i] + nums2[j] == sum) {
+                result.add(Arrays.asList(nums1[i], nums2[j]));
+                remaining--;
+            }
+        }
+    }
+    return result;
+}
+
+private int countPairs(int[] nums1, int[] nums2, int target) {
+    int count = 0, j = nums2.length - 1;
+    for (int i = 0; i < nums1.length; i++) {
+        while (j >= 0 && nums1[i] + nums2[j] > target) j--;
+        if (j < 0) break;
+        count += j + 1;
+    }
+    return count;
+}
+```
+
+**Time Complexity**: O(k log k) for heap approach, O((m+n) log(maxSum)) for binary search
+
+**Space Complexity**: O(k) for heap, O(k) for result
+
+**Edge Cases:**
+
+- k > total pairs: return all pairs
+- Empty arrays: return empty list
+- k = 0: return empty list
+- Duplicate values: handle correctly (multiple pairs with same sum)
+- Single element arrays: return that pair
+
+**Common Pitfalls:**
+
+1. Not limiting initial heap size to min(nums1.length, k) - wastes memory
+2. Forgetting to check j+1 bounds before pushing next pair
+3. Using sum in heap comparator incorrectly (overflow with large numbers)
+4. Not handling k larger than total pairs
+5. In binary search: off-by-one in counting pairs
+
+**Similar Pattern Problems:**
+
+- Kth Smallest Element in a Sorted Matrix (LeetCode 378)
+- Kth Smallest Number in Multiplication Table (LeetCode 668)
+- Find K-th Smallest Pair Distance (LeetCode 719)
+- K-th Smallest Prime Fraction (LeetCode 786)
+
+---
+
 ### Hard
 
-#### 7. **IPO (Maximum Capital)**
+#### 10. **IPO (Maximum Capital)**
 
 **Problem Description:**
 You have k projects to choose from. Each project has a capital requirement and a profit. You start with capital w. You can work on at most k projects (one at a time). After completing a project, its profit adds to your capital. Maximize your final capital.

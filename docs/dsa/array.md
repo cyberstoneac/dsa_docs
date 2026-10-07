@@ -2635,12 +2635,174 @@ public void setZeroes(int[][] matrix) {
 - Rotate Image (in-place transformation)
 - Spiral Matrix (boundary traversal)
 - Valid Sudoku (constraint tracking)
+
 ---
 
+#### 23. **H-Index**
+
+**Problem Description:**
+Given an array of integers `citations` where `citations[i]` is the number of citations a researcher received for their `i`th paper, return the researcher's h-index.
+
+According to the definition of h-index on Wikipedia: The h-index is defined as the maximum value of `h` such that the given researcher has published at least `h` papers that have each been cited at least `h` times.[citation:1][citation:19]
+
+**Example Walkthrough:**
+
+Input: `citations = [3,0,6,1,5]`
+```
+Expected Output: 3
+
+Explanation:
+Researcher has 5 papers with citations: 3, 0, 6, 1, 5 respectively.
+
+Sorted ascending: [0, 1, 3, 5, 6]
+
+We need max h such that at least h papers have >= h citations.
+
+Check h=5: Need 5 papers with >=5 citations. Only 2 papers (5,6) qualify. No.
+Check h=4: Need 4 papers with >=4 citations. Only 2 papers (5,6) qualify. No.
+Check h=3: Need 3 papers with >=3 citations. Papers 3,5,6 qualify (3 papers). YES!
+Check h=2: Need 2 papers with >=2 citations. Papers 3,5,6 qualify. YES!
+
+Maximum valid h = 3
+Return 3
+```
+
+Input: `citations = [1,3,1]`
+```
+Expected Output: 1
+
+Sorted: [1, 1, 3]
+
+Check h=3: Need 3 papers with >=3 citations. Only 1 paper (3) qualifies. No.
+Check h=2: Need 2 papers with >=2 citations. Only 1 paper (3) qualifies. No.
+Check h=1: Need 1 paper with >=1 citation. Papers 1,1,3 qualify (3 papers). YES!
+
+Maximum valid h = 1
+Return 1
+```
+
+**Key Insight - Sort and Find the First Valid Index:**
+
+- Sort the array in ascending order
+- For each index `i` in sorted array, the number of papers with at least `citations[i]` citations is `n - i` (all papers from index `i` to the end)
+- The h-index condition is: `citations[i] >= n - i`
+- The first index `i` (from left) that satisfies this gives the maximum h-index, which is `n - i`
+- Return 0 if no such index exists
+
+**Why It Works:**
+
+- After sorting, `citations[i]` is the smallest citation count among the papers from index `i` to the end
+- If `citations[i] >= n - i`, then all `n - i` papers from index `i` onwards have at least `n - i` citations each
+- Since we iterate from left (smallest values), the first valid index gives the largest possible h-index
+- This is O(n log n) due to sorting
+
+**Visualization - Sort and Scan:**
+```mermaid
+graph TD
+    A["Sort citations ascending"] --> B["For i from 0 to n-1"]
+    B --> C{"citations[i] >= n - i?"}
+    C -->|Yes| D["Return n - i"]
+    C -->|No| E{"More indices?"}
+    E -->|Yes| B
+    E -->|No| F["Return 0"]
+```
+
+```java
+class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        Arrays.sort(citations);
+        for (int i = 0; i < n; i++) {
+            if (citations[i] >= n - i) {
+                return n - i;
+            }
+        }
+        return 0;
+    }
+}
+```
+
+**Alternative - Counting Sort (O(n) Time):**
+```java
+class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        int[] buckets = new int[n + 1];
+        // Bucket citations: values >= n go into bucket n
+        for (int c : citations) {
+            if (c >= n) {
+                buckets[n]++;
+            } else {
+                buckets[c]++;
+            }
+        }
+        int count = 0;
+        // Iterate from highest possible h down to 0
+        for (int h = n; h >= 0; h--) {
+            count += buckets[h];
+            if (count >= h) {
+                return h;
+            }
+        }
+        return 0;
+    }
+}
+```
+
+**Alternative - Sorting Descending:**
+```java
+class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        Integer[] sorted = Arrays.stream(citations).boxed()
+            .sorted(Collections.reverseOrder())
+            .toArray(Integer[]::new);
+        int h = 0;
+        for (int i = 0; i < n; i++) {
+            if (sorted[i] >= i + 1) {
+                h = i + 1;
+            } else {
+                break;
+            }
+        }
+        return h;
+    }
+}
+```
+
+**Time Complexity**: O(n log n) for sorting approach, O(n) for counting sort (bucket) approach
+
+**Space Complexity**: O(1) for sorting approach (excluding sort space), O(n) for counting sort
+
+**Edge Cases:**
+
+- Empty array: return 0 (problem guarantees n >= 1)
+- All citations = 0: return 0
+- All citations very high (e.g., [100, 100]): return n (2)
+- Single paper: return min(1, citations[0])
+- Citations = [0]: return 0
+- Citations = [1]: return 1
+- n = 5000, all citations = 5000: return 5000
+
+**Common Pitfalls:**
+
+1. Using descending sort and checking `sorted[i] >= i + 1` — must break when condition fails
+2. Not recognizing that `n - i` is the number of papers with at least `citations[i]` citations
+3. Forgetting to return 0 when no valid h exists
+4. Off-by-one in counting sort bucket indexing (values >= n go to bucket n)
+
+**Similar Pattern Problems:**
+
+- H-Index II (LeetCode 275) — sorted input, binary search O(log n)
+- Kth Largest Element in an Array (LeetCode 215)
+- Maximum Number of Consecutive Values You Can Make (LeetCode 1798)
+- Sort Colors (LeetCode 75)
+
+---
 
 ### Hard
 
-#### 23. **Trapping Rain Water**
+#### 24. **Trapping Rain Water**
 
 **Problem Description:**
 Given elevation map, compute how much water can be trapped after raining.
@@ -2796,7 +2958,7 @@ public int trap(int[] height) {
 
 ---
 
-#### 24. **First Missing Positive**
+#### 25. **First Missing Positive**
 
 **Problem Description:**
 Given unsorted integer array, find the smallest missing positive integer. Must run in O(n) time and O(1) space.
@@ -2910,7 +3072,7 @@ public int firstMissingPositive(int[] nums) {
 
 ---
 
-#### 25. **Longest Consecutive Sequence**
+#### 26. **Longest Consecutive Sequence**
 
 **Problem Description:**
 Given unsorted array, find length of longest consecutive elements sequence. Must run in O(n) time.
@@ -3009,6 +3171,411 @@ public int longestConsecutive(int[] nums) {
 - Consecutive Numbers Sum
 - Longest Substring Without Repeating Characters
 - Binary Tree Longest Consecutive Sequence
+
+---
+
+#### 27. **Brick Wall**
+
+**Problem Description:**
+There is a rectangular brick wall in front of you with `n` rows of bricks. The `i`th row has some number of bricks each of the same height (i.e., one unit) but they can be of different widths. The total width of each row is the same. Draw a vertical line from the top to the bottom of the wall and find the minimum number of bricks this line crosses. You cannot draw a line just along one of the two vertical edges of the wall, in which case the line will obviously cross no bricks.
+
+**Example Walkthrough:**
+
+Input: `wall = [[1,2,2,1],[3,1,2],[1,3,2],[2,4],[3,1,2],[1,3,1,1]]`
+```
+Expected Output: 2
+
+Wall visualization (each row's cumulative positions):
+Row 0: [1, 3, 5, 6]  (gaps at x=1, 3, 5)
+Row 1: [3, 4, 6]     (gaps at x=3, 4)
+Row 2: [1, 4, 6]     (gaps at x=1, 4)
+Row 3: [2, 6]        (gaps at x=2)
+Row 4: [3, 4, 6]     (gaps at x=3, 4)
+Row 5: [1, 4, 5, 6]  (gaps at x=1, 4, 5)
+
+Step 1: Count gap frequency across all rows
+        x=1: appears in rows 0, 2, 5 -> count=3
+        x=2: appears in row 3 -> count=1
+        x=3: appears in rows 0, 1, 4 -> count=3
+        x=4: appears in rows 1, 2, 4, 5 -> count=4
+        x=5: appears in rows 0, 5 -> count=2
+        (x=6 is the total width, excluded)
+
+Step 2: Max gaps at any x = 4 (at x=4)
+
+Step 3: Total rows = 6
+        Min bricks crossed = 6 - 4 = 2
+
+Return 2
+```
+
+Input: `wall = [[1],[1],[1]]`
+```
+Expected Output: 3
+
+Row 0: [1] (gap at x=1, but x=1 is total width - excluded)
+Row 1: [1]
+Row 2: [1]
+
+No internal gaps, so any line crosses all 3 rows.
+Return 3.
+```
+
+Input: `wall = [[1,1],[2],[1,1]]`
+```
+Expected Output: 1
+
+Row 0: [1, 2] (gap at x=1)
+Row 1: [2]    (no internal gap)
+Row 2: [1, 2] (gap at x=1)
+
+x=1 appears in rows 0, 2 -> count=2
+Total rows = 3
+Min bricks = 3 - 2 = 1
+
+Return 1.
+```
+
+**Key Insight - Count Edge Positions (Gaps Between Bricks):**
+
+- Drawing a line at position `x` crosses a brick in row `i` if `x` is NOT a brick boundary in that row
+- The number of bricks crossed = `totalRows - (number of rows where x is a boundary)`
+- So we want to maximize the number of rows where `x` aligns with a brick boundary
+- Use a HashMap to count, for each cumulative width, how many rows have a boundary there
+- Answer = `totalRows - max(counts.values())`
+- **Important**: Do NOT count the final edge (total width) as a boundary — the line can't be drawn there
+
+**Why It Works:**
+
+- Each row's brick boundaries are cumulative sums of brick widths (excluding the last, which is the wall edge)
+- A vertical line at position `x` crosses a brick in a row unless `x` is exactly a brick boundary in that row
+- By finding the `x` with the maximum number of boundary alignments, we minimize crossings
+- This greedy approach works because each row is independent
+
+**Visualization - Boundary Counting:**
+```mermaid
+graph TD
+    A["For each row in wall"] --> B["cumulative = 0"]
+    B --> C["For each brick width except last"]
+    C --> D["cumulative += brick_width"]
+    D --> E["Increment map[cumulative]"]
+    E --> F{"More bricks?"}
+    F -->|Yes| C
+    F -->|No| G{"More rows?"}
+    G -->|Yes| A
+    G -->|No| H["maxGaps = max value in map"]
+    H --> I["Return totalRows - maxGaps"]
+```
+
+```java
+public int leastBricks(List<List<Integer>> wall) {
+    HashMap<Integer, Integer> gapCount = new HashMap<>();
+    int maxGaps = 0;
+    for (List<Integer> row : wall) {
+        int position = 0;
+        // Skip last brick (its end is the wall edge - excluded)
+        for (int i = 0; i < row.size() - 1; i++) {
+            position += row.get(i);
+            int count = gapCount.getOrDefault(position, 0) + 1;
+            gapCount.put(position, count);
+            maxGaps = Math.max(maxGaps, count);
+        }
+    }
+    return wall.size() - maxGaps;
+}
+```
+
+**Alternative - Using Array (if width is small):**
+```java
+public int leastBricks(List<List<Integer>> wall) {
+    int totalWidth = 0;
+    for (int width : wall.get(0)) totalWidth += width;
+    int[] gaps = new int[totalWidth + 1];
+    for (List<Integer> row : wall) {
+        int position = 0;
+        for (int i = 0; i < row.size() - 1; i++) {
+            position += row.get(i);
+            gaps[position]++;
+        }
+    }
+    int maxGaps = 0;
+    for (int i = 1; i < totalWidth; i++) {
+        maxGaps = Math.max(maxGaps, gaps[i]);
+    }
+    return wall.size() - maxGaps;
+}
+```
+
+**Time Complexity**: O(n × m) where n = number of rows, m = average bricks per row
+
+**Space Complexity**: O(W) where W = total width (or O(distinct boundaries) for HashMap)
+
+**Edge Cases:**
+
+- Single row: return 0 (line at any internal gap crosses no bricks)
+- Single brick per row: return n (no internal gaps)
+- All rows identical: line at first gap crosses 0 bricks
+- Empty wall: return 0 (problem guarantees non-empty)
+- Brick widths can be large (use int, no overflow for typical constraints)
+- Duplicate boundaries in same row: should not happen (bricks are contiguous)
+
+**Common Pitfalls:**
+
+1. Including the last brick's end (total width) as a boundary — must exclude
+2. Not skipping the last brick in each row — line at wall edge is invalid
+3. Using the wrong formula — answer is `totalRows - maxGaps`, not `maxGaps`
+4. Off-by-one in cumulative sum — accumulate AFTER moving past the brick
+5. Forgetting to update `maxGaps` incrementally (minor optimization)
+
+**Similar Pattern Problems:**
+
+- Number of Ways to Split Array (cumulative sum)
+- Split Array Largest Sum (binary search on answer)
+- Minimum Number of Arrows to Burst Balloons (interval overlap)
+- Minimum Moves to Equal Array Elements II (median)
+
+---
+
+#### 28. **Count of Smaller Numbers After Self**
+
+**Problem Description:**
+Given an integer array `nums`, return an integer array `counts` where `counts[i]` is the number of smaller elements to the right of `nums[i]`.
+
+**Example Walkthrough:**
+
+Input: `nums = [5,2,6,1]`
+```
+Expected Output: [2,1,1,0]
+
+Step 1: For each index i, count elements to the right that are smaller
+
+i=0, nums[0]=5: right = [2,6,1], smaller = {2,1} -> count=2
+i=1, nums[1]=2: right = [6,1],   smaller = {1}   -> count=1
+i=2, nums[2]=6: right = [1],     smaller = {1}   -> count=1
+i=3, nums[3]=1: right = [],      smaller = {}    -> count=0
+
+Result: [2,1,1,0]
+```
+
+Input: `nums = [-1,-1]`
+```
+Expected Output: [0,0]
+
+i=0, nums[0]=-1: right = [-1], smaller = {} -> count=0
+i=1, nums[1]=-1: right = [],   smaller = {} -> count=0
+
+Result: [0,0]
+```
+
+Input: `nums = [3,4,9,6,1]`
+```
+Expected Output: [1,1,2,1,0]
+
+i=0, nums[0]=3: right = [4,9,6,1], smaller = {1}       -> count=1
+i=1, nums[1]=4: right = [9,6,1],   smaller = {1}       -> count=1
+i=2, nums[2]=9: right = [6,1],     smaller = {6,1}     -> count=2
+i=3, nums[3]=6: right = [1],       smaller = {1}       -> count=1
+i=4, nums[4]=1: right = [],        smaller = {}        -> count=0
+
+Result: [1,1,2,1,0]
+```
+
+**Key Insight - Merge Sort with Index Tracking:**
+
+- This is a classic **inversion count** variant
+- During merge sort, when we pick an element from the **right half** before an element in the **left half**, it means the left element is greater than the right element
+- We can count how many right elements are smaller than each left element during merge
+- To track original indices, we sort an array of `(value, originalIndex)` pairs
+- Time complexity: O(n log n) with merge sort
+
+**Why It Works:**
+
+- Merge sort divides the array into halves, sorts each, then merges
+- During merge, both halves are sorted
+- If `left[i] > right[j]`, then all remaining elements in the right half from `j` to the end are greater than or equal to `right[j]`, but `left[i]` is greater than `right[j]` (and possibly more)
+- Specifically, when we take an element from the right half (because it's smaller than the current left element), we increment the count for ALL remaining left elements
+- Alternative: when we take an element from the left half, we know `j` elements from the right half have already been taken (all smaller than the current left element), so add `j` to `count[originalIndex of left[i]]`
+
+**Visualization - Merge Sort Counting:**
+```mermaid
+graph TD
+    A["nums = [5,2,6,1], index = [0,1,2,3]"] --> B["Divide into halves"]
+    B --> C["Left: [(5,0),(2,1)]<br/>Right: [(6,2),(1,3)]"]
+    C --> D["Recursively sort each half"]
+    D --> E["Left sorted: [(2,1),(5,0)]<br/>Right sorted: [(1,3),(6,2)]"]
+    E --> F["Merge: compare left[i] and right[j]"]
+    F --> G{"left[i] <= right[j]?"}
+    G -->|Yes| H["count[left index] += j<br/>Take left[i]"]
+    G -->|No| I["Take right[j], j++"]
+    H --> J["Continue merging"]
+    I --> J
+    J --> K["Result counts"]
+```
+
+```java
+class Solution {
+    public List<Integer> countSmaller(int[] nums) {
+        int n = nums.length;
+        int[] counts = new int[n];
+        int[][] arr = new int[n][2];
+        for (int i = 0; i < n; i++) {
+            arr[i][0] = nums[i];
+            arr[i][1] = i;
+        }
+        mergeSort(arr, 0, n - 1, counts);
+        List<Integer> result = new ArrayList<>();
+        for (int c : counts) result.add(c);
+        return result;
+    }
+
+    private void mergeSort(int[][] arr, int left, int right, int[] counts) {
+        if (left >= right) return;
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid, counts);
+        mergeSort(arr, mid + 1, right, counts);
+        merge(arr, left, mid, right, counts);
+    }
+
+    private void merge(int[][] arr, int left, int mid, int right, int[] counts) {
+        int[][] temp = new int[right - left + 1][2];
+        int i = left, j = mid + 1, k = 0;
+        while (i <= mid && j <= right) {
+            if (arr[i][0] <= arr[j][0]) {
+                // All elements from mid+1 to j-1 are smaller than arr[i]
+                counts[arr[i][1]] += (j - (mid + 1));
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
+            }
+        }
+        while (i <= mid) {
+            counts[arr[i][1]] += (j - (mid + 1));
+            temp[k++] = arr[i++];
+        }
+        while (j <= right) {
+            temp[k++] = arr[j++];
+        }
+        System.arraycopy(temp, 0, arr, left, temp.length);
+    }
+}
+```
+
+**Alternative - Binary Indexed Tree (Fenwick Tree) O(n log n):**
+```java
+class Solution {
+    public List<Integer> countSmaller(int[] nums) {
+        int n = nums.length;
+        // Coordinate compression
+        int[] sorted = nums.clone();
+        Arrays.sort(sorted);
+        Map<Integer, Integer> rank = new HashMap<>();
+        int r = 1;
+        for (int v : sorted) {
+            if (!rank.containsKey(v)) {
+                rank.put(v, r++);
+            }
+        }
+        int[] bit = new int[r];
+        List<Integer> result = new ArrayList<>();
+        // Process from right to left
+        for (int i = n - 1; i >= 0; i--) {
+            int idx = rank.get(nums[i]);
+            result.add(query(bit, idx - 1)); // count of elements < nums[i]
+            update(bit, idx, 1);             // add nums[i] to BIT
+        }
+        Collections.reverse(result);
+        return result;
+    }
+
+    private void update(int[] bit, int i, int delta) {
+        while (i < bit.length) {
+            bit[i] += delta;
+            i += i & (-i);
+        }
+    }
+
+    private int query(int[] bit, int i) {
+        int sum = 0;
+        while (i > 0) {
+            sum += bit[i];
+            i -= i & (-i);
+        }
+        return sum;
+    }
+}
+```
+
+**Alternative - BST Insertion (Simpler but O(n²) Worst Case):**
+```java
+class Solution {
+    class Node {
+        int val, count, leftCount;
+        Node left, right;
+        Node(int val) {
+            this.val = val;
+            this.count = 1;
+            this.leftCount = 0;
+        }
+    }
+
+    public List<Integer> countSmaller(int[] nums) {
+        List<Integer> result = new LinkedList<>();
+        Node root = null;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            root = insert(root, nums[i], result, 0);
+        }
+        return result;
+    }
+
+    private Node insert(Node node, int val, List<Integer> result, int countSoFar) {
+        if (node == null) {
+            result.add(0, countSoFar);
+            return new Node(val);
+        }
+        if (val < node.val) {
+            node.leftCount++;
+            node.left = insert(node.left, val, result, countSoFar);
+        } else if (val > node.val) {
+            node.right = insert(node.right, val, result, countSoFar + node.count + node.leftCount);
+        } else {
+            node.count++;
+            result.add(0, countSoFar + node.leftCount);
+        }
+        return node;
+    }
+}
+```
+
+**Time Complexity**: O(n log n) for merge sort and BIT, O(n²) worst case for BST
+
+**Space Complexity**: O(n) for all approaches
+
+**Edge Cases:**
+
+- Empty array: return empty list
+- Single element: return [0]
+- All same elements: return all zeros (no smaller elements)
+- Strictly increasing: all zeros (no smaller elements to the right)
+- Strictly decreasing: [n-1, n-2, ..., 0]
+- Negative numbers: handled correctly by comparison
+- Duplicates: only strictly smaller elements are counted
+
+**Common Pitfalls:**
+
+1. Counting equal elements as "smaller" — must be strictly smaller (`<`)
+2. Not tracking original indices — must sort pairs `(value, index)` to map back
+3. Off-by-one in the count: `j - (mid + 1)` is the number of elements taken from right half so far
+4. Forgetting to handle remaining left elements after the main merge loop
+5. In BIT approach: coordinate compression must handle duplicates correctly
+6. In BST approach: worst case (sorted input) degenerates to O(n²)
+
+**Similar Pattern Problems:**
+
+- Count Inversions (merge sort based)
+- Reverse Pairs (LeetCode 493)
+- Count of Range Sum (LeetCode 327)
+- Create Sorted Array through Instructions (LeetCode 1649)
+- Number of Pairs Satisfying Inequality (LeetCode 2426)
 
 ---
 

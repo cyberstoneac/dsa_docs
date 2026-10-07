@@ -710,9 +710,192 @@ public int[] asteroidCollision(int[] asteroids) {
 
 ---
 
+#### 6. **Car Fleet**
+
+**Problem Description:**
+There are `n` cars going to the same destination along a one-lane road. The destination is `target` miles away. You are given two integer arrays `position` and `speed`, both of length `n`, where `position[i]` is the starting position of the `i`th car and `speed[i]` is the speed of the `i`th car (in miles per hour). A car can never pass another car ahead of it, but it can catch up to it and drive bumper-to-bumper at the same speed. A **car fleet** is a non-empty set of cars driving at the same position and same speed. A single car is also a car fleet. Return the number of car fleets that will arrive at the destination.
+
+**Example Walkthrough:**
+
+Input: `target = 12, position = [10,8,0,5,3], speed = [2,4,1,1,3]`
+```
+Expected Output: 3
+
+Step 1: Pair position and speed, sort by position descending
+        (10,2), (8,4), (5,1), (3,3), (0,1)
+
+Step 2: Calculate arrival time for each car if alone
+        pos=10, speed=2 -> time = (12-10)/2 = 1.0
+        pos=8,  speed=4 -> time = (12-8)/4  = 1.0
+        pos=5,  speed=1 -> time = (12-5)/1  = 7.0
+        pos=3,  speed=3 -> time = (12-3)/3  = 3.0
+        pos=0,  speed=1 -> time = (12-0)/1  = 12.0
+
+Step 3: Process with stack
+        time=1.0: stack empty -> push [1.0]
+                  Stack: [1.0]
+
+        time=1.0: 1.0 <= 1.0 -> catches up, replaces fleet
+                  Pop [1.0], push [1.0]
+                  Stack: [1.0]
+
+        time=7.0: 7.0 > 1.0 -> new fleet -> push
+                  Stack: [1.0, 7.0]
+
+        time=3.0: 3.0 <= 7.0 -> catches up, merges with fleet ahead
+                  Pop [7.0], push [7.0]
+                  Stack: [1.0, 7.0]
+
+        time=12.0: 12.0 > 7.0 -> new fleet -> push
+                   Stack: [1.0, 7.0, 12.0]
+
+Return 3
+```
+
+Input: `target = 10, position = [3], speed = [3]`
+```
+Expected Output: 1
+
+Step 1: Single car
+Step 2: time = (10-3)/3 = 2.33
+Step 3: Stack: [2.33]
+
+Return 1
+```
+
+Input: `target = 100, position = [0,2,4], speed = [4,2,1]`
+```
+Expected Output: 1
+
+Step 1: Sort descending: (4,1), (2,2), (0,4)
+Step 2: Times:
+        pos=4, speed=1 -> time = (100-4)/1 = 96.0
+        pos=2, speed=2 -> time = (100-2)/2 = 49.0
+        pos=0, speed=4 -> time = (100-0)/4 = 25.0
+
+Step 3: Process
+        time=96.0: push [96.0]
+        time=49.0: 49.0 <= 96.0 -> catches up -> pop [96.0], push [96.0]
+        time=25.0: 25.0 <= 96.0 -> catches up -> pop [96.0], push [96.0]
+        Stack: [96.0]
+
+Return 1
+```
+
+**Key Insight - Sort by Position Descending + Monotonic Stack:**
+
+- Process cars from closest to target first (position descending)
+- Calculate time each car would take to reach target alone: `(target - position) / speed`
+- If a car behind has a **shorter or equal** arrival time than the car ahead, it catches up and joins that fleet
+- Use a monotonic decreasing stack to track fleet arrival times
+- If current time > stack top, it's a new fleet (push)
+- If current time <= stack top, it merges with the fleet ahead (pop and push)
+- Final stack size = number of fleets
+
+**Why It Works:**
+
+- Cars can't pass each other, so a car can only join a fleet that's **ahead** of it
+- Processing from closest to target ensures "ahead" cars are already processed
+- If car behind reaches target faster (smaller time), it will catch up to the car ahead
+- The fleet's arrival time becomes the **slower** time (the car ahead's time)
+- Stack maintains increasing order from bottom to top (bottom = closest fleet with smallest time)
+- When a new car can't catch up (time > top), it forms a new fleet
+
+**Visualization - Stack Processing:**
+```mermaid
+graph TD
+    A["Sort by position descending"] --> B["Calculate time = (target - pos) / speed"]
+    B --> C{"time <= stack.top?"}
+    C -->|Yes| D["Merge with fleet ahead<br/>Pop and push same time"]
+    C -->|No| E["New fleet<br/>Push time"]
+    D --> F{"More cars?"}
+    E --> F
+    F -->|Yes| C
+    F -->|No| G["Return stack size"]
+```
+
+```java
+public int carFleet(int target, int[] position, int[] speed) {
+    int n = position.length;
+    // Pair position and speed
+    int[][] cars = new int[n][2];
+    for (int i = 0; i < n; i++) {
+        cars[i][0] = position[i];
+        cars[i][1] = speed[i];
+    }
+    // Sort by position descending (closest to target first)
+    Arrays.sort(cars, (a, b) -> b[0] - a[0]);
+
+    // Monotonic decreasing stack of arrival times
+    Stack<Double> stack = new Stack<>();
+    for (int i = 0; i < n; i++) {
+        double time = (double)(target - cars[i][0]) / cars[i][1];
+        while (!stack.isEmpty() && time <= stack.peek()) {
+            stack.pop(); // merge with fleet ahead
+        }
+        stack.push(time);
+    }
+    return stack.size();
+}
+```
+
+**Alternative - Without Stack (Count Fleets):**
+```java
+public int carFleet(int target, int[] position, int[] speed) {
+    int n = position.length;
+    int[][] cars = new int[n][2];
+    for (int i = 0; i < n; i++) {
+        cars[i][0] = position[i];
+        cars[i][1] = speed[i];
+    }
+    Arrays.sort(cars, (a, b) -> b[0] - a[0]);
+
+    int fleets = 0;
+    double lastTime = 0;
+    for (int i = 0; i < n; i++) {
+        double time = (double)(target - cars[i][0]) / cars[i][1];
+        if (time > lastTime) {
+            fleets++;
+            lastTime = time;
+        }
+    }
+    return fleets;
+}
+```
+
+**Time Complexity**: O(n log n) - dominated by sorting
+
+**Space Complexity**: O(n) - for the cars array and stack (or O(1) extra with in-place sorting approach)
+
+**Edge Cases:**
+
+- Single car: returns 1
+- All cars same speed: number of fleets = number of cars (no catching up)
+- Cars already at target: time = 0, all merge into one fleet
+- Faster cars behind slower cars: they catch up and merge
+- Slower cars behind faster cars: no merge, separate fleets
+- Equal arrival times: considered as catching up (use `<=`)
+
+**Common Pitfalls:**
+
+1. Processing from farthest to closest instead of closest to target - breaks the logic
+2. Using `int` division instead of `double` - causes precision loss
+3. Using `<` instead of `<=` when comparing times - equal times should merge
+4. Not sorting by position - positions can be given in arbitrary order
+5. Forgetting that a car can only join a fleet **ahead** of it, not behind
+
+**Similar Pattern Problems:**
+
+- Monotonic Stack (general pattern)
+- Next Greater Element (stack pattern)
+- Daily Temperatures (monotonic stack)
+- Largest Rectangle in Histogram (monotonic stack)
+
+---
+
 ### Hard
 
-#### 6. **Largest Rectangle in Histogram**
+#### 7. **Largest Rectangle in Histogram**
 
 **Problem Description:**
 Given an array of bar heights in a histogram, find the area of the largest rectangle that can be formed.
@@ -837,7 +1020,7 @@ public int largestRectangleArea(int[] heights) {
 
 ---
 
-#### 7. **Decode String**
+#### 8. **Decode String**
 
 **Problem Description:**
 Given an encoded string like "3[a]2[bc]", decode it to "aaabcbc". Numbers followed by brackets mean repeat the content inside that many times. Can be nested.
